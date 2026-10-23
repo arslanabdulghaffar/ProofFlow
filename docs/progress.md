@@ -1,6 +1,6 @@
 # Progress
 
-As of 2026-10-24 KST: **Phase 0 preparation — acceptance checks passed; READY TO PUSH. Core functionality is not implemented.** Do not mark DONE until remote SHA verification also passes. No cloud charges or candidate execution occurred.
+As of 2026-10-24 KST: **Phase 0 DONE — preparation acceptance and remote checkpoint verification passed. Core functionality is not implemented.** Phase 1 is gated by event timing and account/charges evidence. No cloud charges or candidate execution occurred.
 
 Completed preparation: 59-page review including appendices/S01–S42; source version/hash and selected visual table/diagram review; exact private repository authenticated read and advertised write confirmation; isolated local Node LTS/uv readiness; durable product/contract/architecture/security/API/sandbox/inference/budget/UX/test/release plans; 276 trace entries across 59 pages; one-human work-package ordering and owner question register.
 
@@ -14,4 +14,18 @@ NOT RUN: application install/build/lint/types/unit/integration/e2e, PostgreSQL w
 
 Open blockers for later phases: timing; enrollment/eligible account/charges; actual runsc/resource/model compatibility; independent human review gap; ownership/license; product GitHub App/demo repository; public release/submission/domain/uptime authorization. Phase 0 can complete while these are explicitly recorded.
 
-Checkpoint: pending. See next-session.md for resume instructions. Every future completed phase needs acceptance/checks/diff-secret review/docs/commit/push/remote SHA comparison before DONE.
+Verified Phase 0 acceptance checkpoint:
+
+| Fact | Observed result |
+| --- | --- |
+| Repository | arslanabdulghaffar/ProofFlow; private |
+| Branch | main, tracking origin/main |
+| Acceptance commit | `40bc9edcb20e74e51aa0725dc976b5f0316f9f8c` |
+| GitHub link | [Phase 0 acceptance checkpoint](https://github.com/arslanabdulghaffar/ProofFlow/commit/40bc9edcb20e74e51aa0725dc976b5f0316f9f8c) |
+| Authenticated read | Passed: exact private repository API and local Git clone/read |
+| Advertised write | GitHub permissions.push=true; separate from actual push |
+| Actual push | `git push -u origin main` succeeded; no force/protection bypass |
+| Remote verification | `git ls-remote origin refs/heads/main` equaled the full acceptance commit SHA |
+| Working state at verification | Clean; main matched origin/main |
+
+This receipt is committed after observing that push, so it intentionally names the acceptance commit instead of embedding its own self-referential SHA. The later status-receipt commit only updates README/progress/next-session; its final HEAD is also pushed and read back. To identify the latest handoff checkpoint, use `git log -1` and compare to `git ls-remote origin refs/heads/main`. Every future phase requires the same acceptance/checks/diff-secret review/docs/commit/push/readback sequence before DONE.
