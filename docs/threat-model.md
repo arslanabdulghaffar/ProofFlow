@@ -1,0 +1,25 @@
+# Threat model and controls
+
+Design / NOT RUN. Untrusted: public users, uploads, model output, candidate output and webhooks. Trusted but fallible: control services, configured verifier, supervisor, deployment administrator and dependency supply chain. Candidate code must not share the control host. “Independent verifier” means a permission/execution boundary from candidate code, not an unconfirmed independent human author/reviewer.
+
+| Asset / threat | Enforced design | Acceptance |
+| --- | --- | --- |
+| Host/secrets / code escape | Separate restricted worker, runsc, non-root/no capabilities, fixed mounts/command, no candidate secrets/network | Synthetic host-marker, IPv4/IPv6/DNS/metadata denial, resource and cleanup receipts |
+| Business truth / agent self-grading | Immutable owner contract, trusted V01–V10, exact bytes and source partition | Wrong owner with same total, dropped/duplicated row and invalid quarantine all rejected |
+| Tenant data / ID guessing | Workspace authorization on every route, separate roles, tested RLS if added | Known IDs across two sessions cannot read/mutate/stream/export |
+| Availability/credits | Bounded parser, queue, execution and provider requests; atomic spend reservations | Oversize/loop/allocation/fork/inode flood, concurrent cap/admission races |
+| GitHub / injected writes | Dedicated allowlisted App/repo/path, concrete operator approval, fenced outbox/readback | Guest denied; workflow/path/base mutation denied; uncertain create reconciled |
+| Evidence / file swap | Stop all writers, safe collector, immutable artifacts, configured verifier identity | Link/FIFO/device/path/late-writer and fake PASS probes fail |
+| Supply chain / privileged CI | Pinned dependency locks and image digests, scanner/notice review, candidate repo Actions disabled or isolated/no-secret | Secrets/reachable critical findings block affected release; release manifest matches |
+
+Input parser bounds encoding, headers/aliases, cells, rows, JSON depth and content; no archive extraction, pickle, XLSX or parquet. Use generated storage names outside web root. Escape code/logs/cells/filenames/model text; restrictive CSP and no raw HTML. SQL parameterization and fixed argument arrays, never user-derived shell commands. No caller fetch URLs; fixed reviewed provider/GitHub destinations and redirect restrictions. Canonical JSONL remains exact; optional human spreadsheet export is a separate formula-escaped artifact with a distinct hash/label.
+
+Guest sessions: random high-entropy opaque token, stored hash, Secure/HttpOnly/SameSite cookies, CSRF token and Origin checks, one-hour expiry. Operator sessions <=12h with reauthentication for sensitive configuration, session rotation on login/revocation on logout. Operator roles only access assigned workspaces. Worker identity is RPC-only; verifier identity is report-only; migration role is never public request handling.
+
+Provider/App private keys on controller service-readable secret files; short-lived installation tokens; separate mTLS, batch, session and backup keys. No secrets in NEXT_PUBLIC, source, prompts, screenshots, logs or candidate mounts. Prompt injection in source/comments/cells/stderr never widens tools or permissions. Candidate cannot edit contract, verifier, fixture oracle, CI, runtime or approval record. Development fake-provider fixtures must be labeled and impossible to enable in release.
+
+Guest raw inputs/artifacts expire within 24h; export does not authorize indefinite server retention. Minimal metadata 7 days. Backups rolling <=24h snapshots; raw guest data may remain <=48h from upload, with actual prune/restore deletion tests. Workspace deletion immediately revokes access and queues physical deletion; tombstones prevent restore resurrection. Synthetic licensed benchmark fixtures can persist with attribution. Hashes are not automatically anonymous. Provider retention/residency remain account-specific unknowns; public intake accepts synthetic or authorized non-sensitive data only.
+
+Incident response: pause admission/affected writes; preserve restricted evidence; revoke compromised keys; isolate affected host; rebuild trusted images; restore and reconcile hashes/outbox; retest original fault/containment; document impact before resuming. Never manually set VERIFIED/COMPLETED to clear an alert. Wrong acceptance triggers digest/version revocation and holds future outputs, followed by verifier repair and re-evaluation.
+
+Residual risks: malicious administrator/control-host compromise, unknown kernel/runtime/dependency vulnerabilities, side channels, incomplete business contract, provider drift, single-host outages and unconfirmed human review. Tested controls must be named with their actual evidence. No universal isolation, tamper-proof audit, zero risk, formal proof or compliance claims.

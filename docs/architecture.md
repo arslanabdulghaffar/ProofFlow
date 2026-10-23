@@ -1,0 +1,58 @@
+# Architecture plan
+
+Status: design only. Next.js/React/TypeScript UI and FastAPI/Pydantic API behind Caddy on a Vultr control VM; PostgreSQL 18 with SQLAlchemy/Alembic stores durable state and queue; a separate restricted Linux worker has Docker + explicit pinned gVisor runsc (initial platform systrap). The trusted verifier is a separate restricted process/image on control, with no provider credential or candidate execution. Two VMs are a design choice, not an event-mandated count.
+
+Browser HTTPS → API/auth/immutable assets → PostgreSQL job and event transaction → orchestrator → Vultr inference or mTLS worker. Worker returns collected bytes and supervisor receipts → content-addressed storage → trusted verifier → pending approval. Exact approval activates a version; authenticated fresh batches bind it and repeat execution/verification. Separately approved PR intent enters a durable outbox and is reconciled against GitHub readback.
+
+Only the supervisor controls Docker. Candidate mounts contain its code, this execution's parsed source data and approved requirements; never the repository, hidden oracle, verifier, runtime socket or credentials. Candidate report files cannot become verifier reports. Worker identity cannot access control DB/integration secrets. Public browser fields cannot choose endpoint, image, command, mount, limits or pass status.
+
+## Module plan (not created application directories)
+
+| Path | Responsibility |
+| --- | --- |
+| web/src/app and components | Intake, contract, incident, diff/checks, approvals, batches, export |
+| api/app/routes, services, db | Auth, strict /v1 schemas, transactions, OpenAPI/SSE/downloads |
+| orchestrator/agent.py, provider.py | Explicit bounded state machine, single Vultr adapter |
+| worker/supervisor.py, protocol.py | Fixed execution lifecycle, collection, watchdog and receipts |
+| verifier/main.py, rules | Trusted bounded parsing and deterministic V01–V10 |
+| contracts, schemas, db/migrations | Versioned frozen schemas, generated types, additive migrations |
+| infra/images, compose, cloud-init | Pinned trusted images, services, hardening, secret-file references |
+| tests/unit, integration, security; eval | Tests of real boundaries, isolated baseline execution, protected oracles |
+| scripts; docs/releases | Doctor/probes/deploy/restore commands and reproducible manifests |
+
+## Storage and records
+
+Use workspace-scoped workspaces/sessions, api_tokens/integration_connections, assets/contracts, pipelines/versions, jobs/attempts/executions, events, reports/artifacts, approvals/audit_events, batches/integration_events, provider_calls/reservations and outbox. Composite foreign keys and unique keys enforce ownership and scoped identity. Store session/API token hashes; HMAC secrets are separate secret files. API/queue/migration roles differ; RLS is a planned defense only after tests prove it. Append-only application audit permissions do not defeat a compromised administrator.
+
+Store bytes in same-filesystem temporary files, enforce bounds, fsync, atomically rename to SHA-256 paths, fsync directory, then commit artifact references. Verify an existing hash object's size/hash before reuse. Publication requires every referenced artifact durable. Reconcile orphan files/pending rows after a grace period; never claim filesystem and DB have a shared atomic transaction. Workspace-authorized registry lookups mediate deduplicated storage; a known digest is not download permission.
+
+Raw upload hashes identify original bytes. Canonical JSON uses UTF-8, sorted keys, compact separators, no duplicate keys/nonfinite numbers, documented escaping and integers/string money rules. Freeze golden hash vectors across languages; server is the authority. Manifest binds inputs (incident and canary), candidate/original, output files, contract, runtime, verifier, prompt/model metadata and timestamps.
+
+## Version/approval invalidation
+
+Bundle binds workspace, pipeline, immutable version, candidate/contract/runtime/verifier/report digests, expected active version, actor, action intent and time. Add policy epoch and revocation epoch to action guards. The server recomputes it, checks owner authorization and uses a DB compare-and-swap; stale requests return VERSION_CONFLICT. Historical approval records remain facts, never editable permissions for new bytes.
+
+| Change | New actions | Queued/running batches and pending PRs |
+| --- | --- | --- |
+| New code candidate, no activation | Requires new full verification and approval; old active version remains | Existing bindings unchanged; new candidate grants no authority |
+| Ordinary activation of verified B | New batches bind B | Batches already accepted on A may finish A unless A revoked; no silent rebinding. Old pending PR preview becomes stale and requires reapproval |
+| Contract change or verifier change | Increment pipeline policy epoch, deactivate old active version, require reverify/reapprove | Cancel queued affected work; request running cancellation; hold raced outputs. Cancel pending external intents; old approvals cannot dispatch |
+| Runtime change (even patch update) | New immutable bundle; same conservative invalidation as verifier | Same hold/cancel policy; old pinned version may only resume after explicit revalidation/approval |
+| Explicit revoke or discovered incorrect acceptance/security defect | Mark affected version/digest revoked, increment epoch, reject intake | Cancel queued; cancel running; no post-revocation completion/publication. Historical completed results stay recorded and are marked affected; pending PRs blocked |
+| Rollback | Explicit owner selection of unrevoked verified compatible version under current policy, new CAS/audit | No revival of revoked permission, old outbox action or completed batch |
+
+Immutable binding answers **what** a batch was assigned; revocation answers **whether it may continue or publish**. Rebinding requires a new batch/intent. Check eligibility/epochs at intake, dispatch and terminal commit; revocation and commit serialize on the same pipeline/version guards. An external request already accepted by GitHub cannot be recalled by a later revocation: mark it dispatched-before-revocation, reconcile exact state, and expose the action for operator handling. Never falsely promise distributed rollback.
+
+## Durable state and worker fencing
+
+Jobs persist RECEIVED/VALIDATING/QUEUED, BASELINE_RUNNING/VERIFYING, DIAGNOSING/PATCH_PROPOSED, CANDIDATE_RUNNING/VERIFYING, VERIFIED_PENDING_APPROVAL, NEEDS_REVIEW, EXHAUSTED, FAILED_INFRA or CANCELLED. Already-correct originals still get canary/verification/approval; do not count them as AI repairs. Batch states separately include queued/running/verifying/COMPLETED/HELD_FOR_REVIEW/cancelled/failed. UI reads committed state/events only.
+
+Claim work in a short `FOR UPDATE SKIP LOCKED` transaction, assign lease owner and increment generation; 10s heartbeat, 45s initial expiry using DB time. Do not hold the transaction across RPC/model calls. Every state/event/result write has job ID + expected state + generation + unexpired lease + cancellation/epoch guards in one transaction. Zero affected rows means stale controller: no publication or side effect. Attempt identity `(job_id, attempt_no, kind)` distinguishes original/candidate/canary; execution ID is a server-generated immutable UUID persisted before dispatch with manifest hash, deadline and worker assignment.
+
+Worker keeps a durable local execution journal and highest fencing generation per job. `create(execution_id)` with same manifest is idempotent; differing bytes conflict. `status` exposes queued/running/stopping/collected/cleaned/unknown with exact identity. A new controller sends a fence/adopt request and waits for acknowledgement before further dispatch; old-generation commands are rejected. It first reconciles known execution status. Never start a replacement while an old execution could still run; require confirmed termination/cleanup or stop as FAILED_INFRA. Worker restart reconciles server-created labels/journal, enforces original hard deadlines, and does not trust candidate labels. A journal/worker loss leaves an uncertain outcome, never PASS.
+
+Worker RPC fencing cannot by itself fence GitHub or the provider. Use a dedicated trusted dispatcher, durable reservations/outbox, row-locked authorization check and serialized dispatch authorization record (linearization point). Only dispatcher has provider/GitHub write credentials and worker-create mTLS authority; stale orchestrators submit durable intent IDs, never make those calls directly. Read/status and cancellation authorities are separately scoped. Reclaimer must reconcile an in-flight/uncertain dispatch before another request. Validate current epochs immediately before authorized dispatch; revocation blocks later dispatches. An already-authorized in-flight worker request is reconciled/cancelled before replacement, even if it arrives after controller takeover. Duplicate execution may occur after infrastructure uncertainty, but only a current generation can commit a result. No exactly-once execution claim.
+
+PR intent binds repo ID, base SHA, allowed pipeline path, exact candidate bytes/digests, sanitized body hash and draft=true; deterministic branch includes immutable intent ID. Read back branch/head/file bytes/PR draft state/URL. Base movement invalidates preview. Timeout triggers lookup before retry, never blind create. Product App uses only contents and pull-request permissions for a dedicated demo repo with no privileged Actions. Local development Git credentials are not product credentials.
+
+See [API](api.md), [sandbox](sandbox.md), [inference](inference.md), and [threat model](threat-model.md) for interface and failure details.

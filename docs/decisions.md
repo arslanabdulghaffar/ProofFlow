@@ -1,0 +1,26 @@
+# Decision log
+
+All decisions below dated 2026-10-24; implementation evidence remains NOT RUN. Ordinary design defaults may be refined before schema freeze with traceability and tests. Business meaning outside synthetic demo approval needs the owner.
+
+| ID | Decision and reason | State / authority |
+| --- | --- | --- |
+| D01 | Phase 0 documentation/tool readiness only; retain event timing gate | Owner instruction + current rules; accepted |
+| D02 | Reuse supplied empty folder, clone exact private repository, start its default main; preserve history | Authenticated identity/read evidence; accepted; push separately verified |
+| D03 | One confirmed human owner + Codex; no assumed hours or independent reviewer | Owner clarification; accepted |
+| D04 | Synthetic exact raw-field duplicate equality, earliest ordinal representative, hold all conflicting identities; strict precedence | Broad semantics owner-approved; exact examples/default representation in contract.md |
+| D05 | v1.1 finite downstream filters, exact customer attributes, optional merchant/currency rollups with schemas and V10 | Synthetic scope approved; coordinated schema extension pending Phase 2 |
+| D06 | Contract/verifier/runtime changes invalidate eligibility via policy epoch; immutable batch binding survives as history; explicit revoke stops publication | Conservative engineering choice; race tests required |
+| D07 | Durable execution UUID + manifest + journal; generation-fenced transitions; reconcile before retry; no exactly-once claim | Engineering choice; Phase 2/4 tests |
+| D08 | Dedicated Linux runsc/systrap worker, independent guest process/resource probes, supervisor-owned bounded storage survives stop | Primary docs support direction; compatibility unproven |
+| D09 | Two-model small authenticated Vultr probe before selection; strict local JSON schema regardless of provider mode | Catalogue-only now; account/model/billing pending |
+| D10 | Equal-budget development pilot, 72-run minimum comparison; 216 runs conditional on measured cost/upper bound | Replaces unfunded p43 assumption; eval/plan.md |
+| D11 | $150 project/$25 inference ceilings, eligible credits only; ask before potential out-of-pocket exposure | Owner standing authorization; account charges unverified |
+| D12 | Revise $10 storage allowance to $18 reserved minimum; total target $140.20, not quote | Official billing observation; account-specific charges pending |
+| D13 | MIT proposed for owned code; no LICENSE issued until ownership clearance; source PDF excluded | Owner says clearance unestablished |
+| D14 | Local Node 24 LTS/uv tooling isolated; application dependencies/images pinned at kickoff | No global tool replacement; verified local commands |
+| D15 | Required human review gap stays explicit; automated checks + separate critical review continue development | Latest owner instruction supersedes treating missing teammate as development stop |
+| D16 | Product App/repo/action approval separate from development Git authentication and checkpoint authorization | Preserves product external-action boundary |
+| D17 | P1 minimizer, fancy analytics/motion, multi-model routing/extra profiles deferred; single complete deployed path first | Solo-first plan; no safety/approval cuts |
+| D18 | Page 11 live foundation gate moved to Phase 1; Phase 0 cannot claim health/sandbox success | Resolves PDF sequencing vs user pre-event boundary |
+
+No installed model/provider, product permission, cloud rate or test result is inferred from these planning decisions. Changes must record the old claim that is no longer valid and the acceptance evidence required.

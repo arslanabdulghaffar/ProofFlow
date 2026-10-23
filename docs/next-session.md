@@ -1,0 +1,15 @@
+# Resume ProofFlow
+
+Current phase: Phase 0 preparation; **core not implemented**. Preparation acceptance checks passed; commit/push verification is the remaining Phase 0 step. Use progress.md for the eventual receipt and `git log -5 --oneline` plus `git ls-remote origin refs/heads/main` to verify current remote state. Repository: private arslanabdulghaffar/ProofFlow, branch main, checkout A:\hackathon\ProofFlow. Do not overwrite local work.
+
+Read AGENTS.md, product.md, contract.md, threat-model.md, rules.md, decisions.md and phase-plan.md. The source handoff v1.0 (59 pages) SHA-256 is in source-review.md; full PDF is not committed. requirements-traceability.md covers every page; external-evidence.md records verified primary references and source-only context. This repository alone should be sufficient to resume planning without hidden chat history.
+
+Owner is the sole confirmed human, hours/teammates/reviewer unknown. Synthetic-only duplicate/downstream policy approved on 2026-10-24. Continue authorized ordinary work and phase checkpoints without asking “shall I continue?” Human independent review remains a disclosed gap; automated checks/separate critical review are allowed. Keep private. MIT ownership unconfirmed. No credentials in chat. Real customer semantics, publication/submission and product external actions need their own authorization.
+
+Exact next task at kickoff: verify the current official opening/announcements (published Nov 4 00:00 KST, session 01:00 KST), record permission timing, then confirm registration/credit/subscription charges/expiry and bounded $150 total/$25 inference eligibility. If potential out-of-pocket liability cannot be ruled out/bounded, ask before spending and continue nonbillable work. Then implement Phase 1 trusted foundation, pin lockfiles/images, provision approved control+worker, test real Vultr coding/JSON and explicit runsc/systrap with **independent guest-task/CPU/RAM/storage/inode/network/wall/cleanup probes before uploaded code**.
+
+Do not begin repair agent, verifier, supervisor, product API/UI or end-to-end core before official timing permits. Date being near kickoff or credits being available is insufficient. No automation/reminder has been scheduled. If resumed before opening, only further authorized preparation is allowed.
+
+Actual tools/checks: Windows Python 3.12.10/Git2.49/GCM; ignored local uv 0.13.5 and Node 24.22.1/npm 11.19.1; WSL Ubuntu24.04/Docker 29.9.1 cgroupv2 respond but **no runsc**. No product/containment/inference/evaluation/restore tests have run. `python scripts/check_preparation.py` is documentation hygiene only. See environment-readiness.md for paths and exact known limitations.
+
+Pending owner/account items Q01–Q07 are in risks.md. Main design resolutions are D04–D12: exact raw duplicates/direct representative links; v1.1 explicit downstream outputs; policy/revocation epochs with immutable bindings; durable execution/fencing/outbox; survivor output filesystem after writer termination; account-probed Vultr JSON/cost; pilot and fair conditional evaluation. Re-read those before implementing rather than filling gaps with ad hoc business guesses.

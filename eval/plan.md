@@ -1,0 +1,38 @@
+# Evaluation and spending plan
+
+TARGET / NOT RUN. The owner authorized **$150 total project spend, at most $25 inference**, using verified eligible hackathon credits only after charges and caps are established. Out-of-pocket exposure or unbounded liability requires approval. Phase 0 incurs no cloud charge. A credit balance is not permission to ignore minimums, tax, expiry, transfer or post-event costs.
+
+## Reconcile the handoff arithmetic
+
+PDF p43 proposes A/B/C ×24 incidents ×3 repeats =216 model-based runs, plus D once/case. At $0.50/job this reserves **$108**, excluding development. That cannot be promised inside $25. The 216-run plan is therefore conditional and deferred until measured costs and upper bounds establish feasibility. No run is reported as complete.
+
+Allocate inference envelopes: $2 authenticated model probes, $5 development, $12 final evaluation, $4 public judging, $2 uncertainty/recovery = $25. Alerts at aggregate $15/$20; hard stop at $25 including outstanding/uncertain reservations. Track per-envelope caps as well as global cap. No preferred-arm overspend. Envelopes may be reassigned by a documented operator decision within the same cap while protecting judging reserve.
+
+## Feasible staged evaluation
+
+| Stage | Schedule / maximum | Evidence and admission gate |
+| --- | --- | --- |
+| Development pilot | Phase 3/early 5: 12 model jobs, 4 per A/B/C on non-final cases; <=$0.10/job; <=$1.20 from development envelope | Measure full-job costs, token/latency tails, usage gaps, failures, and billing reconciliation. This pilot is development, never held-out results |
+| Minimum comparison | Phase 5: 24 frozen incidents × A/B/C once =72 jobs; D once each =24 deterministic runs | Equal <=$0.10/job upper bound gives <=$7.20. Keep 18 repairable +6 ambiguous cases; disclose one repeat and adjusted denominators (18/6 per arm) |
+| Full repeats if feasible | Add 144 jobs to reach 216 total | Require pilot-supported equal <=$0.05/job cap and total final upper bound <=$10.80, compatible with quality/token limits; otherwise do not launch. Set all arms' cap before viewing held-out results |
+| If even minimum fails budget/latency | Predeclare smaller balanced set before unsealing, e.g. 12 incidents (one repairable and one ambiguous per family) ×3 arms, same caps, D once | Label reduced scope, report 6/6 denominators per arm, no 24-case or three-repeat claims. If not adequate, publish NOT RUN rather than fabricate comparison |
+
+A job cost cap is checked before each call using authoritative rates and conservative input/output bounds. The lower evaluation cap may reduce retries; it applies identically to A/B/C and is disclosed. Do not adopt a $0.05 cap just because mean cost is low: prove admitted calls' worst-case reservation fits. Runtime/call/token limits remain at most the product limits. Forecasts include uncertain calls and transport retries; low averages never authorize overrunning reservations. At conservative legacy rates, a full 120k input +32k output budget costs $0.154 before other charges, showing why the smaller cap may bind.
+
+Max wall-time arithmetic: 216×300s =18 job-hours serial (idealized >=9 hours at two fully occupied slots); 72×300s =6 serial job-hours. Inference, canary work, shared verifier, rate limits and recovery can extend wall time. Reserve a large evaluation block on Nov 7 KST and reduce predeclared scope if the measured schedule cannot fit; do not borrow the final submission buffer for unplanned tuning.
+
+## Fair arms and protected cases
+
+A: complete ProofFlow; B: documented generic patch/run loop (optionally pinned mini-swe-agent adaptation); C: same as A without bounded witness feedback; D: deterministic repair/rebuild. Same model, contracts, initial data, execution limits, call/token/spend ceilings and final protected evaluator for A/B/C. Publish prompts/adapters and deterministic scope, including any lost downstream behavior. B's own acceptance policy is scored separately from its final evaluator grade. Randomize/interleave arm order and log service changes.
+
+At least 12 development cases, then 24 final cases: schema aliases/order/mapping; units/precision; composite joins; exact/conflicting duplicates; completeness/zero/refunds; downstream timestamps/filters/attributes/rollups. Each family has three repairable cases and one ambiguous case. The v1.1 extension adds attribute mutation coverage to development and canary cases. Preserve one family ambiguity on undefined business semantics. Keep generator seeds/oracles outside candidate and model access. Small expected results require manual owner review; no independent human oracle review is confirmed. Record that limitation instead of claiming independence from the human author. The verifier is technically separate from the repair agent.
+
+Freeze source, prompts, runtime, schemas, case manifest and grader before final runs. Examining a final failure for tuning makes it development data; re-freeze a new set or disclose reruns. Store one actual JSONL run record with IDs, manifests, arm, case/family, repeat, final candidate grade, acceptance decision, abstention, timeouts/errors, latency stages, calls/tokens, cost source/usage-known flag and cleanup. Failed/time-limited jobs stay in denominators. Missing results are NOT RUN, not zero.
+
+Report repair coverage, distinct-case/family outcomes, incorrect accepted/total accepted (undefined if none), ambiguity holds, repeat consistency only if repeated, median/p95 with sample sizes, costs and cleanup failures. Original targets 44/54 and 18/18 apply only to the full repeated design; they are not achieved results or automatically portable to reduced samples. Repeated cases are not independent business problems. Human repair-time comparison and two user interviews are deferred unless an actual consenting participant and fair setup are available; no outreach is authorized by this plan.
+
+## Total infrastructure envelope
+
+Replace PDF's $10 storage allowance: official Vultr billing lists a Standard Object Storage tier at $18/month; account billing period/proration and eligibility need confirmation. Reserve a full $18 minimum, not an invented prorated amount. Proposed ceiling: compute $67.20 (combined <=$0.20/hour ×336h), inference $25, storage $18, incidental/tax/transfer $10, contingency $20 = **$140.20**, leaving $9.80 beneath the $150 hard cap. These are reservations, not quotes. If actual VM plans exceed the combined ceiling, resize or replan before provisioning. Reserve judging uptime explicitly; seven extra days are an estimate, not a promise of the judging end date.
+
+Use a durable atomic ledger: committed measured/estimated cost + outstanding worst-case reservations + fixed service liabilities <= envelope and project caps. All three must fit before work starts. Freeze spending on missing account/rate evidence. Poll/reconcile usage without printing billing identifiers. Scheduled alerts alone are not a hard spend cap; if unavoidable billing cannot be bounded by terms, service limits and cleanup/renewal controls, ask the owner before enabling service. Stop new inference before exhausting uptime funds. Do not automatically destroy an active judging demo; obtain the required hosting decision before the funded period expires.

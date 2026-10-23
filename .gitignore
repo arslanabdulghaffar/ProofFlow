@@ -1,0 +1,54 @@
+# Credentials and machine-local configuration
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+credentials*.json
+*.tfstate
+*.tfstate.*
+.terraform/
+.aws/
+# Dependency and tool caches
+.venv/
+.venv-*/
+venv/
+node_modules/
+.tools/
+.uv-cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.next/
+coverage/
+htmlcov/
+.coverage*
+# Runtime/private data; keep reviewed synthetic fixtures under tests or eval
+data/
+artifacts/
+runtime/
+backups/
+logs/
+*.log
+*.sqlite*
+*.dump
+tmp/
+temp/
+build/
+dist/
+output/
+eval/results/
+# Do not redistribute supplied source materials
+ProofFlow_Complete_Engineering_Handoff.pdf
+Pasted text.txt
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
