@@ -1,6 +1,6 @@
 # Progress
 
-As of 2026-10-24 KST: **Phase 0 DONE — preparation acceptance and remote checkpoint verification passed. Core functionality is not implemented.** Phase 1 is gated by event timing and account/charges evidence. No cloud charges or candidate execution occurred.
+As of 2026-10-24 KST: **Ready for kickoff. Phase 0 DONE; Phase 1 not started.** Owner confirms the start request was premature; core stays gated until official opening. Account/charges evidence also remains incomplete. No cloud resource, billable service, inference request or candidate execution occurred in this session.
 
 Completed preparation: 59-page review including appendices/S01–S42; source version/hash and selected visual table/diagram review; exact private repository authenticated read and advertised write confirmation; isolated local Node LTS/uv readiness; durable product/contract/architecture/security/API/sandbox/inference/budget/UX/test/release plans; 276 trace entries across 59 pages; one-human work-package ordering and owner question register.
 
@@ -29,3 +29,13 @@ Verified Phase 0 acceptance checkpoint:
 | Working state at verification | Clean; main matched origin/main |
 
 This receipt is committed after observing that push, so it intentionally names the acceptance commit instead of embedding its own self-referential SHA. The later status-receipt commit only updates README/progress/next-session; its final HEAD is also pushed and read back. To identify the latest handoff checkpoint, use `git log -1` and compare to `git ls-remote origin refs/heads/main`. Every future phase requires the same acceptance/checks/diff-secret review/docs/commit/push/readback sequence before DONE.
+
+## Preparation follow-up for Phase 1
+
+Starting checkout was clean main at `be67be18e3d88d91b0b65bdb7d24aed3d268e127`; fetch and remote SHA agreed. Authenticated GitHub metadata rechecked: exact repository, private=true, pull=true, push=true. Advertised permission remains distinct from actual checkpoint push.
+
+Completed useful follow-up: current official schedule/rules and rule book rechecked; timing question resolved by owner (no early permission; do not ask again); exact deployed Phase 1 dependency/probe/acceptance checklist; public VM catalogue evidence plus authenticated unsubmitted Seoul Ubuntu24.04 control/worker quotes; account/login steps and organizer-question refinements; latest stop-after-Phase-1 policy made durable. See [readiness](phase1-readiness.md). No extra implementation or public release was performed.
+
+Vultr login succeeded. Billing requires payment-method verification; its form shows $0.00 Total Available Credit but no verified redeemed-event balance, expiry or service coverage. No payment details entered/card linked/code redeemed. Compute previews were $24+$48/month after removing default backup add-ons; differing hourly displays remain documented. Provisional whole-project reservation is $145, including $25 inference, within the owner's $150 ceiling. Final fee/coverage/inference/minimum/termination terms and actual spending authorization remain external dependencies; no enforced spend cap exists yet.
+
+Separate Codex critical review (not independent human sign-off): found Q08, an unresolved missing-attribute-versus-filter interpretation; recorded example/recommendation for Phase 2 without changing semantics. Clarified cleanup-success eligibility and cross-pipeline policy invalidation. Checks passed: preparation checker (276 entries/59 pages, links/templates/ignores), JSON parsing and budget arithmetic, staged whitespace, and redacted Gitleaks staged scan (zero findings). Reviewed the 15-file staged inventory: documentation plus public catalogue JSON only; no secrets, account identifiers, raw browser state, local tools or core code. Application, inference and deployed containment gates remain NOT RUN. This is a preparation checkpoint, not Phase 1 completion. Its containing commit is identified by Git HEAD and required remote readback rather than an impossible embedded self-hash.

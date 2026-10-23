@@ -22,5 +22,10 @@ All decisions below dated 2026-10-24; implementation evidence remains NOT RUN. O
 | D16 | Product App/repo/action approval separate from development Git authentication and checkpoint authorization | Preserves product external-action boundary |
 | D17 | P1 minimizer, fancy analytics/motion, multi-model routing/extra profiles deferred; single complete deployed path first | Solo-first plan; no safety/approval cuts |
 | D18 | Page 11 live foundation gate moved to Phase 1; Phase 0 cannot claim health/sandbox success | Resolves PDF sequencing vs user pre-event boundary |
+| D19 | Stop after successful Phase 1 checkpoint for owner review, before Phase 2 | Latest user task supersedes automatic phase continuation for this task |
+| D20 | Owner confirmed the window-open assertion was premature and no early permission exists; wait for Nov 4 00:00 KST/current official opening | Resolved owner clarification; do not ask again; finish preparation only |
+| D21 | Propose Seoul AMD High Performance control 2c/4GiB and worker 4c/8GiB; preserve isolation/headroom | Public API plus authenticated unsubmitted $24/$48 monthly previews; final networking/fees/coverage and deployment entitlement pending; no provisioning |
+| D22 | Reserve $72 compute until account billing is settled; revised provisional total $145 within $150 | Replaces D12's $67.20 compute/$140.20 total; API hourly/monthly fields and billing article require reconciliation; not an enforced cap |
+| D23 | Account/quote inspection only; no resource, inference subscription, payment verification or billable activation now | Latest owner instruction; login succeeded but credit terms remain unverified |
 
 No installed model/provider, product permission, cloud rate or test result is inferred from these planning decisions. Changes must record the old claim that is no longer valid and the acceptance evidence required.

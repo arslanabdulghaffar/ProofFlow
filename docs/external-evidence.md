@@ -2,6 +2,8 @@
 
 Verification date for this Phase 0 review: **2026-10-24, Asia/Seoul**. Public primary documentation was consulted; account-specific access/terms/billing and deployed behavior were not tested. A successful page read is not a successful integration. Recheck temporal facts at kickoff and before release. Source index below retains every PDF reference; context-only references have not been independently revalidated here.
 
+Same-day preparation follow-up: schedule/event/sponsor/general guide rechecked; the rendered [rule book](https://lablab.ai/hackathon-rules) inspected. Owner confirms no early permission. Public [plans API](https://api.vultr.com/v2/plans?per_page=500) retrieved and selected records saved in [evidence](evidence/vultr-plans-2026-10-24.json). Authenticated Vultr Billing and unsubmitted Seoul compute quotes inspected after owner login; no redeemed credit/expiry/coverage evidence shown. The [readiness record](phase1-readiness.md) distinguishes account observations, conflicting displayed rates, defaults and unknowns. [Server billing](https://docs.vultr.com/support/platform/billing/how-am-i-billed-for-my-servers), [stopped-instance billing](https://docs.vultr.com/support/platform/billing/are-stopped-instances-still-billed-on-vultr), [account limits](https://docs.vultr.com/platform/billing/manage-account-limits) and inference provisioning/usage docs rechecked. No cloud resource or billable service created.
+
 | Topic | Primary evidence | Finding / limit |
 | --- | --- | --- |
 | Event and timing | [Event](https://lablab.ai/ai-hackathons/vultr-hackathon), [dashboard](https://lablab.ai/ai-hackathons/vultr-hackathon/live), [sponsor](https://community.vultr.com/e/vultr-agent-rush-hackathon) | Track 1 requirements and Nov 3–8 window confirmed; opening 15:00 UTC vs sponsor session16:00; no early-core permission located |
@@ -23,7 +25,7 @@ Verification date for this Phase 0 review: **2026-10-24, Asia/Seoul**. Public pr
 | Toolchain | [Node releases](https://nodejs.org/en/about/previous-releases), [Node distribution](https://nodejs.org/dist/v24.22.1/), [uv installation](https://docs.astral.sh/uv/getting-started/installation/) | Node 24 LTS and isolated PyPI uv tooling used; local archive/wheel hashes and checks in environment-readiness.md |
 | Prior art | [Datafold](https://docs.datafold.com/data-migration-automation/datafold-migration-agent), [ADP-MA abstract](https://arxiv.org/abs/2602.00307), [AegisFlow abstract](https://arxiv.org/abs/2610.06971), [mini-swe-agent](https://github.com/SWE-agent/mini-swe-agent) | Overlap exists; paper/vendor performance claims not reproduced. Full-paper technical review and baseline revision pin deferred before any detailed comparative claim |
 
-Local authenticated GitHub identity/read/advertised write facts are recorded separately from these public sources. Repository ruleset enumeration returned403; no protection bypass or absence-of-protection claim. No cloud API, inference POST, product PR write, payment, organizer message, public release or submission was performed.
+Local authenticated GitHub identity/read/advertised write facts are recorded separately from these public sources. Repository ruleset enumeration returned403; no protection bypass or absence-of-protection claim. No mutating cloud API, inference POST, product PR write, payment, organizer message, public release or submission was performed. The later public catalogue GET and authorized read-only console inspection are documented above.
 
 ## Complete PDF source index
 

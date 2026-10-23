@@ -2,7 +2,7 @@
 
 ProofFlow is a planned product for repairing supported Python revenue-import pipelines, checking their actual records against human-approved business rules, and using an exact approved version for subsequent batches.
 
-**Current status: Phase 0 preparation complete and checkpoint verified. Core functionality is not implemented.** There is no running application, verified repair, measured benchmark, deployed sandbox, or completed product integration. See [progress](docs/progress.md) for the checkpoint and checks actually performed.
+**Ready for kickoff. Phase 0 is complete; Phase 1 awaits the official opening and account/spending gates.** Core functionality is not implemented. There is no running application, verified repair, measured benchmark, deployed sandbox, or completed product integration. See [Phase 1 readiness](docs/phase1-readiness.md) for the inspected VM quote, setup steps and exact acceptance checklist, and [progress](docs/progress.md) for checks actually performed.
 
 The intended workflow is intake → original execution → independent checks → bounded Vultr-generated repair → fresh sandbox → independent verification → human approval → verified fresh batch. A separate operator approval permits an actual draft GitHub PR. Humans supply inputs and business decisions; they do not manually repair code or advance repair stages.
 

@@ -8,6 +8,8 @@ Each row identifies page, classification, priority, component, required evidence
 
 Coverage: 276 entries across 59 PDF pages. Mechanical page/field coverage is checked by scripts/check_preparation.py; semantic completeness also requires the recorded manual source review.
 
+Phase 1 resumption on 2026-10-24: [readiness record](phase1-readiness.md) maps actual entry blockers and planned deployed receipts to R05, R11, R14, R24, R26, R27, R39 and R46. No implementation status below changes: timing/account gates remain unsatisfied and all runtime/provider checks remain NOT RUN. The public VM catalogue snapshot is evidence of advertised plans only.
+
 | ID | PDF page | Class | Priority | Requirement / disposition scope | Planned component | Acceptance evidence | Dependency | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | R01-01 | 1 | CONTEXT | INFO | Record source version, planning status and no implied tests | [source-review.md](source-review.md) | PDF metadata/hash and review record | None | IMPLEMENTED_DOC |
@@ -25,7 +27,7 @@ Coverage: 276 entries across 59 PDF pages. Mechanical page/field coverage is che
 | R05-07 | 5 | OFFICIAL | P0 | Record opening, kickoff-session discrepancy, UTC/KST deadline and internal buffer | [rules.md](rules.md) | Current primary URLs/date in rules | None | IMPLEMENTED_DOC |
 | R05-08 | 5 | OFFICIAL | P0 | Use CPU workers; no dependency on event GPU access | [rules.md](rules.md) | Architecture and Phase 1 plan | None | IMPLEMENTED_DOC |
 | R05-09 | 5 | OFFICIAL | P0 | Record four judging dimensions without invented weights; optional onsite and enrollment requirements | [rules.md](rules.md) | Rules evidence; account enrollment still unverified | None | IMPLEMENTED_DOC |
-| R06-01 | 6 | OPEN | P0 | Resolve pre-event permission without treating silence or credit availability as permission | [rules.md](rules.md) | No core before official window or explicit guidance | Owner/organizer/account evidence | BLOCKED_OWNER |
+| R06-01 | 6 | OPEN | P0 | Owner confirms no early permission; wait for official opening without treating credit availability as permission | [rules.md](rules.md) | Timing clarification recorded; recheck at kickoff | Official opening; no repeated owner question | DEFERRED_PHASE1 |
 | R06-02 | 6 | OPEN | P0 | Resolve credit channel/eligibility/expiry/billing/pooling and signup/payment conditions | [rules.md](rules.md) | Redacted account/organizer evidence before charges | Owner/organizer/account evidence | BLOCKED_OWNER |
 | R06-03 | 6 | OPEN | P0 | Confirm actual field/media limits, judging timetable and multiple-entry/track prize policy | [rules.md](rules.md) | Live form and dated organizer answer | Owner/organizer/account evidence | BLOCKED_OWNER |
 | R06-04 | 6 | DESIGN | P0 | Prefer current event-specific evidence; retain conflicting sources; draft questions only | [rules.md](rules.md) | Rules log and unsent question list | None | IMPLEMENTED_DOC |
