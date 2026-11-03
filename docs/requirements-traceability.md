@@ -16,6 +16,8 @@ Worker image follow-up: R14/R26/R27 have build-only pinned pandas/NumPy and mock
 
 Inference client follow-up: R14-05/R24 and R46-03 have partial real PostgreSQL commit ordering and mock HTTP error/timeout/parser evidence. Real Vultr and deployed controls remain NOT RUN; no acceptance status changed.
 
+Supervisor follow-up: R26-06/R27-03/07 and T07/T08/T15 have partial real local systemd evidence for watchdog-after-supervisor-death, stopped writers, bounded capture, startup denial and cleanup/recovery. Nine integration groups use fixed trusted fixtures only; 32 Linux collector/journal tests passed. No runsc/candidate/cloud execution occurred. Authenticated service composition and all deployed acceptance remain deferred; see [supervisor receipt](evidence/phase1-supervisor-2026-11-04.json).
+
 Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/claim/crash evidence (14 groups); R27-04 has offline probe output/rate validation only. Deployed dispatcher, per-job budgets, alerting, provider meters and final billing coverage remain unproven. No full requirement status changes. See [budget receipt](evidence/phase1-budget-postgres-2026-11-04.json).
 
 | ID | PDF page | Class | Priority | Requirement / disposition scope | Planned component | Acceptance evidence | Dependency | Status |

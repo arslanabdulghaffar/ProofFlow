@@ -1,0 +1,135 @@
+{
+  "recorded_at_utc": "2026-11-03T18:53:20.359630+00:00",
+  "base_commit": "884bc82b18fec1bc820ea564827dcb6b3f0fc346",
+  "phase": "1",
+  "status": "LOCAL_COMPONENT_PASS_DEPLOYED_NOT_RUN",
+  "scope": "Trusted local systemd fixtures and inert filesystem/journal tests only. No candidate, worker-image, runsc or pandas execution.",
+  "files_sha256": {
+    "tests/security/supervisor_linux_check.py": "b003839e472dc9346dace71fa7fedd1d365cb169e9c913bd2c61a17c066e5591",
+    "tests/security/test_supervisor_journal.py": "44076273e2f29520fb5f812c2b40adcc58b45007d03935d8dfd46badcb27a9d6",
+    "tests/unit/test_worker_protocol.py": "510a6f020d6c13ee39c959b247d559a44241313717c90726cbce9f1b27b76539",
+    "worker/__init__.py": "0930f74db3b1c2bf464f225b6349c1f2a35c411e2504fb4a850b5f464bb6b9dc",
+    "worker/collector.py": "0e396d6f4c1e63b8b34f6c090445ecbe0cd6c056fcd4a2b27c1390c285023e38",
+    "worker/host.py": "e14e8a998cfcadd65e242ab783591c52fdc3b96ca8a2d3b02fe29a4677fd15fe",
+    "worker/journal.py": "374d2bc645748bea96416644564cfa1e0909b2108c9c8a508175ceee43a6a483",
+    "worker/launcher.py": "f7bbe39731b914f56aa33fe083a6450c073df9f74db7cfeb9720872139d1b6dc",
+    "worker/log_capture.py": "91f7ee7ea5725b2a2c92643c54b075d596f847f931d678be02cd6d68b7ab170e",
+    "worker/protocol.py": "3aced5c93985619ab53c68364f23b2fc5d7498ccbd16793b9b95b27df64a2d84",
+    "worker/runtime.py": "413cc52b57f76a988994a8627f86e05a26fa7bd929e5f20409dc7ddef167f445",
+    "worker/staging.py": "c573dfa6db96e89c917af96ffd953c6111f9ab5c31d86b5c39f6abd28bac7123",
+    "worker/start_gate.py": "9ea60b791822935da6b25d7ed79a91c80844ccb451bc3f64bb55445581e95e3b",
+    "worker/supervisor.py": "b44ecb2caf36b2be4b08d62b12909b56e9cead4cca07c9018478075d56df442b"
+  },
+  "environment": {
+    "os": "WSL Ubuntu 24.04",
+    "kernel": "6.18.54.1-microsoft-standard-WSL2",
+    "systemd": "255 (255.4-1ubuntu8.17)",
+    "python_linux": "3.12.3",
+    "python_windows": "3.12.10",
+    "cgroup_version": 2,
+    "integration_fixture_privilege": "local root; fixed generated resources only"
+  },
+  "checks": {
+    "pytest": {
+      "passed": 124,
+      "skipped": 32,
+      "skip_reason": "Linux-only ownership/descriptor tests separately executed under WSL",
+      "command": "uv run --locked pytest -q"
+    },
+    "linux_collector_journal": {
+      "passed": 32,
+      "command": "python3 -m unittest discover -s tests/security -q"
+    },
+    "ruff": {
+      "status": "PASS",
+      "command": "uv run --locked ruff check api worker orchestrator tests scripts/check_control_image.py scripts/check_budget_postgres.py"
+    },
+    "systemd_integration": {
+      "command": "python3 tests/security/supervisor_linux_check.py",
+      "scope": "trusted_local_systemd_fixtures_no_candidates_no_runsc",
+      "checks": [
+        "real_service_capture_cleanup_exact_replay_no_reexecution",
+        "wrong_watchdog_readback_prevents_fixture_start_and_cleans",
+        "late_start_after_staging_removal_denied_by_independent_gate",
+        "real_simultaneous_stdout_stderr_flood_bounded_and_drained",
+        "resident_capture_expiry_and_fail_closed_maintenance_recovery",
+        "extra_output_rejected_and_all_mounts_cleaned",
+        "durable_cancel_kills_detached_descendant_before_collection",
+        "cleanup_failure_quarantines_then_recovery_reclaims_owned_resources",
+        "independent_20s_systemd_watchdog_after_supervisor_SIGKILL_and_restart_cleanup"
+      ],
+      "cleanup": "owned_units_mounts_processes_and_root_absent"
+    }
+  },
+  "checked_unit_settings": {
+    "RuntimeMaxSec": 20,
+    "TimeoutStartSec": 20,
+    "TimeoutStopSec": 1,
+    "KillMode": "control-group",
+    "KillSignal": "SIGKILL",
+    "SendSIGKILL": true,
+    "Restart": "no",
+    "Delegate": false,
+    "CPUQuota": "100%",
+    "MemoryMax": 805306368,
+    "MemorySwapMax": 0,
+    "TasksMax": 128,
+    "NoNewPrivileges": true,
+    "PrivateNetwork": true
+  },
+  "limits": {
+    "concurrent_executions": 2,
+    "retained_result_slots_including_inflight": 20,
+    "output_tmpfs_bytes": 67108864,
+    "scratch_tmpfs_bytes": 67043328,
+    "guest_dev_planned_bytes": 65536,
+    "inodes_per_host_tmpfs": 1024,
+    "collected_output_bytes": 10485760,
+    "collected_output_lines": 20000,
+    "combined_retained_log_bytes": 102400,
+    "fixture_log_bytes_observed_at_least": 1048576,
+    "copy_retention_seconds": 300,
+    "retention_note": "Resident one-second maintenance loop tested with aged trusted fixture directory and injected fault; deployment service restart not yet implemented"
+  },
+  "critical_review": {
+    "reviewer": "Codex separate critical pass; not independent human approval",
+    "fixed": [
+      "Delayed systemd start after supervisor cleanup",
+      "In-flight retention slot race",
+      "Exact replay denial at full retention",
+      "Cancellation racing final receipt commit"
+    ],
+    "reviewed": [
+      "Fixed UUID paths and unit ownership",
+      "Immutable request/runtime/source identity",
+      "Durable journal before staging",
+      "Independent watchdog and kernel cgroup quiescence",
+      "Bounded stream draining and collector invocation",
+      "Normal unmount and exact owned cleanup",
+      "Quarantine and crash reconciliation"
+    ],
+    "new_packages": [],
+    "host_privilege": "Dedicated-worker root for fixed systemd, mount and pinned runtime administration; no new candidate privilege"
+  },
+  "not_run": [
+    "Actual runsc/systrap and guest Python/pandas",
+    "Designated Vultr worker execution",
+    "Guest fork/thread/CPU/memory/storage/inode enforcement",
+    "Guest IPv4/IPv6/DNS/metadata/control/private/external network denial",
+    "Real Vultr inference",
+    "Deployed writer termination/capture/cleanup"
+  ],
+  "remaining_composition": [
+    "Authenticated mTLS service and durable transfer",
+    "Trusted immutable image extraction/import with tree provenance",
+    "Immutable supervisor installation and deployed service restart"
+  ],
+  "cloud_actions_this_work": 0,
+  "personal_spending_authorized": false,
+  "human_independent_review": "NOT_AVAILABLE",
+  "primary_references": [
+    "https://www.freedesktop.org/software/systemd/man/255/systemd-run.html",
+    "https://docs.kernel.org/admin-guide/cgroup-v2.html",
+    "https://raw.githubusercontent.com/google/gvisor/master/runsc/config/flags.go"
+  ]
+}
