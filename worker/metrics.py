@@ -11,7 +11,9 @@ def counters(text: str, required: set[str]) -> dict[str, int]:
     result = {}
     for line in text.splitlines():
         parts = line.split()
-        if (len(parts) != 2 or not re.fullmatch(r"[a-z_]+", parts[0])
+        # Linux 6.8 exposes the namespaced core_sched.force_idle_usec counter.
+        # Preserve it without weakening numeric, duplicate or required-key checks.
+        if (len(parts) != 2 or not re.fullmatch(r"[a-z_]+(?:\.[a-z_]+)*", parts[0])
                 or not re.fullmatch(r"[0-9]{1,20}", parts[1]) or parts[0] in result
                 or int(parts[1]) > 2**64 - 1):
             raise SupervisorError("CGROUP_METRICS_INVALID")

@@ -5,6 +5,7 @@ These bytes remain untrusted: escape them at display time, never execute them or
 interpret PASS/status text as authority. No stream is written to a host log file.
 """
 
+import base64
 from dataclasses import dataclass
 
 MAX_LOG_BYTES = 100 * 1024
@@ -16,6 +17,23 @@ class CapturedStream:
     content: bytes
     received_bytes: int
     truncated: bool
+
+
+def failure_preview(streams: tuple[CapturedStream, ...]) -> list[dict]:
+    """At most 4 KiB of inert failure diagnostics inside the bounded receipt.
+
+    A failed output collection is never promoted to an artifact/verification
+    result. Full successful captures retain their existing shared 100 KiB cap.
+    """
+    remaining = 4096
+    result = []
+    for stream in sorted(streams, key=lambda item: item.name != "stderr"):
+        prefix = stream.content[:remaining]
+        remaining -= len(prefix)
+        result.append({"stream": stream.name, "base64": base64.b64encode(prefix).decode(),
+                       "retained": len(prefix), "received": stream.received_bytes,
+                       "truncated": stream.received_bytes > len(prefix)})
+    return result
 
 
 class BoundedLogCapture:

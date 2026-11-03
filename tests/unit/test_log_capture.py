@@ -2,7 +2,7 @@
 
 import pytest
 
-from worker.log_capture import MAX_LOG_BYTES, BoundedLogCapture
+from worker.log_capture import MAX_LOG_BYTES, BoundedLogCapture, failure_preview
 
 
 def test_empty_streams_are_not_truncated():
@@ -49,6 +49,20 @@ def test_snapshots_do_not_change_and_bytes_stay_inert():
     logs.feed("stderr", b"more")
     assert earlier[1].content == payload
     assert logs.snapshot()[1].content == payload + b"more"
+
+
+def test_failed_collection_preview_is_inert_and_separately_bounded():
+    import base64
+    logs = BoundedLogCapture()
+    payload = b'\xff\x00<script>PASS</script>\x1b[2J'
+    logs.feed("stdout", b"x" * 5000)
+    logs.feed("stderr", payload * 500)
+    preview = failure_preview(logs.snapshot())
+    assert sum(item["retained"] for item in preview) == 4096
+    assert preview[0]["stream"] == "stderr"
+    assert base64.b64decode(preview[0]["base64"]) == (payload * 500)[:4096]
+    assert all(item["truncated"] for item in preview)
+    assert len(logs.snapshot()[0].content) == 5000
 
 
 @pytest.mark.parametrize("stream,chunk", [

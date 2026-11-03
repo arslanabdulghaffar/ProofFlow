@@ -49,6 +49,7 @@ def test_oci_fixed_mounts_capabilities_and_scratch_sharing():
     mounts = {mount["destination"]: mount for mount in config["mounts"]}
     assert "ro" in mounts["/input"]["options"]
     assert mounts["/scratch"]["source"] == mounts["/dev/shm"]["source"]  # noqa: S108 - guest mount
+    assert mounts["/scratch"]["source"] == mounts["/tmp"]["source"]  # noqa: S108
     assert "path" not in config["linux"]["namespaces"][0]
     assert "--rollups" not in config["process"]["args"]
     assert oci_config(policy, replace(item, include_rollups=True), Path("/trusted/execution"))[

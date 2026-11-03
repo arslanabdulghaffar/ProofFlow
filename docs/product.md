@@ -1,5 +1,7 @@
 # Product and UX specification
 
+Current deployment status is in [readiness](phase1-readiness.md) and the [actual worker receipt](evidence/phase1-deployed-2026-11-04.json). Earlier local-only descriptions below are historical; Phase1 acceptance remains incomplete.
+
 Phase 1 has local health, collection, budget-backed inference, a built unexecuted worker image, supervisor, authenticated private worker RPC and image import; no deployed path, operational UI, public execution endpoint or repair workflow exists. The owner is the only confirmed human contributor, with Codex assisting. The target user is a data/operations engineer responsible for small merchant revenue imports. The value hypothesis is repairing existing code while preserving declared behavior and exposing reliable evidence; no customer validation or ROI has been measured.
 
 P0 outcome: compatible unseen input runs end to end without manual code fixes, edited outputs, database status changes or human stage advancement. A real original execution exposes a crash or silent data error; Vultr proposes actual changed code; each candidate executes in a fresh sandbox; an independent deterministic verifier accepts or rejects records; bounded retry or honest clarification/failure follows. An approved exact version automatically processes and re-verifies a fresh batch. A separately approved operator action creates a real draft PR with readback. Artifact export is a durable outcome but not a substitute claim for completed GitHub integration.

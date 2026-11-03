@@ -5,6 +5,7 @@ roots/units, normal tmpfs mounts, fixed tiny files, bounded logs and sleeping
 trusted processes. Tests real watchdog/cgroup/collector/cleanup composition.
 """
 
+import base64
 import json
 import os
 import shutil
@@ -55,6 +56,9 @@ def request():
 
 def service(mode, output):
     path = Path(output)
+    if mode == "crash":
+        os.write(2, b"TRUSTED_CRASH_FIXTURE PASS_IS_INERT\n" * 512)
+        raise SystemExit(2)
     (path / "ledger.jsonl").write_bytes(b'{"fixture":true}\n')
     (path / "unresolved.jsonl").write_bytes(b"")
     if mode == "bad-output":
@@ -133,6 +137,20 @@ def main():
         supervisor.acknowledge(item.execution_id, item.manifest_hash())
         assert not (root / "results" / item.execution_id.hex).exists()
         checks.append("real_service_capture_cleanup_exact_replay_no_reexecution")
+
+        runtime.mode = "crash"
+        item = request()
+        owned.append(item.execution_id)
+        receipt = supervisor.execute(item)
+        assert not receipt["collected"] and receipt["cleanup"] == "confirmed", receipt
+        assert receipt["outcome"] == "output_rejected" and receipt["error"] == "MISSING_OUTPUT_FILE"
+        assert receipt["verification"] == "NOT_PERFORMED"
+        preview = receipt["failure_log_preview"]
+        assert sum(v["retained"] for v in preview) <= 4096
+        assert base64.b64decode(preview[0]["base64"]).startswith(b"TRUSTED_CRASH_FIXTURE")
+        assert preview[0]["truncated"]
+        assert not supervisor.staging.path(item.execution_id).exists()
+        checks.append("failed_collection_retains_bounded_inert_diagnostics_without_acceptance")
 
         runtime.mode = "cpu"
         item = request()

@@ -1,0 +1,3370 @@
+{
+  "checks": {
+    "linux_unittest": {
+      "passed": 45
+    },
+    "trusted_local_supervisor_groups": 11,
+    "windows_pytest": {
+      "linux_only_skipped": 45,
+      "passed": 224
+    }
+  },
+  "limitations": [
+    "Default fork flood hits 128 host tasks before 64 guest processes. Original capacity test FAILED; 32-task lowered-fixture enforcement passed, no policy raised. Review remains open.",
+    "Supervisor-death and controller-disconnect deployed tests NOT RUN.",
+    "Deployed database, HTTPS readiness, real inference NOT RUN.",
+    "No independent human review.",
+    "Image advisory counts retained; no full runtime/host vulnerability clearance."
+  ],
+  "network_positive": {
+    "external_recheck_at": "2026-11-03T22:06:16.839599+00:00",
+    "observed": {
+      "controlled_external": "connected",
+      "dns": "resolved",
+      "external_ipv4": "connected",
+      "external_ipv6": "connected",
+      "metadata": "connected",
+      "private_control": "connected",
+      "private_worker": "connected"
+    },
+    "time": "2026-11-03T22:04:15.714248+00:00"
+  },
+  "new_worker_image": {
+    "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+    "image_started_on_build_host": false,
+    "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+    "trivy": {
+      "CRITICAL": 0,
+      "HIGH": 45,
+      "LOW": 61,
+      "MEDIUM": 72,
+      "UNKNOWN": 7,
+      "python": 0
+    }
+  },
+  "phase": "Phase 1 IN PROGRESS",
+  "records": [
+    {
+      "observed": null,
+      "probe": "benign",
+      "raw_receipt_sha256": "9366dad350a06bc10f24351d54faf028a1af6aabdfcf0e09a165fa47952d1c57",
+      "recorded_at": "2026-11-03T21:40:34.192650+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "CGROUP_METRICS_INVALID",
+        "files": null,
+        "logs": null,
+        "outcome": "infrastructure_failure",
+        "resource_observation": null,
+        "runtime_client_exit_code": null,
+        "unit_result": null,
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a01664ae2d568a3300bcafff09c225e7c3cd2af34d7fbf5eb0ccaccfe95acb56"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "benign",
+      "raw_receipt_sha256": "40282d07a6bdc0fe77938c619e058d8c0f5d98b8d6950468c942f560dceb630b",
+      "recorded_at": "2026-11-03T21:42:04.150986+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "MISSING_OUTPUT_FILE",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 5,
+              "nr_throttled": 3,
+              "system_usec": 273437,
+              "throttled_usec": 53264,
+              "usage_usec": 424392,
+              "user_usec": 150955
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 25370624
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 34,
+          "samples": 6,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 2,
+        "unit_result": "exit-code",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "c5762011d7bec45e058063562ffeaf0778f905f7d5b74a19f1c05c89d93c3cc8"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "benign",
+      "raw_receipt_sha256": "ce14e4db74ccf88a8a564aac49930b3027e36df9860c971227570bbc22cefb43",
+      "recorded_at": "2026-11-03T21:43:50.616109+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "MISSING_OUTPUT_FILE",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 2,
+              "nr_throttled": 1,
+              "system_usec": 118533,
+              "throttled_usec": 48021,
+              "usage_usec": 247244,
+              "user_usec": 128710
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 16666624
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 37,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 2,
+        "unit_result": "exit-code",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "445a267d1146e246c08dacd3e4c36063fd759e25ddbd505ceeeb43201c59d4fb"
+      }
+    },
+    {
+      "observed": {
+        "cap_eff": "0000000000000000",
+        "gid": 10001,
+        "no_new_privs": "1",
+        "nofile": [
+          64,
+          64
+        ],
+        "nproc": [
+          64,
+          64
+        ],
+        "numpy": "2.5.4",
+        "pandas": "3.1.0",
+        "sums": {
+          "A": 150,
+          "B": 350
+        },
+        "uid": 10001
+      },
+      "probe": "benign",
+      "raw_receipt_sha256": "daee1fe0c5a86ee6c95cf5935b1f904845c95d9988713a0512ebc1425f1fffb9",
+      "recorded_at": "2026-11-03T21:45:36.565709+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 187,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "a95a9d2e8d830ebb0a82932a6e54253ce3122589b00822ab752552597e115121"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 25,
+              "nr_throttled": 23,
+              "system_usec": 1235923,
+              "throttled_usec": 356380,
+              "usage_usec": 2558169,
+              "user_usec": 1322246
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 133173248
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 38,
+          "samples": 27,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a76bde5b1dc5c5df4c2602d668cb3d9882770812f2dfb6ad30a02367c2b68d20"
+      }
+    },
+    {
+      "observed": {
+        "environment_keys": [
+          "BLIS_NUM_THREADS",
+          "HOME",
+          "LANG",
+          "LC_ALL",
+          "MKL_NUM_THREADS",
+          "NUMEXPR_NUM_THREADS",
+          "OMP_NUM_THREADS",
+          "OPENBLAS_NUM_THREADS",
+          "PATH",
+          "TMPDIR",
+          "TZ",
+          "VECLIB_MAXIMUM_THREADS"
+        ],
+        "fds": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "host_credential": 2,
+        "host_marker": 2,
+        "input_write": 13,
+        "root_write": 13
+      },
+      "probe": "filesystem",
+      "raw_receipt_sha256": "5fe40f26327016690f5a8f7ff73dd29496787cc3ddab0fccfb294859dbe246e7",
+      "recorded_at": "2026-11-03T21:47:42.229164+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 310,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "556837846b8dbd3dfb779bcc74502a9699482e274223d59532b275ec36f6fe1d"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 3,
+              "nr_throttled": 2,
+              "system_usec": 118698,
+              "throttled_usec": 47970,
+              "usage_usec": 248926,
+              "user_usec": 130228
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 17993728
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 37,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a76bde5b1dc5c5df4c2602d668cb3d9882770812f2dfb6ad30a02367c2b68d20"
+      }
+    },
+    {
+      "observed": {
+        "children_started": 63,
+        "errno": 11,
+        "hard_limit_raise_succeeded": false
+      },
+      "probe": "forks",
+      "raw_receipt_sha256": "44cfb9073c15bf3c75c2614e4a86f2f88c89155e272fe7cfe34b93fe52cec179",
+      "recorded_at": "2026-11-03T21:47:59.947409+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 75,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "05cca79748340ad090d3ccded64ce61831b002cf556166eaaa1567496a0bfe48"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 167,
+              "nr_throttled": 132,
+              "system_usec": 11683092,
+              "throttled_usec": 23031797,
+              "usage_usec": 14824383,
+              "user_usec": 3141291
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 230842368
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 112,
+          "samples": 149,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a76bde5b1dc5c5df4c2602d668cb3d9882770812f2dfb6ad30a02367c2b68d20"
+      }
+    },
+    {
+      "observed": {
+        "error": "RuntimeError",
+        "hard_limit_raise_succeeded": false,
+        "threads_started": 63
+      },
+      "probe": "threads",
+      "raw_receipt_sha256": "a4e11d0ae4e67a746ebbfbf9586eb09840fd848bf5e3d2ca42faa4a4a5e3e3d8",
+      "recorded_at": "2026-11-03T21:48:01.662922+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 86,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "c96c93e81fe2695daf9e4ab58cbba504eb1829db2457894c0a14592a6db64134"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 5,
+              "nr_throttled": 3,
+              "system_usec": 231998,
+              "throttled_usec": 320998,
+              "usage_usec": 503600,
+              "user_usec": 271602
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 21983232
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 41,
+          "samples": 6,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a76bde5b1dc5c5df4c2602d668cb3d9882770812f2dfb6ad30a02367c2b68d20"
+      }
+    },
+    {
+      "observed": {
+        "elapsed_seconds": 3.000004414,
+        "value": 8025964
+      },
+      "probe": "cpu",
+      "raw_receipt_sha256": "6d0c66c85c11099015c9fa6dad47d894b7eb7d5d5fe644fb51b5526ec5041e1e",
+      "recorded_at": "2026-11-03T21:48:06.198415+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 51,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "55a6d1d9c70a40ca6cfa12f0cfb0cc7ac92471bc5587cd4c919882d91284babd"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 32,
+              "nr_throttled": 31,
+              "system_usec": 386580,
+              "throttled_usec": 924090,
+              "usage_usec": 3187541,
+              "user_usec": 2800961
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 19214336
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 37,
+          "samples": 33,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a76bde5b1dc5c5df4c2602d668cb3d9882770812f2dfb6ad30a02367c2b68d20"
+      }
+    },
+    {
+      "observed": {
+        "/dev/shm": {
+          "bytes_written": 67043328,
+          "errno": 28
+        },
+        "/output": {
+          "bytes_written": 67108864,
+          "errno": 28
+        },
+        "/scratch": {
+          "bytes_written": 100663296,
+          "errno": null
+        },
+        "shm_is_same_backing": false
+      },
+      "probe": "storage",
+      "raw_receipt_sha256": "a2ed3aff346a8ad06534cc0559efcd5d8df9a07048f16699911d5148bfb9c261",
+      "recorded_at": "2026-11-03T21:48:07.999912+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 195,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "73ffe25da68c5f45c174fa3c0fe250f16fe2d13245bc0b8522120c13c294ec0f"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 6,
+              "nr_throttled": 4,
+              "system_usec": 380270,
+              "throttled_usec": 102367,
+              "usage_usec": 560712,
+              "user_usec": 180441
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 122232832
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 37,
+          "samples": 7,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a76bde5b1dc5c5df4c2602d668cb3d9882770812f2dfb6ad30a02367c2b68d20"
+      }
+    },
+    {
+      "observed": {
+        "mountinfo_sha256": "4b41e6e80892db1bc352ab948766463c9a9f436be56ca8faeb6cccf9d1a42c39",
+        "stats": {
+          "/": {
+            "blocks": 656,
+            "blocksize": 131072,
+            "device": 19,
+            "files": 10080,
+            "inode": 10080
+          },
+          "/dev/shm": {
+            "blocks": 16368,
+            "blocksize": 4096,
+            "device": 34,
+            "files": 1024,
+            "inode": 1
+          },
+          "/output": {
+            "blocks": 16384,
+            "blocksize": 4096,
+            "device": 27,
+            "files": 1024,
+            "inode": 1
+          },
+          "/scratch": {
+            "blocks": 1015690,
+            "blocksize": 4096,
+            "device": 35,
+            "files": 1015690,
+            "inode": 1
+          }
+        }
+      },
+      "probe": "mounts",
+      "raw_receipt_sha256": "94ae9474f1ea3f03f3f4de86821dfc1d3de7a58f4d76d23a2429b1dcba9df8ef",
+      "recorded_at": "2026-11-03T21:51:39.847514+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 1619,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "4d052d4ec765b7872faa4b8a6a892114d43ad2dd0f4c7f2fc37325bfb8b7b368"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 3,
+              "nr_throttled": 2,
+              "system_usec": 119375,
+              "throttled_usec": 68731,
+              "usage_usec": 255188,
+              "user_usec": 135813
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 17141760
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 37,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a76bde5b1dc5c5df4c2602d668cb3d9882770812f2dfb6ad30a02367c2b68d20"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "storage",
+      "raw_receipt_sha256": "84a559696e5c05c97dd576da20e33fdf9ed4ed22b36a4793282e5160ff4500b6",
+      "recorded_at": "2026-11-03T21:52:42.069376+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "MISSING_OUTPUT_FILE",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 8,
+              "nr_throttled": 6,
+              "system_usec": 497599,
+              "throttled_usec": 253947,
+              "usage_usec": 744780,
+              "user_usec": 247180
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 121802752
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 9,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 1,
+        "unit_result": "exit-code",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "d9bb4743dd3724aca188c7d92d5a9c83319fa2ec1e0b12dabda3a88b7f2bc3c3"
+      }
+    },
+    {
+      "observed": {
+        "mountinfo_sha256": "133122f61008c00a5f9a9afbb96d64c3a9cc9c48cf9dc181e04a7519fde409c7",
+        "stats": {
+          "/": {
+            "blocks": 656,
+            "blocksize": 131072,
+            "device": 19,
+            "files": 10080,
+            "inode": 10080
+          },
+          "/dev/shm": {
+            "blocks": 16368,
+            "blocksize": 4096,
+            "device": 36,
+            "files": 1024,
+            "inode": 1
+          },
+          "/output": {
+            "blocks": 16384,
+            "blocksize": 4096,
+            "device": 27,
+            "files": 1024,
+            "inode": 1
+          },
+          "/scratch": {
+            "blocks": 1015690,
+            "blocksize": 4096,
+            "device": 37,
+            "files": 1015690,
+            "inode": 1
+          }
+        }
+      },
+      "probe": "mounts",
+      "raw_receipt_sha256": "0665b29b7c775394f157dfc33ea65b9badf4fa5f193d5e969c28d1e21aba1129",
+      "recorded_at": "2026-11-03T21:52:53.697688+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 1808,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "d4a972be94945d143c6a132f4a1be07c16127cab6e08bb8546c7c97b4614e0cd"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 3,
+              "nr_throttled": 1,
+              "system_usec": 114835,
+              "throttled_usec": 41580,
+              "usage_usec": 246519,
+              "user_usec": 131683
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 17108992
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "platform": "systrap",
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "d9bb4743dd3724aca188c7d92d5a9c83319fa2ec1e0b12dabda3a88b7f2bc3c3"
+      }
+    },
+    {
+      "observed": {
+        "/dev/shm": {
+          "bytes_written": 67043328,
+          "errno": 28
+        },
+        "/output": {
+          "bytes_written": 67108864,
+          "errno": 28
+        },
+        "/scratch": {
+          "bytes_written": 67043328,
+          "errno": 28
+        },
+        "/tmp": {
+          "bytes_written": 67043328,
+          "errno": 28
+        },
+        "aliases_share_bytes": true,
+        "combined_aliases": {
+          "bytes_written": 67039232,
+          "errno": 28
+        }
+      },
+      "probe": "storage",
+      "raw_receipt_sha256": "ee04e4ffb71faf83305946e41641577106f10ab800fdd510cda48b96e7e6374c",
+      "recorded_at": "2026-11-03T21:56:04.174702+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 303,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "aea9d0465ae9444f870bff59e4e88f8281eae6e7085ba29c2077007bf1fa9350"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 10,
+              "nr_throttled": 6,
+              "system_usec": 629967,
+              "throttled_usec": 84122,
+              "usage_usec": 923212,
+              "user_usec": 293244
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 98480128
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 10,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": {
+        "/output": {
+          "errno": 28,
+          "files_created": 1023
+        },
+        "/scratch": {
+          "errno": 28,
+          "files_created": 1023
+        }
+      },
+      "probe": "inodes",
+      "raw_receipt_sha256": "4566c40ec29d794547db26030e926c76097c39577a1f0731693c4c4f7ef3f5de",
+      "recorded_at": "2026-11-03T21:56:06.526062+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 100,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "2d617b698167fd62710ac72b1cd586f0117a0e057e5f692face53260d4db11e0"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 11,
+              "nr_throttled": 9,
+              "system_usec": 367400,
+              "throttled_usec": 582421,
+              "usage_usec": 1015338,
+              "user_usec": 647937
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 24072192
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 12,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": {
+        "environment_keys": [
+          "BLIS_NUM_THREADS",
+          "HOME",
+          "LANG",
+          "LC_ALL",
+          "MKL_NUM_THREADS",
+          "NUMEXPR_NUM_THREADS",
+          "OMP_NUM_THREADS",
+          "OPENBLAS_NUM_THREADS",
+          "PATH",
+          "TMPDIR",
+          "TZ",
+          "VECLIB_MAXIMUM_THREADS"
+        ],
+        "fds": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "host_credential": 2,
+        "host_marker": 2,
+        "input_write": 13,
+        "root_write": 30
+      },
+      "probe": "filesystem",
+      "raw_receipt_sha256": "91ec1cf4575036da4aea489c93cfd3333276dbf1a9575d730fe86900e7eee7ea",
+      "recorded_at": "2026-11-03T21:56:07.696157+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 310,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "45f875f163f6d43515d8b8b574252e48d53c281aa00ff179258d0f6c3f9e0696"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 3,
+              "nr_throttled": 2,
+              "system_usec": 105251,
+              "throttled_usec": 117669,
+              "usage_usec": 214934,
+              "user_usec": 109683
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 16658432
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": {
+        "wrote_per_stream": 262144
+      },
+      "probe": "logs",
+      "raw_receipt_sha256": "1e065c9bd6b15e5fb4887c3828dd72fee6a71ca1ae94c1ecef52a8d6689de551",
+      "recorded_at": "2026-11-03T21:56:09.322536+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 29,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "4d291aedd1a7c25251741e7466f530a1a154db29e88f3f25ea6da3f576610454"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 262144,
+            "retained": 102400,
+            "sha256": "8b77ec70310a4f694fff9ad0bf5f1e9da39b97ec5ccb3ced6a6261ac4effee4c",
+            "stream": "stdout",
+            "truncated": true
+          },
+          {
+            "received": 262144,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": true
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 4,
+              "nr_throttled": 2,
+              "system_usec": 134314,
+              "throttled_usec": 91363,
+              "usage_usec": 315419,
+              "user_usec": 181104
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 18329600
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 5,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "symlink",
+      "raw_receipt_sha256": "26be589e39ec3b936f4ec07659d23e181afdac5f4e908d91589e5f3a6387bddf",
+      "recorded_at": "2026-11-03T21:56:10.495113+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "UNSAFE_OUTPUT_TYPE_OR_LINK",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 3,
+              "nr_throttled": 2,
+              "system_usec": 105017,
+              "throttled_usec": 48543,
+              "usage_usec": 246654,
+              "user_usec": 141637
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 17010688
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "fifo",
+      "raw_receipt_sha256": "da4bb59713850030cee78aef6acae8b414071a5394da6d056ae261746a21f51c",
+      "recorded_at": "2026-11-03T21:56:11.895898+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "MISSING_OUTPUT_FILE",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 2,
+              "nr_throttled": 1,
+              "system_usec": 115445,
+              "throttled_usec": 61825,
+              "usage_usec": 254558,
+              "user_usec": 139113
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 16781312
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "hardlink",
+      "raw_receipt_sha256": "2f0060cac4af533760d50c1b542a8688ba5973f4602fe21ed9fba91dfc22ba7a",
+      "recorded_at": "2026-11-03T21:56:13.033026+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "UNSAFE_OUTPUT_TYPE_OR_LINK",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 2,
+              "nr_throttled": 1,
+              "system_usec": 135415,
+              "throttled_usec": 76429,
+              "usage_usec": 250173,
+              "user_usec": 114757
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 16826368
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 41,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "extra",
+      "raw_receipt_sha256": "fa86b3d8d3ec5ff0aaad34f5dcc0e6e38408627bd6726765abda1d2652d49a2e",
+      "recorded_at": "2026-11-03T21:56:14.449287+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "UNEXPECTED_OUTPUT_ENTRY",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 3,
+              "nr_throttled": 1,
+              "system_usec": 122965,
+              "throttled_usec": 57413,
+              "usage_usec": 264479,
+              "user_usec": 141514
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 17747968
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "output_bytes",
+      "raw_receipt_sha256": "ba3e3908005a278e9ae17ef73c35d060b87dfdf44ca158488d80318911e111f3",
+      "recorded_at": "2026-11-03T21:56:15.533616+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "OUTPUT_BYTES_EXCEEDED",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 2,
+              "nr_throttled": 1,
+              "system_usec": 107615,
+              "throttled_usec": 35104,
+              "usage_usec": 239673,
+              "user_usec": 132057
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 16769024
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "output_lines",
+      "raw_receipt_sha256": "9c4f88b611deef509d23d48807f40f2c6bf4e95839f431ef940ea0563cde8947",
+      "recorded_at": "2026-11-03T21:56:16.630878+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "OUTPUT_LINES_EXCEEDED",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 2,
+              "nr_throttled": 0,
+              "system_usec": 84247,
+              "throttled_usec": 0,
+              "usage_usec": 169534,
+              "user_usec": 85287
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 16093184
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 38,
+          "samples": 3,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "memory",
+      "raw_receipt_sha256": "e6d3a16a605b094f7e6f1b0381def0d2b38c4a693f836bd3e938b74ae8bbeb8b",
+      "recorded_at": "2026-11-03T21:56:37.579373+00:00",
+      "result": {
+        "cleanup": "uncertain",
+        "collected": false,
+        "error": "EXECUTION_WRITERS_REMAIN",
+        "files": null,
+        "logs": null,
+        "outcome": "infrastructure_failure",
+        "resource_observation": null,
+        "runtime_client_exit_code": null,
+        "unit_result": null,
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "a3633f2ef4e697ee5e44f7dd029706bc4d69e1bd69469f20aecdaee672db1b17"
+      }
+    },
+    {
+      "observed": {
+        "probe": "memory"
+      },
+      "probe": "memory",
+      "raw_receipt_sha256": "ea83187d605170e71db864531f2d143dda2cf9e1aa115c46d5c66e086d3e309b",
+      "recorded_at": "2026-11-03T21:58:29.549501+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 20,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "f397706d54c36f4da6368202ac8023ddff8b28a3ba592b10eb7a6c5c3ef10bfd"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "timeout",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 199,
+              "nr_throttled": 109,
+              "system_usec": 11619725,
+              "throttled_usec": 14443501,
+              "usage_usec": 14331641,
+              "user_usec": 2711915
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 493158400
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 188,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 255,
+        "unit_result": "signal",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "probe": "memory"
+      },
+      "probe": "memory",
+      "raw_receipt_sha256": "90b0892ab7b452057d258b44b6377ebe2cdba5c3382a990f7872b16da13ef3ad",
+      "recorded_at": "2026-11-03T21:59:27.196506+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 20,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "f397706d54c36f4da6368202ac8023ddff8b28a3ba592b10eb7a6c5c3ef10bfd"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "timeout",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 199,
+              "nr_throttled": 105,
+              "system_usec": 12486602,
+              "throttled_usec": 8029250,
+              "usage_usec": 15762780,
+              "user_usec": 3276178
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 684285952
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 195,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 255,
+        "unit_result": "signal",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "pandas": "3.1.0",
+        "probe": "memory"
+      },
+      "probe": "memory",
+      "raw_receipt_sha256": "f687424053e964409bdcac5684b8c5dd76be7378bc854660f6728de07176d409",
+      "recorded_at": "2026-11-03T22:00:15.196291+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 39,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "e6cf1db754ae0cd8ea9aef77c0d074ca06c8162719baeaa27606d25ce60b5dce"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 159,
+              "nr_throttled": 95,
+              "system_usec": 8378730,
+              "throttled_usec": 7680995,
+              "usage_usec": 12850881,
+              "user_usec": 4472151
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 274,
+              "oom": 1,
+              "oom_group_kill": 1,
+              "oom_kill": 4
+            },
+            "memory_peak_bytes": 805310464
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 152,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 1,
+        "unit_result": "oom-kill",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "probe": "timeout"
+      },
+      "probe": "timeout",
+      "raw_receipt_sha256": "34aca749f0bab04da3d2d36d51a3ee674c289ec81164493399916dccc4159e74",
+      "recorded_at": "2026-11-03T22:00:51.665063+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 21,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "58ac1bf6f2f8573bfa85c5170dad6d48bedc7d58d941078edf0ccd1310b34a92"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 20,
+            "retained": 20,
+            "sha256": "8eea1706ee26444651c9554d24aee5e9a3ab78f6f3a04d6affa85781e772caa4",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "timeout",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 41,
+              "nr_throttled": 2,
+              "system_usec": 159205,
+              "throttled_usec": 89063,
+              "usage_usec": 325659,
+              "user_usec": 166453
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 18497536
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 195,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 255,
+        "unit_result": "signal",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "probe": "descendants"
+      },
+      "probe": "descendants",
+      "raw_receipt_sha256": "1d82420d133b1246114a4436ebcaa73690b3c6996c391bf099012fdef1ef3170",
+      "recorded_at": "2026-11-03T22:01:12.960216+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 25,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "1497fc75b62eb5c002e5160cbb20e769ea8b43b8385099890debe458f0470eaf"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 23,
+            "retained": 23,
+            "sha256": "c59c3572893a9aa02e5c67f60c4c0109da05d30384c20dd22b2e4f73ef919fc7",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "timeout",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 47,
+              "nr_throttled": 3,
+              "system_usec": 193025,
+              "throttled_usec": 102806,
+              "usage_usec": 384875,
+              "user_usec": 191850
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 25640960
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 194,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 255,
+        "unit_result": "signal",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "cap_eff": "0000000000000000",
+        "gid": 10001,
+        "no_new_privs": "1",
+        "nofile": [
+          64,
+          64
+        ],
+        "nproc": [
+          64,
+          64
+        ],
+        "numpy": "2.5.4",
+        "pandas": "3.1.0",
+        "sums": {
+          "A": 150,
+          "B": 350
+        },
+        "uid": 10001
+      },
+      "probe": "benign",
+      "raw_receipt_sha256": "a91d4fc8267a7efd783280aeec07e8591580390aadebafb0774fd797f53a47e3",
+      "recorded_at": "2026-11-03T22:01:16.389780+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 187,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "a95a9d2e8d830ebb0a82932a6e54253ce3122589b00822ab752552597e115121"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 22,
+              "nr_throttled": 20,
+              "system_usec": 1054512,
+              "throttled_usec": 359857,
+              "usage_usec": 2213927,
+              "user_usec": 1159415
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 131080192
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 23,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "forks",
+      "raw_receipt_sha256": "91487869eedd794429d1bbace64704d2cc650ce9c5ece7fb91431c6debeda397",
+      "recorded_at": "2026-11-03T22:01:19.035045+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "MISSING_OUTPUT_FILE",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 16,
+              "nr_throttled": 14,
+              "system_usec": 993062,
+              "throttled_usec": 1296498,
+              "usage_usec": 1489151,
+              "user_usec": 496089
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 273473536
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 128,
+          "samples": 16,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 2,
+        "unit_result": "exit-code",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": null,
+      "probe": "forks",
+      "raw_receipt_sha256": "be49cab3330afd2cc0747e2d0002e5fcd859fe0a05429ce4b1e7ba0a2ceee9fd",
+      "recorded_at": "2026-11-03T22:02:24.443899+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": false,
+        "error": "MISSING_OUTPUT_FILE",
+        "files": null,
+        "logs": null,
+        "outcome": "output_rejected",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 17,
+              "nr_throttled": 2,
+              "system_usec": 784153,
+              "throttled_usec": 118608,
+              "usage_usec": 1274526,
+              "user_usec": 490372
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 277557248
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 126,
+          "samples": 18,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 2,
+        "unit_result": "exit-code",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "children_started": 45,
+        "in_progress": true
+      },
+      "probe": "forks",
+      "raw_receipt_sha256": "cea05b2f645491de3d21ba4921cc4443b919f5d08ebf6d343bee1181ea48e67c",
+      "recorded_at": "2026-11-03T22:03:07.137396+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 46,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "f0ef3740cae5ee8a7151315be71cb6ffd4452ee6b2fb49f18098e4d53cef9a70"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 17,
+              "nr_throttled": 3,
+              "system_usec": 849742,
+              "throttled_usec": 111193,
+              "usage_usec": 1351601,
+              "user_usec": 501859
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 271958016
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 128,
+          "samples": 19,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 2,
+        "unit_result": "exit-code",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "controlled_external": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "dns": {
+          "errno": -3,
+          "type": "gaierror"
+        },
+        "external_ipv4": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "external_ipv6": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "metadata": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "private_control": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "private_worker": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "raw_socket": {
+          "errno": 1,
+          "type": "PermissionError"
+        },
+        "udp": {
+          "errno": 101,
+          "type": "OSError"
+        }
+      },
+      "probe": "network",
+      "raw_receipt_sha256": "b36a7ee77806bd30fbd8c1f4fcf36501575bbaff3213207822eb5edfd68fedf7",
+      "recorded_at": "2026-11-03T22:04:39.271973+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 456,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "15b0a08ede24580ea390e5d2fe5cf602e567489a7cd857d01fefca1f586f895d"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 3,
+              "nr_throttled": 2,
+              "system_usec": 120891,
+              "throttled_usec": 64506,
+              "usage_usec": 283435,
+              "user_usec": 162543
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 17793024
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "children_started": 31,
+        "errno": 11,
+        "hard_limit_raise_succeeded": false
+      },
+      "probe": "fork_limit_lowered",
+      "raw_receipt_sha256": "52156b9525fa9d709a09c50b7cc8652c7f9d647a369aa1bd9a8e396fe23530f5",
+      "recorded_at": "2026-11-03T22:04:45.167281+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 75,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "f152c57b531ec6c92b30a46f4031911c8fbc732588a8d75b6766340326914272"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 13,
+              "nr_throttled": 2,
+              "system_usec": 656757,
+              "throttled_usec": 44378,
+              "usage_usec": 1072611,
+              "user_usec": 415853
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 197726208
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 99,
+          "samples": 14,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "error": "RuntimeError",
+        "hard_limit_raise_succeeded": false,
+        "threads_started": 63
+      },
+      "probe": "threads",
+      "raw_receipt_sha256": "b49c7a7ab782d6965f60b18092536c2e1438bd98aef57bcd8f5683b3e2fff623",
+      "recorded_at": "2026-11-03T22:05:58.139449+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 86,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "c96c93e81fe2695daf9e4ab58cbba504eb1829db2457894c0a14592a6db64134"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 4,
+              "nr_throttled": 3,
+              "system_usec": 201812,
+              "throttled_usec": 145469,
+              "usage_usec": 460369,
+              "user_usec": 258556
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 22302720
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 40,
+          "samples": 6,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "elapsed_seconds": 3.000004702,
+        "value": 5750139
+      },
+      "probe": "cpu",
+      "raw_receipt_sha256": "a0c2c078f4cfb5cdc1c85af2a36fe9351b3d42a1208194e8a54b9ef9369f3941",
+      "recorded_at": "2026-11-03T22:06:02.459613+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 51,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "c6a44fa3b1c2fe79cf9695a72781cbca2bbef96c7d99dc24dc4c4f03a98c82dd"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 33,
+              "nr_throttled": 31,
+              "system_usec": 364138,
+              "throttled_usec": 838747,
+              "usage_usec": 3243148,
+              "user_usec": 2879009
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 18968576
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 33,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    },
+    {
+      "observed": {
+        "controlled_external": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "dns": {
+          "errno": -3,
+          "type": "gaierror"
+        },
+        "external_ipv4": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "external_ipv6": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "metadata": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "private_control": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "private_worker": {
+          "errno": 101,
+          "type": "OSError"
+        },
+        "raw_socket": {
+          "errno": 1,
+          "type": "PermissionError"
+        },
+        "udp": {
+          "errno": 101,
+          "type": "OSError"
+        }
+      },
+      "probe": "network",
+      "raw_receipt_sha256": "36d1a93526b7b964527cdc65da746dd99ff12913eebe6cf9643ad10f69ec8816",
+      "recorded_at": "2026-11-03T22:06:42.390697+00:00",
+      "result": {
+        "cleanup": "confirmed",
+        "collected": true,
+        "error": null,
+        "files": [
+          {
+            "bytes": 456,
+            "lines": 1,
+            "name": "ledger.jsonl",
+            "sha256": "15b0a08ede24580ea390e5d2fe5cf602e567489a7cd857d01fefca1f586f895d"
+          },
+          {
+            "bytes": 0,
+            "lines": 0,
+            "name": "unresolved.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "logs": [
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stdout",
+            "truncated": false
+          },
+          {
+            "received": 0,
+            "retained": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stream": "stderr",
+            "truncated": false
+          }
+        ],
+        "outcome": "exited",
+        "resource_observation": {
+          "final_sample_available": false,
+          "last_observed": {
+            "cpu": {
+              "burst_usec": 0,
+              "core_sched.force_idle_usec": 0,
+              "nr_bursts": 0,
+              "nr_periods": 2,
+              "nr_throttled": 1,
+              "system_usec": 105257,
+              "throttled_usec": 42416,
+              "usage_usec": 235157,
+              "user_usec": 129899
+            },
+            "memory_events": {
+              "high": 0,
+              "low": 0,
+              "max": 0,
+              "oom": 0,
+              "oom_group_kill": 0,
+              "oom_kill": 0
+            },
+            "memory_peak_bytes": 17416192
+          },
+          "limits": {
+            "cpu_cores": 1,
+            "host_tasks": 128,
+            "memory_bytes": 805306368,
+            "swap_bytes": 0
+          },
+          "sampled_max_host_tasks": 39,
+          "samples": 4,
+          "scope": "runtime_and_descendants_not_guest_only",
+          "source": "host_cgroup_v2"
+        },
+        "runtime_client_exit_code": 0,
+        "unit_result": "success",
+        "verification": "NOT_PERFORMED"
+      },
+      "runtime": {
+        "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+        "platform": "systrap",
+        "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+        "runtime": "runsc",
+        "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+        "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+      }
+    }
+  ],
+  "review": {
+    "independent_human": false,
+    "separate_codex_review": "Exact input mode under umask; bounded inert failed-run previews; dotted cgroup counters; tmpfs alias quota and real /tmp; bounded kernel termination observation; no result-status edits or policy relaxations."
+  },
+  "scope": "Actual designated Vultr worker infrastructure fixtures; no business verifier or real inference yet",
+  "source_files": [
+    {
+      "path": "infra/gvisor/runsc-release.json",
+      "sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe"
+    },
+    {
+      "path": "infra/images/worker.Dockerfile",
+      "sha256": "495914da7322013f2f2e51c9750eb85245787ff6500e0c9187b6edd27a476812"
+    },
+    {
+      "path": "scripts/Read-VultrAccount.ps1",
+      "sha256": "45f54b651a86af1d42c7e68ebbe1981c4e99b8c5b6d7f1d949c17594a1229635"
+    },
+    {
+      "path": "scripts/Save-VultrCredential.ps1",
+      "sha256": "3058b440679cbd0b2f621772a4318d62f0ab2e939341e0a81e6a37c563211d6b"
+    },
+    {
+      "path": "scripts/Watch-VultrCredit.ps1",
+      "sha256": "5ae38174e177f3fc258aff8816684386ff8207b481571164abf4798694ed3db1"
+    },
+    {
+      "path": "scripts/build_worker_rootfs.py",
+      "sha256": "987ea3ed7f3f6f64133af8b56c9308da839ecf1c37fdab2ea2ee55c37d23e681"
+    },
+    {
+      "path": "scripts/check_budget_postgres.py",
+      "sha256": "36d98a2e865a982130c54027cc5d02d51749de9560f12acfd221498c69202e55"
+    },
+    {
+      "path": "scripts/check_control_image.py",
+      "sha256": "5b7a06c4dafadac76557ff2bd07830308945dace01a729c3015c2186e5c07cd6"
+    },
+    {
+      "path": "scripts/check_preparation.py",
+      "sha256": "a531ec12b95dcb634aba4640fafe8296db2a96b394808405b929633c99d77a60"
+    },
+    {
+      "path": "scripts/cleanup_network_probes.py",
+      "sha256": "a35c81d3dc5effea05ae1aaf29188724082196c62e890b02fd34b1c56ace7ddf"
+    },
+    {
+      "path": "scripts/deploy_worker.py",
+      "sha256": "9de37e4e90b5c7c64ef9afa3c390a10af6a648fef9601484430ad1a264b8038a"
+    },
+    {
+      "path": "scripts/install_probe_controller.py",
+      "sha256": "fdf5383a46411b4f7586eb9d0ba3b33f30e4a4e46ab11030a8b19a165f360929"
+    },
+    {
+      "path": "scripts/install_worker_host.py",
+      "sha256": "c4ffa0f11d616a48d38fe3e2315fe812df9f33670d4d7dd7ad8ccaae2c8e1938"
+    },
+    {
+      "path": "scripts/prepare_network_probes.py",
+      "sha256": "e3ea0f8462b1f56f31dd1be686ed8f66dc881314cd9b287831c13449f68cf1cf"
+    },
+    {
+      "path": "scripts/probe_worker_controller.py",
+      "sha256": "32505dcfcdee32599c43b24f84ce8758ab4da5ddaed1c1da41313e0582c3771c"
+    },
+    {
+      "path": "scripts/run_worker_suite.py",
+      "sha256": "ea56ba04f54fc50c7d24a29b7ce8de95b89903e75de2593361701eb42663cb8c"
+    },
+    {
+      "path": "scripts/update_worker_image.py",
+      "sha256": "3f575d76548303720a21d54606acadce63cc4448446c9acac896e7da756fa7d0"
+    },
+    {
+      "path": "scripts/vultr_credit_guard.py",
+      "sha256": "54fa44a859c2110ae786de17d6c37f12e6af16526dd6f5314c04990f33e0e0ad"
+    },
+    {
+      "path": "scripts/vultr_phase1.py",
+      "sha256": "2d425956e06a66d51f89edbab09eff360eb5c2eece8e9a3689b834b73e036bbb"
+    },
+    {
+      "path": "worker/__init__.py",
+      "sha256": "0930f74db3b1c2bf464f225b6349c1f2a35c411e2504fb4a850b5f464bb6b9dc"
+    },
+    {
+      "path": "worker/collector.py",
+      "sha256": "0e396d6f4c1e63b8b34f6c090445ecbe0cd6c056fcd4a2b27c1390c285023e38"
+    },
+    {
+      "path": "worker/entrypoint.py",
+      "sha256": "988f37e4c510afae1611bf8cfdf925c52f96ca1bc033ebe2ad53e186a8c282eb"
+    },
+    {
+      "path": "worker/host.py",
+      "sha256": "13b768a57637debbb4fd77a0be8a2725d2399c039c526a5e752daa5c5c030652"
+    },
+    {
+      "path": "worker/journal.py",
+      "sha256": "fec480a5de2860093637afeca5752d75964414d4d868b5f529fffed981b4d0c0"
+    },
+    {
+      "path": "worker/launcher.py",
+      "sha256": "f7bbe39731b914f56aa33fe083a6450c073df9f74db7cfeb9720872139d1b6dc"
+    },
+    {
+      "path": "worker/log_capture.py",
+      "sha256": "b9507c79aafd4adab77b47b430ac594a2faa10cd13287653a1d6eb84a4c0d2c8"
+    },
+    {
+      "path": "worker/metrics.py",
+      "sha256": "1c3a9565b362d0a16f56a44b24074650ebcdda253c0a08a9202a8ccab9c6107c"
+    },
+    {
+      "path": "worker/protocol.py",
+      "sha256": "7aaf319f4baa1cc821fc15aeaad4a0bff865730636412dd988d0f7aa87cc0e5a"
+    },
+    {
+      "path": "worker/rootfs.py",
+      "sha256": "5283c965736359afd4d53a5387fd6057e0755743bc7d65e95dbd560157fd9b75"
+    },
+    {
+      "path": "worker/runtime.py",
+      "sha256": "efd94d6c628bcf4f8833901c3948bc67a9e230aa7f5740aca012efac3acefc6f"
+    },
+    {
+      "path": "worker/runtime_bundle.py",
+      "sha256": "b65b8d526f0b94c2e352aac5d17bb5ff91068424446627dd3ffc9a342e0194a9"
+    },
+    {
+      "path": "worker/service.py",
+      "sha256": "0e7ba2316d5bab505006e98ed70f436a68302215fcdc146c2582c6f07cf5368b"
+    },
+    {
+      "path": "worker/staging.py",
+      "sha256": "4b84e4c6e238ba3a3b97e08294b69f721f04316d1dba9e299c665fcf25e4a3a2"
+    },
+    {
+      "path": "worker/start_gate.py",
+      "sha256": "9ea60b791822935da6b25d7ed79a91c80844ccb451bc3f64bb55445581e95e3b"
+    },
+    {
+      "path": "worker/supervisor.py",
+      "sha256": "268d66e05f8de07302b6e0f20fb5f0ee4cc0acefd65c2e69be84bcef6f71f86c"
+    },
+    {
+      "path": "worker/wire.py",
+      "sha256": "8e9bafd7fba1c0ad92aa8fe153c15ac39a16e7eae3574e968ede740eb03bee9b"
+    }
+  ],
+  "starting_commit": "c808c94d75fc1d7100565929580f19cef19aa341"
+}

@@ -13,6 +13,7 @@ from uuid import UUID
 
 from worker.collector import CollectionError, collect_stopped_outputs
 from worker.journal import Journal
+from worker.log_capture import failure_preview
 from worker.protocol import ExecutionRequest, SupervisorError, runtime_identity_digest
 from worker.runtime import SystemdRunsc
 from worker.staging import Staging
@@ -152,6 +153,7 @@ class Supervisor:
                    "outcome": "infrastructure_failure", "collected": False,
                    "verification": "NOT_PERFORMED", "cleanup": "uncertain"}
         output_fd = None
+        logs = ()
         try:
             path = self.staging.prepare(request)
             output_fd = self.staging.open_output(identifier)
@@ -176,6 +178,7 @@ class Supervisor:
                 else "infrastructure_failure"
             receipt["error"] = str(error) if isinstance(error, (SupervisorError, CollectionError)) \
                 else "HOST_IO_FAILURE"
+            receipt["failure_log_preview"] = failure_preview(logs)
         finally:
             if output_fd is not None:
                 os.close(output_fd)  # Close retained mount handle before normal unmount.

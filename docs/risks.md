@@ -1,5 +1,13 @@
 # Risks and owner decisions
 
+Actual default fork flooding can exhaust the128 host-task ceiling before64 guest processes and terminate runsc. Cleanup succeeds; original capacity acceptance remains unresolved. Supervisor-death/control-disconnect deployed recovery, DB/inference and host/runtime advisory review remain gates.
+
+## Current deployment risk update — Nov 4
+
+Q02 no longer blocks all credit-funded work: the owner explicitly instructed credit use while their support reply is pending. Actual redemption and $24/$48 quotes were verified; two VMs exist, latest observed charge $0.12 and remaining $199.88. No personal spending or provider guarantee is authorized/claimed. The administrator credit guard depends on the owner's Windows session/network and delayed account metering; it cannot guarantee an instantaneous provider stop. No inference calls are enabled yet.
+
+SSH is presently refusing/timing out despite boot completion. Restricted alternate ports, explicit IPv4 listening and bounded boot/packet diagnostics are being checked on empty project VMs, without bypassing host identity or widening source IP access. Candidate admission remains disabled. Existing runtime/image advisory and human-review gaps remain. The new Phase 2 continuation permission does not resolve Q08, MIT ownership or public-release approval.
+
 Owner: the requesting project owner is the only confirmed human contributor and final business-semantics decision maker. Codex assists work; no independent human reviewer or focused-hours commitment is confirmed. These facts do not block remaining Phase 0 preparation.
 
 | ID | Risk / concrete unresolved item | Owner / due | Disposition |

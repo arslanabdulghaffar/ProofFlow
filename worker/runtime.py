@@ -104,6 +104,10 @@ def oci_config(policy: RuntimePolicy, request: ExecutionRequest, path: Path) -> 
                "options": ["bind", "ro" if name == "input" else "rw", "nosuid", "nodev", "noexec"]}
               for name, destination in (("input", "/input"), ("output", "/output"),
                                          ("scratch", "/scratch"),
+                                         # Keep /tmp a real image directory: runsc resolves
+                                         # symlinks before deciding whether /tmp is explicit.
+                                         # All writable aliases share one host quota.
+                                         ("scratch", "/tmp"),  # noqa: S108 - bounded guest mount
                                          ("scratch", "/dev/shm"))],  # noqa: S108 - bounded guest mount
         ],
         "linux": {"namespaces": [{"type": name} for name in
@@ -289,7 +293,18 @@ class SystemdRunsc:
             command(["/usr/bin/systemctl", "kill", "--kill-whom=all", "--signal=SIGKILL",
                      self.unit(identifier)], allow_failure=True)
             command(["/usr/bin/systemctl", "stop", self.unit(identifier)])
-        return self.confirm_stopped(identifier)
+        # systemd may report stopped while SIGKILL recipients are still exiting.
+        # Never collect until the kernel confirms zero writers; a bounded grace
+        # period is for termination observation, not additional guest runtime.
+        deadline = time.monotonic() + 2
+        while True:
+            try:
+                return self.confirm_stopped(identifier)
+            except SupervisorError as error:
+                if (str(error) not in {"EXECUTION_WRITERS_REMAIN", "EXECUTION_WRITERS_UNCERTAIN"}
+                        or time.monotonic() >= deadline):
+                    raise
+                time.sleep(0.02)
 
     def confirm_stopped(self, identifier: UUID) -> dict:
         state = self.show(identifier)

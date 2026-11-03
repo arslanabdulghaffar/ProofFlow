@@ -1,5 +1,25 @@
 # Phase 1 entry and deployment proposal
 
+## Actual worker deployment checkpoint — Nov 4, 07:09 KST
+
+Both VMs now have pinned SSH on port443. The worker runs the actual pinned runsc/systrap and immutable SquashFS image over private mTLS. Trusted pandas output is independently captured/hash-checked. Actual passes: UID10001/no capabilities/no-new-privileges, read-only root/input, host-marker isolation, CPU throttling, 768MiB OOM kill, 64-task thread ceiling, shared scratch/tmp/shm byte quota, output byte quota, inode exhaustion, bounded logs, unsafe/oversized output rejection, 20s timeout/descendant cleanup, and benign recovery. Network denial covers IPv4/IPv6/DNS/UDP/raw sockets/metadata/private services/controlled external SSH with positive host controls; temporary public test access was removed.
+
+Real probes found and fixed: input permissions lost to restrictive umask; valid dotted Ubuntu cgroup counter rejected; failed captures losing all diagnostics; gVisor automatic tmpfs hiding the scratch quota through a /tmp symlink; and transient kernel writer teardown after systemd reported stopped. Limits remain unchanged. The new image keeps /tmp a real directory and explicitly binds all scratch aliases to one bounded host mount. Failure receipts remain preserved. [Source-bound deployment evidence](evidence/phase1-deployed-2026-11-04.json) includes failures and subsequent results.
+
+Open: default fork flood exhausts 128 host tasks before all63 children can coexist (latest diagnostic45); it fails closed and cleans up. The separate fixture voluntarily lowered its own guest limit to32 and observed31 children/EAGAIN/no hard-limit raise, proving guest fork accounting without changing deployment policy. The original capacity test is still failed, not relabeled passed. Complete its critical disposition, deployed supervisor-death/controller-disconnect recovery, control/database/disk/restore/HTTPS and real bounded Vultr inference before Phase1 acceptance. No provider subscription/call yet; no Phase2 work or independent human approval.
+
+Validation: 224 Windows tests passed/45 Linux-only skips; all45 Linux tests passed separately;11 trusted local systemd groups passed after termination changes; Ruff passed. New worker image scan: no CRITICAL or Python findings,45 HIGH/72 MEDIUM/61 LOW/7 UNKNOWN retained. Earlier evidence belongs to its named historical source/image. This is a WIP checkpoint; continue authorized work immediately.
+
+## Current deployment override — Nov 4, 06:30 KST
+
+The owner now explicitly authorizes credit-funded deployment while awaiting their support response; no repeated generic billing approval is needed. Phase 2 continuation after real Phase 1 acceptance and verified checkpoint/report is also authorized while the owner is away. Older no-provisioning/stop-for-review statements below describe earlier checkpoints and are superseded.
+
+Two actual fixed-plan VMs, private VPC and restricted firewall/SSH resources exist. Fresh quote $24+$48/month; $145 conservative allocation; no backups/DDoS add-ons. Actual observed charges $0.12, remaining credit $199.88. Credentials and resource identities are private outside Git. SSH access is being diagnosed through official console boot evidence and empty-VM rebuilds; no application is deployed and no candidate or provider call has run. Do not duplicate creates or bypass pinned host keys.
+
+`scripts/vultr_phase1.py` durably records create intents before POST and refuses uncertain-create replay. An exclusive Windows administrator lock serializes it with `scripts/vultr_credit_guard.py`. The scheduled `ProofFlow-CreditGuard` task ran successfully; cutoff is $120 observed spend, funded review at 72 hours, absolute teardown Nov 23. Scope: exact recorded project VMs only, no unrelated assets. No provider non-overage guarantee is inferred; local task availability and billing lag remain limitations. Actual inference admission remains disabled until the deployed database/quote/receipt gates pass.
+
+Separate critical review of the new administrator boundary: keys never enter Git, candidate mounts, API errors or command arguments; TLS/proxy/redirect restrictions are explicit; SSH ignores unrelated local configuration and retains exact host pins. Credit guard latches before deletion, validates exact ownership and reconciles absence after lost replies. A process lock prevents stale guard writes from losing provisioning intents. Offline tests reject nonfinite/negative accounting, identity mismatch, duplicate deletion after reply loss and deadline/credit-reset bypasses. Runtime/source advisories remain open, with no public admission or security clearance claimed. No independent human approval.
+
 ## Current kickoff state — 2026-11-04 KST
 
 **Phase 1 IN PROGRESS, not accepted.** Official dashboard explicitly Live / Submissions open at the Nov 4 recheck (trusted clock Nov 3 16:33:54 UTC / Nov 4 01:33:54 KST). The owner authorized implementation. The Oct 24 section below is historical and superseded where noted here; its proposed topology and ordered deployed checks still apply.

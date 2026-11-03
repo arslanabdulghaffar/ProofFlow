@@ -12,6 +12,21 @@ def test_counters_preserve_actual_values():
     }
 
 
+def test_deployed_ubuntu_cpu_stat_namespaced_counter():
+    actual = ("usage_usec 3109479\nuser_usec 2336177\nsystem_usec 773302\n"
+              "core_sched.force_idle_usec 0\nnr_periods 669\nnr_throttled 1\n"
+              "throttled_usec 51921\nnr_bursts 0\nburst_usec 0\n")
+    result = counters(actual, {"usage_usec", "nr_throttled", "throttled_usec"})
+    assert result["core_sched.force_idle_usec"] == 0
+    assert result["throttled_usec"] == 51921
+
+
+@pytest.mark.parametrize("name", [".usage_usec", "core..usage_usec", "core.", "../usage_usec"])
+def test_invalid_counter_names_remain_rejected(name):
+    with pytest.raises(SupervisorError, match="CGROUP_METRICS_INVALID"):
+        counters(name + " 1", set())
+
+
 @pytest.mark.parametrize("text", ["usage_usec -1", "usage_usec True", "usage_usec 1.0",
                                  "usage_usec 1\nusage_usec 2", "usage_usec 18446744073709551616",
                                  "wrong 3", "usage_usec 1 extra"])

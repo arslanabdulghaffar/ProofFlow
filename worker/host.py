@@ -51,7 +51,9 @@ def command(args: list[str], *, timeout: float = 5, allow_failure: bool = False)
 
 
 def synced_write(path: Path, content: bytes, *, mode: int = 0o600) -> None:
-    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, mode)
+    if mode not in (0o600, 0o444):
+        raise SupervisorError("UNAPPROVED_DURABLE_FILE_MODE")
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
     try:
         view = memoryview(content)
         while view:
@@ -59,6 +61,10 @@ def synced_write(path: Path, content: bytes, *, mode: int = 0o600) -> None:
             if not written:
                 raise SupervisorError("SHORT_DURABLE_WRITE")
             view = view[written:]
+        # The service uses UMask=0077. Apply the reviewed final mode on this
+        # exact newly created descriptor, so staged guest inputs are readable
+        # after their read-only bind without making the host parent traversable.
+        os.fchmod(fd, mode)
         os.fsync(fd)
     finally:
         os.close(fd)

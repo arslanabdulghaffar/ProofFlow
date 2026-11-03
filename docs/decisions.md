@@ -1,5 +1,14 @@
 # Decision log
 
+D52 — Deployed probes drive exact-mode input writes, bounded failure diagnostics, dotted cgroup counters, real /tmp plus shared bounded binds and a two-second kernel-termination observation grace. Execution limits are unchanged; collection still requires zero writers. D53 — Preserve default fork capacity failure; voluntary32-task fixture proves guest fork accounting, not default63-child capacity.
+
+## Latest owner and deployment decisions — Nov 4
+
+- D48 supersedes D23/D27/D30's indefinite paid-action block: owner explicitly authorizes credit use for the project while they await support. Verify actual credit, expiry and charges; retain $150 total/$25 inference, no personal payment. Unknown tax/non-overage terms remain unknown rather than promised guarantees.
+- D49 supersedes D19 and older stop-before-Phase-2 language: complete Phase 1 acceptance, update docs, commit/push/verify and report, then continue Phase 2 while the owner is away under their explicit instruction. Silence is not additional authorization for publication, business policies or spending changes.
+- D50: administrator API key stays encrypted under Windows DPAPI outside Git; pre-pinned SSH host identities avoid trusting a first network connection. Exactly two quoted VMs created, with private VPC and administrator-only SSH firewalls. Empty-machine rebuilds are setup recovery, never application-data migration.
+- D51: operational guard cuts off early at $120 observed project/account spend and a funded review deadline, with a fixed November 23 maximum. Preserve $30 headroom; no automatic creation on recovery. This is a best-effort task on the administrator computer, not provider-enforced billing. Inference requires the separate database admission cap.
+
 All decisions below dated 2026-10-24; implementation evidence remains NOT RUN. Ordinary design defaults may be refined before schema freeze with traceability and tests. Business meaning outside synthetic demo approval needs the owner.
 
 | ID | Decision and reason | State / authority |

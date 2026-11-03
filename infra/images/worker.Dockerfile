@@ -9,8 +9,7 @@ RUN python -m pip install --no-cache-dir --only-binary=:all: --require-hashes -r
     && find /usr -xdev -type f -perm /6000 -exec chmod a-s {} + \
     && rm /tmp/build-requirements.txt /tmp/requirements.txt \
     && mkdir -p /input /output /scratch /opt/proofflow \
-    && chown 10001:10001 /output /scratch \
-    && rmdir /tmp && ln -s /scratch /tmp
+    && chown 10001:10001 /output /scratch
 COPY worker/launcher.py /opt/proofflow/launcher.py
 RUN chmod 0444 /opt/proofflow/launcher.py
 WORKDIR /scratch

@@ -1,5 +1,11 @@
 # Requirements traceability
 
+Actual deployed R26/R27 evidence now covers pandas/nonroot/read-only/network/CPU/RAM/thread/storage/inodes/capture/ordinary timeout and cleanup. Default fork capacity and deployed supervisor/control death remain open. See evidence/phase1-deployed-2026-11-04.json; no phase-completion claim.
+
+## Real deployment status — Nov 4
+
+Partial Phase 1 evidence now includes two actual quoted VMs, private VPC/firewall/SSH resources, encrypted management-key setup, durable provisioning intents and a successfully run administrator credit guard. SSH/installation and all actual guest/provider gates are still incomplete; no requirement status is promoted by resource creation. Latest owner authorization allows Phase 2 after real Phase 1 acceptance/checkpoint/report; old waiting/phase-boundary descriptions are historical. See progress and phase1-readiness.
+
 Read against all 59 pages on 2026-10-24. Requirements are paraphrased and grouped only when one acceptance check covers the same obligation; repeated source obligations are retained at their page. Source examples/targets are never reported as executions. See [source review](source-review.md), [decisions](decisions.md), and [test plan](test-plan.md).
 
 Status legend: IMPLEMENTED_DOC means documentation/preparation only; DEFERRED_PHASE1–6 means explicitly scheduled implementation after the timing gate, not implemented; DEFERRED_CONDITIONAL requires the stated budget gate; DEFERRED_P1 is optional/post-event; BLOCKED_OWNER requires a listed substantive decision. P0 means a product/release requirement, distinct from Phase 0. CONTEXT rows account for cover/navigation/source pages without inventing functionality. Test IDs remain planned acceptance evidence. Local foundation HTTP checks now pass; deployed product/runtime/provider gates remain NOT RUN.
