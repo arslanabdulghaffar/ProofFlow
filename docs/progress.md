@@ -1,5 +1,13 @@
 # Progress
 
+## Phase2 identity/registry checkpoint — Nov4,08:20 KST
+
+Continued after verified private checkpoint `9f5f08d897f8745a7051bd98fa63c462991ee923`, without waiting for continuation. Added opaque session/CSRF helpers and a separate product PostgreSQL migration with private nonlogin owner/API/provisioner roles, immutable workspace-scoped input registry, exact retry conflicts, expiry/revocation and fixed capacity/byte quotas. Public HTTP routes and the product DB client/deployment are still unfinished; no guest signup or permission to activate a version exists.
+
+Actual disposable PostgreSQL18.6 checks passed10 groups: migration/topology/durability, scoped registry/CSRF/idempotency, table/owner/provisioner/public/transaction-policy denials, input bounds, concurrent64-object and128MiB quota, expiry/logout, both workspace-revocation race orders, workspace/session capacity, dump/restore and confirmed fixture cleanup. The separate critical pass moved database PUBLIC CONNECT/TEMP and public-schema CREATE revocation from test setup into the actual migration, then reran the checks. This helper uses local test-only trust authentication; production SCRAM and browser integration are NOT RUN. [Source-bound component evidence](evidence/phase2-components-2026-11-04.json).
+
+Current suite:391 Windows tests pass/53 Linux-only skips;8 new Linux storage groups passed and the prior45 unchanged Linux cases retain their previous evidence. Ruff passes. No new dependency, provider request, cloud resource or account action. Q08 remains pending, and full schema/verifier/queue/live failure-view acceptance is unfinished. No independent human sign-off. Continue from this WIP checkpoint with the product adapter/authenticated routes and durable queue; quota admission must precede blob staging so rejected registrations cannot accumulate unbounded orphan files.
+
 ## Phase2 source and evidence components — Nov4,08:09 KST
 
 Phase1 is DONE at verified private main `0a24f45467b64132b0a3ca95a503aa8f4799ebff`. Continued directly into authorized Phase2. Added strict bounded JSON/CSV/scalar parsing and canonical vectors; every original occurrence remains present and exact. Candidate-output structural decoding grants no status. V02–V04 compare source partition, original identity and composite customer ownership; total-preserving ownership swaps are rejected. Full V01–V10/verifier schema freeze remains pending Q08 and remaining semantics/integration.

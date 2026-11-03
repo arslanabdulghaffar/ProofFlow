@@ -1,0 +1,115 @@
+{
+  "candidate_execution_on_development_host": false,
+  "critical_review": {
+    "fixed_findings": [
+      "bounded name validation prevents native Unicode exception diagnostics",
+      "database PUBLIC CONNECT/TEMP and public-schema CREATE revocation moved from fixture setup into actual migration"
+    ],
+    "remaining": [
+      "Q08 policy/schema freeze",
+      "full semantic/canary verification and isolated verifier integration",
+      "product DB client/SCRAM deployment/HTTP browser authorization",
+      "upload quota reservation before blob write; registry/physical orphan reconciliation",
+      "product queue/original execution/failure view",
+      "retention/rate limits and public release authorization"
+    ],
+    "reviewer": "Codex separate critical pass; no independent human sign-off"
+  },
+  "linux_storage_groups_passed": 8,
+  "new_cloud_resources": 0,
+  "new_provider_calls": 0,
+  "observed_at": "2026-11-03T23:20:04.271746+00:00",
+  "phase": "2",
+  "phase1_verified_checkpoint": "0a24f45467b64132b0a3ca95a503aa8f4799ebff",
+  "postgres": {
+    "authentication": "fixture-local-trust; deployed product SCRAM NOT RUN",
+    "checks": [
+      "pinned_private_postgres_migration_durability",
+      "scoped_immutable_registry_idempotency_and_csrf",
+      "no_table_owner_provisioner_public_or_transaction_bypass",
+      "fixed_asset_kind_and_byte_bounds",
+      "atomic_count_and_byte_quota_concurrency",
+      "session_revocation_and_expiry_fail_closed",
+      "workspace_revoke_serializes_with_both_race_orders",
+      "workspace_expiry_and_fixed_workspace_session_capacity",
+      "dump_restore_preserves_ownership_and_revocation",
+      "owned_fixture_cleanup_confirmed"
+    ],
+    "image": "sha256:9ed8d24e2d804f04bd228a4619c9ed43c3a8d2f4a09fe947b44b112615eb010d",
+    "migration_sha256": "8cbe9cf7403c0c5b0040ddf48ce4889faee749182e83a7a629c2ad91ffb818e3",
+    "scope": "local_trusted_disposable_only"
+  },
+  "prior_linux_unchanged_groups_passed": 45,
+  "prior_phase2_verified_checkpoint": "9f5f08d897f8745a7051bd98fa63c462991ee923",
+  "sources": [
+    {
+      "path": "api/app/assets.py",
+      "sha256": "1461dc40147482680476a4cf9286f813bf41d0d6193b3ae13f70fddfeaa0456e"
+    },
+    {
+      "path": "api/app/auth.py",
+      "sha256": "aee35336b26197f5c1468087e9d5b7909fafa9f8e0a19f07fa68212a13256d6b"
+    },
+    {
+      "path": "contracts/codec.py",
+      "sha256": "691c3c49305f8996967800736e23522be7b25298d7d8f8946a25f9e84939eb98"
+    },
+    {
+      "path": "contracts/scalars.py",
+      "sha256": "d396f77d3277567f766261b399fc5bd45981b1ccb5531f9adb2b5876ab830d06"
+    },
+    {
+      "path": "contracts/source.py",
+      "sha256": "c8f674eb525bde1ab3fb39e696073d2f91e4c5f29af109579b1205f5f1482b00"
+    },
+    {
+      "path": "db/phase2/001_identity_assets.sql",
+      "sha256": "8cbe9cf7403c0c5b0040ddf48ce4889faee749182e83a7a629c2ad91ffb818e3"
+    },
+    {
+      "path": "scripts/check_product_postgres.py",
+      "sha256": "020a2de072676d03077432afa57de3ac47033c4a1db4ccbe8f303ea7b6729bb4"
+    },
+    {
+      "path": "tests/security/test_assets_linux.py",
+      "sha256": "7f9dbf4ab835570fea2f020c8f5be3cbbc7b2302f21faa4807d861878b8191d4"
+    },
+    {
+      "path": "tests/unit/test_auth.py",
+      "sha256": "28be45ae230234219a95448f836ee8e6875085055dfdec7426fd0691ff771e00"
+    },
+    {
+      "path": "tests/unit/test_contract_codec.py",
+      "sha256": "16487bb3acb25f045a7b7bae735cd07239ae3be2f99df04fb3d95fac05dabc2b"
+    },
+    {
+      "path": "tests/unit/test_contract_scalars.py",
+      "sha256": "f7bc7a44a2db4406c561b5ad0df8ff653da2dbe937ae628f4afa7d4dd60cad0f"
+    },
+    {
+      "path": "tests/unit/test_contract_source.py",
+      "sha256": "fa5ab485713fe91874a24a773afe49f8972a8d75db57894b392cffaf0efcb066"
+    },
+    {
+      "path": "tests/unit/test_verifier_lineage.py",
+      "sha256": "46169ab84ce5280b4803e990ea674a2a09fd3d00001fa988e4b7edca99992821"
+    },
+    {
+      "path": "tests/unit/test_verifier_outputs.py",
+      "sha256": "4ed3fa375eac80d27e32e896175d6b94956fbec1265f4d430a2fd284713c85c2"
+    },
+    {
+      "path": "verifier/lineage.py",
+      "sha256": "6b1e7ab766028e770c515eb7011b7b7faf6b20efc7be4ea8511458772bbca6ca"
+    },
+    {
+      "path": "verifier/outputs.py",
+      "sha256": "f500ac720b1ac942c25773f0601cdfded25b1eae48864246b450e56ab210971c"
+    }
+  ],
+  "status": "IN_PROGRESS_COMPONENTS_ONLY",
+  "windows_tests": {
+    "linux_skipped": 53,
+    "passed": 391
+  }
+}

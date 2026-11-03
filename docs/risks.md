@@ -2,6 +2,10 @@
 
 Current Phase1 acceptance is documented in phase1-readiness and the acceptance receipt. Fork capacity remains limited but containment is proven by kernel denial/cleanup (D54). Supervisor/control death, database/restore, inference, generated-code worker checks, HTTPS and repaired reboot recovery passed. Remaining risks: native/runtime advisory inventory and absent full binary reachability review; no independent human sign-off; operator-only HTTPS, portable backup/public release work outstanding; Q08 contract decision; delayed billing and Windows-dependent credit guard. Older risk entries below describe historical states.
 
+## Current Phase2 component risks
+
+Private local input, lineage, byte-store and identity/registry tests pass; the product database/HTTP path is not deployed. Q08 still prevents complete policy/schema freeze. Partial V02–V04 success cannot promote a job: money/reason/filter/duplicate/rollup/canary and runtime/cleanup gates remain. Blob writes need quota reservation before staging and registry-aware orphan/retention reconciliation before intake, otherwise DB rejection alone cannot bound physical storage. Session hashing/Origin/CSRF parsing does not replace current PostgreSQL authorization. Fixture trust authentication is local-only; live product SCRAM, browser ownership tests, bounded queue and failure UI remain unfinished. No independent human reviewer or public-release authorization.
+
 ## Current deployment risk update — Nov 4
 
 Q02 no longer blocks all credit-funded work: the owner explicitly instructed credit use while their support reply is pending. Actual redemption and $24/$48 quotes were verified; two VMs exist, latest observed charge $0.12 and remaining $199.88. No personal spending or provider guarantee is authorized/claimed. The administrator credit guard depends on the owner's Windows session/network and delayed account metering; it cannot guarantee an instantaneous provider stop. No inference calls are enabled yet.
