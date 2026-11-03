@@ -75,3 +75,21 @@ No installed model/provider, product permission, cloud rate or test result is in
 - D45: bounded immutable probe intents/results preserve exact bytes; read-only recovery cannot resend or settle. Unfinished intents consume the 100/account cap. Synthetic restore never authorizes a restored spend ledger to dispatch.
 - D46: pin the complete gVisor release-20261102.0 bundle and fixed companion directory. No runtime auto-download or local guest execution. Unavailable package inventory is a review gap, not a clean scan.
 - D47: require actual kernel cgroup limit readback before launch; retain sampled host counters with missing-final-sample state. Host counts do not prove guest fork/thread enforcement.
+
+
+## D54: distinguish host containment from guest fork capacity (Nov 4)
+
+Separate critical review of the deployed fork flood: the unchanged default fixture's expectation of 63 simultaneous children remains FAILED (45 observed before runtime exit2). A read-only host observer captured pids.max=128, sampled_peak=128 and pids.events max=1 on that exact execution. The kernel denied further tasks; runtime descendants terminated and cleanup confirmed. The independently lowered32 guest fixture proves31 children/EAGAIN/no hard-limit raise; the64-thread fixture proves63 threads plus main. These are upper resource bounds, not a promise that gVisor can support every combination up to both ceilings simultaneously.
+
+Disposition: process containment passes; default fork capacity is an explicit compatibility limitation. No deployment limit, fixed fixture expectation, collected output or candidate result was changed to pass. The failed fixture remains in evidence and its runner still fails. Simple pandas workloads are eligible for the next isolated probe; any runtime nonzero, partial output, timeout or uncertain cleanup is ineligible for verification success. Model-generated code remains untrusted and runs only on the designated worker. This is Codex's separate critical review, not independent human approval.
+
+
+## D55: persistent SSH recovery and real reboot gate
+
+The control reboot failed its180s administrative recovery bound because ssh.socket's443 setting did not govern the enabled ssh.service startup. Recovered via worker private forwarding with the original control host-key pin; no agent/key forwarded, no data rebuilt or host check bypassed. Explicit key-only sshd ports22/443 plus enabled regular service now survive both real VM reboots. The bootstrap template includes the same persistent behavior. Retain the initial failure and successful follow-up evidence.
+
+## D56: provider probes, reservations and bounded development backup
+
+Both2048-token coding responses exhausted reasoning allowance and were rejected unchanged. New IDs with8192 maximum completion tokens (already the adapter ceiling) passed for both models; all eight requests retain their reservations. Authenticated provider usage reconciles token counts, not a final invoice. No security/output/business limit changed. Flash Next is a reasonable first Phase3 candidate based on lower catalogue cost and this single faster coding probe; it is not a benchmark or quality superiority claim.
+
+Phase1 private state now has a Windows-user-bound DPAPI off-VM backup and actual disposable restore. This proves encrypted local recovery for this operator profile; it does not satisfy the later portable restic/object-storage requirement. Empty HTTPS health is operator-only; public application admission remains503. No public release or human security approval is inferred.

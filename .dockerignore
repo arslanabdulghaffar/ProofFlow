@@ -8,6 +8,7 @@
 !infra/
 !infra/images/
 !infra/images/control.Dockerfile
+!infra/images/control-runtime.Dockerfile
 !infra/images/control-requirements.txt
 !infra/images/control-build-requirements.txt
 !infra/images/inference-check.Dockerfile

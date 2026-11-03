@@ -47,7 +47,7 @@ if trace.exists():
         require(kind in {"DESIGN", "OFFICIAL", "CONTEXT", "TARGET", "OPEN", "OBSERVED"},
                 f"Missing classification: {rid}")
         require(priority in {"P0", "P1", "INFO"}, f"Missing priority: {rid}")
-        require(status in {"IMPLEMENTED_DOC", "BLOCKED_OWNER", "DEFERRED_P1",
+        require(status in {"IMPLEMENTED_DOC", "IMPLEMENTED_PHASE1", "BLOCKED_OWNER", "DEFERRED_P1",
                            "DEFERRED_CONDITIONAL"} |
                 {f"DEFERRED_PHASE{i}" for i in range(1, 7)}, f"Bad status: {rid}")
     require(pages == set(range(1, 60)), "Traceability does not cover all 59 PDF pages")

@@ -290,11 +290,14 @@ class Admin:
                              "curl", "ca-certificates", "nftables"],
                 "write_files": [{"path": "/etc/ssh/sshd_config.d/00-proofflow.conf",
                                  "permissions": "0600", "owner": "root:root",
-                                 "content": "PasswordAuthentication no\n"
+                                 "content": "Port 22\nPort 443\nListenAddress 0.0.0.0\n"
+                                            "PasswordAuthentication no\n"
                                             "KbdInteractiveAuthentication no\n"
                                             "PermitRootLogin prohibit-password\n"
                                             "AllowUsers root\n"}],
-                "runcmd": [["systemctl", "restart", "ssh"],
+                "runcmd": [["systemctl", "disable", "--now", "ssh.socket"],
+                           ["systemctl", "enable", "ssh.service"],
+                           ["systemctl", "restart", "ssh.service"],
                            ["sh", "-c", "install -d -m 0700 /var/lib/proofflow-setup && "
                             "printf ready > /var/lib/proofflow-setup/cloud-init-ready"]],
             }

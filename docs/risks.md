@@ -1,6 +1,6 @@
 # Risks and owner decisions
 
-Actual default fork flooding can exhaust the128 host-task ceiling before64 guest processes and terminate runsc. Cleanup succeeds; original capacity acceptance remains unresolved. Supervisor-death/control-disconnect deployed recovery, DB/inference and host/runtime advisory review remain gates.
+Current Phase1 acceptance is documented in phase1-readiness and the acceptance receipt. Fork capacity remains limited but containment is proven by kernel denial/cleanup (D54). Supervisor/control death, database/restore, inference, generated-code worker checks, HTTPS and repaired reboot recovery passed. Remaining risks: native/runtime advisory inventory and absent full binary reachability review; no independent human sign-off; operator-only HTTPS, portable backup/public release work outstanding; Q08 contract decision; delayed billing and Windows-dependent credit guard. Older risk entries below describe historical states.
 
 ## Current deployment risk update — Nov 4
 

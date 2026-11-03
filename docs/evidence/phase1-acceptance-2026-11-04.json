@@ -1,0 +1,1561 @@
+{
+  "checks": {
+    "credit_guard_fault_cases": 13,
+    "hosted_ci": "NOT RUN: no hosted runner billing authorization",
+    "linux_security_prior_unchanged_sources": {
+      "passed": 45
+    },
+    "preparation_hygiene": "passed",
+    "ruff": "passed",
+    "trusted_local_supervisor_prior_unchanged_sources": 11,
+    "windows_pytest": {
+      "linux_only_skipped": 45,
+      "passed": 229
+    }
+  },
+  "deployed_worker_previous_evidence": "phase1-deployed-2026-11-04.json",
+  "limitations": [
+    "No independent human sign-off.",
+    "Empty operator HTTPS only; readiness503 and no product execution/public demo route yet.",
+    "Vulnerability inventories retained: control/worker45HIGH72MEDIUM61LOW7UNKNOWN, noCRITICAL or Python findings; gVisor source20 findings are not a binary reachability report. See current critical review in phase1-readiness.",
+    "Off-VM backup is Windows CurrentUser DPAPI; portable restic/object-storage and restore-to-new-account are not yet implemented.",
+    "Credit guard depends on administrator power/network/session and provider accounting lag. No personal payment authorized.",
+    "Q08 owner decision pending; no schema/verifier freeze on ambiguous filtered-row attribute semantics."
+  ],
+  "phase": "Phase 1 technical acceptance PASSED; Git checkpoint verification reported separately",
+  "recorded_at": "2026-11-03T22:48:49.641356+00:00",
+  "records": {
+    "benign_after_reboot": {
+      "raw_sha256": "ff04737b4c7384684dd7f6756e18a1b4c4dd6afbe0b012db39d78a58129258dd",
+      "value": {
+        "controller_roundtrip_seconds": 3.594,
+        "execution": "70d6e0fbc41747d8980805ea9e4eb706",
+        "observed": {
+          "cap_eff": "0000000000000000",
+          "gid": 10001,
+          "no_new_privs": "1",
+          "nofile": [
+            64,
+            64
+          ],
+          "nproc": [
+            64,
+            64
+          ],
+          "numpy": "2.5.4",
+          "pandas": "3.1.0",
+          "sums": {
+            "A": 150,
+            "B": 350
+          },
+          "uid": 10001
+        },
+        "probe": "benign",
+        "receipt": {
+          "cleanup": "confirmed",
+          "collected": true,
+          "execution": "70d6e0fbc41747d8980805ea9e4eb706",
+          "files": [
+            {
+              "bytes": 187,
+              "lines": 1,
+              "name": "ledger.jsonl",
+              "sha256": "a95a9d2e8d830ebb0a82932a6e54253ce3122589b00822ab752552597e115121"
+            },
+            {
+              "bytes": 0,
+              "lines": 0,
+              "name": "unresolved.jsonl",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "generation": 1,
+          "logs": [
+            {
+              "received": 0,
+              "retained": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "stream": "stdout",
+              "truncated": false
+            },
+            {
+              "received": 0,
+              "retained": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "stream": "stderr",
+              "truncated": false
+            }
+          ],
+          "manifest": "1e9125e35b002110fbd6e17e7431b63c21197494567934ac8af14fd2ffb40a47",
+          "outcome": "exited",
+          "resource_observation": {
+            "final_sample_available": false,
+            "last_observed": {
+              "cpu": {
+                "burst_usec": 0,
+                "core_sched.force_idle_usec": 0,
+                "nr_bursts": 0,
+                "nr_periods": 23,
+                "nr_throttled": 22,
+                "system_usec": 1267379,
+                "throttled_usec": 291964,
+                "usage_usec": 2308990,
+                "user_usec": 1041611
+              },
+              "memory_events": {
+                "high": 0,
+                "low": 0,
+                "max": 0,
+                "oom": 0,
+                "oom_group_kill": 0,
+                "oom_kill": 0
+              },
+              "memory_peak_bytes": 143949824
+            },
+            "limits": {
+              "cpu_cores": 1,
+              "host_tasks": 128,
+              "memory_bytes": 805306368,
+              "swap_bytes": 0
+            },
+            "sampled_max_host_tasks": 40,
+            "samples": 24,
+            "scope": "runtime_and_descendants_not_guest_only",
+            "source": "host_cgroup_v2"
+          },
+          "runtime": {
+            "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+            "platform": "systrap",
+            "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+            "runtime": "runsc",
+            "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+            "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+            "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+          },
+          "runtime_client_exit_code": 0,
+          "runtime_exit_code": "0",
+          "runtime_exit_kind": "0",
+          "termination": {
+            "cgroup": "/system.slice/proofflow-exec-70d6e0fbc41747d8980805ea9e4eb706.service",
+            "kernel_writers": "absent_or_populated_zero",
+            "state": "inactive",
+            "unit": "proofflow-exec-70d6e0fbc41747d8980805ea9e4eb706.service"
+          },
+          "unit_result": "success",
+          "verification": "NOT_PERFORMED"
+        }
+      }
+    },
+    "budget-auth-after-reboot.json": {
+      "raw_sha256": "d5e480e65febe313495846edfa424ac43a219ab591ec16420da4007fba81753e",
+      "value": {
+        "checks": [
+          "scram_authenticated_socket_and_durable_no_tcp",
+          "table_read_mutation_and_owner_escalation_denied",
+          "wrong_missing_password_and_peer_admin_denied"
+        ],
+        "scope": "actual_deployed_database_no_provider_call"
+      }
+    },
+    "budget-offvm-backup.json": {
+      "raw_sha256": "69ebabfa7f5367b6980626ed3fd2c4513d6fef80d1d8a5a9ec03557cab326df0",
+      "value": {
+        "actual_restore": "all_three_table_hashes_match",
+        "encrypted": "Windows_CurrentUser_DPAPI_with_project_entropy",
+        "encrypted_sha256": "470f641560db1101585dc55c50ccc8dc94bfad6988f3841b4629e37c987ed5fc",
+        "limitation": "Requires original Windows user profile; portable restic backup deferred",
+        "off_vm": true,
+        "plaintext_bytes": 41241,
+        "plaintext_sha256": "5d33615b5c2c2060c28b2a3c0eedad32837e4c2ca55a75a66760a33d6e548375",
+        "rows": {
+          "accounts": "546b75589e9da7ab913efdff666995c3ba1eec6631d464dedcfa66646b32f957",
+          "probe_receipts": "4cff2b9cd47c1a501869eb794c2ddb66a4e488b768a9264e84e7e38879b0331f",
+          "reservations": "bfb3aae6ab4a80ddd8737d5186d178733e83d4071a1c8280190115fdb5b4c618"
+        }
+      }
+    },
+    "budget-restore-with-provider.json": {
+      "raw_sha256": "03344b9af4203377409c62cafbc5bcea9c9d7f3b440f2a7c0af70cc255de6408",
+      "value": {
+        "backup_bytes": 41241,
+        "backup_sha256": "d44300b23e65dbf66347d836b552409feff7b5c1f38ba9317506b0ea648f47f1",
+        "limitation": "Restores captured rows; provider billing settlement is separate",
+        "restart": "same_rows",
+        "restore": "same_rows",
+        "restored_admission": "blocked",
+        "row_counts": {
+          "accounts": 1,
+          "probe_receipts": 8,
+          "reservations": 10
+        },
+        "rowset_sha256": {
+          "accounts": "546b75589e9da7ab913efdff666995c3ba1eec6631d464dedcfa66646b32f957",
+          "probe_receipts": "4cff2b9cd47c1a501869eb794c2ddb66a4e488b768a9264e84e7e38879b0331f",
+          "reservations": "bfb3aae6ab4a80ddd8737d5186d178733e83d4071a1c8280190115fdb5b4c618"
+        },
+        "scope": "actual_deployed_database_restore_no_provider_calls"
+      }
+    },
+    "crash_controller": {
+      "raw_sha256": "ad5cd2f13a674c11de9842155a025b74c19bca1a06885bf1a117756425512a19",
+      "value": {
+        "acceptance": "passed",
+        "elapsed_seconds": 21.609,
+        "execution": "f19dedbc5ddc4390a1a5c949471321c8",
+        "kernel": {
+          "cgroup_exists": false,
+          "events": null,
+          "process_count": 0
+        },
+        "mode": "controller",
+        "recorded_at": "2026-11-03T22:13:40.228757+00:00",
+        "staging": "absent",
+        "status": {
+          "execution": "f19dedbc5ddc4390a1a5c949471321c8",
+          "generation": 1,
+          "receipt": {
+            "cleanup": "confirmed",
+            "collected": true,
+            "execution": "f19dedbc5ddc4390a1a5c949471321c8",
+            "files": [
+              {
+                "bytes": 25,
+                "lines": 1,
+                "name": "ledger.jsonl",
+                "sha256": "1497fc75b62eb5c002e5160cbb20e769ea8b43b8385099890debe458f0470eaf"
+              },
+              {
+                "bytes": 0,
+                "lines": 0,
+                "name": "unresolved.jsonl",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              }
+            ],
+            "generation": 1,
+            "logs": [
+              {
+                "received": 23,
+                "retained": 23,
+                "sha256": "c59c3572893a9aa02e5c67f60c4c0109da05d30384c20dd22b2e4f73ef919fc7",
+                "stream": "stdout",
+                "truncated": false
+              },
+              {
+                "received": 0,
+                "retained": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "stream": "stderr",
+                "truncated": false
+              }
+            ],
+            "manifest": "a1364edf146eba80a70041fd833b922ce10702a0a106bc6aab038125861f7b87",
+            "outcome": "timeout",
+            "resource_observation": {
+              "final_sample_available": false,
+              "last_observed": {
+                "cpu": {
+                  "burst_usec": 0,
+                  "core_sched.force_idle_usec": 0,
+                  "nr_bursts": 0,
+                  "nr_periods": 41,
+                  "nr_throttled": 2,
+                  "system_usec": 162544,
+                  "throttled_usec": 52688,
+                  "usage_usec": 368910,
+                  "user_usec": 206366
+                },
+                "memory_events": {
+                  "high": 0,
+                  "low": 0,
+                  "max": 0,
+                  "oom": 0,
+                  "oom_group_kill": 0,
+                  "oom_kill": 0
+                },
+                "memory_peak_bytes": 25677824
+              },
+              "limits": {
+                "cpu_cores": 1,
+                "host_tasks": 128,
+                "memory_bytes": 805306368,
+                "swap_bytes": 0
+              },
+              "sampled_max_host_tasks": 39,
+              "samples": 194,
+              "scope": "runtime_and_descendants_not_guest_only",
+              "source": "host_cgroup_v2"
+            },
+            "runtime": {
+              "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+              "platform": "systrap",
+              "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+              "runtime": "runsc",
+              "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+              "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+              "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+            },
+            "runtime_client_exit_code": 255,
+            "runtime_exit_code": "9",
+            "runtime_exit_kind": "2",
+            "termination": {
+              "cgroup": "/system.slice/proofflow-exec-f19dedbc5ddc4390a1a5c949471321c8.service",
+              "kernel_writers": "absent_or_populated_zero",
+              "state": "failed",
+              "unit": "proofflow-exec-f19dedbc5ddc4390a1a5c949471321c8.service"
+            },
+            "unit_result": "signal",
+            "verification": "NOT_PERFORMED"
+          },
+          "state": "CLEANED"
+        },
+        "unit": {
+          "ActiveState": "inactive",
+          "MainPID": "0",
+          "Result": "success"
+        }
+      }
+    },
+    "crash_supervisor": {
+      "raw_sha256": "ea2e3d35c99e690d54595edf1a0176625e41b1e17cfc97ff5387e7fec567f6f9",
+      "value": {
+        "acceptance": "passed",
+        "elapsed_seconds": 21.64,
+        "execution": "8d3b74219bab4decaf4fd183bf3a14c6",
+        "kernel": {
+          "cgroup_exists": false,
+          "events": null,
+          "process_count": 0
+        },
+        "mode": "supervisor",
+        "recorded_at": "2026-11-03T22:12:48.583212+00:00",
+        "staging": "absent",
+        "status": {
+          "execution": "8d3b74219bab4decaf4fd183bf3a14c6",
+          "generation": 1,
+          "receipt": {
+            "cleanup": "confirmed",
+            "collected": false,
+            "execution": "8d3b74219bab4decaf4fd183bf3a14c6",
+            "outcome": "interrupted",
+            "termination": {
+              "cgroup": "/system.slice/proofflow-exec-8d3b74219bab4decaf4fd183bf3a14c6.service",
+              "kernel_writers": "absent_or_populated_zero",
+              "state": "failed",
+              "unit": "proofflow-exec-8d3b74219bab4decaf4fd183bf3a14c6.service"
+            },
+            "verification": "NOT_PERFORMED"
+          },
+          "state": "CLEANED"
+        },
+        "unit": {
+          "ActiveState": "failed",
+          "MainPID": "0",
+          "Result": "timeout"
+        }
+      }
+    },
+    "fork_kernel_denial": {
+      "raw_sha256": "f5187b881c179bfedd798f2c9a70c4329a4e446a81aef99144db31f633019221",
+      "value": {
+        "proofflow-exec-3c5b619f6ed543ed9449518b5e985821.service": {
+          "denied_by_kernel": 1,
+          "pids_max": 128,
+          "sampled_peak": 128,
+          "samples": 176
+        }
+      }
+    },
+    "generated-dense-coding-extended.json": {
+      "raw_sha256": "7f1e3f792d6a1e6a37bc7d7566280a6ba569df06d8d1156dfb43dfb92d2170b5",
+      "value": {
+        "execution": "a14d2e4c2216433fb9ba0f2813c79c18",
+        "expected": [
+          {
+            "merchant": "A",
+            "total_cents": 100
+          },
+          {
+            "merchant": "B",
+            "total_cents": 800
+          },
+          {
+            "merchant": "C",
+            "total_cents": 0
+          },
+          {
+            "merchant": "D",
+            "total_cents": 9007199254740993
+          }
+        ],
+        "independent_expected_check": true,
+        "observed": [
+          {
+            "merchant": "A",
+            "total_cents": 100
+          },
+          {
+            "merchant": "B",
+            "total_cents": 800
+          },
+          {
+            "merchant": "C",
+            "total_cents": 0
+          },
+          {
+            "merchant": "D",
+            "total_cents": 9007199254740993
+          }
+        ],
+        "pipeline_sha256": "feb4022ae0c29c0e4d17d700d772f289b24cc005c9f9c058bb09135b680432c6",
+        "probe": "dense-coding-extended",
+        "provider_response_sha256": "80796707cbf11fc5bc791fdd44707d16f3f481ca16544b79f97ffe0ff8c13589",
+        "receipt": {
+          "cleanup": "confirmed",
+          "collected": true,
+          "execution": "a14d2e4c2216433fb9ba0f2813c79c18",
+          "files": [
+            {
+              "bytes": 163,
+              "lines": 4,
+              "name": "ledger.jsonl",
+              "sha256": "43bbf17ce34346de9a9900e350b97d271f01be9b30d7628c58ad7a01442054ea"
+            },
+            {
+              "bytes": 0,
+              "lines": 0,
+              "name": "unresolved.jsonl",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "generation": 1,
+          "logs": [
+            {
+              "received": 0,
+              "retained": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "stream": "stdout",
+              "truncated": false
+            },
+            {
+              "received": 0,
+              "retained": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "stream": "stderr",
+              "truncated": false
+            }
+          ],
+          "manifest": "0a5e24bccc58e54cf4a8c3e6ef9e6de6d41770fab44cd139b358cb2d7cacaef4",
+          "outcome": "exited",
+          "resource_observation": {
+            "final_sample_available": false,
+            "last_observed": {
+              "cpu": {
+                "burst_usec": 0,
+                "core_sched.force_idle_usec": 0,
+                "nr_bursts": 0,
+                "nr_periods": 14,
+                "nr_throttled": 13,
+                "system_usec": 412706,
+                "throttled_usec": 451883,
+                "usage_usec": 1459111,
+                "user_usec": 1046405
+              },
+              "memory_events": {
+                "high": 0,
+                "low": 0,
+                "max": 0,
+                "oom": 0,
+                "oom_group_kill": 0,
+                "oom_kill": 0
+              },
+              "memory_peak_bytes": 63131648
+            },
+            "limits": {
+              "cpu_cores": 1,
+              "host_tasks": 128,
+              "memory_bytes": 805306368,
+              "swap_bytes": 0
+            },
+            "sampled_max_host_tasks": 39,
+            "samples": 16,
+            "scope": "runtime_and_descendants_not_guest_only",
+            "source": "host_cgroup_v2"
+          },
+          "runtime": {
+            "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+            "platform": "systrap",
+            "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+            "runtime": "runsc",
+            "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+            "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+            "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+          },
+          "runtime_client_exit_code": 0,
+          "runtime_exit_code": "0",
+          "runtime_exit_kind": "0",
+          "termination": {
+            "cgroup": "/system.slice/proofflow-exec-a14d2e4c2216433fb9ba0f2813c79c18.service",
+            "kernel_writers": "absent_or_populated_zero",
+            "state": "inactive",
+            "unit": "proofflow-exec-a14d2e4c2216433fb9ba0f2813c79c18.service"
+          },
+          "unit_result": "success",
+          "verification": "NOT_PERFORMED"
+        },
+        "scope": "synthetic_infrastructure_not_business_verification"
+      }
+    },
+    "generated-flash-coding-extended.json": {
+      "raw_sha256": "a9b92d4637eafc4e83be470c05bed8418e9d21c4b5b3113aa1977e28b65dac5d",
+      "value": {
+        "execution": "bbcf07ded2a5458faecab8a1c818003d",
+        "expected": [
+          {
+            "merchant": "A",
+            "total_cents": 100
+          },
+          {
+            "merchant": "B",
+            "total_cents": 800
+          },
+          {
+            "merchant": "C",
+            "total_cents": 0
+          },
+          {
+            "merchant": "D",
+            "total_cents": 9007199254740993
+          }
+        ],
+        "independent_expected_check": true,
+        "observed": [
+          {
+            "merchant": "A",
+            "total_cents": 100
+          },
+          {
+            "merchant": "B",
+            "total_cents": 800
+          },
+          {
+            "merchant": "C",
+            "total_cents": 0
+          },
+          {
+            "merchant": "D",
+            "total_cents": 9007199254740993
+          }
+        ],
+        "pipeline_sha256": "14b10649654cf5bb48a6791eafa508c99187d580eaff65ce0c51e6dfea8cea1e",
+        "probe": "flash-coding-extended",
+        "provider_response_sha256": "16f839c2d047b6e150f3718fdd6476daaa50bcd365f573abfc35cdb3fca10cd5",
+        "receipt": {
+          "cleanup": "confirmed",
+          "collected": true,
+          "execution": "bbcf07ded2a5458faecab8a1c818003d",
+          "files": [
+            {
+              "bytes": 163,
+              "lines": 4,
+              "name": "ledger.jsonl",
+              "sha256": "43bbf17ce34346de9a9900e350b97d271f01be9b30d7628c58ad7a01442054ea"
+            },
+            {
+              "bytes": 0,
+              "lines": 0,
+              "name": "unresolved.jsonl",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ],
+          "generation": 1,
+          "logs": [
+            {
+              "received": 0,
+              "retained": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "stream": "stdout",
+              "truncated": false
+            },
+            {
+              "received": 0,
+              "retained": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "stream": "stderr",
+              "truncated": false
+            }
+          ],
+          "manifest": "8a30b4a42c41dae679b6d7069d51883e1985720570808be2da599214ccc44367",
+          "outcome": "exited",
+          "resource_observation": {
+            "final_sample_available": false,
+            "last_observed": {
+              "cpu": {
+                "burst_usec": 0,
+                "core_sched.force_idle_usec": 0,
+                "nr_bursts": 0,
+                "nr_periods": 15,
+                "nr_throttled": 14,
+                "system_usec": 428009,
+                "throttled_usec": 564442,
+                "usage_usec": 1451858,
+                "user_usec": 1023849
+              },
+              "memory_events": {
+                "high": 0,
+                "low": 0,
+                "max": 0,
+                "oom": 0,
+                "oom_group_kill": 0,
+                "oom_kill": 0
+              },
+              "memory_peak_bytes": 63016960
+            },
+            "limits": {
+              "cpu_cores": 1,
+              "host_tasks": 128,
+              "memory_bytes": 805306368,
+              "swap_bytes": 0
+            },
+            "sampled_max_host_tasks": 40,
+            "samples": 16,
+            "scope": "runtime_and_descendants_not_guest_only",
+            "source": "host_cgroup_v2"
+          },
+          "runtime": {
+            "image_sha256": "2f6e7eeff7d8c66ec76010b2c19f4f1420abdeb28039e7a887f1878e258ccf96",
+            "platform": "systrap",
+            "rootfs_sha256": "98f64a3b6b9276f012aa1894089b7dbb0397c56479758cb8325ed0be00707393",
+            "runtime": "runsc",
+            "runtime_bundle_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+            "runtime_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+            "supervisor_sha256": "99b520f608cf2f89ac3f16523dd245c543e29cb4259ee4dc6488ede1cec85519"
+          },
+          "runtime_client_exit_code": 0,
+          "runtime_exit_code": "0",
+          "runtime_exit_kind": "0",
+          "termination": {
+            "cgroup": "/system.slice/proofflow-exec-bbcf07ded2a5458faecab8a1c818003d.service",
+            "kernel_writers": "absent_or_populated_zero",
+            "state": "inactive",
+            "unit": "proofflow-exec-bbcf07ded2a5458faecab8a1c818003d.service"
+          },
+          "unit_result": "success",
+          "verification": "NOT_PERFORMED"
+        },
+        "scope": "synthetic_infrastructure_not_business_verification"
+      }
+    },
+    "https-health.json": {
+      "raw_sha256": "49c4f760fbf8c98fc419b461a702dd6eba0233eaad26f416bd1ffae585ab63e7",
+      "value": {
+        "anonymous_public_access": false,
+        "application_ready": false,
+        "certificate_der_sha256": "5bb97ca96e7719e875643462a90053d21f56fcf844a242096ab2135f965b3262",
+        "liveness": 200,
+        "readiness": 503,
+        "scope": "actual_vultr_operator_https_over_pinned_ssh",
+        "tls_version": "TLSv1.3",
+        "unimplemented_routes": 404,
+        "untrusted_ca": "rejected"
+      }
+    },
+    "inference-dense-ambiguity.json": {
+      "raw_sha256": "29c44f89583259f75c130752c4a4ccecf286b20e9d370673dfd46ae01558a0f0",
+      "value": {
+        "code_executed_on_control": false,
+        "content_sha256": "4e8f62ee5c94b4820feafa8e59c13b6376fe8a19f286d5471217021da4f062d1",
+        "durable_recovery_matches": true,
+        "elapsed_ms": 1414,
+        "kind": "ambiguity",
+        "model": "qwen3.8-27b",
+        "probe": "dense-ambiguity",
+        "provider_id": "chatcmpl-2662c2ff-81ed-47c4-a7c1-5f175148cb68",
+        "request_id": "d0a8ae29-a6de-44e5-b5c3-08485e1c92ba",
+        "request_sha256": "d5c1aa711fa647d04331e0128d369498829cfa3524be82fe6f16aa4dfa3faba5",
+        "reserve_micro_usd": 41370,
+        "response_sha256": "d43ccfee41d15eb47f2d48ebeb7f31a810805bc765a7df6d2bf9272d54935fba",
+        "schema_and_fixture_check": true,
+        "usage": {
+          "completion_tokens": 207,
+          "prompt_tokens": 138,
+          "total_tokens": 345
+        }
+      }
+    },
+    "inference-dense-coding-extended.json": {
+      "raw_sha256": "62ce8b048ea6500e978eb768bf145c857a8a995f704ef9eeef2b789448ec5ae1",
+      "value": {
+        "code_executed_on_control": false,
+        "content_sha256": "14542f92ee39cd6b14bf75b966a95092492f5d78e93c93488d8725b09d6e6926",
+        "durable_recovery_matches": true,
+        "elapsed_ms": 12641,
+        "kind": "coding",
+        "model": "qwen3.8-27b",
+        "probe": "dense-coding-extended",
+        "provider_id": "chatcmpl-e26ee0f5-3ec8-4fd5-bedd-7699de012aff",
+        "request_id": "2abeba4f-9917-46d0-aa23-544ad13f2a9a",
+        "request_sha256": "d841b9e3ad38bde72686e9ef2ddd02f2f97a291b7a822c178be6c404872fae3d",
+        "reserve_micro_usd": 47514,
+        "response_sha256": "80796707cbf11fc5bc791fdd44707d16f3f481ca16544b79f97ffe0ff8c13589",
+        "schema_and_fixture_check": true,
+        "usage": {
+          "completion_tokens": 4397,
+          "prompt_tokens": 198,
+          "total_tokens": 4595
+        }
+      }
+    },
+    "inference-dense-json.json": {
+      "raw_sha256": "0d18edd9f805aa3e335acd861a160bfae109e5a9a7d674c92ae479800b9a5023",
+      "value": {
+        "code_executed_on_control": false,
+        "content_sha256": "ace00e501be18898e20d5848b814324f6f737f0837770898369275bf0e7bfd0b",
+        "durable_recovery_matches": true,
+        "elapsed_ms": 1303,
+        "kind": "json",
+        "model": "qwen3.8-27b",
+        "probe": "dense-json",
+        "provider_id": "chatcmpl-a8f72dd3-868c-45c0-87e6-9a1099e8cfd4",
+        "request_id": "be054e47-0059-4272-8e15-373355743487",
+        "request_sha256": "5104d77a65cd531d517cc8d88339401aa8e7ddc7293d65945566bccbf0a68166",
+        "reserve_micro_usd": 41370,
+        "response_sha256": "5a875dbaeef501c68a48bac243856c3beafe473099ef455d9656e590ae6eccef",
+        "schema_and_fixture_check": true,
+        "usage": {
+          "completion_tokens": 64,
+          "prompt_tokens": 83,
+          "total_tokens": 147
+        }
+      }
+    },
+    "inference-durable-summary.json": {
+      "raw_sha256": "efb0dd3c8c42257a22fbdc146ec312c6abcc5c5ba81c5f6a581143717b88cffd",
+      "value": [
+        {
+          "elapsed_ms": 1303,
+          "finish_reason": "stop",
+          "http_status": 200,
+          "id": "be054e47-0059-4272-8e15-373355743487",
+          "outcome": "PARSED_RESPONSE",
+          "reserve_micro": 41370,
+          "response_hash": "5a875dbaeef501c68a48bac243856c3beafe473099ef455d9656e590ae6eccef",
+          "state": "RECORDED",
+          "usage": {
+            "completion_tokens": 64,
+            "completion_tokens_details": {
+              "reasoning_tokens": 52
+            },
+            "prompt_tokens": 83,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 147
+          }
+        },
+        {
+          "elapsed_ms": 5454,
+          "finish_reason": "length",
+          "http_status": 200,
+          "id": "b7b2d200-1527-4895-a6c5-b1aeddf73fd9",
+          "outcome": "OUTCOME_UNKNOWN",
+          "reserve_micro": 41370,
+          "response_hash": "5d9d1b22584685f5339164a8ae23a15976f78d4e497600670b9b07f800a25d6c",
+          "state": "RECORDED",
+          "usage": {
+            "completion_tokens": 2048,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048
+            },
+            "prompt_tokens": 198,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2246
+          }
+        },
+        {
+          "elapsed_ms": 1414,
+          "finish_reason": "stop",
+          "http_status": 200,
+          "id": "d0a8ae29-a6de-44e5-b5c3-08485e1c92ba",
+          "outcome": "PARSED_RESPONSE",
+          "reserve_micro": 41370,
+          "response_hash": "d43ccfee41d15eb47f2d48ebeb7f31a810805bc765a7df6d2bf9272d54935fba",
+          "state": "RECORDED",
+          "usage": {
+            "completion_tokens": 207,
+            "completion_tokens_details": {
+              "reasoning_tokens": 146
+            },
+            "prompt_tokens": 138,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 345
+          }
+        },
+        {
+          "elapsed_ms": 1312,
+          "finish_reason": "stop",
+          "http_status": 200,
+          "id": "26e2cc23-d316-4bff-ae4c-44f02d8b03ba",
+          "outcome": "PARSED_RESPONSE",
+          "reserve_micro": 26624,
+          "response_hash": "c9ead0b882002af7e179a087bf7694f7512f0ae81ae0c651e1b961f3b7d4e02e",
+          "state": "RECORDED",
+          "usage": {
+            "completion_tokens": 48,
+            "completion_tokens_details": {
+              "reasoning_tokens": 36
+            },
+            "prompt_tokens": 83,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 131
+          }
+        },
+        {
+          "elapsed_ms": 5660,
+          "finish_reason": "length",
+          "http_status": 200,
+          "id": "d1e37278-2271-460f-9d2f-f5ec9fc78109",
+          "outcome": "OUTCOME_UNKNOWN",
+          "reserve_micro": 26624,
+          "response_hash": "8000bb88424305c0e542cfda92e0800ed213d5b934f70d0f3c7275b0957f8461",
+          "state": "RECORDED",
+          "usage": {
+            "completion_tokens": 2048,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048
+            },
+            "prompt_tokens": 198,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2246
+          }
+        },
+        {
+          "elapsed_ms": 1323,
+          "finish_reason": "stop",
+          "http_status": 200,
+          "id": "6778f592-08a3-42b3-abc4-aa050915804f",
+          "outcome": "PARSED_RESPONSE",
+          "reserve_micro": 26624,
+          "response_hash": "37ee96df684c77d171ef5947d9758593e356b26a7d0928aee08ad0b78a7f0f9b",
+          "state": "RECORDED",
+          "usage": {
+            "completion_tokens": 157,
+            "completion_tokens_details": {
+              "reasoning_tokens": 118
+            },
+            "prompt_tokens": 138,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 295
+          }
+        },
+        {
+          "elapsed_ms": 12641,
+          "finish_reason": "stop",
+          "http_status": 200,
+          "id": "2abeba4f-9917-46d0-aa23-544ad13f2a9a",
+          "outcome": "PARSED_RESPONSE",
+          "reserve_micro": 47514,
+          "response_hash": "80796707cbf11fc5bc791fdd44707d16f3f481ca16544b79f97ffe0ff8c13589",
+          "state": "RECORDED",
+          "usage": {
+            "completion_tokens": 4397,
+            "completion_tokens_details": {
+              "reasoning_tokens": 4019
+            },
+            "prompt_tokens": 198,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "total_tokens": 4595
+          }
+        },
+        {
+          "elapsed_ms": 6569,
+          "finish_reason": "stop",
+          "http_status": 200,
+          "id": "e89b87de-fc70-4db1-b5cd-65bac0590585",
+          "outcome": "PARSED_RESPONSE",
+          "reserve_micro": 27853,
+          "response_hash": "16f839c2d047b6e150f3718fdd6476daaa50bcd365f573abfc35cdb3fca10cd5",
+          "state": "RECORDED",
+          "usage": {
+            "completion_tokens": 2517,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2228
+            },
+            "prompt_tokens": 198,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            },
+            "total_tokens": 2715
+          }
+        }
+      ]
+    },
+    "inference-flash-ambiguity.json": {
+      "raw_sha256": "8e158417e9e74bebc96ecdc147b50f598aae17f2582faddaf91ade96689daf2f",
+      "value": {
+        "code_executed_on_control": false,
+        "content_sha256": "86749baa6c5e30b54d38266117c3eefcb3d7f750ec1d6574270bd8a14925b839",
+        "durable_recovery_matches": true,
+        "elapsed_ms": 1323,
+        "kind": "ambiguity",
+        "model": "qwen3.8-flash-next",
+        "probe": "flash-ambiguity",
+        "provider_id": "chatcmpl-f283f2d8-7c03-4b99-9dc7-71ce9992d39c",
+        "request_id": "6778f592-08a3-42b3-abc4-aa050915804f",
+        "request_sha256": "4567da09ee99598920b6be603a102201831c7121851bb3e72140aef946c845e0",
+        "reserve_micro_usd": 26624,
+        "response_sha256": "37ee96df684c77d171ef5947d9758593e356b26a7d0928aee08ad0b78a7f0f9b",
+        "schema_and_fixture_check": true,
+        "usage": {
+          "completion_tokens": 157,
+          "prompt_tokens": 138,
+          "total_tokens": 295
+        }
+      }
+    },
+    "inference-flash-coding-extended.json": {
+      "raw_sha256": "cd116c7406f1469c8cc5aa05059d5890e953b1579c5a0d6c843a13d1a31b800a",
+      "value": {
+        "code_executed_on_control": false,
+        "content_sha256": "d62ee881345f918114a39577cb876d167d258684f63ebece59b23f507416e4f6",
+        "durable_recovery_matches": true,
+        "elapsed_ms": 6569,
+        "kind": "coding",
+        "model": "qwen3.8-flash-next",
+        "probe": "flash-coding-extended",
+        "provider_id": "chatcmpl-b074a1a1-582a-4bd7-879b-f9c89daa43ff",
+        "request_id": "e89b87de-fc70-4db1-b5cd-65bac0590585",
+        "request_sha256": "2e06cf89f480eec858974afc76d2c20b49269a59fb44652c8d863ba020632d77",
+        "reserve_micro_usd": 27853,
+        "response_sha256": "16f839c2d047b6e150f3718fdd6476daaa50bcd365f573abfc35cdb3fca10cd5",
+        "schema_and_fixture_check": true,
+        "usage": {
+          "completion_tokens": 2517,
+          "prompt_tokens": 198,
+          "total_tokens": 2715
+        }
+      }
+    },
+    "inference-flash-json.json": {
+      "raw_sha256": "56b2c19d04eb582e5d60aff859f804e77e85f775a363b23e3b580a8e0f0eb2f2",
+      "value": {
+        "code_executed_on_control": false,
+        "content_sha256": "ace00e501be18898e20d5848b814324f6f737f0837770898369275bf0e7bfd0b",
+        "durable_recovery_matches": true,
+        "elapsed_ms": 1312,
+        "kind": "json",
+        "model": "qwen3.8-flash-next",
+        "probe": "flash-json",
+        "provider_id": "chatcmpl-17ca8fa6-4aaa-4602-95d2-68eda4f498bb",
+        "request_id": "26e2cc23-d316-4bff-ae4c-44f02d8b03ba",
+        "request_sha256": "3b2f12fbdfa14a365ee381fb96a3ebec39e590a8126abd355fde27ded067728c",
+        "reserve_micro_usd": 26624,
+        "response_sha256": "c9ead0b882002af7e179a087bf7694f7512f0ae81ae0c651e1b961f3b7d4e02e",
+        "schema_and_fixture_check": true,
+        "usage": {
+          "completion_tokens": 48,
+          "prompt_tokens": 83,
+          "total_tokens": 131
+        }
+      }
+    },
+    "inference-metering.json": {
+      "raw_sha256": "bd9e121c8a2f844767c2b21b9f340e8c5442ffeb1d4853e8e44a2052ebb2577f",
+      "value": {
+        "observed_at": "2026-11-03T22:35:23.893553+00:00",
+        "response_sha256": "4701c90e8a39a2ba7b8a6bea642902f8d88919c2c34bb9cf4155d0f5210f3cff",
+        "settled_reservations": false,
+        "usage": {
+          "current_month": {
+            "chat": 0,
+            "chat_input": 0,
+            "chat_usage": [
+              {
+                "input_tokens": 617,
+                "model": "qwen3.8-27b",
+                "output_tokens": 6716
+              },
+              {
+                "input_tokens": 617,
+                "model": "qwen3.8-flash-next",
+                "output_tokens": 4770
+              }
+            ],
+            "image": 0.0,
+            "image_sm": 0.0,
+            "tts": 0,
+            "tts_sm": 0
+          },
+          "previous_month": {
+            "chat": 0,
+            "chat_input": 0,
+            "chat_usage": [],
+            "image": 0.0,
+            "image_sm": 0.0,
+            "tts": 0,
+            "tts_sm": 0
+          }
+        }
+      }
+    },
+    "reboot-control.json": {
+      "raw_sha256": "0e084f5acc92a34e8d612989691d8b7633278aa82c21afebe4667c64a6da2d48",
+      "value": {
+        "dependency_probes_required": true,
+        "new_boot_id": true,
+        "recorded_at": "2026-11-03T22:45:10.528628+00:00",
+        "role": "control",
+        "same_machine_and_pinned_ssh": true,
+        "seconds": 34.44,
+        "services_active": [
+          "proofflow-health.service",
+          "proofflow-budget.service"
+        ]
+      }
+    },
+    "reboot-worker.json": {
+      "raw_sha256": "cd9e1cbe12d0f1c71da54f95904962de3d8347767eda7e00bc7860fbd9f803ee",
+      "value": {
+        "dependency_probes_required": true,
+        "new_boot_id": true,
+        "recorded_at": "2026-11-03T22:46:09.229418+00:00",
+        "role": "worker",
+        "same_machine_and_pinned_ssh": true,
+        "seconds": 37.02,
+        "services_active": [
+          "proofflow-worker.service"
+        ]
+      }
+    },
+    "source-readback.json": {
+      "raw_sha256": "bc51c51d338c009ea2d7233315f5efde9590f75f0a8eaccd841e8ccff84f09f4",
+      "value": {
+        "deployed_worker_sources_match": true,
+        "files": 17,
+        "source_manifest_sha256": "6fa062a0dc699e8d3f8cadf35748556fd153f6a793cf0c4c8e97ed8b54cebca7"
+      }
+    },
+    "ssh-boot-repair.json": {
+      "raw_sha256": "476c2aea959685298431ecb90bc6b46742c5541225b498ec963b8c4b71d1f92f",
+      "value": {
+        "control": {
+          "config_sha256": "ed3c6cdea94e78d55a22606a6bfd7afb2382535ec55cf5b51d9ba9080b6da88a",
+          "key_only_root": true,
+          "password_authentication": false,
+          "ports": [
+            22,
+            443
+          ],
+          "service": "enabled",
+          "socket": "disabled"
+        },
+        "worker": {
+          "config_sha256": "ed3c6cdea94e78d55a22606a6bfd7afb2382535ec55cf5b51d9ba9080b6da88a",
+          "key_only_root": true,
+          "password_authentication": false,
+          "ports": [
+            22,
+            443
+          ],
+          "service": "enabled",
+          "socket": "disabled"
+        }
+      }
+    },
+    "worker_identity": {
+      "raw_sha256": "00783e99b2d7e0c89497d1c933fbeba5733d92d7958d18377a7bdb48e57f9cbd",
+      "value": {
+        "identity": "matched_independent_install_pins",
+        "unauthorized_client_and_server_pin": "rejected"
+      }
+    }
+  },
+  "retained_failures": [
+    "Default63-child capacity fixture still FAILED; exact execution independently hit128 host tasks and pids.events max=1; containment passed, D54.",
+    "Two coding responses at2048 completion tokens rejected with finish_reason=length. New8192-bound request IDs passed; originals unchanged.",
+    "Initial control reboot lost public443 SSH for over180s. Private pinned-key recovery found socket/service startup mismatch; fixed both hosts, then new control34.44s/worker37.02s reboots passed.",
+    "FIFO guest creation denied before collection; actual FIFO collector path exercised by trusted Linux security tests, not claimed as deployed candidate-triggered FIFO rejection."
+  ],
+  "scope": "Private operator foundation and synthetic probes, not complete product or public release",
+  "source_files": [
+    {
+      "path": ".dockerignore",
+      "sha256": "c76ee957c486a33d858650c17b599ca0bf856bc31096878d2d37679cf5b90d7b"
+    },
+    {
+      "path": "api/__init__.py",
+      "sha256": "fabddcc014594d5b832bac085059d7a2ded54439ca094874eff26c4b7fa4f2c0"
+    },
+    {
+      "path": "api/app/__init__.py",
+      "sha256": "6b28ea34d68fc4a32ce595d3aeb6d1da523696e88e0ca436eed52f0c653707ec"
+    },
+    {
+      "path": "api/app/main.py",
+      "sha256": "72ac27d0876e9b97ca705c6487dac1a581712dab1fc23b5afbc2bec2fd4d7576"
+    },
+    {
+      "path": "db/phase1/001_budget.sql",
+      "sha256": "0c44956322f4c548f205239deec1e60cad5150a62d49abbab1060b3f8db40fdf"
+    },
+    {
+      "path": "db/phase1/002_runtime_roles.sql",
+      "sha256": "dbae668753b00c1324ea72843c2ba22d52bc9ec5940091e7f660e106a5a0e719"
+    },
+    {
+      "path": "db/phase1/003_probe_receipts.sql",
+      "sha256": "4a3229e058a2da0ac0f120126e276f791a584430537dff2817974950f892698a"
+    },
+    {
+      "path": "infra/gvisor/runsc-release.json",
+      "sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe"
+    },
+    {
+      "path": "infra/images/budget-postgres.Dockerfile",
+      "sha256": "b68779ec9a3e73d018d3264796e478395992aca0154cd0e569d2466894eefe5a"
+    },
+    {
+      "path": "infra/images/control-build-requirements.txt",
+      "sha256": "8e4da4de9431ea29429933f4a2169046e0c6205b7fbd6d4e609622732d2d801f"
+    },
+    {
+      "path": "infra/images/control-requirements.txt",
+      "sha256": "d213bf4d24fd17475d36ac2837c543b99ddc247833def52a907952af3ce83ba2"
+    },
+    {
+      "path": "infra/images/control-runtime.Dockerfile",
+      "sha256": "2c4550536e280c579d60196d339aded4519ff446a7b471f37c6be4bce218b931"
+    },
+    {
+      "path": "infra/images/control.Dockerfile",
+      "sha256": "53394faf9a422edff987993cc5a8e57b788f16c5842cdf63812ed316e5079b7e"
+    },
+    {
+      "path": "infra/images/inference-check-requirements.txt",
+      "sha256": "3fb82df376e6c5039403872ec0281f8550d4fdb0c43568e6daab015cef2bc882"
+    },
+    {
+      "path": "infra/images/inference-check.Dockerfile",
+      "sha256": "4a351cb3915375766aa2ceaefed45ecf490e1a0f58babc61bf9e64071f7cdb76"
+    },
+    {
+      "path": "infra/images/worker-requirements.txt",
+      "sha256": "e8d0caf5ac1c5331c34abe6564fc0b0a727915916e0985dc8b025223799296d3"
+    },
+    {
+      "path": "infra/images/worker.Dockerfile",
+      "sha256": "495914da7322013f2f2e51c9750eb85245787ff6500e0c9187b6edd27a476812"
+    },
+    {
+      "path": "infra/postgres/pg_hba.conf",
+      "sha256": "5be0bc1fe62d5d28626a703529550d0695343c0a72a49028b792087d59210f4f"
+    },
+    {
+      "path": "infra/postgres/postgresql.conf",
+      "sha256": "8d898b2ac85be6bfa91e3dbabf9b10e9ab12fad8ed21412078ff0e3288c0f376"
+    },
+    {
+      "path": "infra/systemd/proofflow-worker.service",
+      "sha256": "2d3e8250499bbdb120a34a53750968ab2193b3ff01040fd6d8a6e5ee22165855"
+    },
+    {
+      "path": "orchestrator/__init__.py",
+      "sha256": "b6237e4043086a66670b1e12a938c5e2af4555365e11febd58b8db2f513af840"
+    },
+    {
+      "path": "orchestrator/budget_store.py",
+      "sha256": "e8d9440aa67d04761aef88fec7241bef1fda2c51c986feaf472108b17a12f46f"
+    },
+    {
+      "path": "orchestrator/probe_journal.py",
+      "sha256": "9cc5054567f62f7f2472e403ae5da32f1f08ac4fa98e20341295c7e9371e9057"
+    },
+    {
+      "path": "orchestrator/probe_plan.py",
+      "sha256": "00af2f4037712b29d6705d64e43b9284dfd45811ef22319c5159ec875629239f"
+    },
+    {
+      "path": "orchestrator/probe_response.py",
+      "sha256": "e3702f4452031656cd434c3b9783b970b35c57c9fd7e859deda79f3df3e14b01"
+    },
+    {
+      "path": "orchestrator/provider_setup.py",
+      "sha256": "5b45ab86177a218a3d592893393805845ee072f62287f0afe5ad2abf680178fd"
+    },
+    {
+      "path": "orchestrator/vultr_probe.py",
+      "sha256": "51d1a0501fca94e0b317e4a6cc1e90f37c3af1803797221f3377cfb6b4b92325"
+    },
+    {
+      "path": "orchestrator/worker_client.py",
+      "sha256": "07a6ec958e0b5c6c72ef9ee8a8016a16a3917d827f46ace887ca88b4432bb539"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "38269e6332d025f4aa42402a9ab9a266ba12124268836f428964a37dac889e6d"
+    },
+    {
+      "path": "scripts/Read-VultrAccount.ps1",
+      "sha256": "45f54b651a86af1d42c7e68ebbe1981c4e99b8c5b6d7f1d949c17594a1229635"
+    },
+    {
+      "path": "scripts/Save-VultrCredential.ps1",
+      "sha256": "3058b440679cbd0b2f621772a4318d62f0ab2e939341e0a81e6a37c563211d6b"
+    },
+    {
+      "path": "scripts/Watch-VultrCredit.ps1",
+      "sha256": "5ae38174e177f3fc258aff8816684386ff8207b481571164abf4798694ed3db1"
+    },
+    {
+      "path": "scripts/activate_vultr_inference.py",
+      "sha256": "01e1dc4666d23a8b3fcf496660bd127e788a3b391e5892d85cba143f9c9a8296"
+    },
+    {
+      "path": "scripts/backup_budget_offvm.py",
+      "sha256": "6f77ae5df13aca73e7d67b8926070949458503d6557c6a320cdcdadd1d2b940a"
+    },
+    {
+      "path": "scripts/build_worker_rootfs.py",
+      "sha256": "987ea3ed7f3f6f64133af8b56c9308da839ecf1c37fdab2ea2ee55c37d23e681"
+    },
+    {
+      "path": "scripts/check_budget_postgres.py",
+      "sha256": "36d98a2e865a982130c54027cc5d02d51749de9560f12acfd221498c69202e55"
+    },
+    {
+      "path": "scripts/check_budget_restore_host.py",
+      "sha256": "34ed5cbc214b6f07b6240093afec2be14ef99386e57cf6d74dc5bc5947fd2202"
+    },
+    {
+      "path": "scripts/check_control_image.py",
+      "sha256": "5b7a06c4dafadac76557ff2bd07830308945dace01a729c3015c2186e5c07cd6"
+    },
+    {
+      "path": "scripts/check_deployed_budget.py",
+      "sha256": "aaf7c3709c83e9cdf4b60c580ed5d977ab712195a16cbc7af72aec370f2fa712"
+    },
+    {
+      "path": "scripts/check_deployed_https.py",
+      "sha256": "3c3b624713be929c9d172a060fef4b7b99be3f9e351361c7cefa5b590034e01d"
+    },
+    {
+      "path": "scripts/check_deployed_reboot.py",
+      "sha256": "e9e0279de4202d28f3267c6ae67f4fcb717a40917ea7330dfedd13d2acb516bb"
+    },
+    {
+      "path": "scripts/check_preparation.py",
+      "sha256": "cd615e3afe6d1d2815afd4d38d6439f241cd8a344995bddd14745006e1f6d1da"
+    },
+    {
+      "path": "scripts/cleanup_network_probes.py",
+      "sha256": "a35c81d3dc5effea05ae1aaf29188724082196c62e890b02fd34b1c56ace7ddf"
+    },
+    {
+      "path": "scripts/deploy_budget.py",
+      "sha256": "b0b005d0900e387ed4bfd6bc98e8e518e73897ba4a17caefe5cfa6a3d3212b80"
+    },
+    {
+      "path": "scripts/deploy_control_images.py",
+      "sha256": "8a683213ed7760998747d424eaa0ee2db5d52011109c50a74b0c769bcd9f07c3"
+    },
+    {
+      "path": "scripts/deploy_health.py",
+      "sha256": "c317fb6190f467cf171d8c5b7cabe9f7b2fdca48883474ec603dfc72b0948987"
+    },
+    {
+      "path": "scripts/deploy_worker.py",
+      "sha256": "9de37e4e90b5c7c64ef9afa3c390a10af6a648fef9601484430ad1a264b8038a"
+    },
+    {
+      "path": "scripts/install_budget_host.py",
+      "sha256": "e564ff971cd412fb0445e3c29ac71e4c284e484bb769118a6983c4e465c257fe"
+    },
+    {
+      "path": "scripts/install_control_docker.sh",
+      "sha256": "c84ec7182e7ce417dd8f9d8c0c47e3164184620e380e13636cdf66cf286d51d2"
+    },
+    {
+      "path": "scripts/install_probe_controller.py",
+      "sha256": "fdf5383a46411b4f7586eb9d0ba3b33f30e4a4e46ab11030a8b19a165f360929"
+    },
+    {
+      "path": "scripts/install_worker_host.py",
+      "sha256": "c4ffa0f11d616a48d38fe3e2315fe812df9f33670d4d7dd7ad8ccaae2c8e1938"
+    },
+    {
+      "path": "scripts/prepare_control_docker.sh",
+      "sha256": "12376f0186ee47d7bd402c5818d3bae7d76eab6d0585dbaa22dd447564489e4a"
+    },
+    {
+      "path": "scripts/prepare_health_pki.py",
+      "sha256": "0cb0cf9c0048cdb265b33bf189e0204068d912bbbf5041a5b450e74eb6bae9e7"
+    },
+    {
+      "path": "scripts/prepare_network_probes.py",
+      "sha256": "e3ea0f8462b1f56f31dd1be686ed8f66dc881314cd9b287831c13449f68cf1cf"
+    },
+    {
+      "path": "scripts/probe_generated_controller.py",
+      "sha256": "b60f2a9996d03b64435dc34d4131e0b323673e86f928503812fa4a9b905a821e"
+    },
+    {
+      "path": "scripts/probe_host_pids.py",
+      "sha256": "44d37ca4ea1b6e7ce8b8ae978aa231eedec274994a027cd7b157f44ddd5cde01"
+    },
+    {
+      "path": "scripts/probe_vultr_deployed.py",
+      "sha256": "8b841f1cf267949da3b7f340e5a17f905050bfc7615b39b8ba9b2c501f3348b0"
+    },
+    {
+      "path": "scripts/probe_worker_controller.py",
+      "sha256": "32505dcfcdee32599c43b24f84ce8758ab4da5ddaed1c1da41313e0582c3771c"
+    },
+    {
+      "path": "scripts/probe_worker_crash_controller.py",
+      "sha256": "5d98c26770cfc41e67c492eafaa3d6701782a81a876e21618efecd3b4aca6dee"
+    },
+    {
+      "path": "scripts/read_inference_usage_deployed.py",
+      "sha256": "e9cb4e82f1bdb1b7880c0159527c94295df587e15b027e13ce05a133f185495b"
+    },
+    {
+      "path": "scripts/repair_ssh_startup.py",
+      "sha256": "963dd0803e23d83d03a965418fcf5dd63e839df483b50504c2cbc9db35438b6d"
+    },
+    {
+      "path": "scripts/run_vultr_probes.py",
+      "sha256": "7266af9f75539c6215cf15d35317de48f0181178f37e2ecc409de83a5327fbbe"
+    },
+    {
+      "path": "scripts/run_worker_crash_probe.py",
+      "sha256": "6a58cfb5aa5138ff1b1d61f1f513aa381285ec7d39be67657331094795679a05"
+    },
+    {
+      "path": "scripts/run_worker_suite.py",
+      "sha256": "ea56ba04f54fc50c7d24a29b7ce8de95b89903e75de2593361701eb42663cb8c"
+    },
+    {
+      "path": "scripts/update_worker_image.py",
+      "sha256": "3f575d76548303720a21d54606acadce63cc4448446c9acac896e7da756fa7d0"
+    },
+    {
+      "path": "scripts/vultr_credit_guard.py",
+      "sha256": "520c1f5f8cc4f7a8468fb6cb4e179a73a34cac195dc2837eee04dba24363ff49"
+    },
+    {
+      "path": "scripts/vultr_phase1.py",
+      "sha256": "d55101f4a011df998e0cc04a4afe8be773e1c177b9edfd576ffa21addbf9aaa7"
+    },
+    {
+      "path": "tests/integration/budget_client_check.py",
+      "sha256": "8c8dc672426b08dd96006e1d41d4e234f6e6a906f4d89040dbbe37f6c8a9ea1a"
+    },
+    {
+      "path": "tests/integration/test_health_http.py",
+      "sha256": "fd4b6f71524d247faa2671c532ec2ae37a2df93af85a1ccdf2a1cf26762ed371"
+    },
+    {
+      "path": "tests/security/rootfs_linux_check.py",
+      "sha256": "ee2f1eda3d7a6766989f8befa4a835a45df016393f51ea00535ee7dfaf55b435"
+    },
+    {
+      "path": "tests/security/supervisor_linux_check.py",
+      "sha256": "7f9881873e14f00ca2591ddf83e209109723a1e978bcb1d22140614c0b2d6c33"
+    },
+    {
+      "path": "tests/security/test_collector.py",
+      "sha256": "0c1302b9cbcc7a7181e603f736ad21c77a74384630815dfd9a4ed0968ee1602f"
+    },
+    {
+      "path": "tests/security/test_host_files_linux.py",
+      "sha256": "958a7134064b6e6932d5a7ad469150215360b8d3e730153f7dba63298c9034cd"
+    },
+    {
+      "path": "tests/security/test_provider_setup_linux.py",
+      "sha256": "4aa96fce5e86a5f978816867abbcc3ecfe7b2bcb41665e0e43d3e57ce7a4011d"
+    },
+    {
+      "path": "tests/security/test_runtime_bundle_linux.py",
+      "sha256": "9e014a3ea31f1fac6cfe2d15887748c071a2db5f06756852b101c8f9756f2567"
+    },
+    {
+      "path": "tests/security/test_supervisor_journal.py",
+      "sha256": "44076273e2f29520fb5f812c2b40adcc58b45007d03935d8dfd46badcb27a9d6"
+    },
+    {
+      "path": "tests/security/worker_rpc_linux_check.py",
+      "sha256": "5044f456ec46e06423f9c41c834b0904fdd3c9c821364d47946d12493895b2bb"
+    },
+    {
+      "path": "tests/unit/test_budget_store.py",
+      "sha256": "f31b10f01c9bf277c7996d7b79c57cfa578410707793b0ba5f1696611cc1497b"
+    },
+    {
+      "path": "tests/unit/test_control_image_hardening.py",
+      "sha256": "da221279bbc982bb950336b6f9f807785aa59676a20a2d74bd24df1e1c8ea9ea"
+    },
+    {
+      "path": "tests/unit/test_health.py",
+      "sha256": "755a7e31579bc6760f3f857d503e22c11ed3ca9e7f26da2306059d769188698a"
+    },
+    {
+      "path": "tests/unit/test_log_capture.py",
+      "sha256": "357bc526ba820d545855c5354648bcb5a673babea4bd51f06daf0e387abfc546"
+    },
+    {
+      "path": "tests/unit/test_probe_journal.py",
+      "sha256": "c3cf8a00ef9ff694243fe1f437024473f2a5210777ef86ce70cc2e8753f9ce60"
+    },
+    {
+      "path": "tests/unit/test_probe_plan.py",
+      "sha256": "08ce262792c945233bc957b1ae01e0478d6c881927356508366fcddc7c187cda"
+    },
+    {
+      "path": "tests/unit/test_probe_response.py",
+      "sha256": "1b26feed1d3ca40f11451fea31b87992874ffc437766ed37a78e06ed09daa404"
+    },
+    {
+      "path": "tests/unit/test_rootfs_archive.py",
+      "sha256": "ab449e3234b38a2d1dd95113e2b2cbe411a23627ac7b1e6d87ed21d54eff282e"
+    },
+    {
+      "path": "tests/unit/test_runtime_bundle.py",
+      "sha256": "9b7e7a1dcc7de931da513c825ae17ed65f7aca8622240957eaea385ba733fe62"
+    },
+    {
+      "path": "tests/unit/test_vultr_credit_guard.py",
+      "sha256": "ff192ae989444009f1717c2f73b6b15361e9c03f62994ffcb7b410a5f6dbe250"
+    },
+    {
+      "path": "tests/unit/test_vultr_probe.py",
+      "sha256": "84af5adb69e2500968171856ae50146904fa21a2be8abf6f07119d5762e3e090"
+    },
+    {
+      "path": "tests/unit/test_worker_launcher_policy.py",
+      "sha256": "664433dd37d5f28d157baefebefe3ced62af03252b9d2447f8e641756e4ad8de"
+    },
+    {
+      "path": "tests/unit/test_worker_metrics.py",
+      "sha256": "ca561c30367b353d54cb568374e60ad1f531c1ecbb2933da1fbbd37869d94e6a"
+    },
+    {
+      "path": "tests/unit/test_worker_protocol.py",
+      "sha256": "b3892798e8a8b03fb0a110b099035f1eb8c146e2e67928828d0c75490d6f7ab8"
+    },
+    {
+      "path": "tests/unit/test_worker_service.py",
+      "sha256": "3f2289e9f6bce5d2e86889ef855de717b0c5b7e61d1784e1f226847991752727"
+    },
+    {
+      "path": "tests/unit/test_writer_termination.py",
+      "sha256": "0fb28ffcd082027819409a7336725e7b9403788c9220d3edd57a31d08baa1f77"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "b7eafc19025b234ef886c03658ee7a329b0cd55825f59948bfdebab908e399ac"
+    },
+    {
+      "path": "worker/__init__.py",
+      "sha256": "0930f74db3b1c2bf464f225b6349c1f2a35c411e2504fb4a850b5f464bb6b9dc"
+    },
+    {
+      "path": "worker/collector.py",
+      "sha256": "0e396d6f4c1e63b8b34f6c090445ecbe0cd6c056fcd4a2b27c1390c285023e38"
+    },
+    {
+      "path": "worker/entrypoint.py",
+      "sha256": "988f37e4c510afae1611bf8cfdf925c52f96ca1bc033ebe2ad53e186a8c282eb"
+    },
+    {
+      "path": "worker/environment/pyproject.toml",
+      "sha256": "829cfd777edea5d93e3a0f5de773d538ecff4db29d3038a061d0d99bd7a288e4"
+    },
+    {
+      "path": "worker/environment/uv.lock",
+      "sha256": "38f18ecf25de0f31420d0d0ec58678dfdb38d9307ef67ed44d4e8aa24f93d1db"
+    },
+    {
+      "path": "worker/host.py",
+      "sha256": "13b768a57637debbb4fd77a0be8a2725d2399c039c526a5e752daa5c5c030652"
+    },
+    {
+      "path": "worker/journal.py",
+      "sha256": "fec480a5de2860093637afeca5752d75964414d4d868b5f529fffed981b4d0c0"
+    },
+    {
+      "path": "worker/launcher.py",
+      "sha256": "f7bbe39731b914f56aa33fe083a6450c073df9f74db7cfeb9720872139d1b6dc"
+    },
+    {
+      "path": "worker/log_capture.py",
+      "sha256": "b9507c79aafd4adab77b47b430ac594a2faa10cd13287653a1d6eb84a4c0d2c8"
+    },
+    {
+      "path": "worker/metrics.py",
+      "sha256": "1c3a9565b362d0a16f56a44b24074650ebcdda253c0a08a9202a8ccab9c6107c"
+    },
+    {
+      "path": "worker/protocol.py",
+      "sha256": "7aaf319f4baa1cc821fc15aeaad4a0bff865730636412dd988d0f7aa87cc0e5a"
+    },
+    {
+      "path": "worker/rootfs.py",
+      "sha256": "5283c965736359afd4d53a5387fd6057e0755743bc7d65e95dbd560157fd9b75"
+    },
+    {
+      "path": "worker/runtime.py",
+      "sha256": "efd94d6c628bcf4f8833901c3948bc67a9e230aa7f5740aca012efac3acefc6f"
+    },
+    {
+      "path": "worker/runtime_bundle.py",
+      "sha256": "b65b8d526f0b94c2e352aac5d17bb5ff91068424446627dd3ffc9a342e0194a9"
+    },
+    {
+      "path": "worker/service.py",
+      "sha256": "0e7ba2316d5bab505006e98ed70f436a68302215fcdc146c2582c6f07cf5368b"
+    },
+    {
+      "path": "worker/staging.py",
+      "sha256": "4b84e4c6e238ba3a3b97e08294b69f721f04316d1dba9e299c665fcf25e4a3a2"
+    },
+    {
+      "path": "worker/start_gate.py",
+      "sha256": "9ea60b791822935da6b25d7ed79a91c80844ccb451bc3f64bb55445581e95e3b"
+    },
+    {
+      "path": "worker/supervisor.py",
+      "sha256": "268d66e05f8de07302b6e0f20fb5f0ee4cc0acefd65c2e69be84bcef6f71f86c"
+    },
+    {
+      "path": "worker/wire.py",
+      "sha256": "8e9bafd7fba1c0ad92aa8fe153c15ac39a16e7eae3574e968ede740eb03bee9b"
+    }
+  ],
+  "spending": {
+    "checked_at": "2026-11-03T22:47:16.447568+00:00",
+    "credit_remaining_observed": "199.77",
+    "estimate_is_invoice": false,
+    "funded_review_due_at": "2026-11-06T21:05:35.177139+00:00",
+    "held_reservation_micro_usd": 279349,
+    "inference_cap_usd": 25,
+    "inference_requests": 8,
+    "parsed_responses": 6,
+    "probe_cap_usd": 2,
+    "project_cap_usd": 150,
+    "provider_nonoverage_guarantee": false,
+    "settled_reservations": false,
+    "token_rate_estimate_usd": "0.00782425",
+    "truncated_responses_rejected": 2
+  }
+}

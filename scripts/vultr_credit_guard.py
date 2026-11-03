@@ -39,7 +39,10 @@ def stop_reason(account: dict, state: dict, now: datetime) -> str | None:
 def run(admin: Admin, now: datetime) -> dict:
     if admin.state.get("project") != LABEL:
         raise RuntimeError("GUARD_PROJECT_MISMATCH")
-    account = admin.request("GET", "/account")["account"]
+    try:
+        account = admin.request("GET", "/account")["account"]
+    except Exception:
+        account = {}  # Missing accounting closes admission; still try exact owned teardown.
     reason = stop_reason(account, admin.state, now)
     guard = admin.state.setdefault("credit_guard", {})
     guard.update({"checked_at": now.isoformat(), "early_stop_usd": str(EARLY_STOP_USD),
@@ -53,34 +56,52 @@ def run(admin: Admin, now: datetime) -> dict:
                 "review_due_at": admin.state["review_due_at"]}
     guard["admission_closed"] = True
     admin.save()  # Latch before any destructive request. No automatic recreation.
-    deleted = []
-    # Exact known project resources only. Never enumerate/delete other account assets.
+    resources = admin.state.get("resources", {})
+    targets = []
+    if resources.get("inference"):
+        targets.append(("inference", "/inference/", "subscription", resources["inference"],
+                        {"label": LABEL + "-inference"}))
     for role, plan in PLANS.items():
-        identifier = admin.state.get("resources", {}).get("vm_" + role)
-        if not identifier:
-            continue
-        if not re.fullmatch(r"[a-zA-Z0-9-]{1,64}", identifier):
-            raise RuntimeError("GUARD_RESOURCE_ID_INVALID")
+        if resources.get("vm_" + role):
+            targets.append((role, "/instances/", "instance", resources["vm_" + role],
+                            {"label": LABEL + "-" + role, "plan": plan, "region": "icn"}))
+    deleted, pending = [], []
+    for role, prefix, key, identifier, expected in targets:
         try:
-            instance = admin.request("GET", "/instances/" + identifier)["instance"]
-        except RuntimeError as error:
-            if str(error) != "VULTR_HTTP_404":
-                raise
-        else:
-            if (instance["label"] != LABEL + "-" + role or instance["plan"] != plan
-                    or instance["region"] != "icn" or LABEL not in instance.get("tags", [])):
-                raise RuntimeError("GUARD_RESOURCE_IDENTITY_MISMATCH")
-            admin.request("DELETE", "/instances/" + identifier)
+            if not re.fullmatch(r"[a-zA-Z0-9-]{1,64}", identifier):
+                raise RuntimeError("GUARD_RESOURCE_ID_INVALID")
+            route = prefix + identifier
             try:
-                admin.request("GET", "/instances/" + identifier)
+                observed = admin.request("GET", route)[key]
             except RuntimeError as error:
                 if str(error) != "VULTR_HTTP_404":
                     raise
             else:
-                raise RuntimeError("GUARD_DELETION_PENDING_READBACK")
-        deleted.append(role)
+                if (any(observed.get(k) != v for k, v in expected.items())
+                        or observed.get("id") != identifier
+                        or (key == "instance" and LABEL not in observed.get("tags", []))):
+                    raise RuntimeError("GUARD_RESOURCE_IDENTITY_MISMATCH")
+                admin.request("DELETE", route)
+                try:
+                    admin.request("GET", route)
+                except RuntimeError as error:
+                    if str(error) != "VULTR_HTTP_404":
+                        raise
+                else:
+                    raise RuntimeError("GUARD_DELETION_PENDING_READBACK")
+            if role == "inference":
+                guard["inference_revoked"] = True
+            else:
+                deleted.append(role)
+        except Exception:
+            # One unavailable/mismatched resource must not prevent safe teardown
+            # of the other exact owned resources. Never delete an unverified ID.
+            pending.append(role)
         guard["deleted_vm_roles"] = deleted.copy()
+        guard["pending_resource_roles"] = pending.copy()
         admin.save()
+    if pending:
+        raise RuntimeError("GUARD_DELETION_UNCONFIRMED")
     # Inference dispatch runs only on the control VM; deleting it terminates its
     # credentials/callers. Unknown in-flight usage remains reserved in the ledger.
     guard["completed_at"] = now.isoformat()

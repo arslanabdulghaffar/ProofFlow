@@ -62,7 +62,7 @@ class Cloud:
             return {}
         if role in self.deleted:
             raise RuntimeError("VULTR_HTTP_404")
-        return {"instance": {"label": "unrelated" if self.mismatch else
+        return {"instance": {"id": "owned-" + role, "label": "unrelated" if self.mismatch else
                              "proofflow-phase1-" + role,
                              "plan": "vhp-2c-4gb-amd" if role == "control"
                              else "vhp-4c-8gb-amd", "region": "icn",
@@ -78,7 +78,7 @@ def test_only_exact_project_ids_deleted_and_absence_read_back():
 
 def test_identity_mismatch_does_not_delete():
     cloud = Cloud(mismatch=True)
-    with pytest.raises(RuntimeError, match="IDENTITY_MISMATCH"):
+    with pytest.raises(RuntimeError, match="DELETION_UNCONFIRMED"):
         run(cloud, NOW)
     assert not cloud.deleted
     assert cloud.persisted["credit_guard"]["admission_closed"]
@@ -86,7 +86,77 @@ def test_identity_mismatch_does_not_delete():
 
 def test_uncertain_delete_reconciles_absence_without_second_delete():
     cloud = Cloud(lose_delete_reply=True)
-    with pytest.raises(RuntimeError, match="CONNECTION_LOST"):
+    with pytest.raises(RuntimeError, match="DELETION_UNCONFIRMED"):
         run(cloud, NOW)
     run(cloud, NOW)
     assert cloud.calls.count(("DELETE", "/instances/owned-control")) == 1
+
+
+class InferenceCloud(Cloud):
+    def __init__(self, *, wrong_label=False, lose_reply=False):
+        super().__init__()
+        self.state["resources"]["inference"] = "owned-subscription"
+        self.wrong_label, self.lose_reply = wrong_label, lose_reply
+        self.revoked = False
+
+    def request(self, method, route):
+        if not route.startswith("/inference/"):
+            return super().request(method, route)
+        self.calls.append((method, route))
+        assert route == "/inference/owned-subscription"
+        if method == "DELETE":
+            assert self.persisted["credit_guard"]["admission_closed"]
+            self.revoked = True
+            if self.lose_reply:
+                self.lose_reply = False
+                raise RuntimeError("CONNECTION_LOST")
+            return {}
+        if self.revoked:
+            raise RuntimeError("VULTR_HTTP_404")
+        return {"subscription": {"id": "owned-subscription", "label": "unrelated"
+                                 if self.wrong_label else "proofflow-phase1-inference"}}
+
+
+def test_guard_revokes_exact_subscription_before_compute_and_reads_absence():
+    cloud = InferenceCloud()
+    run(cloud, NOW)
+    assert cloud.revoked and cloud.persisted["credit_guard"]["inference_revoked"]
+    assert cloud.calls.index(("DELETE", "/inference/owned-subscription")) < cloud.calls.index(
+        ("DELETE", "/instances/owned-control"))
+
+
+def test_guard_refuses_changed_subscription():
+    cloud = InferenceCloud(wrong_label=True)
+    with pytest.raises(RuntimeError, match="DELETION_UNCONFIRMED"):
+        run(cloud, NOW)
+    assert not cloud.revoked
+
+
+def test_guard_reconciles_lost_subscription_delete_without_replay():
+    cloud = InferenceCloud(lose_reply=True)
+    with pytest.raises(RuntimeError, match="DELETION_UNCONFIRMED"):
+        run(cloud, NOW)
+    run(cloud, NOW)
+    assert cloud.calls.count(("DELETE", "/inference/owned-subscription")) == 1
+    assert cloud.deleted == {"control", "worker"}
+
+
+def test_missing_account_response_closes_admission_but_still_stops_owned_resources():
+    cloud = Cloud()
+    request = cloud.request
+    def fail_account(method, route):
+        if route == "/account":
+            raise RuntimeError("ACCOUNT_ENDPOINT_UNAVAILABLE")
+        return request(method, route)
+    cloud.request = fail_account
+    assert run(cloud, NOW)["reason"] == "ACCOUNTING_UNAVAILABLE"
+    assert cloud.deleted == {"control", "worker"}
+
+
+def test_subscription_failure_does_not_leave_known_compute_running():
+    cloud = InferenceCloud(wrong_label=True)
+    with pytest.raises(RuntimeError, match="DELETION_UNCONFIRMED"):
+        run(cloud, NOW)
+    assert cloud.deleted == {"control", "worker"}
+    assert not cloud.revoked
+    assert cloud.persisted["credit_guard"]["pending_resource_roles"] == ["inference"]

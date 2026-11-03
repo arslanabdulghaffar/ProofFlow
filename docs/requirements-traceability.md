@@ -1,5 +1,7 @@
 # Requirements traceability
 
+Current Phase1 evidence: [acceptance receipt](evidence/phase1-acceptance-2026-11-04.json). IMPLEMENTED_PHASE1 means the named infrastructure requirement has real deployed evidence; it does not assert a finished product, public release or independent human approval. Composite rows involving future API, browser, approval, restic or repair behavior remain deferred even where foundation evidence now exists. Historical paragraphs below retain the original checkpoint context.
+
 Actual deployed R26/R27 evidence now covers pandas/nonroot/read-only/network/CPU/RAM/thread/storage/inodes/capture/ordinary timeout and cleanup. Default fork capacity and deployed supervisor/control death remain open. See evidence/phase1-deployed-2026-11-04.json; no phase-completion claim.
 
 ## Real deployment status — Nov 4
@@ -38,7 +40,7 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R04-01 | 4 | CONTEXT | INFO | Review delivery, appendices and source-reference navigation | [source-review.md](source-review.md) | Pages 32–59 read; trace entries below | None | IMPLEMENTED_DOC |
 | R05-01 | 5 | OFFICIAL | P0 | Deploy backend and web app on Vultr; identify control and worker | [rules.md](rules.md) | G-03 deployment manifest and public HTTPS | Phase 1 account/timing | DEFERRED_PHASE1 |
 | R05-02 | 5 | OFFICIAL | P0 | Use Vultr Serverless Inference for all application agent calls | [rules.md](rules.md) | T06 provider IDs/usage, G-03 | Phase 1 account/timing | DEFERRED_PHASE1 |
-| R05-03 | 5 | OFFICIAL | P0 | Isolate execution with resource caps, secret separation and lifecycle cleanup | [rules.md](rules.md) | T07 receipts, G-06 | Phase 1 account/timing | DEFERRED_PHASE1 |
+| R05-03 | 5 | OFFICIAL | P0 | Isolate execution with resource caps, secret separation and lifecycle cleanup | [rules.md](rules.md) | T07 receipts, G-06 | Phase 1 account/timing | IMPLEMENTED_PHASE1 |
 | R05-04 | 5 | OFFICIAL | P0 | Publish repository/setup, public demo, real recorded containment and architecture | [release.md](release.md) | G-10/G-11 links and playable media | Explicit publication permission | BLOCKED_OWNER |
 | R05-05 | 5 | OFFICIAL | P0 | Original MIT-compliant team-owned submission with attribution; 1–6 enrolled members | [release.md](release.md) | Ownership clearance, enrollment and notices | Explicit publication permission | BLOCKED_OWNER |
 | R05-06 | 5 | OFFICIAL | P0 | Complete title/descriptions/tags/cover/video/slides/platform links | [release.md](release.md) | Actual submission form and confirmation | Explicit publication permission | BLOCKED_OWNER |
@@ -83,7 +85,7 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R14-02 | 14 | DESIGN | P0 | Separate two VMs, trusted verifier, artifacts, Caddy and restricted worker | [architecture.md](architecture.md) | T07,T21 deployed topology | Phase 1 account/runtime | DEFERRED_PHASE1 |
 | R14-03 | 14 | DESIGN | P0 | Use encrypted restic off-VM backup and scoped GitHub/batch integration | [architecture.md](architecture.md) | T16,T17,T22 | Phase 1 account/runtime | DEFERRED_PHASE1 |
 | R14-04 | 14 | DESIGN | P0 | Record OS/Python/Node/pandas/runsc/image/model/prompt/source identities; no latest release pins | [architecture.md](architecture.md) | Release manifest; provider drift disclosed | Phase 1 account/runtime | DEFERRED_PHASE1 |
-| R14-05 | 14 | DESIGN | P0 | Prove real model coding/JSON and runsc compatibility before feature expansion | [architecture.md](architecture.md) | Phase 1 exit evidence | Phase 1 account/runtime | DEFERRED_PHASE1 |
+| R14-05 | 14 | DESIGN | P0 | Prove real model coding/JSON and runsc compatibility before feature expansion | [architecture.md](architecture.md) | Phase 1 exit evidence | Phase 1 account/runtime | IMPLEMENTED_PHASE1 |
 | R15-01 | 15 | DESIGN | P0 | Separate browser/controller/provider/worker/candidate/verifier/GitHub permissions | [architecture.md](architecture.md) | T07,T09,T10,T17 | Phase 1–2 boundaries | DEFERRED_PHASE2 |
 | R15-02 | 15 | DESIGN | P0 | Authenticate/hash/parse source, run original, collect actual bytes, independently check, propose and recheck | [architecture.md](architecture.md) | T06 end-to-end manifests | Phase 1–2 boundaries | DEFERRED_PHASE2 |
 | R15-03 | 15 | DESIGN | P0 | Only configured verifier identity for exact inputs/code/contract/runtime/output may confer pass | [architecture.md](architecture.md) | Forged PASS/report tests; T02,T18 | Phase 1–2 boundaries | DEFERRED_PHASE2 |
@@ -141,15 +143,15 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R25-04 | 25 | DESIGN | P0 | Preserve declared regressions; no fixture-ID answer embedding; compare complete rewrite to D | [inference.md](inference.md) | T05,T20 | Phase 2 schemas + Phase 1 model | DEFERRED_PHASE3 |
 | R25-05 | 25 | DESIGN | P0 | Owner clarification creates new contract/job; model diagnosis remains hypothesis | [inference.md](inference.md) | T13,T19 | Phase 2 schemas + Phase 1 model | DEFERRED_PHASE3 |
 | R26-01 | 26 | DESIGN | P0 | Private mTLS execution protocol with immutable ID/generation/image/manifest/limit/deadline | [sandbox.md](sandbox.md) | T07,T15 auth and replay probes | Phase 1 Linux compatibility | DEFERRED_PHASE1 |
-| R26-02 | 26 | DESIGN | P0 | Explicit pinned runsc, non-root/no caps/no-new-privileges/no host namespace/devices | [sandbox.md](sandbox.md) | T07 runtime/config evidence | Phase 1 Linux compatibility | DEFERRED_PHASE1 |
-| R26-03 | 26 | DESIGN | P0 | Read-only root/input/code; bounded write mounts; no keys/home/host/socket | [sandbox.md](sandbox.md) | T07,T08 | Phase 1 Linux compatibility | DEFERRED_PHASE1 |
-| R26-04 | 26 | DESIGN | P0 | No candidate DNS/egress/metadata and no runtime dependency installs | [sandbox.md](sandbox.md) | T07,T10 | Phase 1 Linux compatibility | DEFERRED_PHASE1 |
-| R26-05 | 26 | DESIGN | P0 | Enforce CPU/RAM/guest tasks/storage/wall watchdog independently | [sandbox.md](sandbox.md) | Individual T07 controls, not host PID assumption | Phase 1 Linux compatibility | DEFERRED_PHASE1 |
-| R26-06 | 26 | DESIGN | P0 | Fresh sandbox, stop writers before safe collection, remove container/volumes/staging | [sandbox.md](sandbox.md) | T07,T08,T15 cleanup evidence | Phase 1 Linux compatibility | DEFERRED_PHASE1 |
+| R26-02 | 26 | DESIGN | P0 | Explicit pinned runsc, non-root/no caps/no-new-privileges/no host namespace/devices | [sandbox.md](sandbox.md) | T07 runtime/config evidence | Phase 1 Linux compatibility | IMPLEMENTED_PHASE1 |
+| R26-03 | 26 | DESIGN | P0 | Read-only root/input/code; bounded write mounts; no keys/home/host/socket | [sandbox.md](sandbox.md) | T07,T08 | Phase 1 Linux compatibility | IMPLEMENTED_PHASE1 |
+| R26-04 | 26 | DESIGN | P0 | No candidate DNS/egress/metadata and no runtime dependency installs | [sandbox.md](sandbox.md) | T07,T10 | Phase 1 Linux compatibility | IMPLEMENTED_PHASE1 |
+| R26-05 | 26 | DESIGN | P0 | Enforce CPU/RAM/guest tasks/storage/wall watchdog independently | [sandbox.md](sandbox.md) | Individual T07 controls, not host PID assumption | Phase 1 Linux compatibility | IMPLEMENTED_PHASE1 |
+| R26-06 | 26 | DESIGN | P0 | Fresh sandbox, stop writers before safe collection, remove container/volumes/staging | [sandbox.md](sandbox.md) | T07,T08,T15 cleanup evidence | Phase 1 Linux compatibility | IMPLEMENTED_PHASE1 |
 | R26-07 | 26 | DESIGN | P0 | Runsc failure stops or uses separately verified disposable VM; no silent downgrade | [sandbox.md](sandbox.md) | Readiness gate and incident record | Phase 1 Linux compatibility | DEFERRED_PHASE1 |
 | R27-01 | 27 | DESIGN | P0 | Enforce all upload/row/cell/source/contract/objective caps in contract plan | [sandbox.md](sandbox.md) | T08 boundary values | Phase 1–3 limits | DEFERRED_PHASE3 |
-| R27-02 | 27 | DESIGN | P0 | Enforce 1vCPU/768MiB/64 guest tasks/20s, output64MiB/scratch64MiB and inode caps | [sandbox.md](sandbox.md) | T07 independently measured | Phase 1–3 limits | DEFERRED_PHASE3 |
-| R27-03 | 27 | DESIGN | P0 | Collected JSONL 10MiB/20000 lines; logs100KiB with truncation flags | [sandbox.md](sandbox.md) | T08/T07 output and log flood | Phase 1–3 limits | DEFERRED_PHASE3 |
+| R27-02 | 27 | DESIGN | P0 | Enforce 1vCPU/768MiB/64 guest tasks/20s, output64MiB/scratch64MiB and inode caps | [sandbox.md](sandbox.md) | T07 independently measured | Phase 1–3 limits | IMPLEMENTED_PHASE1 |
+| R27-03 | 27 | DESIGN | P0 | Collected JSONL 10MiB/20000 lines; logs100KiB with truncation flags | [sandbox.md](sandbox.md) | T08/T07 output and log flood | Phase 1–3 limits | IMPLEMENTED_PHASE1 |
 | R27-04 | 27 | DESIGN | P0 | Original+3 proposals/max4 canaries/5 calls/300s total; 8192 response, 120k input/32k output/$0.50 ceilings | [sandbox.md](sandbox.md) | T11,T12 budget precedence | Phase 1–3 limits | DEFERRED_PHASE3 |
 | R27-05 | 27 | DESIGN | P0 | 2 slots/20 queue; per guest/IP/day/start quotas including guest creation | [sandbox.md](sandbox.md) | T12 concurrent admission | Phase 1–3 limits | DEFERRED_PHASE3 |
 | R27-06 | 27 | DESIGN | P0 | Verifier1vCPU/512MiB/5s; optional minimizer8 reruns/30s shares deadline | [sandbox.md](sandbox.md) | T07 bounded trusted service; reducer deferred | Phase 1–3 limits | DEFERRED_PHASE3 |
@@ -227,7 +229,7 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R39-01 | 39 | DESIGN | P0 | Verify individual account/enrollment and actual gift code/balance/expiry/charges before provisioning | [release.md](release.md) | Redacted account evidence; no assumed pooling | Timing, eligible bounded charges | DEFERRED_PHASE1 |
 | R39-02 | 39 | DESIGN | P0 | Confirm region/VM quote, private network, public HTTPS/allowlisted SSH, worker private RPC | [release.md](release.md) | Manifest and network probes | Timing, eligible bounded charges | DEFERRED_PHASE1 |
 | R39-03 | 39 | DESIGN | P0 | Harden supported hosts/users/keys/time; private DB, artifact volumes and separated roles | [release.md](release.md) | T07,T09,T21 | Timing, eligible bounded charges | DEFERRED_PHASE1 |
-| R39-04 | 39 | DESIGN | P0 | Install pinned runtime/dependencies and actual resource probes before uploads | [release.md](release.md) | T07 | Timing, eligible bounded charges | DEFERRED_PHASE1 |
+| R39-04 | 39 | DESIGN | P0 | Install pinned runtime/dependencies and actual resource probes before uploads | [release.md](release.md) | T07 | Timing, eligible bounded charges | IMPLEMENTED_PHASE1 |
 | R39-05 | 39 | DESIGN | P0 | Configure secret files/mTLS/services/health, TLS cookies and external browser | [release.md](release.md) | T10,T19,T21 | Timing, eligible bounded charges | DEFERRED_PHASE1 |
 | R39-06 | 39 | DESIGN | P0 | Real deployed provider and full repair/approval/new batch smoke | [release.md](release.md) | T06,T23 | Timing, eligible bounded charges | DEFERRED_PHASE1 |
 | R39-07 | 39 | DESIGN | P0 | Reproducible cloud-init/doctor/probe/deploy; unhealthy dependencies refuse repair admission | [release.md](release.md) | T18,T21 | Timing, eligible bounded charges | DEFERRED_PHASE1 |
