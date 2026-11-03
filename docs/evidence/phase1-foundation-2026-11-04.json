@@ -1,6 +1,6 @@
 {
-  "recorded_at_utc": "2026-11-03T18:10:34.148204+00:00",
-  "base_commit": "df7717f948ba195b84f1c42c40ed859a402a4731",
+  "recorded_at_utc": "2026-11-03T18:17:28.845554+00:00",
+  "base_commit": "2442eebc522e5d9153851989242aaac57acdb7c0",
   "phase": "1",
   "status": "IN_PROGRESS_NOT_ACCEPTED",
   "scope": "trusted local health, worker collection, budget ledger and offline probe preparation only",
@@ -8,7 +8,7 @@
     "api/app/main.py": "72ac27d0876e9b97ca705c6487dac1a581712dab1fc23b5afbc2bec2fd4d7576",
     "pyproject.toml": "38269e6332d025f4aa42402a9ab9a266ba12124268836f428964a37dac889e6d",
     "uv.lock": "b7eafc19025b234ef886c03658ee7a329b0cd55825f59948bfdebab908e399ac",
-    ".dockerignore": "28fc2f5867c9ef0253bf99ce7ffd75103d3fa82e9e4a3b26ec2190ce18b8b4b5",
+    ".dockerignore": "541e252d540556ad546aa341861d52248433efff8283bdd30586e34151e78a57",
     "infra/images/control.Dockerfile": "53394faf9a422edff987993cc5a8e57b788f16c5842cdf63812ed316e5079b7e",
     "infra/images/control-requirements.txt": "d213bf4d24fd17475d36ac2837c543b99ddc247833def52a907952af3ce83ba2",
     "infra/images/control-build-requirements.txt": "8e4da4de9431ea29429933f4a2169046e0c6205b7fbd6d4e609622732d2d801f",
@@ -34,11 +34,17 @@
     "tests/unit/test_vultr_probe.py": "979649e5fec283207b0bbdd3d382f7ebe609d428b2def4cfcdb4352fe2965b66",
     "tests/integration/budget_client_check.py": "7d0a3eed1b9d13657dd54ea5aa4bcb9917dbafb2e1daba408807dcf5b5c2e707",
     "infra/images/inference-check.Dockerfile": "4a351cb3915375766aa2ceaefed45ecf490e1a0f58babc61bf9e64071f7cdb76",
-    "infra/images/inference-check-requirements.txt": "3fb82df376e6c5039403872ec0281f8550d4fdb0c43568e6daab015cef2bc882"
+    "infra/images/inference-check-requirements.txt": "3fb82df376e6c5039403872ec0281f8550d4fdb0c43568e6daab015cef2bc882",
+    "worker/launcher.py": "f7bbe39731b914f56aa33fe083a6450c073df9f74db7cfeb9720872139d1b6dc",
+    "worker/environment/pyproject.toml": "829cfd777edea5d93e3a0f5de773d538ecff4db29d3038a061d0d99bd7a288e4",
+    "worker/environment/uv.lock": "38f18ecf25de0f31420d0d0ec58678dfdb38d9307ef67ed44d4e8aa24f93d1db",
+    "infra/images/worker.Dockerfile": "ae7fa2a43d2d8eb8fa9d57072db828fcf6a87cae409b6241b4153fa34253a095",
+    "infra/images/worker-requirements.txt": "e8d0caf5ac1c5331c34abe6564fc0b0a727915916e0985dc8b025223799296d3",
+    "tests/unit/test_worker_launcher_policy.py": "664433dd37d5f28d157baefebefe3ced62af03252b9d2447f8e641756e4ad8de"
   },
   "checks": {
     "pytest": {
-      "passed": 100,
+      "passed": 114,
       "command": "uv run --locked pytest -q",
       "skipped": 24,
       "skip_reason": "Linux collector tests skipped on Windows and separately executed under WSL"
@@ -178,7 +184,8 @@
       "passed_synthetic_cases": 18,
       "scope": "offline pure preparation; fixed Vultr endpoint, integer reserve, bound request hash, stale/invalid quote rejection; no HTTP"
     },
-    "inference_client": "Real local PostgreSQL + explicitly mocked HTTP; see budget receipt. Real Vultr gate NOT RUN."
+    "inference_client": "Real local PostgreSQL + explicitly mocked HTTP; see budget receipt. Real Vultr gate NOT RUN.",
+    "worker_image": "phase1-worker-image-2026-11-04.json; build/scan only; no local image launch or candidate execution"
   },
   "cloud": {
     "account_credit_usd": "200.00",

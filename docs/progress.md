@@ -1,5 +1,11 @@
 # Progress
 
+## Phase 1 worker image follow-up — 2026-11-04 KST
+
+Continued directly after pushing and verifying inference checkpoint `2442eebc522e5d9153851989242aaac57acdb7c0`. Built/scanned the pinned worker image with a separate pandas/NumPy lock and fixed nonroot bootstrap. Fourteen pure/mock policy cases added; 114 Windows tests passed, 24 unchanged Linux cases skipped (prior pass retained), Ruff passed. No worker image launch, pandas import, candidate execution, real rlimit mutation or cloud charge. Scan retains Debian 45 HIGH/72 MEDIUM/61 LOW/7 UNKNOWN and Python zero, no CRITICAL; this is not worker release clearance. [Sandbox](sandbox.md) and [receipt](evidence/phase1-worker-image-2026-11-04.json) record limits and critical review.
+
+Phase 1 remains IN PROGRESS: deployed runtime identity, independent resource/network probes, supervisor watchdog/writer termination/cleanup and real Vultr calls remain unproven. Private repo and credit-only scope preserved; no repeated sufficiency question. This is a second implementation checkpoint in the same work period, not a Phase 1 completion. Reviewed 20 intended staged files; 36 foundation and 7 worker hashes match staged bytes, and 16 retained inference hashes match its verified checkpoint. Documentation/traceability, whitespace and staged secret checks passed (zero leaks). No candidate/private data, environments or raw build/scan artifacts staged.
+
 ## Phase 1 inference client follow-up — 2026-11-04 KST
 
 Continued from verified private main `df7717f948ba195b84f1c42c40ed859a402a4731`. Added a real Psycopg budget driver and fixed-endpoint bounded Vultr HTTPX client, strict provider JSON parser, optional locked dependencies and a reproducible trusted integration image. 100 Windows tests passed, 24 unchanged Linux cases skipped with prior Linux result retained; Ruff passed. PostgreSQL 14 groups plus five real-driver/mock-HTTP checks passed; all owned test resources removed. Python audit: 51 distributions, zero known findings. New helper image has no Python/CRITICAL findings; existing Debian advisories remain and PostgreSQL test-image critical findings are not waived. Separate critical review and exact sources in readiness and budget receipt.

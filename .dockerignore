@@ -21,3 +21,7 @@
 !tests/
 !tests/integration/
 !tests/integration/budget_client_check.py
+!infra/images/worker.Dockerfile
+!infra/images/worker-requirements.txt
+!worker/
+!worker/launcher.py

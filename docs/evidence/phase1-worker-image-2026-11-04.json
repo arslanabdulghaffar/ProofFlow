@@ -1,0 +1,93 @@
+{
+  "recorded_at_utc": "2026-11-03T18:17:28.845554+00:00",
+  "base_commit": "2442eebc522e5d9153851989242aaac57acdb7c0",
+  "status": "BUILT_AND_SCANNED_NOT_EXECUTED_NOT_PHASE_ACCEPTANCE",
+  "image_id": "sha256:966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+  "platform": "linux/amd64",
+  "image_config": {
+    "user": "10001:10001",
+    "entrypoint": [
+      "/usr/local/bin/python3",
+      "-I",
+      "-B",
+      "/opt/proofflow/launcher.py"
+    ],
+    "workdir": "/scratch"
+  },
+  "source_sha256": {
+    "worker/launcher.py": "f7bbe39731b914f56aa33fe083a6450c073df9f74db7cfeb9720872139d1b6dc",
+    "worker/environment/pyproject.toml": "829cfd777edea5d93e3a0f5de773d538ecff4db29d3038a061d0d99bd7a288e4",
+    "worker/environment/uv.lock": "38f18ecf25de0f31420d0d0ec58678dfdb38d9307ef67ed44d4e8aa24f93d1db",
+    "infra/images/worker.Dockerfile": "ae7fa2a43d2d8eb8fa9d57072db828fcf6a87cae409b6241b4153fa34253a095",
+    "infra/images/worker-requirements.txt": "e8d0caf5ac1c5331c34abe6564fc0b0a727915916e0985dc8b025223799296d3",
+    "tests/unit/test_worker_launcher_policy.py": "664433dd37d5f28d157baefebefe3ced62af03252b9d2447f8e641756e4ad8de",
+    ".dockerignore": "541e252d540556ad546aa341861d52248433efff8283bdd30586e34151e78a57"
+  },
+  "tests": {
+    "launcher_policy_passed": 14,
+    "full_windows_passed": 114,
+    "linux_collector_skipped": 24,
+    "scope": "pure policy helpers/mocked resource APIs and descriptor closure; no main(), real rlimit changes or candidate execution"
+  },
+  "build": "Pinned base, hash-required binary wheels, pip removed, setid bits stripped, root-owned launcher; no candidate code in image/build context. Worker requirements export matched lock.",
+  "scan": {
+    "scanner": "Trivy 0.76.1",
+    "raw_sha256": "555166781d1c24740c05939787fd9511bfbc30d5262e43ed59311eea94e0f410",
+    "targets": [
+      {
+        "type": "debian",
+        "counts": {
+          "LOW": 61,
+          "HIGH": 45,
+          "MEDIUM": 72,
+          "UNKNOWN": 7
+        },
+        "python_inventory": []
+      },
+      {
+        "type": "python-pkg",
+        "counts": {},
+        "python_inventory": [
+          {
+            "name": "numpy",
+            "version": "2.5.4",
+            "licenses": [
+              "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0"
+            ]
+          },
+          {
+            "name": "pandas",
+            "version": "3.1.0",
+            "licenses": [
+              "BSD-3-Clause"
+            ]
+          },
+          {
+            "name": "python-dateutil",
+            "version": "2.9.0.post0",
+            "licenses": [
+              "BSD-3-Clause",
+              "Apache-2.0"
+            ]
+          },
+          {
+            "name": "six",
+            "version": "1.17.0",
+            "licenses": [
+              "MIT"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "not_run": [
+    "worker_image_launch",
+    "pandas_import_or_execution_on_designated_worker",
+    "runsc_identity_and_compatibility",
+    "guest_fork_and_thread_limits",
+    "deployed_CPU_memory_storage_inode_network_probes",
+    "supervisor_watchdog_writer_termination_capture_cleanup"
+  ],
+  "review": "Codex separate critical pass only; no independent human sign-off. Health-image reachability triage does not transfer to a hostile-code worker. Binary-wheel native libraries and worker runtime/kernel require release review."
+}

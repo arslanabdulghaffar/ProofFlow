@@ -1,0 +1,14 @@
+[project]
+name = "proofflow-worker-runtime"
+version = "0.1.0"
+description = "Pinned dependencies for the designated isolated worker only"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pandas==3.1.0",
+    "numpy==2.5.4",
+    "python-dateutil==2.9.0.post0",
+    "six==1.17.0",
+]
+
+[tool.uv]
+package = false

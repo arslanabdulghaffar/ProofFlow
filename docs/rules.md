@@ -31,4 +31,4 @@ The owner supplied guidance attributed to lablab.ai's hackathon Discord live ses
 
 ProofFlow remains Challenge 1 with its fixed Vultr adapter. The existing runsc/systrap design is a project security decision and stays in place; event Docker sufficiency does not prove our containment probes. Reserve two weeks of judging compute in the existing envelope. Preserve the account's observed December 4 expiry pending an exact expiry time. Publication/license requirements describe eventual submission; they do not settle ownership clearance or authorize changing this repository's visibility now.
 
-One precise Vultr support message about taxes/non-overage was presented for explicit sending permission. No message has been sent and permission remains pending; no repeated permission or service-coverage question is needed while independent work continues.
+One precise Vultr support message about taxes/non-overage was presented for explicit sending permission. No explicit sending permission was received and no message has been sent. The owner reiterated continuous development; do not wait on this question or ask it again while ordinary work can continue.

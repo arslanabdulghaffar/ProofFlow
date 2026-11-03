@@ -149,5 +149,7 @@
     "skipped_linux": 24,
     "new_mock_or_fault_cases": 52,
     "scope": "synthetic provider responses; no real API calls"
-  }
+  },
+  "verified_source_commit": "2442eebc522e5d9153851989242aaac57acdb7c0",
+  "source_observation": "Inference checkpoint sources/scan retained. Later worker-only Docker-context allowlist changes do not alter this existing helper image."
 }
