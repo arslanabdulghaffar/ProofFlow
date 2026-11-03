@@ -118,7 +118,460 @@
     "installation": "NOT_PERFORMED",
     "guest_execution": "NOT_RUN",
     "vulnerability_inventory": "UNAVAILABLE: no analyzable packages; not zero vulnerabilities",
-    "scan_raw_sha256": "1d40430a7bd98cd85386f0836b3b34715fa8d1f8eca0b12a999daeb01cb88e4c"
+    "scan_raw_sha256": "1d40430a7bd98cd85386f0836b3b34715fa8d1f8eca0b12a999daeb01cb88e4c",
+    "source_manifest_review": {
+      "recorded_at_utc": "2026-11-03T20:45:48.402939+00:00",
+      "after_verified_checkpoint": "f1be7111ab2bd4e0e33209f3998f354d83646b32",
+      "scope": "Selected official release source manifest, not an executable SBOM or reachability proof",
+      "provenance": {
+        "go.mod": {
+          "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/go.mod",
+          "bytes": 6374,
+          "sha256": "ce3c330a41dbacd3da73b58a967f7466beae0d6cb3e8c02903fcf2967d939e21"
+        },
+        "go.sum": {
+          "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/go.sum",
+          "bytes": 46236,
+          "sha256": "14ba57e6cfb55c1deaeca106aebf6efc98cbe60bddd16029989e1f2421445e75"
+        },
+        "SECURITY.md": {
+          "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/SECURITY.md",
+          "bytes": 18299,
+          "sha256": "f7e59cba18f83f47ce905339fd3cdcbefb43dcf0054a61ca6fb34a4a1e83cc7f"
+        }
+      },
+      "scanner": "Trivy 0.76.1 existing vulnerability database, no suppressions",
+      "raw_scan_sha256": "611bdb2aa30eed6868239f611f5e159fde89dd0adf52389f4a3a50990ea0b358",
+      "packages": 128,
+      "counts": {
+        "LOW": 2,
+        "HIGH": 9,
+        "MEDIUM": 6,
+        "UNKNOWN": 3
+      },
+      "findings": [
+        {
+          "VulnerabilityID": "CVE-2026-10722",
+          "PkgName": "github.com/cilium/ebpf",
+          "InstalledVersion": "v0.16.0",
+          "FixedVersion": "0.22.0",
+          "Severity": "LOW",
+          "Title": "github.com/cilium/ebpf: Cilium ebpf: Denial of Service via integer overflow",
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-10722",
+            "https://gist.github.com/thesmartshadow/256bff0f8042c584f993ace89074a815",
+            "https://github.com/cilium/ebpf",
+            "https://github.com/cilium/ebpf/",
+            "https://github.com/cilium/ebpf/commit/533dfc82fd228bfadf42ea7180c39de7d9af47fa",
+            "https://github.com/cilium/ebpf/issues/2019",
+            "https://github.com/cilium/ebpf/pull/2021",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-10722",
+            "https://vuldb.com/cve/CVE-2026-10722",
+            "https://vuldb.com/submit/818291",
+            "https://vuldb.com/vuln/368091",
+            "https://vuldb.com/vuln/368091/cti",
+            "https://www.cve.org/CVERecord?id=CVE-2026-10722"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-46680",
+          "PkgName": "github.com/containerd/containerd/v2",
+          "InstalledVersion": "v2.1.5",
+          "FixedVersion": "2.0.9, 2.2.4, 2.3.1",
+          "Severity": "HIGH",
+          "Title": "github.com/containerd/containerd: containerd: Privilege escalation via incorrect user ID handling",
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-46680",
+            "https://github.com/containerd/containerd",
+            "https://github.com/containerd/containerd/security/advisories/GHSA-fqw6-gf59-qr4w",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-46680",
+            "https://www.cve.org/CVERecord?id=CVE-2026-46680"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-53488",
+          "PkgName": "github.com/containerd/containerd/v2",
+          "InstalledVersion": "v2.1.5",
+          "FixedVersion": "2.0.10, 2.1.9, 2.2.5, 2.3.2",
+          "Severity": "HIGH",
+          "Title": "github.com/containerd/containerd: containerd: Host-root command execution via unvalidated image config labels in CRI plugin",
+          "References": [
+            "http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53488",
+            "https://access.redhat.com/security/cve/CVE-2026-53488",
+            "https://github.com/bottlerocket-os/bottlerocket-core-kit/blob/develop/advisories/14.5.1/BRSA-rrw1j1iyz4iz.toml",
+            "https://github.com/containerd/containerd",
+            "https://github.com/containerd/containerd/security/advisories/GHSA-xhf5-7wjv-pqxp",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-53488",
+            "https://ubuntu.com/security/notices/USN-8471-1",
+            "https://ubuntu.com/security/notices/USN-8472-1",
+            "https://ubuntu.com/security/notices/USN-8473-1",
+            "https://www.cve.org/CVERecord?id=CVE-2026-53488"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-53489",
+          "PkgName": "github.com/containerd/containerd/v2",
+          "InstalledVersion": "v2.1.5",
+          "FixedVersion": "2.1.9, 2.2.5, 2.3.2",
+          "Severity": "HIGH",
+          "Title": "github.com/containerd/containerd: containerd: Arbitrary host file read via symlink following in CRI checkpoint restore",
+          "References": [
+            "http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53489",
+            "https://access.redhat.com/security/cve/CVE-2026-53489",
+            "https://github.com/bottlerocket-os/bottlerocket-core-kit/blob/develop/advisories/14.5.1/BRSA-hg86gkmhd6vu.toml",
+            "https://github.com/containerd/containerd",
+            "https://github.com/containerd/containerd/security/advisories/GHSA-rgh6-rfwx-v388",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-53489",
+            "https://ubuntu.com/security/notices/USN-8472-1",
+            "https://ubuntu.com/security/notices/USN-8473-1",
+            "https://www.cve.org/CVERecord?id=CVE-2026-53489"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-53492",
+          "PkgName": "github.com/containerd/containerd/v2",
+          "InstalledVersion": "v2.1.5",
+          "FixedVersion": "2.1.9, 2.2.5, 2.3.2",
+          "Severity": "HIGH",
+          "Title": "github.com/containerd/containerd: containerd: Security bypass via Container Device Interface (CDI) annotation smuggling during checkpoint restoration.",
+          "References": [
+            "http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53492",
+            "https://access.redhat.com/security/cve/CVE-2026-53492",
+            "https://github.com/bottlerocket-os/bottlerocket-core-kit/blob/develop/advisories/14.5.1/BRSA-rsj9m8ifmjes.toml",
+            "https://github.com/containerd/containerd",
+            "https://github.com/containerd/containerd/security/advisories/GHSA-33vj-92qq-66hc",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-53492",
+            "https://ubuntu.com/security/notices/USN-8472-1",
+            "https://ubuntu.com/security/notices/USN-8473-1",
+            "https://www.cve.org/CVERecord?id=CVE-2026-53492"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-95837",
+          "PkgName": "github.com/containerd/containerd/v2",
+          "InstalledVersion": "v2.1.5",
+          "FixedVersion": "2.2.7, 2.3.4",
+          "Severity": "HIGH",
+          "Title": "github.com/containerd/containerd: containerd: Privilege escalation via crafted container checkpoint restore",
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-95837",
+            "https://github.com/containerd/containerd",
+            "https://github.com/containerd/containerd/commit/928c03c6898cad95f795300281fdff0dbc55a32f",
+            "https://github.com/containerd/containerd/pull/13913",
+            "https://github.com/containerd/containerd/security/advisories/GHSA-p7v4-vr35-mj6f",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-95837",
+            "https://www.cve.org/CVERecord?id=CVE-2026-95837"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-47262",
+          "PkgName": "github.com/containerd/containerd/v2",
+          "InstalledVersion": "v2.1.5",
+          "FixedVersion": "2.0.10, 2.1.9, 2.2.5, 2.3.2",
+          "Severity": "MEDIUM",
+          "Title": "github.com/containerd/containerd: containerd: Denial of Service via maliciously crafted image leading to unbounded group parsing",
+          "References": [
+            "http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-47262",
+            "https://access.redhat.com/security/cve/CVE-2026-47262",
+            "https://github.com/bottlerocket-os/bottlerocket-core-kit/blob/develop/advisories/14.5.1/BRSA-fjsigcujf6oz.toml",
+            "https://github.com/containerd/containerd",
+            "https://github.com/containerd/containerd/security/advisories/GHSA-jpcc-p29g-p8mq",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-47262",
+            "https://ubuntu.com/security/notices/USN-8471-1",
+            "https://ubuntu.com/security/notices/USN-8472-1",
+            "https://ubuntu.com/security/notices/USN-8473-1",
+            "https://www.cve.org/CVERecord?id=CVE-2026-47262"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-50195",
+          "PkgName": "github.com/containerd/containerd/v2",
+          "InstalledVersion": "v2.1.5",
+          "FixedVersion": "2.1.9, 2.2.5, 2.3.2",
+          "Severity": "MEDIUM",
+          "Title": "github.com/containerd/containerd: containerd: Arbitrary code execution via CRI checkpoint image tag poisoning",
+          "References": [
+            "http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-50195",
+            "https://access.redhat.com/security/cve/CVE-2026-50195",
+            "https://github.com/bottlerocket-os/bottlerocket-core-kit/blob/develop/advisories/14.5.1/BRSA-rvxerctzzv8k.toml",
+            "https://github.com/containerd/containerd",
+            "https://github.com/containerd/containerd/security/advisories/GHSA-cvxm-645q-p574",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-50195",
+            "https://ubuntu.com/security/notices/USN-8472-1",
+            "https://ubuntu.com/security/notices/USN-8473-1",
+            "https://www.cve.org/CVERecord?id=CVE-2026-50195"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-53493",
+          "PkgName": "github.com/containerd/containerd/v2",
+          "InstalledVersion": "v2.1.5",
+          "FixedVersion": "2.0.13, 2.2.9, 2.3.6, 2.4.1",
+          "Severity": "MEDIUM",
+          "Title": "github.com/containerd/containerd: containerd: Denial of Service via crafted OCI image index",
+          "References": [
+            "http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53493",
+            "https://access.redhat.com/security/cve/CVE-2026-53493",
+            "https://github.com/bottlerocket-os/bottlerocket-core-kit/blob/develop/advisories/17.1.0/BRSA-pwceglsxouzx.toml",
+            "https://github.com/containerd/containerd",
+            "https://github.com/containerd/containerd/commit/4f5f32636d47f051751065cf824a10da70c619fe",
+            "https://github.com/containerd/containerd/commit/94e83c14c8aac963e24e28105dab9c9af812a2a8",
+            "https://github.com/containerd/containerd/releases/tag/v1.7.36",
+            "https://github.com/containerd/containerd/releases/tag/v2.0.13",
+            "https://github.com/containerd/containerd/releases/tag/v2.2.9",
+            "https://github.com/containerd/containerd/releases/tag/v2.3.6",
+            "https://github.com/containerd/containerd/releases/tag/v2.4.1",
+            "https://github.com/containerd/containerd/security/advisories/GHSA-pg57-6jwg-q645",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-53493",
+            "https://www.cve.org/CVERecord?id=CVE-2026-53493"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-116587",
+          "PkgName": "github.com/go-jose/go-jose/v4",
+          "InstalledVersion": "v4.1.4",
+          "FixedVersion": "4.1.6",
+          "Severity": "HIGH",
+          "Title": "github.com/go-jose/go-jose: go-jose: Denial of Service via crafted RSA parameters in JWKs",
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-116587",
+            "https://github.com/go-jose/go-jose",
+            "https://github.com/go-jose/go-jose/commit/a0111f82742fa92bceec9ede40845e73319e6230",
+            "https://github.com/go-jose/go-jose/releases/tag/v4.1.6",
+            "https://github.com/go-jose/go-jose/security/advisories/GHSA-mgcc-cww5-fp2q",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-116587",
+            "https://www.cve.org/CVERecord?id=CVE-2026-116587"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-116585",
+          "PkgName": "github.com/go-jose/go-jose/v4",
+          "InstalledVersion": "v4.1.4",
+          "FixedVersion": "4.1.5",
+          "Severity": "MEDIUM",
+          "Title": "github.com/go-jose/go-jose: go-jose: Denial of Service via empty ciphertext buffer during JWE decryption",
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-116585",
+            "https://github.com/go-jose/go-jose",
+            "https://github.com/go-jose/go-jose/commit/35883f7999e87cbd1b1f4cda07fdad8cd71c3dd6",
+            "https://github.com/go-jose/go-jose/commit/74114c2fa22669a2b2a296746eaa82e15566fd54",
+            "https://github.com/go-jose/go-jose/pull/292",
+            "https://github.com/go-jose/go-jose/releases/tag/v4.1.5",
+            "https://github.com/go-jose/go-jose/security/advisories/GHSA-4w3g-jfj2-cw2q",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-116585",
+            "https://www.cve.org/CVERecord?id=CVE-2026-116585"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-116586",
+          "PkgName": "github.com/go-jose/go-jose/v4",
+          "InstalledVersion": "v4.1.4",
+          "FixedVersion": "4.1.5",
+          "Severity": "MEDIUM",
+          "Title": "github.com/go-jose/go-jose: go-jose: Denial of Service via deeply nested JSON parsing",
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-116586",
+            "https://github.com/go-jose/go-jose",
+            "https://github.com/go-jose/go-jose/commit/a31af25836222f4c45d366d6e8f9b1049dd9935a",
+            "https://github.com/go-jose/go-jose/pull/290",
+            "https://github.com/go-jose/go-jose/releases/tag/v4.1.5",
+            "https://github.com/go-jose/go-jose/security/advisories/GHSA-vvm8-gf78-28g4",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-116586",
+            "https://www.cve.org/CVERecord?id=CVE-2026-116586"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-81870",
+          "PkgName": "go.opentelemetry.io/otel/sdk",
+          "InstalledVersion": "v1.43.0",
+          "FixedVersion": "1.45.0",
+          "Severity": "LOW",
+          "Title": "github.com/open-telemetry/opentelemetry-go: OpenTelemetry-Go: Information disclosure via exporter configuration logging",
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-81870",
+            "https://github.com/open-telemetry/opentelemetry-go",
+            "https://github.com/open-telemetry/opentelemetry-go/commit/3a1412d2b3bc4e4231fbeac2ed42117ae541bb38",
+            "https://github.com/open-telemetry/opentelemetry-go/pull/8438",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/exporters/zipkin/v1.45.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.45.0",
+            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-8wmf-6v46-5gfg",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-81870",
+            "https://www.cve.org/CVERecord?id=CVE-2026-81870"
+          ]
+        },
+        {
+          "VulnerabilityID": "GO-2026-5932",
+          "PkgName": "golang.org/x/crypto",
+          "InstalledVersion": "v0.57.0",
+          "FixedVersion": "0.58.1-0.20261009181718-2f1f834330b2",
+          "Severity": "UNKNOWN",
+          "Title": "The golang.org/x/crypto/openpgp package is unmaintained, unsafe by design, and has known security issues",
+          "References": [
+            "https://go.dev/issue/44226",
+            "https://go.dev/issue/81227",
+            "https://pkg.go.dev/vuln/GO-2026-5932"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-78661",
+          "PkgName": "golang.org/x/net",
+          "InstalledVersion": "v0.60.0",
+          "FixedVersion": "0.62.0",
+          "Severity": "UNKNOWN",
+          "Title": "When coalescing adjacent text nodes in addText and fosterParent, appen ...",
+          "References": [
+            "https://go.dev/cl/849365",
+            "https://go.dev/issue/82224",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6860"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-97045",
+          "PkgName": "golang.org/x/net",
+          "InstalledVersion": "v0.60.0",
+          "FixedVersion": "0.62.0",
+          "Severity": "UNKNOWN",
+          "Title": "In childTextNodesAreLiteral, walking up the tree previously stopped at ...",
+          "References": [
+            "https://go.dev/cl/855121",
+            "https://go.dev/issue/82622",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6866"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-84304",
+          "PkgName": "google.golang.org/grpc",
+          "InstalledVersion": "v1.80.0",
+          "FixedVersion": "1.83.1",
+          "Severity": "HIGH",
+          "Title": "google.golang.org/grpc: gRPC-Go: Denial of Service via HTTP/2 DATA Frame Fragmentation",
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-84304",
+            "https://github.com/grpc/grpc-go",
+            "https://github.com/grpc/grpc-go/commit/7354d9c8debb4bcf2225bf429857078de310c176",
+            "https://github.com/grpc/grpc-go/commit/8cfeca0e1ee5ea0980dcc320e20240fa1079ec77",
+            "https://github.com/grpc/grpc-go/pull/9331",
+            "https://github.com/grpc/grpc-go/pull/9333",
+            "https://github.com/grpc/grpc-go/releases/tag/v1.83.1",
+            "https://github.com/grpc/grpc-go/security/advisories/GHSA-vp52-pcj8-j9qc",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-84304",
+            "https://www.cve.org/CVERecord?id=CVE-2026-84304"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-84445",
+          "PkgName": "google.golang.org/grpc",
+          "InstalledVersion": "v1.80.0",
+          "FixedVersion": "1.82.2, 1.83.2, 1.84.0-dev.0.20260825144003-d5a41119e0e3, 1.85.0-dev.0.20260825072537-93e31b48545e",
+          "Severity": "HIGH",
+          "Title": "google.golang.org/grpc: gRPC-Go: Denial of Service via malformed RPC requests",
+          "References": [
+            "https://access.redhat.com/errata/RHSA-2026:76743",
+            "https://access.redhat.com/errata/RHSA-2026:76744",
+            "https://access.redhat.com/security/cve/CVE-2026-84445",
+            "https://bugzilla.redhat.com/2533175",
+            "https://bugzilla.redhat.com/show_bug.cgi?id=2533175",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-84445",
+            "https://errata.almalinux.org/10/ALSA-2026-76743.html",
+            "https://errata.rockylinux.org/RLSA-2026:76744",
+            "https://github.com/grpc/grpc-go",
+            "https://github.com/grpc/grpc-go/commit/3822494d8ea03b992c089fd2a195f041762fffb7",
+            "https://github.com/grpc/grpc-go/commit/8668b69c167df908b6b3666dcbf40992b9e932a4",
+            "https://github.com/grpc/grpc-go/commit/93e31b48545e2a8aaeb6e06b47fb249f94e6297f",
+            "https://github.com/grpc/grpc-go/issues/9354",
+            "https://github.com/grpc/grpc-go/pull/9365",
+            "https://github.com/grpc/grpc-go/pull/9366",
+            "https://github.com/grpc/grpc-go/pull/9367",
+            "https://github.com/grpc/grpc-go/releases/tag/v1.82.2",
+            "https://github.com/grpc/grpc-go/releases/tag/v1.83.2",
+            "https://github.com/grpc/grpc-go/security/advisories/GHSA-2v4p-qf9q-27wj",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-84445",
+            "https://www.cve.org/CVERecord?id=CVE-2026-84445"
+          ]
+        },
+        {
+          "VulnerabilityID": "GHSA-hrxh-6v49-42gf",
+          "PkgName": "google.golang.org/grpc",
+          "InstalledVersion": "v1.80.0",
+          "FixedVersion": "1.82.1",
+          "Severity": "HIGH",
+          "Title": "gRPC-Go: xDS RBAC and HTTP/2 Vulnerabilities",
+          "References": [
+            "https://github.com/grpc/grpc-go",
+            "https://github.com/grpc/grpc-go/commit/4ea465d4ab98013f72a142fe0fc89c19770b2935",
+            "https://github.com/grpc/grpc-go/pull/9236",
+            "https://github.com/grpc/grpc-go/releases/tag/v1.82.1",
+            "https://github.com/grpc/grpc-go/security/advisories/GHSA-hrxh-6v49-42gf"
+          ]
+        },
+        {
+          "VulnerabilityID": "CVE-2026-84303",
+          "PkgName": "google.golang.org/grpc",
+          "InstalledVersion": "v1.80.0",
+          "FixedVersion": "1.83.1",
+          "Severity": "MEDIUM",
+          "Title": "gRPC-Go is the Go language implementation of gRPC. Prior to 1.83.1, th ...",
+          "References": [
+            "https://github.com/grpc/grpc-go",
+            "https://github.com/grpc/grpc-go/commit/db9482836c298f234c896cf82ab68cafc78237f8",
+            "https://github.com/grpc/grpc-go/commit/ebba6f3f1b206e2b4dc4d1d5a96d18430302c2fe",
+            "https://github.com/grpc/grpc-go/pull/9332",
+            "https://github.com/grpc/grpc-go/pull/9335",
+            "https://github.com/grpc/grpc-go/releases/tag/v1.83.1",
+            "https://github.com/grpc/grpc-go/security/advisories/GHSA-qc2q-p7wx-3px3",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-84303"
+          ]
+        }
+      ],
+      "binary_module_name_strings": {
+        "containerd-shim-runsc-v1": [
+          "github.com/cilium/ebpf",
+          "github.com/containerd/containerd/v2",
+          "golang.org/x/crypto",
+          "golang.org/x/net",
+          "google.golang.org/grpc"
+        ],
+        "runsc": [
+          "github.com/cilium/ebpf",
+          "golang.org/x/net"
+        ],
+        "gvisor-bin/checkpointgofer": [
+          "github.com/go-jose/go-jose/v4",
+          "go.opentelemetry.io/otel/sdk",
+          "golang.org/x/crypto",
+          "golang.org/x/net",
+          "google.golang.org/grpc"
+        ],
+        "gvisor-bin/gvisor-proc-umounter": [],
+        "gvisor-bin/gvisor-sentry-prewarmer": [],
+        "gvisor-bin/gvisor_sentry": [
+          "golang.org/x/net"
+        ],
+        "gvisor-bin/runsc-fd-parking": [],
+        "gvisor-bin/runsc-metric-server": [
+          "github.com/cilium/ebpf",
+          "golang.org/x/crypto",
+          "golang.org/x/net",
+          "google.golang.org/grpc"
+        ]
+      },
+      "string_scan_limitation": "Presence is a triage hint; absence does not prove a function is absent or unreachable. No version attribution or waiver from string search.",
+      "high_advisory_primary_review": {
+        "CVE-2026-46680": "Numeric image user parsing; direct worker OCI UID/GID are fixed at 10001. Upstream severity Moderate differs from scanner HIGH. Installed-host/containerd review still required.",
+        "CVE-2026-53488": "CRI image label propagation to host command; upstream Critical differs from scanner HIGH. Worker direct execution does not expose CRI pulls. Not a binary waiver.",
+        "CVE-2026-53489": "CRI checkpoint restore follows a host log symlink; worker exposes no checkpoint restore operation. Not a binary waiver.",
+        "CVE-2026-53492": "CRI restore/CDI annotations; upstream Critical differs from scanner HIGH. Worker OCI has no caller annotations or checkpoint restore. Not a binary waiver.",
+        "CVE-2026-95837": "CRI restored security context; upstream Critical differs from scanner HIGH. Worker creates fresh sandboxes, no restore endpoint. Not a binary waiver.",
+        "CVE-2026-116587": "RSA JWK parsing denial of service; no product JWK endpoint. Complete binary/companion dependency reachability remains unresolved.",
+        "CVE-2026-84304": "gRPC HTTP/2 stream memory exhaustion. Worker RPC is Python TLS framing, not gRPC; optional runtime services and host installation remain unverified.",
+        "CVE-2026-84445": "gRPC xDS server missing authority/Host panic; product has no xDS server. Runtime component reachability remains unresolved.",
+        "GHSA-hrxh-6v49-42gf": "gRPC xDS RBAC and HTTP/2 flaws; no configured product xDS/gRPC server. Runtime component reachability remains unresolved."
+      },
+      "decision": "No scanner suppression, dependency patch, runtime substitution or deployment clearance. Source-level risk retained; complete native build/runtime review and deployed containment gates remain open."
+    }
   },
   "independent_human_review": "NOT_AVAILABLE",
   "cloud_actions": "NONE",
