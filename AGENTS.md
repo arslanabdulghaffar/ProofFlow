@@ -4,7 +4,7 @@ Read `docs/next-session.md`, `docs/product.md`, `docs/contract.md`, `docs/threat
 
 ## Current boundary
 
-The official live dashboard confirmed the event open on 2026-11-04 KST. Phase 1 implementation is authorized. Account activation is verified ($200, ledger expiry 2026-12-04). Eligible service/tax coverage, final charges and spending bounds still gate provisioning and paid inference. Do not advance past failed critical infrastructure gates or into Phase 2 before the Phase 1 checkpoint and owner review. Keep this repository private. Do not contact people, publish, submit, or change visibility without explicit user instruction. Do not assume a PDF estimate is an observed result.
+The official live dashboard confirmed the event open on 2026-11-04 KST. Phase 1 implementation is authorized. Account activation is verified ($200, ledger expiry 2026-12-04). Owner-relayed organizer guidance confirms VM/database/inference credit coverage (GPU excluded) for planning. Tax treatment, final charges and enforceable non-overage bounds still gate provisioning and paid inference. Do not advance past failed critical infrastructure gates or into Phase 2 before the Phase 1 checkpoint and owner review. Keep this repository private. Do not contact people, publish, submit, or change visibility without explicit user instruction. Do not assume a PDF estimate is an observed result.
 
 ## Invariants
 
@@ -18,6 +18,8 @@ The official live dashboard confirmed the event open on 2026-11-04 KST. Phase 1 
 - Preserve user changes and history. Do not force-push, bypass branch rules, erase files, or stage unrelated work.
 - Label fixtures/replays; release paths use real components. Never fabricate tests, metrics, costs, customer results, provider calls or integration success.
 - Reduce P1 scope before containment, authorization, spending caps, exact approvals, independent verification or truthful failures.
+
+WIP checkpoints are durable progress, not requests to stop. Continue authorized Phase 1 work without asking to continue; only actual blockers or successful Phase 1 acceptance trigger the stated boundary. Broad development authorization preserves the specific credit-only and private-repository restrictions.
 
 ## Phase completion and GitHub checkpoint policy
 

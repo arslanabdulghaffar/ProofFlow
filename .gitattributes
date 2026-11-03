@@ -10,3 +10,5 @@
 .env.example text eol=lf
 .gitignore text eol=lf
 .gitattributes text eol=lf
+
+*.sql text eol=lf

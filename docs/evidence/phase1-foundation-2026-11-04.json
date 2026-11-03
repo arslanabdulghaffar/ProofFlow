@@ -1,9 +1,9 @@
 {
-  "recorded_at_utc": "2026-11-03T17:16:06.660932+00:00",
-  "base_commit": "7d5153f1e2b60a17164054541b59bad8d1e489e4",
+  "recorded_at_utc": "2026-11-03T17:46:35.739312+00:00",
+  "base_commit": "59d64f3847aeaef2cd6f2354dec87372cdee1e48",
   "phase": "1",
   "status": "IN_PROGRESS_NOT_ACCEPTED",
-  "scope": "trusted local health and worker byte-collection components only",
+  "scope": "trusted local health, worker collection, budget ledger and offline probe preparation only",
   "files_sha256": {
     "api/app/main.py": "72ac27d0876e9b97ca705c6487dac1a581712dab1fc23b5afbc2bec2fd4d7576",
     "pyproject.toml": "c398304ff29213bd6a1a8b68f6305e1f6e169c6b3580b87a0efba644929c6c99",
@@ -20,18 +20,23 @@
     "worker/collector.py": "0e396d6f4c1e63b8b34f6c090445ecbe0cd6c056fcd4a2b27c1390c285023e38",
     "worker/log_capture.py": "91f7ee7ea5725b2a2c92643c54b075d596f847f931d678be02cd6d68b7ab170e",
     "tests/security/test_collector.py": "0c1302b9cbcc7a7181e603f736ad21c77a74384630815dfd9a4ed0968ee1602f",
-    "tests/unit/test_log_capture.py": "00a52fb3b7e27acc52a1e1c62a9d1b8f8a61e80713117e3536dfd245e28364ed"
+    "tests/unit/test_log_capture.py": "00a52fb3b7e27acc52a1e1c62a9d1b8f8a61e80713117e3536dfd245e28364ed",
+    "db/phase1/001_budget.sql": "0c44956322f4c548f205239deec1e60cad5150a62d49abbab1060b3f8db40fdf",
+    "scripts/check_budget_postgres.py": "c92c57fab10b8854d4add756579765c290c3446126413e6975d4d73d681436b3",
+    "orchestrator/__init__.py": "b6237e4043086a66670b1e12a938c5e2af4555365e11febd58b8db2f513af840",
+    "orchestrator/probe_plan.py": "6320078bcb00e65cca7f45a8c413485ff6211fda106aba3c4df8c01a3a7fd9a5",
+    "tests/unit/test_probe_plan.py": "08ce262792c945233bc957b1ae01e0478d6c881927356508366fcddc7c187cda"
   },
   "checks": {
     "pytest": {
-      "passed": 30,
+      "passed": 48,
       "command": "uv run --locked pytest -q",
       "skipped": 24,
       "skip_reason": "Linux collector tests skipped on Windows and separately executed under WSL"
     },
     "ruff": {
       "status": "PASS",
-      "command": "uv run --locked ruff check api worker tests scripts/check_control_image.py"
+      "command": "uv run --locked ruff check api worker orchestrator tests scripts/check_control_image.py scripts/check_budget_postgres.py"
     },
     "runtime_only_sync": {
       "status": "PASS",
@@ -150,14 +155,20 @@
         "runtime watchdog",
         "guest resource limits",
         "durable artifact transport and cleanup"
-      ]
+      ],
+      "observation": "Retained from prior checkpoint; collector/test sources unchanged."
     },
     "log_capture": {
       "passed_windows_cases": 8,
       "combined_retained_bytes_limit": 102400,
       "scope": "pure trusted buffer tests; no stream-drain/watchdog/UI integration"
     },
-    "image_scan_observation": "Existing scan retained: no image/dependency change. Six lower-severity advisories received primary-source review."
+    "image_scan_observation": "Existing scan retained: no image/dependency change. Six lower-severity advisories received primary-source review.",
+    "budget_postgres": "phase1-budget-postgres-2026-11-04.json",
+    "probe_plan": {
+      "passed_synthetic_cases": 18,
+      "scope": "offline pure preparation; fixed Vultr endpoint, integer reserve, bound request hash, stale/invalid quote rejection; no HTTP"
+    }
   },
   "cloud": {
     "account_credit_usd": "200.00",
@@ -167,10 +178,10 @@
     "provisioned_resources": 0,
     "inference_calls": 0,
     "subscription_created": false,
-    "service_tax_coverage": "NOT_VERIFIED",
+    "service_tax_coverage": "SERVICE_COVERAGE_CONFIRMED_BY_OWNER_RELAY_OF_ORGANIZER_SESSION; TAX_COVERAGE_NOT_VERIFIED",
     "hard_non_overage_bound": "NOT_VERIFIED",
     "personal_spending_authorized": false,
-    "observation_note": "Credit/expiry retained from prior authenticated checkpoint; no paid action this follow-up. Public billing FAQ/limits/stopped-instance documentation rechecked."
+    "observation_note": "No cloud resource or paid call. Owner relayed organizer service coverage and judging-credit guidance; published post-event access text is less specific. Tax/non-overage evidence still outstanding."
   },
   "not_run": [
     "deployed_tls_private_network_database",
@@ -179,7 +190,7 @@
     "guest_resource_network_limits",
     "worker_safe_collection_watchdog_cleanup",
     "real_vultr_coding_json",
-    "durable_provider_spend_reservations",
+    "deployed_provider_spend_reservations",
     "later_product_paths"
   ],
   "human_independent_review": "NOT_AVAILABLE"

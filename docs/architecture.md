@@ -58,3 +58,7 @@ Preparation review clarification: collected bytes and a verifier verdict are not
 PR intent binds repo ID, base SHA, allowed pipeline path, exact candidate bytes/digests, sanitized body hash and draft=true; deterministic branch includes immutable intent ID. Read back branch/head/file bytes/PR draft state/URL. Base movement invalidates preview. Timeout triggers lookup before retry, never blind create. Product App uses only contents and pull-request permissions for a dedicated demo repo with no privileged Actions. Local development Git credentials are not product credentials.
 
 See [API](api.md), [sandbox](sandbox.md), [inference](inference.md), and [threat model](threat-model.md) for interface and failure details.
+
+## Phase 1 local budget component status
+
+Infrastructure-only `db/phase1/001_budget.sql` and offline `orchestrator/probe_plan.py` now exist. The ledger uses a single configured project account, serialized reserve/claim/settle functions and separated roles; request hashes/expiry bind exact intent and unknown dispatches retain funds. This is not the product job/business schema or an HTTP dispatcher. Local real PostgreSQL checks pass; no deployed database, paid provider call, worker supervisor or product route is implied. See [inference](inference.md) for commit ordering and [readiness](phase1-readiness.md) for test-image findings and open billing gates.

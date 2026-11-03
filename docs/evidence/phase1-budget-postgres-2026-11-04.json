@@ -1,0 +1,102 @@
+{
+  "checks": [
+    "pinned_server_private_topology_and_migration",
+    "probe_cap_and_exact_intent_idempotency",
+    "probe_inference_project_caps_share_accounting",
+    "20_concurrent_reservations_exactly_10_admitted",
+    "12_concurrent_claims_exactly_one_dispatch_authorization",
+    "uncertain_reservation_survives_database_crash_restart",
+    "settlement_idempotency_conflict_and_confirmed_release",
+    "overrun_recorded_and_future_reserve_claim_blocked",
+    "dispatcher_reconciler_public_role_boundaries",
+    "expiry_rechecked_at_reservation_and_dispatch",
+    "request_quote_deadline_enforced_independently_of_account_expiry",
+    "invalid_amount_digest_purpose_and_unclaimed_settlement_rejected",
+    "transaction_rollback_is_not_a_committed_reservation",
+    "stale_snapshot_isolation_and_nondurable_commit_settings_rejected"
+  ],
+  "cleanup": "container_and_volume_confirmed_absent",
+  "image": "postgres:18.6-trixie@sha256:f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f",
+  "scope": "local_trusted_postgres_only",
+  "server_version": "18.6 (Debian 18.6-1.pgdg13+2)",
+  "recorded_at_utc": "2026-11-03T17:46:01.555506+00:00",
+  "base_commit": "59d64f3847aeaef2cd6f2354dec87372cdee1e48",
+  "status": "LOCAL_COMPONENT_CHECKS_PASS_NOT_PHASE_ACCEPTANCE",
+  "independent_human_review": "NOT_AVAILABLE",
+  "source_sha256": {
+    "db/phase1/001_budget.sql": "0c44956322f4c548f205239deec1e60cad5150a62d49abbab1060b3f8db40fdf",
+    "scripts/check_budget_postgres.py": "c92c57fab10b8854d4add756579765c290c3446126413e6975d4d73d681436b3",
+    "orchestrator/probe_plan.py": "6320078bcb00e65cca7f45a8c413485ff6211fda106aba3c4df8c01a3a7fd9a5",
+    "tests/unit/test_probe_plan.py": "08ce262792c945233bc957b1ae01e0478d6c881927356508366fcddc7c187cda"
+  },
+  "image_scan": {
+    "scanner": "Trivy 0.76.1",
+    "raw_sha256": "ead28e4f208bca46739ffefa0b1164f38e90bfaad5ae30dab8905dfd4f8096e0",
+    "targets": [
+      {
+        "target": "postgres:18.6-trixie@sha256:f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f (debian 13.7)",
+        "type": "debian",
+        "counts": {
+          "LOW": 138,
+          "HIGH": 62,
+          "MEDIUM": 128,
+          "UNKNOWN": 7,
+          "CRITICAL": 1
+        },
+        "critical_findings": [
+          {
+            "VulnerabilityID": "CVE-2026-6653",
+            "PkgName": "libxml2",
+            "InstalledVersion": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+            "FixedVersion": null,
+            "Title": "libxml2: mingw-libxml2: libxml2: Denial of Service via crafted XML input due to use-after-free"
+          }
+        ]
+      },
+      {
+        "target": "usr/local/bin/gosu",
+        "type": "gobinary",
+        "counts": {
+          "MEDIUM": 31,
+          "UNKNOWN": 1,
+          "CRITICAL": 1,
+          "HIGH": 25,
+          "LOW": 3
+        },
+        "critical_findings": [
+          {
+            "VulnerabilityID": "CVE-2025-68121",
+            "PkgName": "stdlib",
+            "InstalledVersion": "v1.24.6",
+            "FixedVersion": "1.24.13, 1.25.7, 1.26.0-rc.3",
+            "Title": "crypto/tls: crypto/tls: Incorrect certificate validation during TLS session resumption"
+          }
+        ]
+      }
+    ],
+    "disposition": "TEST_ONLY; NOT_APPROVED_FOR_DEPLOYMENT; critical and other findings retained without suppression"
+  },
+  "critical_review": {
+    "CVE-2026-6653": {
+      "source": "https://security-tracker.debian.org/tracker/CVE-2026-6653",
+      "assessment": "Installed libxml2 marked vulnerable. Tests supply only trusted fixed SQL and no XML; database has no network or host input mounts. No patch or deployed reachability waiver claimed."
+    },
+    "CVE-2025-68121": {
+      "source": "https://pkg.go.dev/vuln/GO-2026-4337",
+      "assessment": "Go crypto/tls certificate resumption issue reported for gosu stdlib metadata. Test topology has no network/TLS calls. Binary reachability not independently established; retain finding before deployment."
+    },
+    "transaction_settings": {
+      "source": "https://www.postgresql.org/docs/18/transaction-iso.html",
+      "assessment": "Require READ COMMITTED for fresh post-lock sums and synchronous_commit=on. Actual database rejected alternate isolation settings and nondurable commits. Trusted caller must retain durability settings through commit before external I/O; no provider integration yet."
+    }
+  },
+  "limitations": [
+    "This ledger controls only calls integrated with its API, not cloud meters or VM shutdown/expiry.",
+    "No real billing verification, provider key, request, or model success.",
+    "Local fixture trust authentication has no network/published ports and is NOT production configuration.",
+    "Runtime LOGIN credentials/mTLS, migration tooling, application dispatcher, global job limits and deployed durability remain NOT RUN.",
+    "An external request requires a successfully committed single-use claim plus independent current billing/quote/approval gates. A returned boolean inside an uncommitted transaction is insufficient.",
+    "Unknown dispatch/billing stays held; no automatic retry, refund, lease expiry release or budget reset.",
+    "Database owner/admin can alter state; least-privilege role checks do not protect against a compromised administrator."
+  ]
+}
