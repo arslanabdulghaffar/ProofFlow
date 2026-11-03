@@ -93,3 +93,11 @@ The control reboot failed its180s administrative recovery bound because ssh.sock
 Both2048-token coding responses exhausted reasoning allowance and were rejected unchanged. New IDs with8192 maximum completion tokens (already the adapter ceiling) passed for both models; all eight requests retain their reservations. Authenticated provider usage reconciles token counts, not a final invoice. No security/output/business limit changed. Flash Next is a reasonable first Phase3 candidate based on lower catalogue cost and this single faster coding probe; it is not a benchmark or quality superiority claim.
 
 Phase1 private state now has a Windows-user-bound DPAPI off-VM backup and actual disposable restore. This proves encrypted local recovery for this operator profile; it does not satisfy the later portable restic/object-storage requirement. Empty HTTPS health is operator-only; public application admission remains503. No public release or human security approval is inferred.
+
+## D57: bounded Phase2 representations and partial evidence components
+
+Use explicit proofflow-json-v1 ASCII canonical bytes, Unicode scalar key ordering and lossless signed64 JSON integers with golden vectors; server hashes are authoritative. Preserve raw CSV strings and every occurrence. Exact source amount/time parsers use a finite documented grammar and never infer/round. Normalized input expansion must fit the existing10MiB worker cap. No arbitrary policy extension or Q08 choice is introduced.
+
+Output structural decoding and V02–V04 lineage checks are internal partial components, never a verdict. Tests expose their deliberately incomplete coverage so no caller can mistake them for the full verifier. Remaining money/reasons/filter/duplicate/rollup/canary/runtime/approval gates still apply.
+
+Linux assets use a private administrator-opened directory, flock serialization, temp/fsync/rename/directory-fsync, readonly single-link object checks and exact rehash. Same-UID administrator compromise is outside this control; no public hash-only authorization, retention, quota or registry exists yet. Critical pass reviewed hostile names, Unicode errors, byte expansion, ownership swaps, concurrent publication and fsync faults; fixed malformed-name Unicode error leakage. No dependency/privilege addition, human approval or Phase2 completion is claimed.

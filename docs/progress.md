@@ -1,5 +1,13 @@
 # Progress
 
+## Phase2 source and evidence components — Nov4,08:09 KST
+
+Phase1 is DONE at verified private main `0a24f45467b64132b0a3ca95a503aa8f4799ebff`. Continued directly into authorized Phase2. Added strict bounded JSON/CSV/scalar parsing and canonical vectors; every original occurrence remains present and exact. Candidate-output structural decoding grants no status. V02–V04 compare source partition, original identity and composite customer ownership; total-preserving ownership swaps are rejected. Full V01–V10/verifier schema freeze remains pending Q08 and remaining semantics/integration.
+
+Added an internal Linux immutable byte store with descriptor-pinned reads, private ownership, hash checks, serialized atomic/fsynced publication and no public route.8 Linux fixture groups prove unsafe links/types/corruption rejection, concurrent reuse, short-write completion and failed-sync behavior. Quotas, workspace registry authorization and retention are not provided by this primitive. No candidate executed locally; no new provider request, dependency or cloud resource.
+
+Checks:369 Windows tests passed/53 Linux skips;8 new Linux storage groups passed separately (the prior45 Linux cases are unchanged). Ruff and documentation checks pass. Distinct critical pass found and fixed native Unicode exception leakage from malformed attribute declarations; regression cases now return fixed diagnostics. No independent human approval. Latest credit guard observed$199.67 remaining atNov3 23:07UTC; cutoff/review deadlines unchanged. This is a WIP checkpoint, not Phase2 completion; continue independent product auth/storage/queue preparation while the already-sent Q08 question remains pending.
+
 ## Phase 1 technical acceptance passed — Nov 4, 07:50 KST
 
 The actual private Vultr foundation now passes the Phase 1 gates. [Acceptance evidence](evidence/phase1-acceptance-2026-11-04.json) contains23 reviewed records, the retained failures and checkpoint source hashes. The phase checkpoint is complete only after ordinary push and remote SHA verification; the checkpoint report supplies that commit. Earlier sections below are historical, not current blockers.

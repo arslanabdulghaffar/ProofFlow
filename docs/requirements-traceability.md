@@ -1,5 +1,7 @@
 # Requirements traceability
 
+Phase2 local component update: R16-04/R35-01 have bounded source parser tests; R13-03 has canonical byte/hash vectors; R28-02/03/04 have source-partition/identity/composite-owner mutations; R22-02 has Linux immutable-byte fault tests. They remain DEFERRED_PHASE2 until full policy/schema, isolated verifier, authorization, durable product DB and deployed integration acceptance. Partial tests confer no VERIFIED status. See contract.md, architecture.md and current progress.
+
 Current Phase1 evidence: [acceptance receipt](evidence/phase1-acceptance-2026-11-04.json). IMPLEMENTED_PHASE1 means the named infrastructure requirement has real deployed evidence; it does not assert a finished product, public release or independent human approval. Composite rows involving future API, browser, approval, restic or repair behavior remain deferred even where foundation evidence now exists. Historical paragraphs below retain the original checkpoint context.
 
 Actual deployed R26/R27 evidence now covers pandas/nonroot/read-only/network/CPU/RAM/thread/storage/inodes/capture/ordinary timeout and cleanup. Default fork capacity and deployed supervisor/control death remain open. See evidence/phase1-deployed-2026-11-04.json; no phase-completion claim.
