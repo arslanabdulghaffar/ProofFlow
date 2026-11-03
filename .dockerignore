@@ -17,11 +17,13 @@
 !orchestrator/probe_plan.py
 !orchestrator/probe_response.py
 !orchestrator/budget_store.py
+!orchestrator/provider_setup.py
 !orchestrator/vultr_probe.py
 !tests/
 !tests/integration/
 !tests/integration/budget_client_check.py
 !infra/images/worker.Dockerfile
+!infra/images/budget-postgres.Dockerfile
 !infra/images/worker-requirements.txt
 !worker/
 !worker/launcher.py

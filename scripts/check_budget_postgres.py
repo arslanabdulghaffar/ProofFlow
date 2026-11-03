@@ -1,13 +1,16 @@
 """Trusted local PostgreSQL budget checks, no candidate execution or cloud use.
 
 Creates and removes its own labeled container/volume. Requires Linux Docker and
-the exact official image below. No ports/host mounts/network/secrets are used.
-Local trust authentication is strictly a disposable test fixture, never deploy it.
+an exact reviewed database image ID. No ports/host mounts/network/real secrets.
+Initial trust authentication is a disposable ledger fixture, never deploy it.
+The Python client then uses the reviewed SCRAM/peer configuration and fresh fixture
+passwords; a final intentional trust downgrade must fail at the handshake itself.
 """
 
 import argparse
 import json
 import re
+import secrets
 import shutil
 import subprocess
 import time
@@ -16,10 +19,6 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-IMAGE = (
-    "postgres:18.6-trixie@sha256:"
-    "f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f"
-)
 DIGEST = "a" * 64
 EVIDENCE = "b" * 64
 
@@ -29,7 +28,8 @@ def docker(*args: str, stdin: str | None = None, timeout: int = 45) -> str:
     if executable is None:
         raise RuntimeError("Docker is required")
     return subprocess.run(  # noqa: S603 - fixed trusted Docker commands and generated IDs
-        [executable, *args], input=stdin, check=True, capture_output=True,
+        [executable, "--host=unix:///var/run/docker.sock", *args],
+        input=stdin, check=True, capture_output=True,
         text=True, timeout=timeout,
     ).stdout.strip()
 
@@ -41,9 +41,14 @@ def require(condition: bool, message: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--server-image", required=True,
+                        help="Exact reviewed nonroot PostgreSQL image ID")
     parser.add_argument("--client-image",
                         help="Reviewed trusted client image ID; never a candidate")
     arguments = parser.parse_args()
+    if not re.fullmatch(r"sha256:[a-f0-9]{64}", arguments.server_image):
+        raise ValueError("Exact trusted server image ID required")
+    image = arguments.server_image
     if arguments.client_image and not re.fullmatch(r"sha256:[a-f0-9]{64}", arguments.client_image):
         raise ValueError("Exact trusted client image ID required")
     token = uuid.uuid4().hex
@@ -51,21 +56,23 @@ def main() -> None:
     client_name = name + "-client"
     volume = name + "-data"
     label = "proofflow.budget-test=" + token
-    receipt = {"scope": "local_trusted_postgres_only", "image": IMAGE, "checks": []}
+    receipt = {"scope": "local_trusted_postgres_only", "image": image, "checks": []}
     request_deadlines = {}
 
     def sql(statement: str, role: str | None = "pf_budget_dispatcher", **params) -> str:
         require(role in (None, "pf_budget_dispatcher", "pf_budget_reconciler", "pf_budget_public"),
                 "Unapproved test role")
-        user = {None: "postgres", "pf_budget_dispatcher": "pf_budget_test_dispatch",
+        user = {None: "postgres", "pf_budget_dispatcher": "pf_budget_login",
                 "pf_budget_reconciler": "pf_budget_test_reconcile",
                 "pf_budget_public": "pf_budget_public"}[role]
         bindings = []
         for key, value in params.items():
             require(key.isidentifier(), "Invalid test variable name")
             bindings.extend(("--set", key + "=" + str(value)))
-        return docker("exec", "-i", name, "psql", "-X", "-qAt", "-U", user,
-                      "-d", "postgres", "--set", "ON_ERROR_STOP=1", *bindings, stdin=statement)
+        return docker("exec", "-i", "--user", "70:70", name,
+                      "psql", "-X", "-qAt", "-U", user,
+                      "-d", "proofflow_budget", "--set", "ON_ERROR_STOP=1",
+                      *bindings, stdin=statement)
 
     def expect_error(statement: str, code: str, role: str | None = "pf_budget_dispatcher"):
         try:
@@ -113,13 +120,18 @@ def main() -> None:
         receipt["checks"].append(check)
 
     try:
-        docker("image", "inspect", IMAGE)  # No implicit pull or unpinned fallback.
+        docker("image", "inspect", image)  # No implicit pull or unpinned fallback.
         docker("volume", "create", "--label", label, volume)
-        docker("create", "--name", name, "--label", label, "--network", "none",
+        docker("create", "--pull=never", "--name", name, "--label", label,
+               "--network", "none", "--user", "70:70", "--cap-drop", "ALL", "--read-only",
+               "--tmpfs", "/var/run/postgresql:rw,noexec,nosuid,nodev,"
+                          "uid=70,gid=70,mode=0770,size=1m",
+               "--tmpfs", "/tmp:rw,noexec,nosuid,nodev,size=16m",  # noqa: S108 - private tmpfs
                "--memory", "512m", "--cpus", "1", "--pids-limit", "128",
                "--security-opt", "no-new-privileges",
                "--mount", f"type=volume,source={volume},target=/var/lib/postgresql",
-               "-e", "POSTGRES_HOST_AUTH_METHOD=trust", IMAGE,
+               "-e", "POSTGRES_DB=proofflow_budget",
+               "-e", "POSTGRES_HOST_AUTH_METHOD=trust", image,
                "postgres", "-c", "listen_addresses=", "-c",
                "unix_socket_directories=/var/run/postgresql,/var/lib/postgresql")
         docker("start", name)
@@ -127,17 +139,23 @@ def main() -> None:
         config = json.loads(docker("inspect", name))[0]
         require(config["HostConfig"]["NetworkMode"] == "none"
                 and not config["HostConfig"]["PortBindings"]
-                and len(config["Mounts"]) == 1
-                and config["Mounts"][0]["Type"] == "volume"
-                and config["Mounts"][0]["Name"] == volume, "Unexpected test topology")
+                and config["Config"]["User"] == "70:70"
+                and config["HostConfig"]["ReadonlyRootfs"]
+                and config["HostConfig"]["CapDrop"] == ["ALL"]
+                and [item["Name"] for item in config["Mounts"] if item["Type"] == "volume"]
+                == [volume]
+                and all(item["Type"] in ("volume", "tmpfs") for item in config["Mounts"]),
+                "Unexpected test topology")
         receipt["server_version"] = sql("SHOW server_version;", None)
         require(sql("SHOW fsync; SHOW synchronous_commit;", None) == "on\non",
                 "Durability settings disabled")
         migration = Path(__file__).resolve().parent.parent / "db/phase1/001_budget.sql"
         sql(migration.read_text(encoding="utf-8"), None)
+        sql(migration.with_name("002_runtime_roles.sql").read_text(encoding="utf-8"), None)
         sql("CREATE ROLE pf_budget_public LOGIN; "
-            "CREATE ROLE pf_budget_test_dispatch LOGIN IN ROLE pf_budget_dispatcher; "
-            "CREATE ROLE pf_budget_test_reconcile LOGIN IN ROLE pf_budget_reconciler;", None)
+            "CREATE ROLE pf_budget_test_reconcile LOGIN IN ROLE pf_budget_reconciler; "
+            "GRANT CONNECT ON DATABASE proofflow_budget "
+            "TO pf_budget_public, pf_budget_test_reconcile;", None)
         passed("pinned_server_private_topology_and_migration")
 
         a = account()
@@ -262,8 +280,32 @@ def main() -> None:
         if arguments.client_image:
             docker("image", "inspect", arguments.client_image)
             client_account = account(150000000, 25000000, 2000000)
-            docker("create", "--name", client_name, "--label", label,
-                   "--network", "none", "--read-only", "--user", "10001:10001",
+            # Random disposable fixture passwords travel over stdin only, never argv/logs.
+            dispatch_password, observer_password = secrets.token_hex(32), secrets.token_hex(32)
+            sql("SET password_encryption='scram-sha-256'; "
+                f"ALTER ROLE pf_budget_login PASSWORD '{dispatch_password}'; "
+                f"CREATE ROLE pf_budget_observer LOGIN PASSWORD '{observer_password}'; "
+                "GRANT CONNECT ON DATABASE proofflow_budget TO pf_budget_observer; "
+                "GRANT USAGE ON SCHEMA pf_budget TO pf_budget_observer; "
+                "GRANT SELECT ON pf_budget.reservations TO pf_budget_observer;", None)
+            config_root = migration.parents[2] / "infra/postgres"
+            docker("exec", "-i", "--user", "70:70", name, "sh", "-c",
+                   'cat > "$PGDATA/postgresql.conf"',
+                   stdin=config_root.joinpath("postgresql.conf").read_text(encoding="utf-8"))
+            hba = config_root.joinpath("pg_hba.conf").read_text(encoding="utf-8").replace(
+                "local all all reject",
+                "local proofflow_budget pf_budget_observer scram-sha-256\nlocal all all reject",
+            )  # Test-only read observer; never part of production configuration.
+            docker("exec", "-i", "--user", "70:70", name, "sh", "-c",
+                   'cat > "$PGDATA/pg_hba.conf"', stdin=hba)
+            sql("SELECT pg_reload_conf();", None)
+            require(sql("SELECT count(*) FROM pg_hba_file_rules WHERE error IS NOT NULL;", None)
+                    == "0", "Invalid authentication configuration")
+            # Restart ensures the new authentication policy is active before client tests.
+            docker("restart", name)
+            ready()
+            docker("create", "-i", "--pull=never", "--name", client_name, "--label", label,
+                   "--network", "none", "--read-only", "--user", "10001:70",
                    "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
                    "--memory", "256m", "--cpus", "1", "--pids-limit", "32",
                    "--mount", f"type=volume,source={volume},target=/budgetdb,readonly",
@@ -275,14 +317,35 @@ def main() -> None:
                     and host["Memory"] == 256 * 1024 * 1024
                     and host["NanoCpus"] == 1000000000 and host["PidsLimit"] == 32
                     and "no-new-privileges" in host["SecurityOpt"]
-                    and client["Config"]["User"] == "10001:10001"
+                    and client["Config"]["User"] == "10001:70"
                     and len(client["Mounts"]) == 1
                     and client["Mounts"][0]["Name"] == volume
                     and client["Mounts"][0]["RW"] is False, "Unsafe client test configuration")
-            result = docker("start", "--attach", client_name)
+            result = docker("start", "--attach", "--interactive", client_name,
+                            stdin=json.dumps({"dispatch": dispatch_password,
+                                              "observer": observer_password}))
             state = json.loads(docker("inspect", client_name))[0]["State"]
             require(state["ExitCode"] == 0 and not state["Running"], "Client check failed")
             receipt["python_client"] = json.loads(result)
+            # Client must reject a server accidentally configured for trust, even with
+            # correct credentials. This is a disposable fixture, never a release option.
+            docker("exec", "-i", "--user", "70:70", name, "sh", "-c",
+                   'cat > "$PGDATA/pg_hba.conf"',
+                   stdin=hba.replace("pf_budget_login scram-sha-256", "pf_budget_login trust"))
+            docker("restart", name)
+            ready()
+            rejected = docker("start", "--attach", "--interactive", client_name,
+                              stdin=json.dumps({"dispatch": dispatch_password,
+                                                "expect_trust_rejection": True}))
+            require(json.loads(rejected) == {"trust_rejected": True},
+                    "Client accepted passwordless server")
+            require(json.loads(docker("inspect", client_name))[0]["State"]["ExitCode"] == 0,
+                    "Authentication downgrade check failed")
+            docker("exec", "-i", "--user", "70:70", name, "sh", "-c",
+                   'cat > "$PGDATA/pg_hba.conf"', stdin=hba)
+            docker("restart", name)
+            ready()
+            receipt["python_client"]["checks"].append("client_rejects_trust_authentication_downgrade")
     finally:
         # Only remove generated test objects whose exact private label matches.
         if docker("ps", "-aq", "--filter", "name=^/" + client_name + "$"):

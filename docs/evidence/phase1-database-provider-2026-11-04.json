@@ -1,0 +1,162 @@
+{
+  "recorded_at_utc": "2026-11-03T20:04:50.383515+00:00",
+  "base_commit": "f342ad91fdec62404b189fa3ec1612a9af627804",
+  "phase": "1",
+  "status": "LOCAL_CHECKS_PASS_DEPLOYED_NOT_ACCEPTED",
+  "scope": "Trusted local PostgreSQL/SCRAM and host credential fixtures; provider HTTP mock only",
+  "files_sha256": {
+    "scripts/check_preparation.py": "a531ec12b95dcb634aba4640fafe8296db2a96b394808405b929633c99d77a60",
+    ".dockerignore": "fe09e4f2f91c73f57d29492050783e96e45c6c7c8112b75d11d8cc40e2eb8bc5",
+    ".gitattributes": "a23d836ffea168902fd863530209c11bdb5d251af8f0a3507220356d7f3c40f4",
+    "db/phase1/001_budget.sql": "0c44956322f4c548f205239deec1e60cad5150a62d49abbab1060b3f8db40fdf",
+    "db/phase1/002_runtime_roles.sql": "dbae668753b00c1324ea72843c2ba22d52bc9ec5940091e7f660e106a5a0e719",
+    "infra/images/budget-postgres.Dockerfile": "b68779ec9a3e73d018d3264796e478395992aca0154cd0e569d2466894eefe5a",
+    "infra/postgres/pg_hba.conf": "5be0bc1fe62d5d28626a703529550d0695343c0a72a49028b792087d59210f4f",
+    "infra/postgres/postgresql.conf": "8d898b2ac85be6bfa91e3dbabf9b10e9ab12fad8ed21412078ff0e3288c0f376",
+    "orchestrator/budget_store.py": "c7efd53179f88d0507231d1b3636c9f8df22ee5db59adbea1882bb223ed54cb3",
+    "orchestrator/provider_setup.py": "5b45ab86177a218a3d592893393805845ee072f62287f0afe5ad2abf680178fd",
+    "orchestrator/vultr_probe.py": "bbe565b58c0a6bf785f96d1a259fc348784e20e224bf6aec588bb08b46321437",
+    "orchestrator/probe_plan.py": "6320078bcb00e65cca7f45a8c413485ff6211fda106aba3c4df8c01a3a7fd9a5",
+    "orchestrator/probe_response.py": "e3702f4452031656cd434c3b9783b970b35c57c9fd7e859deda79f3df3e14b01",
+    "tests/unit/test_budget_store.py": "f31b10f01c9bf277c7996d7b79c57cfa578410707793b0ba5f1696611cc1497b",
+    "tests/security/test_provider_setup_linux.py": "4aa96fce5e86a5f978816867abbcc3ecfe7b2bcb41665e0e43d3e57ce7a4011d",
+    "scripts/check_budget_postgres.py": "a6b93f00f002a6ae1457fc53c128b3e1cbd5189c6f194557d7a547e1c04ad24c",
+    "tests/integration/budget_client_check.py": "2d7599315fb898206e0104314a8501bc1d20f31e02be04b0ff09c4ac8d3f7a00",
+    "infra/images/inference-check.Dockerfile": "4a351cb3915375766aa2ceaefed45ecf490e1a0f58babc61bf9e64071f7cdb76",
+    "infra/images/inference-check-requirements.txt": "3fb82df376e6c5039403872ec0281f8550d4fdb0c43568e6daab015cef2bc882"
+  },
+  "checks": {
+    "windows_pytest": {
+      "passed": 170,
+      "skipped_linux": 37
+    },
+    "linux_unittest": {
+      "passed": 37,
+      "credential_groups": 5
+    },
+    "ruff": "PASS repository-wide; existing preparation-checker findings resolved",
+    "database": {
+      "checks": [
+        "pinned_server_private_topology_and_migration",
+        "probe_cap_and_exact_intent_idempotency",
+        "probe_inference_project_caps_share_accounting",
+        "20_concurrent_reservations_exactly_10_admitted",
+        "12_concurrent_claims_exactly_one_dispatch_authorization",
+        "uncertain_reservation_survives_database_crash_restart",
+        "settlement_idempotency_conflict_and_confirmed_release",
+        "overrun_recorded_and_future_reserve_claim_blocked",
+        "dispatcher_reconciler_public_role_boundaries",
+        "expiry_rechecked_at_reservation_and_dispatch",
+        "request_quote_deadline_enforced_independently_of_account_expiry",
+        "invalid_amount_digest_purpose_and_unclaimed_settlement_rejected",
+        "transaction_rollback_is_not_a_committed_reservation",
+        "stale_snapshot_isolation_and_nondurable_commit_settings_rejected"
+      ],
+      "cleanup": "container_and_volume_confirmed_absent",
+      "image": "sha256:9ed8d24e2d804f04bd228a4619c9ed43c3a8d2f4a09fe947b44b112615eb010d",
+      "python_client": {
+        "checks": [
+          "scram_success_wrong_password_and_peer_admin_rejection",
+          "authenticated_dispatcher_cannot_read_mutate_or_escalate",
+          "libpq_environment_redirect_rejected_before_connect",
+          "python_driver_committed_reserve_and_exact_replay",
+          "eight_python_claims_exactly_one_committed",
+          "driver_database_error_redacted",
+          "independent_connection_observed_commit_before_mock_http",
+          "failed_mock_http_retained_reservation_and_prevented_resend",
+          "client_rejects_trust_authentication_downgrade"
+        ],
+        "scope": "real_local_postgres_mock_http_only"
+      },
+      "scope": "local_trusted_postgres_only",
+      "server_version": "18.6"
+    }
+  },
+  "images": {
+    "postgres_base": "postgres:18.6-alpine3.24@sha256:10a5c69a83035ab5239f5620d708520e8b28f5aa1f2b20143e6024532edadfb5",
+    "postgres_patched": "sha256:9ed8d24e2d804f04bd228a4619c9ed43c3a8d2f4a09fe947b44b112615eb010d",
+    "helper": "sha256:3a6bc726b6dd003e2935908297fd09ea2993e2d8a4aa7c3126f798d0c7cc55e5",
+    "stable_package_pins": [
+      "brotli-libs=1.2.1-r0",
+      "libcurl=8.23.0-r0"
+    ],
+    "removed": [
+      "gosu",
+      "setid permission bits"
+    ]
+  },
+  "scanner": "Trivy 0.76.1; no suppression",
+  "scans": {
+    "unmodified_alpine": {
+      "raw_sha256": "99f928d283d747cf5366e7160915fe28d4bfbaa7d5b82cf9007d259836567701",
+      "created_at": "2026-11-04T04:50:51.012890107+09:00",
+      "artifact_id": "sha256:ac5c67d946ac15ecea4784736b4542f6338fb0510e978e1783c91f9599fc9310",
+      "targets": [
+        {
+          "target": "postgres:18.6-alpine3.24 (alpine 3.24.3)",
+          "counts": {
+            "CRITICAL": 1,
+            "HIGH": 1,
+            "MEDIUM": 1,
+            "LOW": 22
+          }
+        },
+        {
+          "target": "usr/local/bin/gosu",
+          "counts": {
+            "MEDIUM": 31,
+            "UNKNOWN": 1,
+            "CRITICAL": 1,
+            "HIGH": 25,
+            "LOW": 3
+          }
+        }
+      ]
+    },
+    "patched_database": {
+      "raw_sha256": "c1fd0f4791a650abc5c4bc675ebab92a953ae7853cff4881f2f12bcd2535df8e",
+      "created_at": "2026-11-04T04:54:31.053074207+09:00",
+      "artifact_id": "sha256:61ed5b65b85d4d0bf4ce0c35907e85fd6d38de55a061deea75b24b53c386391e",
+      "targets": [
+        {
+          "target": "proofflow-budget-postgres:phase1 (alpine 3.24.3)",
+          "counts": {}
+        }
+      ]
+    },
+    "trusted_helper": {
+      "raw_sha256": "eb139bf33a56a690916092d2c709b67e6b2ee672bd579dc0f76f106034f7ccc7",
+      "created_at": "2026-11-04T05:00:12.89650584+09:00",
+      "artifact_id": "sha256:410f73331d40f8736f94895492c8db8e999f66953755bffeb319a72594b099ad",
+      "targets": [
+        {
+          "target": "proofflow-inference-check:phase1 (debian 13.7)",
+          "counts": {
+            "LOW": 61,
+            "HIGH": 45,
+            "MEDIUM": 72,
+            "UNKNOWN": 7
+          }
+        },
+        {
+          "target": "Python",
+          "counts": {}
+        }
+      ]
+    }
+  },
+  "independent_human_review": "NOT_AVAILABLE",
+  "not_run": [
+    "actual control/worker installation",
+    "production credentials or provider activation",
+    "deployed disk quota and restore",
+    "live Vultr entitlement/model/rate/probe",
+    "durable provider request/result receipt composition",
+    "runsc and candidate/pandas execution",
+    "deployed guest resource/network/cleanup gates",
+    "credit-only billing enforcement"
+  ],
+  "cloud_actions": "NONE",
+  "repository_visibility": "PRIVATE authenticated on exact repository",
+  "review": "Separate Codex critical pass; strengthened handshake-only negative test, PG environment rejection, full_page_writes checks, descriptor pinning, least privilege, explicit local Docker and no pulls. No independent human approval."
+}

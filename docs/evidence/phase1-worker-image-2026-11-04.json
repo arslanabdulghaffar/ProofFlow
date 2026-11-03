@@ -89,5 +89,7 @@
     "deployed_CPU_memory_storage_inode_network_probes",
     "supervisor_watchdog_writer_termination_capture_cleanup"
   ],
-  "review": "Codex separate critical pass only; no independent human sign-off. Health-image reachability triage does not transfer to a hostile-code worker. Binary-wheel native libraries and worker runtime/kernel require release review."
+  "review": "Codex separate critical pass only; no independent human sign-off. Health-image reachability triage does not transfer to a hostile-code worker. Binary-wheel native libraries and worker runtime/kernel require release review.",
+  "verified_source_commit": "884bc82b18fec1bc820ea564827dcb6b3f0fc346",
+  "historical_note": "Preserved worker build receipt; source hashes resolve to this verified checkpoint. Current database build-context changes do not imply a worker rebuild or execution."
 }

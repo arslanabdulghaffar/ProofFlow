@@ -1,9 +1,10 @@
 """Check Phase 0 documentation coverage/hygiene; never execute product candidates."""
 
-from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 errors: list[str] = []
@@ -84,22 +85,31 @@ if env.exists():
         key, value = line.split("=", 1)
         keys.append(key)
         require(not key.startswith("NEXT_PUBLIC"), "Public environment variable needs review")
-        if key.endswith("_FILE") or key in {"DATABASE_URL", "GITHUB_APP_ID", "GITHUB_INSTALLATION_ID"}:
+        if key.endswith("_FILE") or key in {
+            "DATABASE_URL", "GITHUB_APP_ID", "GITHUB_INSTALLATION_ID",
+        }:
             require(not value, f"Sensitive/location template must be empty: {key}")
     require(len(keys) == len(set(keys)), "Duplicate environment template keys")
 
 samples = [".env", ".env.local", "secrets/test.pem", ".venv-tools/test", ".tools/test",
            "node_modules/test", "data/private.csv", "artifacts/run.json", "backups/db.dump",
            "eval/results/run.jsonl", "ProofFlow_Complete_Engineering_Handoff.pdf"]
-for sample in samples:
-    result = subprocess.run(["git", "check-ignore", "--quiet", "--no-index", sample], cwd=ROOT)
-    require(result.returncode == 0, f"Sensitive/generated path not ignored: {sample}")
-require(subprocess.run(["git", "check-ignore", "--quiet", "--no-index", ".env.example"],
-                       cwd=ROOT).returncode == 1, ".env.example must remain trackable")
+git = shutil.which("git")
+if git is None:
+    errors.append("Git is required for ignore-policy checks")
+else:
+    for sample in [*samples, ".env.example"]:
+        result = subprocess.run(  # noqa: S603 - resolved Git, fixed verb and local fixture paths
+            [git, "check-ignore", "--quiet", "--no-index", sample], cwd=ROOT, timeout=10,
+        )
+        expected = 1 if sample == ".env.example" else 0
+        require(result.returncode == expected, f"Unexpected ignore policy for: {sample}")
 
 if errors:
     for error in errors:
         print(f"FAIL: {error}", file=sys.stderr)
     sys.exit(1)
-print("PASS: preparation inventory, all-page fields, source index, local links, template and ignore rules")
-print("Scope: documentation hygiene only. Application/runtime/inference/security acceptance NOT RUN.")
+print("PASS: preparation inventory, all-page fields, source index, local links, "
+      "template and ignore rules")
+print("Scope: documentation hygiene only. "
+      "Application/runtime/inference/security acceptance NOT RUN.")
