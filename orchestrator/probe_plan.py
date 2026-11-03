@@ -37,6 +37,7 @@ class ProbePlan:
     request_sha256: str
     reserve_micro_usd: int
     quote_sha256: str
+    quote_payload: bytes
 
 
 def _canonical(value: dict) -> bytes:
@@ -95,4 +96,4 @@ def prepare_json_probe(
         "quote_sha256": quote_digest, "reserve_micro_usd": reserve,
     })
     return ProbePlan(VULTR_CHAT_URL, payload, hashlib.sha256(envelope).hexdigest(),
-                     reserve, quote_digest)
+                     reserve, quote_digest, quote_bytes)

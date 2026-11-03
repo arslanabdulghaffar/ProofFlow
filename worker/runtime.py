@@ -20,7 +20,9 @@ from uuid import UUID
 from worker.host import HOST_ENV, command, synced_write
 from worker.launcher import fixed_environment
 from worker.log_capture import BoundedLogCapture
+from worker.metrics import CgroupMetrics
 from worker.protocol import ExecutionRequest, SupervisorError, execution_name
+from worker.runtime_bundle import validate_bundle
 
 WALL_SECONDS = 20
 SYSTEMD_PROPERTIES = (
@@ -45,6 +47,7 @@ class RuntimePolicy:
     rootfs: Path
     runsc: Path = Path("/usr/local/bin/runsc")
     rootfs_sha256: str = ""  # Required by deployment composition; empty never validates.
+    runtime_bundle_sha256: str = ""
 
     def validate(self) -> None:
         if os.geteuid() != 0 or not re.fullmatch(r"[a-f0-9]{32}", self.machine_id):
@@ -52,11 +55,13 @@ class RuntimePolicy:
         if Path("/etc/machine-id").read_text().strip() != self.machine_id:
             raise SupervisorError("WRONG_WORKER_HOST")
         if any(not re.fullmatch(r"[a-f0-9]{64}", digest)
-               for digest in (self.runsc_sha256, self.image_sha256, self.rootfs_sha256)):
+               for digest in (self.runsc_sha256, self.image_sha256, self.rootfs_sha256,
+                              self.runtime_bundle_sha256)):
             raise SupervisorError("INVALID_RUNTIME_PIN")
         expected_rootfs = Path("/var/lib/proofflow-worker/images") / self.image_sha256 / "rootfs"
         if self.rootfs != expected_rootfs or self.runsc != Path("/usr/local/bin/runsc"):
             raise SupervisorError("UNAPPROVED_RUNTIME_PATH")
+        validate_bundle(self.runtime_bundle_sha256, self.runsc_sha256)
         info = self.runsc.lstat()
         if (not stat.S_ISREG(info.st_mode) or info.st_uid != 0 or info.st_nlink != 1
                 or info.st_mode & 0o022):
@@ -121,7 +126,7 @@ class SystemdRunsc:
         sources = {}
         for name in ("__init__", "runtime", "launcher", "host", "start_gate", "staging",
                      "collector", "protocol", "journal", "supervisor", "log_capture", "rootfs",
-                     "wire", "service", "entrypoint"):
+                     "wire", "service", "entrypoint", "metrics", "runtime_bundle"):
             source = Path(__file__).with_name(name + ".py")
             info = source.lstat()
             if (not stat.S_ISREG(info.st_mode) or info.st_uid != 0 or info.st_mode & 0o022
@@ -130,6 +135,7 @@ class SystemdRunsc:
             sources[name] = hashlib.sha256(source.read_bytes()).hexdigest()
         return {"runtime": "runsc", "platform": "systrap",
                 "runtime_sha256": self.policy.runsc_sha256,
+                "runtime_bundle_sha256": self.policy.runtime_bundle_sha256,
                 "image_sha256": self.policy.image_sha256,
                 "rootfs_sha256": self.policy.rootfs_sha256,
                 "supervisor_sha256": hashlib.sha256(
@@ -163,6 +169,7 @@ class SystemdRunsc:
             raise SupervisorError("UNSUPPORTED_HOST_INSTALL_PATH")
         return ["/usr/bin/systemd-run", "--quiet", "--no-ask-password", "--pipe", "--wait",
                 "--expand-environment=no",
+                "--setenv=GVISOR_SIDECAR_BINARIES_DIR=/usr/local/bin/gvisor-bin",
                 "--unit=" + self.unit(identifier), "--slice=system.slice",
                 *["--property=" + item for item in SYSTEMD_PROPERTIES],
                 "--property=ExecStartPre=/usr/bin/python3 -I " + str(gate)
@@ -182,6 +189,8 @@ class SystemdRunsc:
         deadline = time.monotonic() + WALL_SECONDS
         outcome = "exited"
         armed = False
+        metrics = None
+        sampled_at = 0.0
         try:
             with selectors.DefaultSelector() as selector:
                 for name, pipe in (("stdout", process.stdout), ("stderr", process.stderr)):
@@ -212,8 +221,15 @@ class SystemdRunsc:
                                     or state.get("TimeoutStartUSec") != "20s"
                                     or state.get("TimeoutStopUSec") != "1s"):
                                 raise SupervisorError("WATCHDOG_POLICY_MISMATCH")
+                            metrics = CgroupMetrics(identifier)
                             synced_write(path / "launch.ready", identifier.hex.encode())
                             armed = True
+                    if metrics is not None and time.monotonic() - sampled_at >= 0.1:
+                        try:
+                            metrics.sample()
+                        except OSError:
+                            pass  # Fast exit may remove the cgroup before the next sample.
+                        sampled_at = time.monotonic()
                     for key, _ in selector.select(0.05):
                         chunk = os.read(key.fd, 4096)
                         if chunk:
@@ -243,24 +259,29 @@ class SystemdRunsc:
             return {"outcome": outcome, "runtime_exit_code": state.get("ExecMainStatus"),
                     "runtime_client_exit_code": client_code,
                     "runtime_exit_kind": state.get("ExecMainCode"),
-                    "unit_result": state.get("Result"), "invocation": state.get("InvocationID")}, \
+                    "unit_result": state.get("Result"), "invocation": state.get("InvocationID"),
+                    "resource_observation": metrics.finish() if metrics else None}, \
                 capture.snapshot()
         finally:
             # This is a second independent stop path for exceptions/caller cancellation.
             try:
                 self.stop_and_confirm(identifier)
             finally:
-                if process.poll() is None:
-                    try:
-                        os.killpg(process.pid, signal.SIGKILL)  # Only our client group.
-                    except ProcessLookupError:
-                        pass  # Client exited between poll and signal.
-                    try:
-                        process.wait(timeout=2)
-                    except subprocess.TimeoutExpired:
-                        raise SupervisorError("RUNTIME_CLIENT_EXIT_UNCERTAIN") from None
-                process.stdout.close()
-                process.stderr.close()
+                try:
+                    if process.poll() is None:
+                        try:
+                            os.killpg(process.pid, signal.SIGKILL)  # Only our client group.
+                        except ProcessLookupError:
+                            pass  # Client exited between poll and signal.
+                        try:
+                            process.wait(timeout=2)
+                        except subprocess.TimeoutExpired:
+                            raise SupervisorError("RUNTIME_CLIENT_EXIT_UNCERTAIN") from None
+                finally:
+                    process.stdout.close()
+                    process.stderr.close()
+                    if metrics is not None:
+                        metrics.close()
 
     def stop_and_confirm(self, identifier: UUID) -> dict:
         state = self.show(identifier)

@@ -160,5 +160,6 @@
     "https://docs.docker.com/reference/cli/docker/container/create/",
     "https://docs.docker.com/reference/cli/docker/container/export/",
     "https://manpages.ubuntu.com/manpages/noble/man1/mksquashfs.1.html"
-  ]
+  ],
+  "verified_source_commit": "f342ad91fdec62404b189fa3ec1612a9af627804"
 }

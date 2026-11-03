@@ -47,7 +47,7 @@ def main() -> None:
     protected_file(config_path, secret=True)
     config = strict_json(config_path.read_bytes())
     keys(config, {"machine_id", "runsc_sha256", "image_sha256", "rootfs_sha256",
-                  "bind_address", "controller_certificate_sha256"})
+                  "bind_address", "controller_certificate_sha256", "runtime_bundle_sha256"})
     if config["machine_id"] != Path("/etc/machine-id").read_text().strip():
         raise SupervisorError("WRONG_WORKER_HOST")
     address = private_address(config["bind_address"])
@@ -61,7 +61,8 @@ def main() -> None:
     context = tls_context(certs / "ca.pem", certs / "worker.pem", certs / "worker.key", server=True)
     mount_image(directory, image, rootfs)
     policy = RuntimePolicy(config["machine_id"], digest(config["runsc_sha256"]), image,
-                           directory / "rootfs", rootfs_sha256=rootfs)
+                           directory / "rootfs", rootfs_sha256=rootfs,
+                           runtime_bundle_sha256=digest(config["runtime_bundle_sha256"]))
     runtime = SystemdRunsc(policy)
     runtime.validate()
     runtime.identity()  # Reject unsafe code installation before binding any socket.

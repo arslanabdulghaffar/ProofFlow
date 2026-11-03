@@ -11,6 +11,7 @@ from uuid import UUID
 import httpx
 
 from orchestrator.budget_store import PostgresBudget
+from orchestrator.probe_journal import ProbeJournal
 from orchestrator.probe_plan import VULTR_CHAT_URL, RateQuote, prepare_json_probe
 from orchestrator.probe_response import MAX_RESPONSE_BYTES, ProbeResponse, parse_probe_response
 
@@ -32,10 +33,18 @@ async def run_json_probe(
     plan = prepare_json_probe(prompt, quote, max_completion_tokens=max_completion_tokens, now=now)
     seconds = min(MAX_REQUEST_SECONDS, (quote.valid_until - now).total_seconds())
     loop = asyncio.get_running_loop()
-    deadline = loop.time() + seconds
+    started = loop.time()
+    deadline = started + seconds
+    journal = ProbeJournal(budget)
+    prepared = False
+    raw_body = None
+    http_status = None
     try:
         # Covers budget operations, DNS/TLS, headers and entire response drain.
         async with asyncio.timeout_at(deadline):
+            if not await journal.prepare(request_id, plan):
+                raise ProbeDispatchError("PROBE_ALREADY_RECORDED")
+            prepared = True
             await budget.reserve(request_id, plan.request_sha256, plan.reserve_micro_usd,
                                  quote.valid_until)
             if not await budget.claim(request_id, plan.request_sha256):
@@ -55,6 +64,7 @@ async def run_json_probe(
                              "Content-Type": "application/json", "Accept": "application/json",
                              "Accept-Encoding": "identity"},
                 ) as response:
+                    http_status = response.status_code
                     if response.status_code != 200:
                         raise ProbeDispatchError("PROVIDER_HTTP_REJECTED")
                     if (response.headers.get("content-type", "").split(";")[0].strip().lower()
@@ -72,12 +82,25 @@ async def run_json_probe(
                         if len(body) + len(chunk) > MAX_RESPONSE_BYTES:
                             raise ProbeDispatchError("PROVIDER_RESPONSE_TOO_LARGE")
                         body.extend(chunk)
-            parsed = parse_probe_response(bytes(body), model=quote.model,
+            raw_body = bytes(body)
+            parsed = parse_probe_response(raw_body, model=quote.model,
                                           completion_bound=max_completion_tokens)
             # Synchronous bounded parsing cannot yield to asyncio's timeout callback.
             if loop.time() >= deadline or datetime.now(UTC) >= quote.valid_until:
                 raise ProbeDispatchError("PROVIDER_OUTCOME_UNCERTAIN")
+            await journal.record(request_id, plan, "PARSED_RESPONSE", raw_body,
+                                 http_status, int((loop.time() - started) * 1000))
             return parsed
-    except (httpx.HTTPError, OSError, TimeoutError):
-        # A timeout/transport failure cannot establish whether the call was billed.
-        raise ProbeDispatchError("PROVIDER_OUTCOME_UNCERTAIN") from None
+    except BaseException as error:
+        if prepared:
+            # Unknown/lost result commit may already have persisted PARSED_RESPONSE.
+            # Immutable record rejects a contradictory rewrite; recovery reads it,
+            # never repeats a network request. No body/exception text enters errors.
+            try:
+                await journal.record(request_id, plan, "OUTCOME_UNKNOWN", raw_body,
+                                     http_status, int((loop.time() - started) * 1000))
+            except Exception:
+                raise ProbeDispatchError("PROBE_RECEIPT_WRITE_UNCERTAIN") from None
+        if isinstance(error, (httpx.HTTPError, OSError, TimeoutError)):
+            raise ProbeDispatchError("PROVIDER_OUTCOME_UNCERTAIN") from None
+        raise

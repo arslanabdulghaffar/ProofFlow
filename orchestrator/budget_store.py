@@ -54,7 +54,7 @@ class PostgresBudget:
     connection: BudgetConnection = field(repr=False)
     account_id: UUID
 
-    async def _execute(self, statement: str, parameters: tuple) -> bool:
+    async def _query(self, statement: str, parameters: tuple) -> tuple:
         try:
             async with asyncio.timeout(8):
                 async with await psycopg.AsyncConnection.connect(
@@ -73,12 +73,18 @@ class PostgresBudget:
                             raise BudgetUnavailable("BUDGET_DURABILITY_UNAVAILABLE")
                         cursor = await connection.execute(statement, parameters)
                         row = await cursor.fetchone()
-                        if row is None or len(row) != 1 or type(row[0]) is not bool:
+                        if row is None or len(row) != 1:
                             raise BudgetUnavailable("BUDGET_INVALID_RESULT")
                     # Transaction context has acknowledged COMMIT before returning.
-                    return row[0]
+                    return row
         except (psycopg.Error, OSError, TimeoutError):
             raise BudgetUnavailable("BUDGET_OPERATION_UNCERTAIN") from None
+
+    async def _execute(self, statement: str, parameters: tuple) -> bool:
+        row = await self._query(statement, parameters)
+        if type(row[0]) is not bool:
+            raise BudgetUnavailable("BUDGET_INVALID_RESULT")
+        return row[0]
 
     async def reserve(
         self, request_id: UUID, request_hash: str, amount: int, valid_until: datetime,

@@ -62,3 +62,7 @@ No installed model/provider, product permission, cloud rate or test result is in
 
 - D43 (Nov 4 database/provider): same-control-host Unix socket plus client-required SCRAM replaces arbitrary libpq DSNs; fixed database/login, no PG environment/password-file fallback. Separate peer admin and disabled settlement identity. Host-only bounded credential files do not authorize activation. No TCP database support is implied.
 - D44: replace the active vulnerable PostgreSQL fixture with the pinned, patched nonroot Alpine build after real migration/auth/crash tests and a zero-finding scan. Preserve old receipts; do not transfer this result to the helper/control/worker images or claim deployed clearance. Protected configuration review and remaining gates are recorded in readiness; independent human sign-off remains unavailable.
+
+- D45: bounded immutable probe intents/results preserve exact bytes; read-only recovery cannot resend or settle. Unfinished intents consume the 100/account cap. Synthetic restore never authorizes a restored spend ledger to dispatch.
+- D46: pin the complete gVisor release-20261102.0 bundle and fixed companion directory. No runtime auto-download or local guest execution. Unavailable package inventory is a review gap, not a clean scan.
+- D47: require actual kernel cgroup limit readback before launch; retain sampled host counters with missing-final-sample state. Host counts do not prove guest fork/thread enforcement.

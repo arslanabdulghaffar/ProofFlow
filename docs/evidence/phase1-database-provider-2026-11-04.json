@@ -158,5 +158,6 @@
   ],
   "cloud_actions": "NONE",
   "repository_visibility": "PRIVATE authenticated on exact repository",
-  "review": "Separate Codex critical pass; strengthened handshake-only negative test, PG environment rejection, full_page_writes checks, descriptor pinning, least privilege, explicit local Docker and no pulls. No independent human approval."
+  "review": "Separate Codex critical pass; strengthened handshake-only negative test, PG environment rejection, full_page_writes checks, descriptor pinning, least privilege, explicit local Docker and no pulls. No independent human approval.",
+  "verified_source_commit": "3552af72826b75e7ccd32e0dd718b87bc56b0a7c"
 }

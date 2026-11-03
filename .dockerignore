@@ -18,6 +18,7 @@
 !orchestrator/probe_response.py
 !orchestrator/budget_store.py
 !orchestrator/provider_setup.py
+!orchestrator/probe_journal.py
 !orchestrator/vultr_probe.py
 !tests/
 !tests/integration/

@@ -63,6 +63,17 @@ def service(mode, output):
         for _ in range(128):
             os.write(1, b"o" * 4096)
             os.write(2, b"e" * 4096)
+    if mode == "cpu":
+        children = [os.fork()]
+        if children[0] != 0:
+            children.append(os.fork())
+        until = time.monotonic() + 2
+        while time.monotonic() < until:
+            pass  # Fixed two-second trusted CPU fixture; never candidate code.
+        if 0 in children:
+            os._exit(0)
+        for child in children:
+            os.waitpid(child, 0)
     if mode == "sleep":
         child = os.fork()
         if child == 0:
@@ -107,6 +118,11 @@ def main():
         assert receipt["outcome"] == "exited" and receipt["runtime_client_exit_code"] == 0, receipt
         assert not supervisor.staging.path(item.execution_id).exists()
         assert receipt["verification"] == "NOT_PERFORMED"
+        observed = receipt["resource_observation"]
+        assert observed["source"] == "host_cgroup_v2" and observed["samples"] >= 1
+        assert observed["last_observed"]["cpu"]["usage_usec"] > 0
+        assert observed["last_observed"]["memory_peak_bytes"] > 0
+        assert observed["sampled_max_host_tasks"] > 0
         assert supervisor.execute(item) == receipt
         try:
             supervisor.acknowledge(item.execution_id, "incorrect-manifest")
@@ -117,6 +133,18 @@ def main():
         supervisor.acknowledge(item.execution_id, item.manifest_hash())
         assert not (root / "results" / item.execution_id.hex).exists()
         checks.append("real_service_capture_cleanup_exact_replay_no_reexecution")
+
+        runtime.mode = "cpu"
+        item = request()
+        owned.append(item.execution_id)
+        receipt = supervisor.execute(item)
+        assert receipt["cleanup"] == "confirmed" and receipt["collected"], receipt
+        observed = receipt["resource_observation"]
+        assert observed["last_observed"]["cpu"]["nr_throttled"] > 0, observed
+        assert observed["last_observed"]["cpu"]["throttled_usec"] > 0, observed
+        assert observed["samples"] > 1 and observed["sampled_max_host_tasks"] >= 2
+        checks.append("host_kernel_cpu_throttling_and_memory_task_observations")
+        runtime.mode = "success"
 
         # A rejected watchdog readback must never release ExecStartPre.
         original_show = runtime.show

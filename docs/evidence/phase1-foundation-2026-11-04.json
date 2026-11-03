@@ -1,14 +1,14 @@
 {
-  "recorded_at_utc": "2026-11-03T20:04:50.383515+00:00",
-  "base_commit": "f342ad91fdec62404b189fa3ec1612a9af627804",
+  "recorded_at_utc": "2026-11-03T20:41:13.114476+00:00",
+  "base_commit": "3552af72826b75e7ccd32e0dd718b87bc56b0a7c",
   "phase": "1",
   "status": "IN_PROGRESS_NOT_ACCEPTED",
-  "scope": "Trusted local foundation, authenticated worker/import, SCRAM database and host secret loading; provider HTTP mocked, deployed NOT ACCEPTED",
+  "scope": "Trusted local foundation, durable receipts, full runtime pinning and host metrics; deployed NOT ACCEPTED",
   "files_sha256": {
     "api/app/main.py": "72ac27d0876e9b97ca705c6487dac1a581712dab1fc23b5afbc2bec2fd4d7576",
     "pyproject.toml": "38269e6332d025f4aa42402a9ab9a266ba12124268836f428964a37dac889e6d",
     "uv.lock": "b7eafc19025b234ef886c03658ee7a329b0cd55825f59948bfdebab908e399ac",
-    ".dockerignore": "fe09e4f2f91c73f57d29492050783e96e45c6c7c8112b75d11d8cc40e2eb8bc5",
+    ".dockerignore": "337d3e373b1d4b05ac8b4c5e1f5e7a40ca9da6b74aa1c09714dad47ec1a582a1",
     "infra/images/control.Dockerfile": "53394faf9a422edff987993cc5a8e57b788f16c5842cdf63812ed316e5079b7e",
     "infra/images/control-requirements.txt": "d213bf4d24fd17475d36ac2837c543b99ddc247833def52a907952af3ce83ba2",
     "infra/images/control-build-requirements.txt": "8e4da4de9431ea29429933f4a2169046e0c6205b7fbd6d4e609622732d2d801f",
@@ -22,17 +22,17 @@
     "tests/security/test_collector.py": "0c1302b9cbcc7a7181e603f736ad21c77a74384630815dfd9a4ed0968ee1602f",
     "tests/unit/test_log_capture.py": "00a52fb3b7e27acc52a1e1c62a9d1b8f8a61e80713117e3536dfd245e28364ed",
     "db/phase1/001_budget.sql": "0c44956322f4c548f205239deec1e60cad5150a62d49abbab1060b3f8db40fdf",
-    "scripts/check_budget_postgres.py": "a6b93f00f002a6ae1457fc53c128b3e1cbd5189c6f194557d7a547e1c04ad24c",
+    "scripts/check_budget_postgres.py": "36d98a2e865a982130c54027cc5d02d51749de9560f12acfd221498c69202e55",
     "orchestrator/__init__.py": "b6237e4043086a66670b1e12a938c5e2af4555365e11febd58b8db2f513af840",
-    "orchestrator/probe_plan.py": "6320078bcb00e65cca7f45a8c413485ff6211fda106aba3c4df8c01a3a7fd9a5",
+    "orchestrator/probe_plan.py": "00af2f4037712b29d6705d64e43b9284dfd45811ef22319c5159ec875629239f",
     "tests/unit/test_probe_plan.py": "08ce262792c945233bc957b1ae01e0478d6c881927356508366fcddc7c187cda",
-    "orchestrator/budget_store.py": "c7efd53179f88d0507231d1b3636c9f8df22ee5db59adbea1882bb223ed54cb3",
+    "orchestrator/budget_store.py": "e8d9440aa67d04761aef88fec7241bef1fda2c51c986feaf472108b17a12f46f",
     "orchestrator/probe_response.py": "e3702f4452031656cd434c3b9783b970b35c57c9fd7e859deda79f3df3e14b01",
-    "orchestrator/vultr_probe.py": "bbe565b58c0a6bf785f96d1a259fc348784e20e224bf6aec588bb08b46321437",
+    "orchestrator/vultr_probe.py": "51d1a0501fca94e0b317e4a6cc1e90f37c3af1803797221f3377cfb6b4b92325",
     "tests/unit/test_budget_store.py": "f31b10f01c9bf277c7996d7b79c57cfa578410707793b0ba5f1696611cc1497b",
     "tests/unit/test_probe_response.py": "1b26feed1d3ca40f11451fea31b87992874ffc437766ed37a78e06ed09daa404",
-    "tests/unit/test_vultr_probe.py": "979649e5fec283207b0bbdd3d382f7ebe609d428b2def4cfcdb4352fe2965b66",
-    "tests/integration/budget_client_check.py": "2d7599315fb898206e0104314a8501bc1d20f31e02be04b0ff09c4ac8d3f7a00",
+    "tests/unit/test_vultr_probe.py": "84af5adb69e2500968171856ae50146904fa21a2be8abf6f07119d5762e3e090",
+    "tests/integration/budget_client_check.py": "8c8dc672426b08dd96006e1d41d4e234f6e6a906f4d89040dbbe37f6c8a9ea1a",
     "infra/images/inference-check.Dockerfile": "4a351cb3915375766aa2ceaefed45ecf490e1a0f58babc61bf9e64071f7cdb76",
     "infra/images/inference-check-requirements.txt": "3fb82df376e6c5039403872ec0281f8550d4fdb0c43568e6daab015cef2bc882",
     "worker/launcher.py": "f7bbe39731b914f56aa33fe083a6450c073df9f74db7cfeb9720872139d1b6dc",
@@ -41,13 +41,13 @@
     "infra/images/worker.Dockerfile": "ae7fa2a43d2d8eb8fa9d57072db828fcf6a87cae409b6241b4153fa34253a095",
     "infra/images/worker-requirements.txt": "e8d0caf5ac1c5331c34abe6564fc0b0a727915916e0985dc8b025223799296d3",
     "tests/unit/test_worker_launcher_policy.py": "664433dd37d5f28d157baefebefe3ced62af03252b9d2447f8e641756e4ad8de",
-    "tests/security/supervisor_linux_check.py": "b003839e472dc9346dace71fa7fedd1d365cb169e9c913bd2c61a17c066e5591",
+    "tests/security/supervisor_linux_check.py": "98defc69545441726fca9cf8d8461ca42648c38404651bd59915a9d413f25539",
     "tests/security/test_supervisor_journal.py": "44076273e2f29520fb5f812c2b40adcc58b45007d03935d8dfd46badcb27a9d6",
     "tests/unit/test_worker_protocol.py": "510a6f020d6c13ee39c959b247d559a44241313717c90726cbce9f1b27b76539",
     "worker/host.py": "e14e8a998cfcadd65e242ab783591c52fdc3b96ca8a2d3b02fe29a4677fd15fe",
     "worker/journal.py": "fec480a5de2860093637afeca5752d75964414d4d868b5f529fffed981b4d0c0",
     "worker/protocol.py": "7aaf319f4baa1cc821fc15aeaad4a0bff865730636412dd988d0f7aa87cc0e5a",
-    "worker/runtime.py": "f415b9f129029b0d18cb8baa9ffba8c5c8067c8f25453f1ca4da0db3e16fa309",
+    "worker/runtime.py": "df87c8eb035bdc072237f7ba6526f429edf8abbf2db8fb0da5c9a6cb1436498d",
     "worker/staging.py": "4b84e4c6e238ba3a3b97e08294b69f721f04316d1dba9e299c665fcf25e4a3a2",
     "worker/start_gate.py": "9ea60b791822935da6b25d7ed79a91c80844ccb451bc3f64bb55445581e95e3b",
     "worker/supervisor.py": "05b666a4b53375abcd96d570eb1ce9905b6128b59c87777a049505a59232caa1",
@@ -58,7 +58,7 @@
     "tests/security/worker_rpc_linux_check.py": "5044f456ec46e06423f9c41c834b0904fdd3c9c821364d47946d12493895b2bb",
     "tests/unit/test_rootfs_archive.py": "ab449e3234b38a2d1dd95113e2b2cbe411a23627ac7b1e6d87ed21d54eff282e",
     "tests/unit/test_worker_service.py": "3f2289e9f6bce5d2e86889ef855de717b0c5b7e61d1784e1f226847991752727",
-    "worker/entrypoint.py": "d3691b70b5164cf10e85fb4326f25b151dc9957761fc19b105690a61527c07f4",
+    "worker/entrypoint.py": "988f37e4c510afae1611bf8cfdf925c52f96ca1bc033ebe2ad53e186a8c282eb",
     "worker/rootfs.py": "5283c965736359afd4d53a5387fd6057e0755743bc7d65e95dbd560157fd9b75",
     "worker/service.py": "0e7ba2316d5bab505006e98ed70f436a68302215fcdc146c2582c6f07cf5368b",
     "worker/wire.py": "8e9bafd7fba1c0ad92aa8fe153c15ac39a16e7eae3574e968ede740eb03bee9b",
@@ -69,12 +69,21 @@
     "infra/postgres/postgresql.conf": "8d898b2ac85be6bfa91e3dbabf9b10e9ab12fad8ed21412078ff0e3288c0f376",
     "orchestrator/provider_setup.py": "5b45ab86177a218a3d592893393805845ee072f62287f0afe5ad2abf680178fd",
     "tests/security/test_provider_setup_linux.py": "4aa96fce5e86a5f978816867abbcc3ecfe7b2bcb41665e0e43d3e57ce7a4011d",
-    "scripts/check_preparation.py": "a531ec12b95dcb634aba4640fafe8296db2a96b394808405b929633c99d77a60"
+    "scripts/check_preparation.py": "a531ec12b95dcb634aba4640fafe8296db2a96b394808405b929633c99d77a60",
+    "db/phase1/003_probe_receipts.sql": "4a3229e058a2da0ac0f120126e276f791a584430537dff2817974950f892698a",
+    "infra/gvisor/runsc-release.json": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+    "orchestrator/probe_journal.py": "9cc5054567f62f7f2472e403ae5da32f1f08ac4fa98e20341295c7e9371e9057",
+    "tests/security/test_runtime_bundle_linux.py": "9e014a3ea31f1fac6cfe2d15887748c071a2db5f06756852b101c8f9756f2567",
+    "tests/unit/test_probe_journal.py": "c3cf8a00ef9ff694243fe1f437024473f2a5210777ef86ce70cc2e8753f9ce60",
+    "tests/unit/test_runtime_bundle.py": "9b7e7a1dcc7de931da513c825ae17ed65f7aca8622240957eaea385ba733fe62",
+    "tests/unit/test_worker_metrics.py": "6d1c46227839d7fb3baf3e6567973165c0e537b33b35c6b3456d657ed02bb444",
+    "worker/metrics.py": "9fad700954800359a3feb5c897258b918b442faa4d506474de4b22a810a9a5bc",
+    "worker/runtime_bundle.py": "b65b8d526f0b94c2e352aac5d17bb5ff91068424446627dd3ffc9a342e0194a9"
   },
   "checks": {
     "pytest": {
-      "passed": 170,
-      "skipped_linux": 37
+      "passed": 206,
+      "skipped_linux": 43
     },
     "ruff": {
       "status": "PASS",
@@ -222,7 +231,11 @@
     "database_provider_setup": "phase1-database-provider-2026-11-04.json; real local SCRAM, mock HTTP only",
     "linux_collector_journal_credentials": {
       "passed": 37
-    }
+    },
+    "linux_security_current": {
+      "passed": 43
+    },
+    "receipts_runtime_current": "phase1-receipts-runtime-2026-11-04.json"
   },
   "cloud": {
     "account_credit_usd": "200.00",
@@ -235,7 +248,7 @@
     "service_tax_coverage": "SERVICE_COVERAGE_CONFIRMED_BY_OWNER_RELAY_OF_ORGANIZER_SESSION; TAX_COVERAGE_NOT_VERIFIED",
     "hard_non_overage_bound": "NOT_VERIFIED",
     "personal_spending_authorized": false,
-    "observation_note": "No cloud resource or paid call. Owner relayed organizer service coverage and judging-credit guidance; published post-event access text is less specific. Tax/non-overage evidence still outstanding."
+    "observation_note": "No cloud resource or paid call. Owner relayed organizer service coverage and judging-credit guidance; published post-event access text is less specific. Tax/non-overage evidence still outstanding. This follow-up could not access signed-in browser; no fresh account read claimed."
   },
   "not_run": [
     "deployed_tls_private_network_database",

@@ -1,0 +1,155 @@
+{
+  "recorded_at_utc": "2026-11-03T20:41:13.114476+00:00",
+  "base_commit": "3552af72826b75e7ccd32e0dd718b87bc56b0a7c",
+  "phase_status": "IN_PROGRESS_NOT_ACCEPTED",
+  "scope": "Local trusted PostgreSQL/systemd/TLS fixtures, mock HTTP; no guest execution",
+  "files_sha256": {
+    ".dockerignore": "337d3e373b1d4b05ac8b4c5e1f5e7a40ca9da6b74aa1c09714dad47ec1a582a1",
+    "db/phase1/003_probe_receipts.sql": "4a3229e058a2da0ac0f120126e276f791a584430537dff2817974950f892698a",
+    "infra/gvisor/runsc-release.json": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+    "orchestrator/budget_store.py": "e8d9440aa67d04761aef88fec7241bef1fda2c51c986feaf472108b17a12f46f",
+    "orchestrator/probe_journal.py": "9cc5054567f62f7f2472e403ae5da32f1f08ac4fa98e20341295c7e9371e9057",
+    "orchestrator/probe_plan.py": "00af2f4037712b29d6705d64e43b9284dfd45811ef22319c5159ec875629239f",
+    "orchestrator/vultr_probe.py": "51d1a0501fca94e0b317e4a6cc1e90f37c3af1803797221f3377cfb6b4b92325",
+    "scripts/check_budget_postgres.py": "36d98a2e865a982130c54027cc5d02d51749de9560f12acfd221498c69202e55",
+    "tests/integration/budget_client_check.py": "8c8dc672426b08dd96006e1d41d4e234f6e6a906f4d89040dbbe37f6c8a9ea1a",
+    "tests/security/supervisor_linux_check.py": "98defc69545441726fca9cf8d8461ca42648c38404651bd59915a9d413f25539",
+    "tests/security/test_runtime_bundle_linux.py": "9e014a3ea31f1fac6cfe2d15887748c071a2db5f06756852b101c8f9756f2567",
+    "tests/unit/test_probe_journal.py": "c3cf8a00ef9ff694243fe1f437024473f2a5210777ef86ce70cc2e8753f9ce60",
+    "tests/unit/test_runtime_bundle.py": "9b7e7a1dcc7de931da513c825ae17ed65f7aca8622240957eaea385ba733fe62",
+    "tests/unit/test_vultr_probe.py": "84af5adb69e2500968171856ae50146904fa21a2be8abf6f07119d5762e3e090",
+    "tests/unit/test_worker_metrics.py": "6d1c46227839d7fb3baf3e6567973165c0e537b33b35c6b3456d657ed02bb444",
+    "worker/entrypoint.py": "988f37e4c510afae1611bf8cfdf925c52f96ca1bc033ebe2ad53e186a8c282eb",
+    "worker/metrics.py": "9fad700954800359a3feb5c897258b918b442faa4d506474de4b22a810a9a5bc",
+    "worker/runtime.py": "df87c8eb035bdc072237f7ba6526f429edf8abbf2db8fb0da5c9a6cb1436498d",
+    "worker/runtime_bundle.py": "b65b8d526f0b94c2e352aac5d17bb5ff91068424446627dd3ffc9a342e0194a9"
+  },
+  "checks": {
+    "pytest": {
+      "passed": 206,
+      "linux_skipped": 43
+    },
+    "linux_security": {
+      "passed": 43
+    },
+    "ruff": "PASS",
+    "postgres": {
+      "checks": [
+        "pinned_server_private_topology_and_migration",
+        "probe_cap_and_exact_intent_idempotency",
+        "probe_inference_project_caps_share_accounting",
+        "20_concurrent_reservations_exactly_10_admitted",
+        "12_concurrent_claims_exactly_one_dispatch_authorization",
+        "uncertain_reservation_survives_database_crash_restart",
+        "settlement_idempotency_conflict_and_confirmed_release",
+        "overrun_recorded_and_future_reserve_claim_blocked",
+        "dispatcher_reconciler_public_role_boundaries",
+        "expiry_rechecked_at_reservation_and_dispatch",
+        "request_quote_deadline_enforced_independently_of_account_expiry",
+        "invalid_amount_digest_purpose_and_unclaimed_settlement_rejected",
+        "transaction_rollback_is_not_a_committed_reservation",
+        "stale_snapshot_isolation_and_nondurable_commit_settings_rejected"
+      ],
+      "cleanup": "container_and_volume_confirmed_absent",
+      "image": "sha256:9ed8d24e2d804f04bd228a4619c9ed43c3a8d2f4a09fe947b44b112615eb010d",
+      "python_client": {
+        "checks": [
+          "scram_success_wrong_password_and_peer_admin_rejection",
+          "authenticated_dispatcher_cannot_read_mutate_or_escalate",
+          "libpq_environment_redirect_rejected_before_connect",
+          "python_driver_committed_reserve_and_exact_replay",
+          "eight_python_claims_exactly_one_committed",
+          "driver_database_error_redacted",
+          "independent_connection_observed_commit_before_mock_http",
+          "failed_mock_http_retained_reservation_and_prevented_resend",
+          "durable_receipt_recovery_after_lost_commit_ack_no_resend",
+          "receipt_scope_immutable_outcome_and_function_only_permissions",
+          "concurrent_receipt_intent_admission_and_bounded_capacity",
+          "database_crash_preserves_receipt_and_claim",
+          "synthetic_dump_restore_exact_ledger_receipt_hashes",
+          "client_rejects_trust_authentication_downgrade"
+        ],
+        "scope": "real_local_postgres_mock_http_only"
+      },
+      "scope": "local_trusted_postgres_only",
+      "server_version": "18.6"
+    },
+    "supervisor": {
+      "scope": "trusted_local_systemd_fixtures_no_candidates_no_runsc",
+      "checks": [
+        "real_service_capture_cleanup_exact_replay_no_reexecution",
+        "host_kernel_cpu_throttling_and_memory_task_observations",
+        "wrong_watchdog_readback_prevents_fixture_start_and_cleans",
+        "late_start_after_staging_removal_denied_by_independent_gate",
+        "real_simultaneous_stdout_stderr_flood_bounded_and_drained",
+        "resident_capture_expiry_and_fail_closed_maintenance_recovery",
+        "extra_output_rejected_and_all_mounts_cleaned",
+        "durable_cancel_kills_detached_descendant_before_collection",
+        "cleanup_failure_quarantines_then_recovery_reclaims_owned_resources",
+        "independent_20s_systemd_watchdog_after_supervisor_SIGKILL_and_restart_cleanup"
+      ],
+      "cleanup": "owned_units_mounts_processes_and_root_absent"
+    },
+    "worker_rpc": {
+      "scope": "local_real_TLS_trusted_supervisor_fixtures_no_candidates",
+      "checks": [
+        "missing_and_same_CA_unapproved_client_certificates_rejected",
+        "client_server_certificate_pin_rejection",
+        "unauthenticated_handshakes_bounded_to_eight_and_slots_reclaimed",
+        "authorized_oversize_and_duplicate_JSON_rejected_before_dispatch",
+        "exact_controller_runtime_expectation_rejects_changed_worker",
+        "real_TLS_create_replay_scoped_status_durable_capture_and_ack",
+        "lost_ack_reconciled_from_local_bytes_and_tampered_capture_rejected",
+        "controller_disconnect_then_authenticated_cancel_kills_fixture_descendants",
+        "shutdown_denies_already_connected_but_not_admitted_request"
+      ],
+      "cleanup": "fixture_certs_units_mounts_files_removed"
+    }
+  },
+  "helper_image": "sha256:44527242612eabcf508272d7ca8ae4fd06a94a7971a3cc63d4a18667c732dea0",
+  "runtime": {
+    "manifest": "infra/gvisor/runsc-release.json",
+    "manifest_sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe",
+    "archive_sha256": "6f6b1a8f0f4665a403238135167d0d990bfaeaff5544abf68f5e0d822b35484a",
+    "release": "release-20261102.0",
+    "provenance": "Official downloaded release asset matches GitHub release API SHA256",
+    "version": "release-20261102.0; OCI 1.2.1",
+    "flags": "Fixed systrap/network/cgroup flags accepted with --version; no guest test",
+    "installation": "NOT_PERFORMED",
+    "guest_execution": "NOT_RUN",
+    "vulnerability_inventory": "UNAVAILABLE: no analyzable packages; not zero vulnerabilities",
+    "scan_raw_sha256": "1d40430a7bd98cd85386f0836b3b34715fa8d1f8eca0b12a999daeb01cb88e4c"
+  },
+  "independent_human_review": "NOT_AVAILABLE",
+  "cloud_actions": "NONE",
+  "repository_visibility": "PRIVATE",
+  "account_inspection": "CONNECTOR_UNAVAILABLE; no fresh account evidence",
+  "not_run": [
+    "designated-host installation/cross-host TLS",
+    "real runsc/pandas",
+    "deployed guest resource/network/capture/timeout/cleanup",
+    "real Vultr entitlement/rates/JSON/coding/abstention",
+    "deployed disk/restore billing reconciliation",
+    "credit-only non-overage enforcement"
+  ],
+  "review": "Separate Codex critical pass: immutable exact receipts, no replay or budget reset, full bundle, fixed companion path, kernel readback, truthful sampled metrics; no independent human approval",
+  "helper_scan": {
+    "raw_sha256": "cfd0bd07bde46143be4053e5c79f3585cdf3d8ee0c47cb46e5a8ac30a25274ae",
+    "created_at": "2026-11-04T05:27:38.770282195+09:00",
+    "targets": [
+      {
+        "target": "proofflow-inference-check:phase1 (debian 13.7)",
+        "counts": {
+          "LOW": 61,
+          "HIGH": 45,
+          "MEDIUM": 72,
+          "UNKNOWN": 7
+        }
+      },
+      {
+        "target": "Python",
+        "counts": {}
+      }
+    ]
+  }
+}

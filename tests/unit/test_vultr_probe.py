@@ -38,6 +38,28 @@ class FixtureBudget:
         return True
 
 
+class FixtureJournal:
+    def __init__(self, budget):
+        self.budget = budget
+        self.records = []
+        self.fail = None
+        self.prepared = False
+
+    async def prepare(self, request_id, plan):
+        if self.fail == "prepare":
+            raise BudgetUnavailable("FIXTURE_RECEIPT_COMMIT_UNCERTAIN")
+        if self.prepared:
+            return False
+        self.prepared = True
+        return True
+
+    async def record(self, *args):
+        if self.fail == "record":
+            raise BudgetUnavailable("FIXTURE_RECEIPT_COMMIT_UNCERTAIN")
+        self.records.append(args)
+        return True
+
+
 class FixtureStream(httpx.AsyncByteStream):
     def __init__(self, chunks, delay=0):
         self.chunks, self.delay, self.closed = chunks, delay, False
@@ -53,6 +75,9 @@ class FixtureStream(httpx.AsyncByteStream):
 
 
 def install_transport(monkeypatch, budget, *, status=200, headers=None, stream=None, error=None):
+    journal = FixtureJournal(budget)
+    budget.journal = journal
+    monkeypatch.setattr(vultr_probe, "ProbeJournal", lambda bound: journal)
     real_client = httpx.AsyncClient
     captured = []
     stream = stream or FixtureStream([json.dumps(envelope()).encode()])
@@ -179,3 +204,31 @@ def test_header_injection_rejected_before_reservation(monkeypatch):
     with pytest.raises(vultr_probe.ProbeDispatchError, match="INVALID_PROVIDER_SECRET"):
         run(budget, header_value="fixture\r\nInjected: true")
     assert captured == [] and budget.events == []
+
+
+def test_receipt_failure_before_dispatch_prevents_http(monkeypatch):
+    budget = FixtureBudget()
+    captured, _ = install_transport(monkeypatch, budget)
+    budget.journal.fail = "prepare"
+    with pytest.raises(BudgetUnavailable):
+        run(budget)
+    assert not captured and not budget.events
+
+
+def test_success_waits_for_durable_result_and_write_failure_is_not_success(monkeypatch):
+    budget = FixtureBudget()
+    captured, _ = install_transport(monkeypatch, budget)
+    budget.journal.fail = "record"
+    with pytest.raises(vultr_probe.ProbeDispatchError, match="PROBE_RECEIPT_WRITE_UNCERTAIN"):
+        run(budget)
+    assert len(captured) == 1 and budget.claimed
+
+
+def test_replay_is_recovery_only_and_never_resends(monkeypatch):
+    budget = FixtureBudget()
+    captured, _ = install_transport(monkeypatch, budget)
+    run(budget)
+    assert budget.journal.records[0][2] == "PARSED_RESPONSE"
+    with pytest.raises(vultr_probe.ProbeDispatchError, match="PROBE_ALREADY_RECORDED"):
+        run(budget)
+    assert len(captured) == 1 and len(budget.journal.records) == 1

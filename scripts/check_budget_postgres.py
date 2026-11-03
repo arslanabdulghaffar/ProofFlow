@@ -152,6 +152,7 @@ def main() -> None:
         migration = Path(__file__).resolve().parent.parent / "db/phase1/001_budget.sql"
         sql(migration.read_text(encoding="utf-8"), None)
         sql(migration.with_name("002_runtime_roles.sql").read_text(encoding="utf-8"), None)
+        sql(migration.with_name("003_probe_receipts.sql").read_text(encoding="utf-8"), None)
         sql("CREATE ROLE pf_budget_public LOGIN; "
             "CREATE ROLE pf_budget_test_reconcile LOGIN IN ROLE pf_budget_reconciler; "
             "GRANT CONNECT ON DATABASE proofflow_budget "
@@ -327,6 +328,39 @@ def main() -> None:
             state = json.loads(docker("inspect", client_name))[0]["State"]
             require(state["ExitCode"] == 0 and not state["Running"], "Client check failed")
             receipt["python_client"] = json.loads(result)
+            recovery = receipt["python_client"].pop("recovery_fixture")
+            docker("kill", "--signal", "KILL", name)
+            docker("start", name)
+            ready()
+            recovered = docker("start", "--attach", "--interactive", client_name,
+                               stdin=json.dumps({"dispatch": dispatch_password,
+                                                 "recover_after_crash": recovery}))
+            require(json.loads(recovered) == {"crash_receipt_recovered_no_replay": True},
+                    "Database crash lost result or reopened dispatch")
+            require(json.loads(docker("inspect", client_name))[0]["State"]["ExitCode"] == 0,
+                    "Crash receipt recovery check failed")
+            receipt["python_client"]["checks"].append("database_crash_preserves_receipt_and_claim")
+            # Trusted synthetic snapshot restored into a second disposable database.
+            # No dispatch process uses the restore; never run two restored spend ledgers.
+            docker("exec", "--user", "70:70", name, "pg_dump", "-U", "postgres", "-Fc",
+                   "-f", "/var/lib/postgresql/probe-fixture.dump", "proofflow_budget")
+            docker("exec", "--user", "70:70", name, "createdb", "-U", "postgres",
+                   "--template=template0", "proofflow_restore_check")
+            docker("exec", "--user", "70:70", name, "pg_restore", "-U", "postgres",
+                   "--exit-on-error", "--dbname=proofflow_restore_check",
+                   "/var/lib/postgresql/probe-fixture.dump")
+            for table in ("accounts", "reservations", "probe_receipts"):
+                query = ("SELECT encode(sha256(convert_to("  # noqa: S608 - literal table allowlist
+                         "jsonb_agg(to_jsonb(r) ORDER BY id)::text,'UTF8')),'hex') "
+                         f"FROM pf_budget.{table} r;")
+                original_hash = sql(query, None)
+                restored_hash = docker("exec", "-i", "--user", "70:70", name,
+                                       "psql", "-X", "-qAt", "-U", "postgres", "-d",
+                                       "proofflow_restore_check", "-v", "ON_ERROR_STOP=1",
+                                       stdin=query)
+                require(original_hash == restored_hash and len(original_hash) == 64,
+                        "Snapshot restore differed")
+            receipt["python_client"]["checks"].append("synthetic_dump_restore_exact_ledger_receipt_hashes")
             # Client must reject a server accidentally configured for trust, even with
             # correct credentials. This is a disposable fixture, never a release option.
             docker("exec", "-i", "--user", "70:70", name, "sh", "-c",
