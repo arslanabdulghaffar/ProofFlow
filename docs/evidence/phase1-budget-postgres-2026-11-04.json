@@ -19,15 +19,27 @@
   "image": "postgres:18.6-trixie@sha256:f4b419e350fd98d4a8429603295208976dea4c8fb8326d818d346d3e29f1db6f",
   "scope": "local_trusted_postgres_only",
   "server_version": "18.6 (Debian 18.6-1.pgdg13+2)",
-  "recorded_at_utc": "2026-11-03T17:46:01.555506+00:00",
-  "base_commit": "59d64f3847aeaef2cd6f2354dec87372cdee1e48",
+  "recorded_at_utc": "2026-11-03T18:10:34.138696+00:00",
+  "base_commit": "df7717f948ba195b84f1c42c40ed859a402a4731",
   "status": "LOCAL_COMPONENT_CHECKS_PASS_NOT_PHASE_ACCEPTANCE",
   "independent_human_review": "NOT_AVAILABLE",
   "source_sha256": {
     "db/phase1/001_budget.sql": "0c44956322f4c548f205239deec1e60cad5150a62d49abbab1060b3f8db40fdf",
-    "scripts/check_budget_postgres.py": "c92c57fab10b8854d4add756579765c290c3446126413e6975d4d73d681436b3",
+    "scripts/check_budget_postgres.py": "e2ea3b454d151f2d8e62b5fedd5108fc1443c170c951992253771b97cb86f65f",
     "orchestrator/probe_plan.py": "6320078bcb00e65cca7f45a8c413485ff6211fda106aba3c4df8c01a3a7fd9a5",
-    "tests/unit/test_probe_plan.py": "08ce262792c945233bc957b1ae01e0478d6c881927356508366fcddc7c187cda"
+    "tests/unit/test_probe_plan.py": "08ce262792c945233bc957b1ae01e0478d6c881927356508366fcddc7c187cda",
+    "orchestrator/budget_store.py": "f533c607fa4974264acb03b2425d147d6f820bb86ec1f67a1502ce688094b2ee",
+    "orchestrator/probe_response.py": "e3702f4452031656cd434c3b9783b970b35c57c9fd7e859deda79f3df3e14b01",
+    "orchestrator/vultr_probe.py": "bbe565b58c0a6bf785f96d1a259fc348784e20e224bf6aec588bb08b46321437",
+    "tests/unit/test_budget_store.py": "ac035bf421cb9a623042d3af244c18fb8e8842a344b3ea917b1cc8f7bd0a5366",
+    "tests/unit/test_probe_response.py": "1b26feed1d3ca40f11451fea31b87992874ffc437766ed37a78e06ed09daa404",
+    "tests/unit/test_vultr_probe.py": "979649e5fec283207b0bbdd3d382f7ebe609d428b2def4cfcdb4352fe2965b66",
+    "tests/integration/budget_client_check.py": "7d0a3eed1b9d13657dd54ea5aa4bcb9917dbafb2e1daba408807dcf5b5c2e707",
+    "infra/images/inference-check.Dockerfile": "4a351cb3915375766aa2ceaefed45ecf490e1a0f58babc61bf9e64071f7cdb76",
+    "infra/images/inference-check-requirements.txt": "3fb82df376e6c5039403872ec0281f8550d4fdb0c43568e6daab015cef2bc882",
+    "pyproject.toml": "38269e6332d025f4aa42402a9ab9a266ba12124268836f428964a37dac889e6d",
+    "uv.lock": "b7eafc19025b234ef886c03658ee7a329b0cd55825f59948bfdebab908e399ac",
+    ".dockerignore": "28fc2f5867c9ef0253bf99ce7ffd75103d3fa82e9e4a3b26ec2190ce18b8b4b5"
   },
   "image_scan": {
     "scanner": "Trivy 0.76.1",
@@ -94,9 +106,48 @@
     "This ledger controls only calls integrated with its API, not cloud meters or VM shutdown/expiry.",
     "No real billing verification, provider key, request, or model success.",
     "Local fixture trust authentication has no network/published ports and is NOT production configuration.",
-    "Runtime LOGIN credentials/mTLS, migration tooling, application dispatcher, global job limits and deployed durability remain NOT RUN.",
+    "Runtime LOGIN credentials/mTLS, migration tooling, deployed dispatcher composition, global job limits and deployed durability remain NOT RUN.",
     "An external request requires a successfully committed single-use claim plus independent current billing/quote/approval gates. A returned boolean inside an uncommitted transaction is insufficient.",
     "Unknown dispatch/billing stays held; no automatic retry, refund, lease expiry release or budget reset.",
     "Database owner/admin can alter state; least-privilege role checks do not protect against a compromised administrator."
-  ]
+  ],
+  "python_client": {
+    "image": "sha256:2dd4253b0eccbeee945e1f7ec7044a8b6eb296e4c324422e1750af3fac983615",
+    "scope": "real_local_postgres_mock_http_only",
+    "checks": [
+      "python_driver_committed_reserve_and_exact_replay",
+      "eight_python_claims_exactly_one_committed",
+      "driver_database_error_redacted",
+      "independent_connection_observed_commit_before_mock_http",
+      "failed_mock_http_retained_reservation_and_prevented_resend"
+    ],
+    "topology": "network none, no published ports, read-only named fixture volume with Unix socket, non-root read-only client, all caps dropped, 256MiB/1CPU/32 PIDs",
+    "cleanup": "both named containers and volume confirmed absent",
+    "scan": {
+      "scanner": "Trivy 0.76.1",
+      "raw_sha256": "9de1103e4d1c57ec4c3742150b2f5045c25acb3ea003978cc8e6aea8636a231d",
+      "targets": [
+        {
+          "type": "debian",
+          "counts": {
+            "LOW": 61,
+            "HIGH": 45,
+            "MEDIUM": 72,
+            "UNKNOWN": 7
+          }
+        },
+        {
+          "type": "python-pkg",
+          "counts": {}
+        }
+      ],
+      "limitation": "No Python findings; OS advisories retained. Binary wheel bundled libraries require further release review; no clean/deployed image claim."
+    }
+  },
+  "python_tests": {
+    "passed": 100,
+    "skipped_linux": 24,
+    "new_mock_or_fault_cases": 52,
+    "scope": "synthetic provider responses; no real API calls"
+  }
 }

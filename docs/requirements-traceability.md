@@ -12,6 +12,8 @@ Phase 1 kickoff on 2026-11-04: timing is satisfied. R11-04/05 and R14-01/04 have
 
 Local collection follow-up: R26-06 and R27-03/07 now have partial trusted component evidence (24 Linux collector tests and 8 Windows log-buffer tests). Their full runtime/termination/collection/cleanup and malformed-output acceptance remains deferred. No requirement is marked complete by component tests.
 
+Inference client follow-up: R14-05/R24 and R46-03 have partial real PostgreSQL commit ordering and mock HTTP error/timeout/parser evidence. Real Vultr and deployed controls remain NOT RUN; no acceptance status changed.
+
 Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/claim/crash evidence (14 groups); R27-04 has offline probe output/rate validation only. Deployed dispatcher, per-job budgets, alerting, provider meters and final billing coverage remain unproven. No full requirement status changes. See [budget receipt](evidence/phase1-budget-postgres-2026-11-04.json).
 
 | ID | PDF page | Class | Priority | Requirement / disposition scope | Planned component | Acceptance evidence | Dependency | Status |

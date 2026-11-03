@@ -10,3 +10,14 @@
 !infra/images/control.Dockerfile
 !infra/images/control-requirements.txt
 !infra/images/control-build-requirements.txt
+!infra/images/inference-check.Dockerfile
+!infra/images/inference-check-requirements.txt
+!orchestrator/
+!orchestrator/__init__.py
+!orchestrator/probe_plan.py
+!orchestrator/probe_response.py
+!orchestrator/budget_store.py
+!orchestrator/vultr_probe.py
+!tests/
+!tests/integration/
+!tests/integration/budget_client_check.py

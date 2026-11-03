@@ -5,7 +5,9 @@ the exact official image below. No ports/host mounts/network/secrets are used.
 Local trust authentication is strictly a disposable test fixture, never deploy it.
 """
 
+import argparse
 import json
+import re
 import shutil
 import subprocess
 import time
@@ -38,8 +40,15 @@ def require(condition: bool, message: str) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--client-image",
+                        help="Reviewed trusted client image ID; never a candidate")
+    arguments = parser.parse_args()
+    if arguments.client_image and not re.fullmatch(r"sha256:[a-f0-9]{64}", arguments.client_image):
+        raise ValueError("Exact trusted client image ID required")
     token = uuid.uuid4().hex
     name = "proofflow-budget-test-" + token
+    client_name = name + "-client"
     volume = name + "-data"
     label = "proofflow.budget-test=" + token
     receipt = {"scope": "local_trusted_postgres_only", "image": IMAGE, "checks": []}
@@ -111,7 +120,8 @@ def main() -> None:
                "--security-opt", "no-new-privileges",
                "--mount", f"type=volume,source={volume},target=/var/lib/postgresql",
                "-e", "POSTGRES_HOST_AUTH_METHOD=trust", IMAGE,
-               "postgres", "-c", "listen_addresses=")
+               "postgres", "-c", "listen_addresses=", "-c",
+               "unix_socket_directories=/var/run/postgresql,/var/lib/postgresql")
         docker("start", name)
         ready()
         config = json.loads(docker("inspect", name))[0]
@@ -249,8 +259,37 @@ def main() -> None:
         expect_error("SET synchronous_commit=off; " + reserve(a_invalid, str(uuid.uuid4())),
                      "BUDGET_REQUIRES_DURABLE_COMMIT")
         passed("stale_snapshot_isolation_and_nondurable_commit_settings_rejected")
+        if arguments.client_image:
+            docker("image", "inspect", arguments.client_image)
+            client_account = account(150000000, 25000000, 2000000)
+            docker("create", "--name", client_name, "--label", label,
+                   "--network", "none", "--read-only", "--user", "10001:10001",
+                   "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
+                   "--memory", "256m", "--cpus", "1", "--pids-limit", "32",
+                   "--mount", f"type=volume,source={volume},target=/budgetdb,readonly",
+                   arguments.client_image, "python3", "/app/budget_client_check.py", client_account)
+            client = json.loads(docker("inspect", client_name))[0]
+            host = client["HostConfig"]
+            require(host["NetworkMode"] == "none" and not host["PortBindings"]
+                    and host["ReadonlyRootfs"] and host["CapDrop"] == ["ALL"]
+                    and host["Memory"] == 256 * 1024 * 1024
+                    and host["NanoCpus"] == 1000000000 and host["PidsLimit"] == 32
+                    and "no-new-privileges" in host["SecurityOpt"]
+                    and client["Config"]["User"] == "10001:10001"
+                    and len(client["Mounts"]) == 1
+                    and client["Mounts"][0]["Name"] == volume
+                    and client["Mounts"][0]["RW"] is False, "Unsafe client test configuration")
+            result = docker("start", "--attach", client_name)
+            state = json.loads(docker("inspect", client_name))[0]["State"]
+            require(state["ExitCode"] == 0 and not state["Running"], "Client check failed")
+            receipt["python_client"] = json.loads(result)
     finally:
         # Only remove generated test objects whose exact private label matches.
+        if docker("ps", "-aq", "--filter", "name=^/" + client_name + "$"):
+            item = json.loads(docker("inspect", client_name))[0]
+            require(item["Config"]["Labels"].get("proofflow.budget-test") == token,
+                    "Refusing unrelated client cleanup")
+            docker("rm", "--force", client_name)
         found = docker("ps", "-aq", "--filter", "name=^/" + name + "$")
         if found:
             item = json.loads(docker("inspect", name))[0]
@@ -264,6 +303,7 @@ def main() -> None:
                     "Refusing unrelated volume cleanup")
             docker("volume", "rm", volume)
         require(not docker("ps", "-aq", "--filter", "name=^/" + name + "$")
+                and not docker("ps", "-aq", "--filter", "name=^/" + client_name + "$")
                 and not docker("volume", "ls", "--quiet", "--filter", "name=^" + volume + "$")
                 , "Test cleanup incomplete")
         receipt["cleanup"] = "container_and_volume_confirmed_absent"

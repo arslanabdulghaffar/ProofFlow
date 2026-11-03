@@ -1,5 +1,11 @@
 # Progress
 
+## Phase 1 inference client follow-up — 2026-11-04 KST
+
+Continued from verified private main `df7717f948ba195b84f1c42c40ed859a402a4731`. Added a real Psycopg budget driver and fixed-endpoint bounded Vultr HTTPX client, strict provider JSON parser, optional locked dependencies and a reproducible trusted integration image. 100 Windows tests passed, 24 unchanged Linux cases skipped with prior Linux result retained; Ruff passed. PostgreSQL 14 groups plus five real-driver/mock-HTTP checks passed; all owned test resources removed. Python audit: 51 distributions, zero known findings. New helper image has no Python/CRITICAL findings; existing Debian advisories remain and PostgreSQL test-image critical findings are not waived. Separate critical review and exact sources in readiness and budget receipt.
+
+No cloud service, paid provider request, candidate execution or public release. Phase 1 remains incomplete. Owner instructed continuous development without repeated sufficiency questions; ordinary work is not waiting on support-message permission. This is a WIP checkpoint, followed by worker-image implementation, not a phase boundary. Reviewed all 23 intended staged files, 30 foundation/16 budget source hashes, documentation/traceability and whitespace. Staged Gitleaks found zero secrets; exact GitHub repository privacy reverified. Commit/push/remote readback identify the checkpoint.
+
 ## Phase 1 local budget and organizer-guidance follow-up — 2026-11-04 KST
 
 Started from clean local/remote `59d64f3847aeaef2cd6f2354dec87372cdee1e48`. Implemented infrastructure-only PostgreSQL reservations/one-shot claims/reconciliation and offline fixed-endpoint Vultr JSON planning. No new Python dependency, HTTP provider client, candidate execution or cloud service. Separate critical review fixed role-test privilege assumptions, definer ownership, quote deadlines, stale transaction-snapshot risk and nondurable commit settings. Owner-relayed organizer guidance accepted for service coverage, Docker minimum and judging duration; private-repository, credit-only and Phase 2 boundaries persist.
