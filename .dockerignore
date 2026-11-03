@@ -1,0 +1,12 @@
+# Deny by default: never send secrets, Git history, uploads or local caches.
+**
+!api/
+!api/__init__.py
+!api/app/
+!api/app/__init__.py
+!api/app/main.py
+!infra/
+!infra/images/
+!infra/images/control.Dockerfile
+!infra/images/control-requirements.txt
+!infra/images/control-build-requirements.txt

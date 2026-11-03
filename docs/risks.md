@@ -4,8 +4,8 @@ Owner: the requesting project owner is the only confirmed human contributor and 
 
 | ID | Risk / concrete unresolved item | Owner / due | Disposition |
 | --- | --- | --- | --- |
-| Q01 | Event window opens Nov 4 00:00 KST under current official schedule | Resolved owner clarification on Oct 24 | Owner confirms no early permission; wait for kickoff and recheck official schedule then; do not repeatedly ask |
-| Q02 | Registration/enrollment, credits/expiry/coverage, subscription charges, tax and out-of-pocket bounds | Owner/account operator, before any billable action | Signed in; console requests payment-method verification; payment form shows $0 available credit but no verified redeemed-credit record. Quote inspected only; do not link card/deploy/activate. See phase1-readiness.md |
+| Q01 | Implementation timing | RESOLVED on Nov 4 KST | Official dashboard explicitly Live / Submissions open; Phase 1 authorized. No timing question remains |
+| Q02 | Registration/enrollment, credits/expiry/coverage, subscription charges, tax and out-of-pocket bounds | Owner/account operator, before any billable action | RESOLVED activation: dashboard/ledger $200, expires 2026-12-04, current charges $0. Remaining: service/tax coverage and hard non-overage bounds; max instance cost $200/month is not total cap. Owner requests autonomous source-based decision; no personal spending exception and no repeated question. See phase1-readiness.md |
 | Q03 | Human capacity and independent security/verifier review | Owner, before scheduling commitments/release | Continue sequentially with automated + distinct critical review; disclose gap; no invented sign-off |
 | Q04 | Team/employer ownership and MIT copyright holder | Owner, before license/publication | Proposed MIT only; source PDF excluded |
 | Q05 | Dedicated GitHub demo repository/App installation and no privileged Actions | Owner/operator, before Phase 4 write | Product configured permission and concrete operator approval required; local push proves neither |

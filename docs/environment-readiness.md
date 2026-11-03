@@ -1,5 +1,9 @@
 # Environment readiness — 2026-10-24 KST
 
+## Kickoff update — 2026-11-04 KST
+
+Historical observations below describe Oct 24 only. Current branch main is an established private repository. Python app dependencies are now installed in ignored `.venv`; a fresh runtime-only `.venv-runtime-check` succeeded. Local Windows Python 3.12.10, uv 0.13.5. Trusted image uses Python 3.12.16 / Debian trixie linux/amd64; build and non-root/read-only health smoke succeeded with Docker 29.9.1 in WSL. Its temporary test container was removed. No candidate code or candidate sandbox ran locally. No Vultr resources, inference or deployed acceptance. See [readiness evidence](phase1-readiness.md) for versions, limits and exact remaining gates.
+
 Observed on this computer, not a deployment test. Workspace `A:\hackathon\ProofFlow` was empty and not a Git repository. No AGENTS.md existed at workspace or applicable drive/parent paths before changes. Cloned the user's exact repository into the empty folder; nothing was overwritten.
 
 | Area | Actual observation | Readiness |

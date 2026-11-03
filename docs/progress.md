@@ -1,5 +1,17 @@
 # Progress
 
+## Phase 1 kickoff WIP — 2026-11-04 KST
+
+Started from clean main and matching remote `79ccf59ec61b7885ce3ba63d82d3e87d5bfc7233`; existing work preserved. Official timing gate PASSED: dashboard Live / Submissions open. Account activation PASSED after owner used the distinct Gift Code tab: authenticated Dashboard/ledger $200 Remaining Credit, expiry 2026-12-04, charges $0.00. Billing coverage/hard non-overage bounds remain BLOCKED. Owner asks autonomous official-source decisions while they sleep; no repeated question or assumed personal-spending exception. No cloud services created.
+
+Implemented trusted local API health surface, exact Python lock, hashed runtime export, pinned non-root control image and bounded trusted image smoke checker. Eight tests, Ruff, clean runtime-only install, actual loopback HTTP, local image build/smoke/cleanup passed. pip-audit found no known vulnerabilities in 48 installed Python packages. Trivy identified outdated pip in the first image; upgraded build installer and removed runtime pip, then rebuilt/retested. Final image Python scan zero findings; Debian has 45 HIGH/72 MEDIUM/61 LOW/7 UNKNOWN package-advisory findings (no CRITICAL), retained for triage in the scan receipt. Full evidence, dependency review and separate critical pass: [Phase 1 readiness](phase1-readiness.md). No independent human sign-off; no claim of deployed acceptance. Updated rules/judging plan and traceability to distinguish partial foundation from full requirements.
+
+Checkpoint review: preparation/link/trace checks and staged whitespace passed; Gitleaks 8.30.1 staged scan found zero secrets. Reviewed the explicit staged inventory (source, trusted tests, locked dependencies, pinned image files and redacted/public evidence only). No credential, local cache/environment, account identifier or raw browser state staged. GitHub API rechecked private=true on the exact repository.
+
+Phase 1 **IN PROGRESS / NOT ACCEPTED**. Real Vultr inference, deployed isolated pandas, guest/resource/network/output/timeout/cleanup gates remain NOT RUN. Preserve this as a private WIP checkpoint; normal push and remote SHA readback are required. Identify its full SHA with `git log -1` plus `git ls-remote origin refs/heads/main`; no self-referential SHA embedded. Stop after eventual successful Phase 1 checkpoint for owner review before Phase 2.
+
+## Historical Phase 0 evidence
+
 As of 2026-10-24 KST: **Ready for kickoff. Phase 0 DONE; Phase 1 not started.** Owner confirms the start request was premature; core stays gated until official opening. Account/charges evidence also remains incomplete. No cloud resource, billable service, inference request or candidate execution occurred in this session.
 
 Completed preparation: 59-page review including appendices/S01–S42; source version/hash and selected visual table/diagram review; exact private repository authenticated read and advertised write confirmation; isolated local Node LTS/uv readiness; durable product/contract/architecture/security/API/sandbox/inference/budget/UX/test/release plans; 276 trace entries across 59 pages; one-human work-package ordering and owner question register.

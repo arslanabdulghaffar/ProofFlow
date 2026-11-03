@@ -2,7 +2,7 @@
 
 ProofFlow is a planned product for repairing supported Python revenue-import pipelines, checking their actual records against human-approved business rules, and using an exact approved version for subsequent batches.
 
-**Ready for kickoff. Phase 0 is complete; Phase 1 awaits the official opening and account/spending gates.** Core functionality is not implemented. There is no running application, verified repair, measured benchmark, deployed sandbox, or completed product integration. See [Phase 1 readiness](docs/phase1-readiness.md) for the inspected VM quote, setup steps and exact acceptance checklist, and [progress](docs/progress.md) for checks actually performed.
+**Phase 1 IN PROGRESS; cloud spending gates remain blocked. Credits are activated.** The official event is live. A trusted local health service and locked Python dependencies now exist; readiness deliberately returns 503. There is no deployed application, real inference, verified repair, benchmark, sandbox or completed product integration. See [Phase 1 readiness](docs/phase1-readiness.md) for the inspected VM quote, setup steps and exact acceptance checklist, and [progress](docs/progress.md) for checks actually performed.
 
 The intended workflow is intake → original execution → independent checks → bounded Vultr-generated repair → fresh sandbox → independent verification → human approval → verified fresh batch. A separate operator approval permits an actual draft GitHub PR. Humans supply inputs and business decisions; they do not manually repair code or advance repair stages.
 
@@ -24,7 +24,18 @@ No arbitrary repositories, package installation, candidate networking, live acco
 
 ## Preparation check
 
-With Python 3.12 or newer, run `python scripts/check_preparation.py`. This checks documentation coverage and repository hygiene; it does **not** test the product. Application install, health, sandbox, smoke, build and deployment commands will be implemented during the authorized event window. No placeholder command reports those checks as passing.
+With Python 3.12, run `python scripts/check_preparation.py` for documentation hygiene only.
+
+Trusted service development (uv 0.13.5):
+
+```powershell
+.\.venv-tools\Scripts\uv.exe sync --locked --no-build
+.\.venv-tools\Scripts\uv.exe run --locked pytest -q
+.\.venv-tools\Scripts\uv.exe run --locked ruff check api tests
+.\.venv-tools\Scripts\uv.exe run --locked uvicorn api.app.main:app --host 127.0.0.1 --port 8000 --no-access-log --no-server-header --no-proxy-headers
+```
+
+`GET /health/live` returns 200 for process liveness. `GET /health/ready` returns 503 until actual infrastructure checks are implemented and pass. No upload, execution or approval API exists. Local tests run trusted service code only; never run a submitted/model candidate here. These checks do not establish deployed containment or provider success.
 
 ## Planned judge walkthrough
 

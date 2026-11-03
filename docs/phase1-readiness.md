@@ -1,5 +1,55 @@
 # Phase 1 entry and deployment proposal
 
+## Current kickoff state — 2026-11-04 KST
+
+**Phase 1 IN PROGRESS, not accepted.** Official dashboard explicitly Live / Submissions open at the Nov 4 recheck (trusted clock Nov 3 16:33:54 UTC / Nov 4 01:33:54 KST). The owner authorized implementation. The Oct 24 section below is historical and superseded where noted here; its proposed topology and ordered deployed checks still apply.
+
+Account activation **RESOLVED during this run**: the initial card-form summary showed a $200 promotion while Dashboard credit was zero. Codex located the distinct Gift Code tab at the event-linked `/billing/?promo=HACKATHON`; the owner completed it privately. Subsequent Dashboard: Account Balance $200.00, Remaining Credit $200.00, Charges This Month $0.00. Billing history: completed Account Credit -$200.00, dated 2026-11-03, **Expires 2026-12-04**. The UI specifies no expiry timezone/time; this ledger date supersedes the earlier generic 30-days-after-signup label. No code was read/submitted and no payment method added by Codex. No repeated redemption/login question is needed.
+
+The [event instructions](https://lablab.ai/ai-hackathons/vultr-hackathon) broadly cover Compute and other Vultr services and describe adding a payment method for post-event continuation. They do not explicitly establish inference/tax coverage or guarantee stopping before uncovered charges. The authenticated account has a 5-instance / $200-monthly-instance-cost allocation limit; no total-spend stop was found. [Vultr terms](https://www.vultr.com/legal/tos/#tos_7), read in the browser after web extraction failed, retain applicable fees/taxes/overage obligations in sections 7/9; no event-specific exception was shown. **No personal spending, deposits, card charges or uncovered liability are authorized.** Decision: billing bounds/coverage gate remains blocked. The owner asked Codex to use official evidence and decide while they sleep; do not repeat the question or interpret this as personal-spending authorization. No cloud resource, subscription or inference call has been made.
+
+[Public plans rechecked Nov 4](evidence/vultr-plans-2026-11-04.json) plus **authenticated quotes rechecked after activation**: control/worker remain $24/$48 monthly, API/config header $0.033/$0.066 hourly. Both Seoul plans, Ubuntu24.04 x64 and Public IPv4 were selectable; final previews showed $24/$48 and rounded $0.04/$0.07 hourly. Plan-selection table still shows $0.036/$0.071. Backup defaults re-enabled on plan switch and were removed again in unsubmitted previews ($4.80/$9.60 excluded); DDoS off. No Deploy click. Private VPC starts at $0/month in [official overview](https://docs.vultr.com/product-overviews/vpc-networks); no NAT gateway is proposed, and VPC/firewall/SSH have not been created. Preview does not establish tax/credit coverage. Initial 72h estimate remains conservative **$7.92 compute + at most $2 probes**, not a final bill or hard cap. Project allocation remains $145 within $150, inference at most $25. Stop/deletion/expiry treatment must bound ongoing charges; an application ledger alone is insufficient.
+
+### Current inference quote (not activated)
+
+Authenticated Create Inference notice: usage billing, **no monthly fee**, invoiced monthly per subscription; a month below $1.00 is not charged (not a $1 minimum). This supersedes older minimum/plan assumptions. Checkbox remained unchecked and Create was never submitted. [Live prices](https://api.vultrinference.com/docs/models) match the console. Examples per million input/output tokens: DeepSeek V4.1 Flash 1017 (`deepseek-v4.1-flash-1017`) $0.15/$0.60; GLM 5.3 (`glm-5.3`) $0.75/$3.00; Qwen3.8 Flash Next $0.10/$0.20. These are candidates for the planned two-model probe, not compatibility/JSON/coding results. No model is selected as proven. Reserve worst-case input/output/retry and uncertain usage before each call; the $2 probe/$25 aggregate enforcement is still unimplemented and blocks requests. No automatic subscription activation from this quote.
+
+### Trusted foundation evidence (local only)
+
+[Machine-readable foundation receipt](evidence/phase1-foundation-2026-11-04.json) records source-file hashes and the scope of each observed result.
+
+| Check | Observed result / scope |
+| --- | --- |
+| Exact dependency resolution | uv 0.13.5, pyproject exact direct pins, 49 lock entries including project; Windows Python 3.12.10 |
+| Fresh runtime-only install | `uv sync --locked --no-dev --no-build` in ignored `.venv-runtime-check`; 14 runtime dependencies; trusted app import passed |
+| Unit + loopback HTTP | `uv run --locked pytest -q`: 8 passed; liveness 200, readiness 503; no unimplemented intake/approval/docs routes; caller flags cannot assert readiness |
+| Static checks | Ruff on api, tests and control-image checker passed |
+| Python dependency audit | pip-audit 2.10.1: no known vulnerabilities in 48 installed distributions; not an OS/image or universal security clearance |
+| Image build | `infra/images/control.Dockerfile`, Linux amd64; Python 3.12.16 slim trixie digest `sha256:1148dbb014615300fa7e713b2f94f550c0d1c69780c0805f84f093ceee34dd0b`; binary wheels with required hashes; deny-by-default build context |
+| Built local image identity | `sha256:cc34d6503ff4b20d60ea2466f4457c935cbfab19b8e66cc11a72f74064ab2b51`; local build only, no registry push/deployment |
+| Trusted image smoke | Docker 29.9.1 in WSL; uid 10001, read-only root, no capabilities, no-new-privileges, no mounts/published ports, network none; configured 256MiB/0.5CPU/32 host PIDs. Health 200/503, Python 3.12.16, exact test container absent after cleanup |
+
+The smoke checks configurations and trusted health behavior; it does NOT stress-test resource enforcement, establish malicious-code containment or satisfy deployed Phase 1 gates. Candidate code never ran on this development machine. Linux image Python differs from the local Windows interpreter; both are recorded, neither silently substituted for a future worker identity.
+
+Reproduce the trusted image build on a Linux Docker host from repository root:
+
+```sh
+docker build --platform linux/amd64 -f infra/images/control.Dockerfile -t proofflow-control:phase1-local --iidfile /tmp/proofflow-control-image-id .
+python3 scripts/check_control_image.py "$(cat /tmp/proofflow-control-image-id)"
+```
+
+The checker creates one generated-name local test container, no mounts/secrets/ports, and removes only that container. Do not pass a candidate image. Regenerate hashed requirements with `uv export --locked --no-dev --no-emit-project --no-header --no-annotate --format requirements-txt --output-file infra/images/control-requirements.txt` after reviewed dependency changes.
+
+### Dependency and separate critical review
+
+Reviewed scope: FastAPI/Pydantic schemas and Uvicorn trusted HTTP serving; httpx/pytest/Ruff/pip-audit are development checks only. Exact versions and metadata license inventory are in [THIRD_PARTY_NOTICES](../THIRD_PARTY_NOTICES.md); lock includes package hashes. Only public PyPI wheels installed, no dependency source build. The Docker Official Python image is pinned by resolved amd64 manifest digest; installed license files remain in image layers. Trivy 0.76.1 scanned the final image: [reviewed scan/package receipt](evidence/control-image-scan-2026-11-04.json). The initial bundled pip 25.0.1 had five MEDIUM/one LOW findings; installer was hash-pinned to pip 26.3 for build and pip then removed from runtime. Rebuilt image smoke/cleanup passed. Final Python result has no findings; Debian retains 45 HIGH package/advisory pairs (9 unique), 72 MEDIUM, 61 LOW and 7 UNKNOWN, no CRITICAL. No HIGH fix version was reported. Current health code does not process files, invoke shell/mounts or use SQL; this limited exposure is not proof of non-exploitability. Full reachability/vendor-fix and release attribution/provenance review remain open. No finding suppressed or image declared clean. Trivy archive checksum matched official release metadata; scanner is local development tooling, not in the service image.
+
+Separate Codex critical pass: checked no candidate import/exec/dispatcher, no provider key access, no readiness override, loopback default for development, no exposed documentation or intake routes, restrictive build context, non-root runtime, exact-hash dependencies and named test cleanup. Corrected deprecated Starlette TestClient use by testing via HTTPX ASGITransport plus a real HTTP process test. Container checks are explicitly labeled trusted/local and do not claim runsc or enforced guest limits. These checks are not independent human approval; that review gap stays open.
+
+NOT RUN: deployed TLS/private topology/database, gVisor identity, benign pandas, hostile resource/network/output/watchdog/cleanup probes, real Vultr models/JSON/coding, provider spend reservations, deployed image provenance/reachability approval and all later product paths. Credit coverage and bounded spending still block deployed work; activation is now verified. No Phase 1 completion or feature advancement beyond this foundation is claimed.
+
+## Historical preparation record — 2026-10-24
+
 Status on **2026-10-24 KST: READY FOR KICKOFF; Phase 1 not started**. Useful preparation is complete; external entry dependencies remain. This is not a passed Phase 1 or a deployed system. No cloud resource, subscription, inference request or candidate execution was created. The owner corrected the premature start instruction, authorized account/quote inspection only, and prohibited enabling any billable service now. At kickoff, Phase 1 still ends with a verified checkpoint and stop before Phase 2.
 
 ## Observed starting state and blockers

@@ -1,6 +1,6 @@
 # Demonstration and public explanation
 
-Preparation only. No video, public app, customer result or measurement exists. Goal: a useful working workflow early enough for people to try/share after public-release authorization. Early submission does not guarantee ranking, votes or judging advantage.
+Demo plan; implementation has started with the local trusted health foundation. No video, public app, customer result or benchmark exists. Goal: a useful working workflow early enough for people to try/share after public-release authorization. Early submission does not guarantee ranking, votes or judging advantage.
 
 Current description: “ProofFlow is being built to repair supported revenue-import pipelines and expose the evidence behind each decision. A successful process can still assign revenue to the wrong merchant. We plan to check every record against approved rules before a repaired version can process the next batch.”
 
@@ -22,3 +22,16 @@ Self-service judge path: guest workspace → labeled synthetic sample or compati
 Prior art includes Datafold migration/validation, Soda contracts, ADP-MA/AegisFlow remediation, and generic coding agents. Do not claim first self-healing pipeline. Differentiate only with implemented protected acceptance, useful per-record witness, containment, exact approvals and measured baseline comparison. “Why not deterministic ETL?” is answered with actual comparable results, including where D wins. No formal-proof/security-certification/customer-ROI claim. Optional human time baseline/interviews need actual consent and authorization; if unavailable, publish system latency only.
 
 Submission copy/deck may use present-tense capabilities only after corresponding gates pass. Planned slides: user/error, live workflow, trust boundaries, independent verification, measured evaluation/baselines, value/limitations, team. Cover is 16:9; media limits must be checked against current form. Do not publish or contact prospective users from this plan alone.
+
+## Judging strategy checked at kickoff
+
+The [event page](https://lablab.ai/ai-hackathons/vultr-hackathon) confirms the four criteria in the owner's screenshot; numerical event weights are not published. Focus on one complete, useful workflow.
+
+| Criterion | Planned evidence | Claim boundary |
+| --- | --- | --- |
+| Technology | Real Vultr request, isolated execution, checked bytes and cleanup receipt | No replay shown as live; local health is not infrastructure acceptance |
+| Presentation | Silent wrong-owner result, understandable witness, repair, exact approval, fresh batch and containment moment | Four-minute target; verify final form limits |
+| Business value | Merchant import failure and repeatable checked batch | No invented customers, savings or traction |
+| Originality | Protected contract/verifier, per-occurrence accounting and exact-version approval | Differentiate implemented behavior and measured baselines; no unsupported first/unique claim |
+
+Public repo/demo/video/slides and setup/architecture remain release deliverables. Keep private until authorized. Optional Vultr Community showcasing does not replace required lablab submission.

@@ -1,0 +1,75 @@
+{
+  "recorded_at_utc": "2026-11-03T16:53:29.905278+00:00",
+  "base_commit": "79ccf59ec61b7885ce3ba63d82d3e87d5bfc7233",
+  "phase": "1",
+  "status": "IN_PROGRESS_NOT_ACCEPTED",
+  "scope": "trusted local foundation only",
+  "files_sha256": {
+    "api/app/main.py": "72ac27d0876e9b97ca705c6487dac1a581712dab1fc23b5afbc2bec2fd4d7576",
+    "pyproject.toml": "cbc3ccfe0db7b4aba0484199b14be37c854f60a6c96538cd1986a63e9b92bb8b",
+    "uv.lock": "94ca4b85798241427acd213c1b44a5c57d480e723ae0f29baf9e14f7d1c40c08",
+    ".dockerignore": "d6d2baba575f588297fbcecada332b88e4db3454f7a53d1ecbb4aff1902251f0",
+    "infra/images/control.Dockerfile": "0b1d270d33ed1ec45ae579d58f686ca125543e13a71d3f7fc7dea4a1ab6ea05f",
+    "infra/images/control-requirements.txt": "d213bf4d24fd17475d36ac2837c543b99ddc247833def52a907952af3ce83ba2",
+    "infra/images/control-build-requirements.txt": "8e4da4de9431ea29429933f4a2169046e0c6205b7fbd6d4e609622732d2d801f",
+    "scripts/check_control_image.py": "b96422978f4948d90031e747594139b46f174bd4ced58796dbac9644922ef2c8",
+    "tests/unit/test_health.py": "755a7e31579bc6760f3f857d503e22c11ed3ca9e7f26da2306059d769188698a",
+    "tests/integration/test_health_http.py": "fd4b6f71524d247faa2671c532ec2ae37a2df93af85a1ccdf2a1cf26762ed371"
+  },
+  "checks": {
+    "pytest": {
+      "passed": 8,
+      "command": "uv run --locked pytest -q"
+    },
+    "ruff": {
+      "status": "PASS",
+      "command": "uv run --locked ruff check api tests scripts/check_control_image.py"
+    },
+    "runtime_only_sync": {
+      "status": "PASS",
+      "python": "3.12.10",
+      "installed_packages": 14
+    },
+    "pip_audit": {
+      "version": "2.10.1",
+      "installed_distributions": 48,
+      "known_vulnerabilities": 0
+    },
+    "control_image": {
+      "id": "sha256:cc34d6503ff4b20d60ea2466f4457c935cbfab19b8e66cc11a72f74064ab2b51",
+      "python": "3.12.16",
+      "architecture": "linux/amd64",
+      "liveness": 200,
+      "readiness": 503,
+      "uid": 10001,
+      "mounts": 0,
+      "network": "none",
+      "cleanup": "confirmed_absent",
+      "scope": "trusted control only; not candidate containment"
+    },
+    "image_scan": "control-image-scan-2026-11-04.json"
+  },
+  "cloud": {
+    "account_credit_usd": "200.00",
+    "charges_at_inspection_usd": "0.00",
+    "ledger_expiry_date": "2026-12-04",
+    "expiry_time_zone": "NOT_SHOWN",
+    "provisioned_resources": 0,
+    "inference_calls": 0,
+    "subscription_created": false,
+    "service_tax_coverage": "NOT_VERIFIED",
+    "hard_non_overage_bound": "NOT_VERIFIED",
+    "personal_spending_authorized": false
+  },
+  "not_run": [
+    "deployed_tls_private_network_database",
+    "runsc_identity",
+    "isolated_pandas",
+    "guest_resource_network_limits",
+    "worker_safe_collection_watchdog_cleanup",
+    "real_vultr_coding_json",
+    "durable_provider_spend_reservations",
+    "later_product_paths"
+  ],
+  "human_independent_review": "NOT_AVAILABLE"
+}

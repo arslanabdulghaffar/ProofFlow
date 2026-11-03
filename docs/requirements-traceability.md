@@ -2,13 +2,13 @@
 
 Read against all 59 pages on 2026-10-24. Requirements are paraphrased and grouped only when one acceptance check covers the same obligation; repeated source obligations are retained at their page. Source examples/targets are never reported as executions. See [source review](source-review.md), [decisions](decisions.md), and [test plan](test-plan.md).
 
-Status legend: IMPLEMENTED_DOC means documentation/preparation only; DEFERRED_PHASE1–6 means explicitly scheduled implementation after the timing gate, not implemented; DEFERRED_CONDITIONAL requires the stated budget gate; DEFERRED_P1 is optional/post-event; BLOCKED_OWNER requires a listed substantive decision. P0 means a product/release requirement, distinct from Phase 0. CONTEXT rows account for cover/navigation/source pages without inventing functionality. Test IDs are planned acceptance evidence, all product checks NOT RUN.
+Status legend: IMPLEMENTED_DOC means documentation/preparation only; DEFERRED_PHASE1–6 means explicitly scheduled implementation after the timing gate, not implemented; DEFERRED_CONDITIONAL requires the stated budget gate; DEFERRED_P1 is optional/post-event; BLOCKED_OWNER requires a listed substantive decision. P0 means a product/release requirement, distinct from Phase 0. CONTEXT rows account for cover/navigation/source pages without inventing functionality. Test IDs remain planned acceptance evidence. Local foundation HTTP checks now pass; deployed product/runtime/provider gates remain NOT RUN.
 
 Each row identifies page, classification, priority, component, required evidence, dependency and disposition. No application requirement is implemented by this table. Owner instructions additionally require private per-phase checkpoint/push verification and the $150/$25 caps; AGENTS.md, progress.md and eval/plan.md govern these additions. Synthetic semantics are owner-approved; real-data policy is not.
 
 Coverage: 276 entries across 59 PDF pages. Mechanical page/field coverage is checked by scripts/check_preparation.py; semantic completeness also requires the recorded manual source review.
 
-Phase 1 resumption on 2026-10-24: [readiness record](phase1-readiness.md) maps actual entry blockers and planned deployed receipts to R05, R11, R14, R24, R26, R27, R39 and R46. No implementation status below changes: timing/account gates remain unsatisfied and all runtime/provider checks remain NOT RUN. The public VM catalogue snapshot is evidence of advertised plans only.
+Phase 1 kickoff on 2026-11-04: timing is satisfied. R11-04/05 and R14-01/04 have partial local foundation evidence (Python locks, health shell, unit/HTTP checks); their full acceptance remains DEFERRED_PHASE1 because images/deployment/runtime/provider evidence is incomplete. No full requirement is promoted to implemented by a local health check. See [readiness record](phase1-readiness.md). The public VM catalogue is evidence of advertised plans only.
 
 | ID | PDF page | Class | Priority | Requirement / disposition scope | Planned component | Acceptance evidence | Dependency | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |

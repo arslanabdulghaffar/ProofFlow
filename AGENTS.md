@@ -4,7 +4,7 @@ Read `docs/next-session.md`, `docs/product.md`, `docs/contract.md`, `docs/threat
 
 ## Current boundary
 
-Phase 0 is preparation only. Do not implement the repair agent, verifier, sandbox supervisor, product API, operational UI, or end-to-end core before implementation timing is confirmed. Do not incur cloud charges in Phase 0. Keep this repository private. Do not contact people, publish, submit, or change visibility without explicit user instruction. Do not assume a PDF estimate is an observed result.
+The official live dashboard confirmed the event open on 2026-11-04 KST. Phase 1 implementation is authorized. Account activation is verified ($200, ledger expiry 2026-12-04). Eligible service/tax coverage, final charges and spending bounds still gate provisioning and paid inference. Do not advance past failed critical infrastructure gates or into Phase 2 before the Phase 1 checkpoint and owner review. Keep this repository private. Do not contact people, publish, submit, or change visibility without explicit user instruction. Do not assume a PDF estimate is an observed result.
 
 ## Invariants
 
@@ -23,9 +23,9 @@ Phase 0 is preparation only. Do not implement the repair agent, verifier, sandbo
 
 The user authorizes routine reviewed, task-related commits and pushes to private `arslanabdulghaffar/ProofFlow` after every completed phase, including Phase 0. Do not ask again for these checkpoints.
 
-Latest task-specific boundary (2026-10-24): owner confirmed the “window open” assertion was premature; no early permission exists. Finish only useful preparation now, inspect the signed-in account read-only, and report Ready for kickoff with external dependencies. Do not repeatedly ask the timing question. Do not provision or enable any billable service. Once timing and account/spending gates pass in a later authorized run, execute Phase 1, update the handoff, commit/push/verify, report, then **stop for owner review before Phase 2**. This supersedes automatic continuation for this task. See docs/phase1-readiness.md. The owner is the only confirmed human contributor and business-policy approver; focused hours are unknown. Synthetic-only duplicate/downstream rules are approved; MIT ownership clearance remains open.
+Latest task-specific boundary (2026-11-04): official timing is verified and the owner requested Phase 1. Continue independent trusted foundation work; activated credit alone does not establish zero uncovered liability. The owner requests autonomous source-based decisions while offline; do not repeat resolved questions. Provision and enable inference only after the account/spending gates pass. After Phase 1 acceptance, update the handoff, commit/push/verify, report, then **stop for owner review before Phase 2**. This supersedes automatic continuation for this task. See docs/phase1-readiness.md. The owner is the only confirmed human contributor and business-policy approver; focused hours are unknown. Synthetic-only duplicate/downstream rules are approved; MIT ownership clearance remains open.
 
-At kickoff, verified eligible hackathon credits may fund at most $150 total and $25 inference after checking service charges and enforcing caps. No Phase 0 cloud charges. If out-of-pocket liability could occur or cannot be bounded, obtain approval before incurring it; continue independent work. Do not treat credits as universal coverage.
+At kickoff, verified eligible hackathon credits may fund at most $150 total and $25 inference after checking service charges and enforcing caps. No Phase 0 cloud charges. These limits authorize eligible promotional-credit usage only. No personal spending, deposits, payment-method charges or uncovered liability are authorized. If such liability could occur or cannot be bounded, stop the affected action and continue independent work. Do not treat credits as universal coverage.
 
 1. Finish phase acceptance; run appropriate available checks. Mark unavailable checks NOT RUN with a reason.
 2. Review the diff and staged file list; scan for secrets, private data, generated clutter and unrelated changes.

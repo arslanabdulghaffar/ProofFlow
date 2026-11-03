@@ -28,4 +28,13 @@ All decisions below dated 2026-10-24; implementation evidence remains NOT RUN. O
 | D22 | Reserve $72 compute until account billing is settled; revised provisional total $145 within $150 | Replaces D12's $67.20 compute/$140.20 total; API hourly/monthly fields and billing article require reconciliation; not an enforced cap |
 | D23 | Account/quote inspection only; no resource, inference subscription, payment verification or billable activation now | Latest owner instruction; login succeeded but credit terms remain unverified |
 
+## Kickoff decisions — 2026-11-04 KST
+
+- D24 supersedes D01/D20's waiting state: the official dashboard explicitly shows Live / Submissions open. Core Phase 1 work can begin. Stop before Phase 2 still applies.
+- D25 refines D11/D23: $150 total/$25 inference are promotional-credit ceilings, not personal spending authority. No deposit, card charge or uncovered liability is authorized. Credit application does not itself prove available balance, coverage, expiry or bounded charges.
+- D26: minimal trusted FastAPI/Pydantic health surface, exact PyPI dependency pins and uv lock. No arbitrary provider or candidate dispatcher. Liveness is separate from readiness, which remains closed until real infrastructure verification exists. Dependency review and separate critical review are recorded in phase1-readiness.md; no independent human sign-off.
+
+- D27: owner completed the event Gift Code flow; authenticated $200 credit/December 4 expiry resolved activation. Current $24/$48 compute previews and usage-only inference quote were read without purchase. No hard non-overage/expiry protection or precise inference/tax coverage found; maintain credit-only gate under standing owner limits. Owner asks autonomous decisions, not repeated questions or personal spending.
+- D28: Trivy image scan added to foundation review. Fixed outdated runtime pip by using hashed pip 26.3 during build then removing pip. Remaining Debian findings are retained, not suppressed; local health testing is not deployment/release security acceptance.
+
 No installed model/provider, product permission, cloud rate or test result is inferred from these planning decisions. Changes must record the old claim that is no longer valid and the acceptance evidence required.
