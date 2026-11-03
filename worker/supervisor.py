@@ -4,8 +4,8 @@ Durable admission precedes staging/launch. Existing IDs never rerun. The service
 manager watchdog is independent of this process and controller connections.
 """
 
+import base64
 import hashlib
-import json
 import os
 import threading
 from pathlib import Path
@@ -13,7 +13,7 @@ from uuid import UUID
 
 from worker.collector import CollectionError, collect_stopped_outputs
 from worker.journal import Journal
-from worker.protocol import ExecutionRequest, SupervisorError
+from worker.protocol import ExecutionRequest, SupervisorError, runtime_identity_digest
 from worker.runtime import SystemdRunsc
 from worker.staging import Staging
 
@@ -61,6 +61,19 @@ class Supervisor:
             if not self._recovered:
                 raise SupervisorError("RECOVERY_REQUIRED")
             self.staging.prune_results(set(self.journal.unfinished()))
+
+    def pause_admission(self) -> None:
+        with self._guard:
+            self._recovered = False  # Existing executions still terminate and clean normally.
+
+    def describe(self) -> dict:
+        with self._guard:
+            if not self._recovered:
+                raise SupervisorError("RECOVERY_REQUIRED")
+            self.runtime.validate()
+            identity = self.runtime.identity()
+            return {"runtime": identity, "sha256": runtime_identity_digest(identity),
+                    "scope": "IDENTITY_ONLY_NOT_CONTAINMENT_ACCEPTANCE"}
 
     def _housekeeping(self) -> None:
         while not self._stop.wait(1):
@@ -117,14 +130,16 @@ class Supervisor:
         self.staging.prune_results(set(self.journal.unfinished()))
         self._recovered = True
 
-    def execute(self, request: ExecutionRequest) -> dict:
+    def execute(self, request: ExecutionRequest, *, expected_runtime: str | None = None) -> dict:
         with self._guard:
             if not self._recovered:
                 raise SupervisorError("WORKER_MAINTENANCE_FAILED" if self._maintenance_failed
                                       else "RECOVERY_REQUIRED")
             self.runtime.validate()
             identity = self.runtime.identity()
-            digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+            digest = runtime_identity_digest(identity)
+            if expected_runtime is not None and expected_runtime != digest:
+                raise SupervisorError("RUNTIME_POLICY_CHANGED")
             retained = self.staging.prune_results(set(self.journal.unfinished()))
             if not self.journal.admit(request, digest, retained_slots=retained):
                 return self.journal.receipt(request.execution_id) or {
@@ -151,6 +166,7 @@ class Supervisor:
             receipt["files"] = [{"name": f.name, "sha256": f.sha256, "bytes": len(f.content),
                                   "lines": f.lines} for f in files]
             receipt["logs"] = [{"stream": log.name, "retained": len(log.content),
+                                 "sha256": hashlib.sha256(log.content).hexdigest(),
                                  "received": log.received_bytes, "truncated": log.truncated}
                                 for log in logs]
             self.staging.persist(identifier, files, logs, receipt)
@@ -183,3 +199,13 @@ class Supervisor:
                     or receipt.get("cleanup") != "confirmed" or not receipt.get("collected")):
                 raise SupervisorError("INVALID_CAPTURE_ACKNOWLEDGEMENT")
             self.staging.remove_result(identifier)
+
+    def capture(self, identifier: UUID, manifest: str) -> dict:
+        with self._guard:  # Excludes retention/acknowledgement while reading exact bytes.
+            receipt = self.journal.receipt(identifier)
+            if (not receipt or receipt.get("manifest") != manifest
+                    or receipt.get("cleanup") != "confirmed" or not receipt.get("collected")):
+                raise SupervisorError("CAPTURE_NOT_ELIGIBLE")
+            files = self.staging.read_result(identifier, receipt)
+            encoded = {name: base64.b64encode(data).decode() for name, data in files.items()}
+            return {"receipt": receipt, "files": encoded}

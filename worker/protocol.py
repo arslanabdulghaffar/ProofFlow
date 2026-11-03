@@ -47,3 +47,7 @@ def execution_name(identifier: UUID) -> str:
     if type(identifier) is not UUID:
         raise SupervisorError("INVALID_EXECUTION_ID")
     return "proofflow-exec-" + identifier.hex
+
+
+def runtime_identity_digest(identity: dict) -> str:
+    return hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()

@@ -35,7 +35,7 @@ Trusted service development (uv 0.13.5):
 .\.venv-tools\Scripts\uv.exe run --locked uvicorn api.app.main:app --host 127.0.0.1 --port 8000 --no-access-log --no-server-header --no-proxy-headers
 ```
 
-`GET /health/live` returns 200 for process liveness. `GET /health/ready` returns 503 until actual infrastructure checks are implemented and pass. No upload, execution or approval API exists. Local tests run trusted service code only; never run a submitted/model candidate here. These checks do not establish deployed containment or provider success.
+`GET /health/live` returns 200 for process liveness. `GET /health/ready` returns 503 until actual infrastructure checks are implemented and pass. No public upload, execution or approval API exists. The private authenticated worker RPC and immutable image import have local trusted tests; see [sandbox](docs/sandbox.md). Never run a submitted/model candidate here. Local checks do not establish deployed containment or provider success.
 
 ## Planned judge walkthrough
 

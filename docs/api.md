@@ -2,6 +2,8 @@
 
 Design only; freeze strict Pydantic/JSON schemas and OpenAPI-generated frontend types in Phase 2. All lookups/mutations, streams, exports and downloads enforce workspace authorization; opaque IDs alone confer no access. Unknown fields fail. Browser gets no infrastructure secret or filesystem path.
 
+The public API below remains planned. Phase 1 now implements a separate private TLS-framed worker protocol on fixed port 9443, with exact certificate/runtime identities, closed operations and durable transfer; it is not exposed to browsers. Its source and field rules are in worker/service.py, worker/wire.py and orchestrator/worker_client.py; setup/tests/limitations are documented in [sandbox](sandbox.md#authenticated-service-and-immutable-image-import--nov-4-follow-up). No private RPC result is a verifier or approval verdict.
+
 | Endpoint | Planned contract |
 | --- | --- |
 | POST /v1/guest-sessions | Rate-limited expiring isolated workspace and secure cookie |

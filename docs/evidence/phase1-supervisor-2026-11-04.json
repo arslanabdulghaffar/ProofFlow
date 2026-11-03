@@ -131,5 +131,7 @@
     "https://www.freedesktop.org/software/systemd/man/255/systemd-run.html",
     "https://docs.kernel.org/admin-guide/cgroup-v2.html",
     "https://raw.githubusercontent.com/google/gvisor/master/runsc/config/flags.go"
-  ]
+  ],
+  "verified_source_commit": "10960d997f78d18a335911902460f2fdce95ab9f",
+  "historical_note": "Original supervisor checkpoint evidence. Current source and repeated lifecycle checks are in phase1-worker-service-2026-11-04.json."
 }

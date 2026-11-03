@@ -1,9 +1,9 @@
 {
-  "recorded_at_utc": "2026-11-03T18:53:20.359630+00:00",
-  "base_commit": "884bc82b18fec1bc820ea564827dcb6b3f0fc346",
+  "recorded_at_utc": "2026-11-03T19:43:54.677395+00:00",
+  "base_commit": "10960d997f78d18a335911902460f2fdce95ab9f",
   "phase": "1",
   "status": "IN_PROGRESS_NOT_ACCEPTED",
-  "scope": "Trusted local health, budget-backed mock inference, build-only worker image and internal supervisor with trusted host lifecycle fixtures",
+  "scope": "Trusted local foundation, authenticated worker service, image import and mock provider integration; deployed NOT ACCEPTED",
   "files_sha256": {
     "api/app/main.py": "72ac27d0876e9b97ca705c6487dac1a581712dab1fc23b5afbc2bec2fd4d7576",
     "pyproject.toml": "38269e6332d025f4aa42402a9ab9a266ba12124268836f428964a37dac889e6d",
@@ -45,23 +45,34 @@
     "tests/security/test_supervisor_journal.py": "44076273e2f29520fb5f812c2b40adcc58b45007d03935d8dfd46badcb27a9d6",
     "tests/unit/test_worker_protocol.py": "510a6f020d6c13ee39c959b247d559a44241313717c90726cbce9f1b27b76539",
     "worker/host.py": "e14e8a998cfcadd65e242ab783591c52fdc3b96ca8a2d3b02fe29a4677fd15fe",
-    "worker/journal.py": "374d2bc645748bea96416644564cfa1e0909b2108c9c8a508175ceee43a6a483",
-    "worker/protocol.py": "3aced5c93985619ab53c68364f23b2fc5d7498ccbd16793b9b95b27df64a2d84",
-    "worker/runtime.py": "413cc52b57f76a988994a8627f86e05a26fa7bd929e5f20409dc7ddef167f445",
-    "worker/staging.py": "c573dfa6db96e89c917af96ffd953c6111f9ab5c31d86b5c39f6abd28bac7123",
+    "worker/journal.py": "fec480a5de2860093637afeca5752d75964414d4d868b5f529fffed981b4d0c0",
+    "worker/protocol.py": "7aaf319f4baa1cc821fc15aeaad4a0bff865730636412dd988d0f7aa87cc0e5a",
+    "worker/runtime.py": "f415b9f129029b0d18cb8baa9ffba8c5c8067c8f25453f1ca4da0db3e16fa309",
+    "worker/staging.py": "4b84e4c6e238ba3a3b97e08294b69f721f04316d1dba9e299c665fcf25e4a3a2",
     "worker/start_gate.py": "9ea60b791822935da6b25d7ed79a91c80844ccb451bc3f64bb55445581e95e3b",
-    "worker/supervisor.py": "b44ecb2caf36b2be4b08d62b12909b56e9cead4cca07c9018478075d56df442b"
+    "worker/supervisor.py": "05b666a4b53375abcd96d570eb1ce9905b6128b59c87777a049505a59232caa1",
+    "infra/systemd/proofflow-worker.service": "2d3e8250499bbdb120a34a53750968ab2193b3ff01040fd6d8a6e5ee22165855",
+    "orchestrator/worker_client.py": "07a6ec958e0b5c6c72ef9ee8a8016a16a3917d827f46ace887ca88b4432bb539",
+    "scripts/build_worker_rootfs.py": "987ea3ed7f3f6f64133af8b56c9308da839ecf1c37fdab2ea2ee55c37d23e681",
+    "tests/security/rootfs_linux_check.py": "ee2f1eda3d7a6766989f8befa4a835a45df016393f51ea00535ee7dfaf55b435",
+    "tests/security/worker_rpc_linux_check.py": "5044f456ec46e06423f9c41c834b0904fdd3c9c821364d47946d12493895b2bb",
+    "tests/unit/test_rootfs_archive.py": "ab449e3234b38a2d1dd95113e2b2cbe411a23627ac7b1e6d87ed21d54eff282e",
+    "tests/unit/test_worker_service.py": "3f2289e9f6bce5d2e86889ef855de717b0c5b7e61d1784e1f226847991752727",
+    "worker/entrypoint.py": "d3691b70b5164cf10e85fb4326f25b151dc9957761fc19b105690a61527c07f4",
+    "worker/rootfs.py": "5283c965736359afd4d53a5387fd6057e0755743bc7d65e95dbd560157fd9b75",
+    "worker/service.py": "0e7ba2316d5bab505006e98ed70f436a68302215fcdc146c2582c6f07cf5368b",
+    "worker/wire.py": "8e9bafd7fba1c0ad92aa8fe153c15ac39a16e7eae3574e968ede740eb03bee9b"
   },
   "checks": {
     "pytest": {
-      "passed": 124,
+      "command": "uv run --locked pytest -q",
+      "passed": 159,
       "skipped": 32,
-      "skip_reason": "Linux-only ownership/descriptor tests separately executed under WSL",
-      "command": "uv run --locked pytest -q"
+      "skip_reason": "Linux-only collector/journal checks separately passed under WSL"
     },
     "ruff": {
       "status": "PASS",
-      "command": "uv run --locked ruff check api worker orchestrator tests scripts/check_control_image.py scripts/check_budget_postgres.py"
+      "command": "uv run --locked ruff check api worker orchestrator tests scripts/build_worker_rootfs.py scripts/check_control_image.py scripts/check_budget_postgres.py"
     },
     "runtime_only_sync": {
       "status": "PASS",
@@ -200,7 +211,8 @@
     "linux_collector_journal": {
       "passed": 32,
       "command": "python3 -m unittest discover -s tests/security -q"
-    }
+    },
+    "worker_service_import": "phase1-worker-service-2026-11-04.json; local trusted fixtures only"
   },
   "cloud": {
     "account_credit_usd": "200.00",

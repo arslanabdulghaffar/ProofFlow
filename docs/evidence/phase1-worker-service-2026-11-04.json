@@ -1,0 +1,164 @@
+{
+  "recorded_at_utc": "2026-11-03T19:43:54.677395+00:00",
+  "base_commit": "10960d997f78d18a335911902460f2fdce95ab9f",
+  "phase": "1",
+  "status": "LOCAL_PASS_DEPLOYED_NOT_ACCEPTED",
+  "scope": "Trusted local TLS/systemd fixtures and data-only image import; no candidate or image execution",
+  "files_sha256": {
+    "infra/systemd/proofflow-worker.service": "2d3e8250499bbdb120a34a53750968ab2193b3ff01040fd6d8a6e5ee22165855",
+    "orchestrator/worker_client.py": "07a6ec958e0b5c6c72ef9ee8a8016a16a3917d827f46ace887ca88b4432bb539",
+    "scripts/build_worker_rootfs.py": "987ea3ed7f3f6f64133af8b56c9308da839ecf1c37fdab2ea2ee55c37d23e681",
+    "tests/security/rootfs_linux_check.py": "ee2f1eda3d7a6766989f8befa4a835a45df016393f51ea00535ee7dfaf55b435",
+    "tests/security/supervisor_linux_check.py": "b003839e472dc9346dace71fa7fedd1d365cb169e9c913bd2c61a17c066e5591",
+    "tests/security/test_supervisor_journal.py": "44076273e2f29520fb5f812c2b40adcc58b45007d03935d8dfd46badcb27a9d6",
+    "tests/security/worker_rpc_linux_check.py": "5044f456ec46e06423f9c41c834b0904fdd3c9c821364d47946d12493895b2bb",
+    "tests/unit/test_rootfs_archive.py": "ab449e3234b38a2d1dd95113e2b2cbe411a23627ac7b1e6d87ed21d54eff282e",
+    "tests/unit/test_worker_protocol.py": "510a6f020d6c13ee39c959b247d559a44241313717c90726cbce9f1b27b76539",
+    "tests/unit/test_worker_service.py": "3f2289e9f6bce5d2e86889ef855de717b0c5b7e61d1784e1f226847991752727",
+    "worker/__init__.py": "0930f74db3b1c2bf464f225b6349c1f2a35c411e2504fb4a850b5f464bb6b9dc",
+    "worker/collector.py": "0e396d6f4c1e63b8b34f6c090445ecbe0cd6c056fcd4a2b27c1390c285023e38",
+    "worker/entrypoint.py": "d3691b70b5164cf10e85fb4326f25b151dc9957761fc19b105690a61527c07f4",
+    "worker/host.py": "e14e8a998cfcadd65e242ab783591c52fdc3b96ca8a2d3b02fe29a4677fd15fe",
+    "worker/journal.py": "fec480a5de2860093637afeca5752d75964414d4d868b5f529fffed981b4d0c0",
+    "worker/launcher.py": "f7bbe39731b914f56aa33fe083a6450c073df9f74db7cfeb9720872139d1b6dc",
+    "worker/log_capture.py": "91f7ee7ea5725b2a2c92643c54b075d596f847f931d678be02cd6d68b7ab170e",
+    "worker/protocol.py": "7aaf319f4baa1cc821fc15aeaad4a0bff865730636412dd988d0f7aa87cc0e5a",
+    "worker/rootfs.py": "5283c965736359afd4d53a5387fd6057e0755743bc7d65e95dbd560157fd9b75",
+    "worker/runtime.py": "f415b9f129029b0d18cb8baa9ffba8c5c8067c8f25453f1ca4da0db3e16fa309",
+    "worker/service.py": "0e7ba2316d5bab505006e98ed70f436a68302215fcdc146c2582c6f07cf5368b",
+    "worker/staging.py": "4b84e4c6e238ba3a3b97e08294b69f721f04316d1dba9e299c665fcf25e4a3a2",
+    "worker/start_gate.py": "9ea60b791822935da6b25d7ed79a91c80844ccb451bc3f64bb55445581e95e3b",
+    "worker/supervisor.py": "05b666a4b53375abcd96d570eb1ce9905b6128b59c87777a049505a59232caa1",
+    "worker/wire.py": "8e9bafd7fba1c0ad92aa8fe153c15ac39a16e7eae3574e968ede740eb03bee9b"
+  },
+  "checks": {
+    "pytest": {
+      "command": "uv run --locked pytest -q",
+      "passed": 159,
+      "skipped": 32,
+      "skip_reason": "Linux-only collector/journal checks separately passed under WSL"
+    },
+    "linux_collector_journal": {
+      "command": "python3 -m unittest discover -s tests/security -q",
+      "passed": 32
+    },
+    "ruff": {
+      "status": "PASS",
+      "command": "uv run --locked ruff check api worker orchestrator tests scripts/build_worker_rootfs.py scripts/check_control_image.py scripts/check_budget_postgres.py"
+    },
+    "worker_rpc": {
+      "command": "python3 tests/security/worker_rpc_linux_check.py",
+      "scope": "local_real_TLS_trusted_supervisor_fixtures_no_candidates",
+      "checks": [
+        "missing_and_same_CA_unapproved_client_certificates_rejected",
+        "client_server_certificate_pin_rejection",
+        "unauthenticated_handshakes_bounded_to_eight_and_slots_reclaimed",
+        "authorized_oversize_and_duplicate_JSON_rejected_before_dispatch",
+        "exact_controller_runtime_expectation_rejects_changed_worker",
+        "real_TLS_create_replay_scoped_status_durable_capture_and_ack",
+        "lost_ack_reconciled_from_local_bytes_and_tampered_capture_rejected",
+        "controller_disconnect_then_authenticated_cancel_kills_fixture_descendants",
+        "shutdown_denies_already_connected_but_not_admitted_request"
+      ],
+      "cleanup": "fixture_certs_units_mounts_files_removed"
+    },
+    "rootfs": {
+      "command": "python3 tests/security/rootfs_linux_check.py /var/tmp/proofflow-rootfs-10960d9-final",
+      "scope": "local_image_import_and_mount_only_no_image_execution",
+      "checks": [
+        "wrong_release_pin_and_modified_blob_rejected",
+        "real_readonly_squashfs_loop_backing_identity_verified",
+        "host_write_denied_and_bootstrap_bytes_match_without_execution"
+      ],
+      "import": {
+        "builder_sha256": "47d5c1af3da11864e64c9dc6bb4e568719dcc315e6a744e79381ce3374fb7393",
+        "docker_image_sha256": "966a330c3a63a13032f407aa46de0b90d839a00ffbeb82cf04f120a5e4b7086a",
+        "export_sha256": "c6d548c333deaa2b10b4f4b1421b57865cbd2f2fedb285fed96da9ad14595ae8",
+        "image_started": false,
+        "inventory": {
+          "declared_bytes": 260579522,
+          "entries": 10080
+        },
+        "rootfs_sha256": "bb9a2f31b699fa961b897686e0187f021251029b2b1445ebb42f061afe645cb9",
+        "version": 1
+      },
+      "cleanup": "mount_and_loop_absent_build_artifact_retained_private"
+    },
+    "supervisor": {
+      "command": "python3 tests/security/supervisor_linux_check.py",
+      "scope": "trusted_local_systemd_fixtures_no_candidates_no_runsc",
+      "checks": [
+        "real_service_capture_cleanup_exact_replay_no_reexecution",
+        "wrong_watchdog_readback_prevents_fixture_start_and_cleans",
+        "late_start_after_staging_removal_denied_by_independent_gate",
+        "real_simultaneous_stdout_stderr_flood_bounded_and_drained",
+        "resident_capture_expiry_and_fail_closed_maintenance_recovery",
+        "extra_output_rejected_and_all_mounts_cleaned",
+        "durable_cancel_kills_detached_descendant_before_collection",
+        "cleanup_failure_quarantines_then_recovery_reclaims_owned_resources",
+        "independent_20s_systemd_watchdog_after_supervisor_SIGKILL_and_restart_cleanup"
+      ],
+      "cleanup": "owned_units_mounts_processes_and_root_absent"
+    }
+  },
+  "environment": {
+    "os": "WSL Ubuntu 24.04",
+    "kernel": "6.18.54.1-microsoft-standard-WSL2",
+    "systemd": "255 (255.4-1ubuntu8.17)",
+    "python_linux": "3.12.3",
+    "python_windows": "3.12.10",
+    "openssl_package": "3.0.13-0ubuntu3.15",
+    "squashfs_tools_package": "1:4.6.1-1build1"
+  },
+  "wire_limits": {
+    "max_frame_bytes": 15728640,
+    "max_json_depth": 12,
+    "connections": 8,
+    "handshake_seconds": 5,
+    "receive_send_seconds": 10,
+    "client_response_seconds": 45,
+    "service_drain_seconds": 40,
+    "minimum_TLS": "1.3",
+    "ALPN": "proofflow-worker/1"
+  },
+  "critical_review": {
+    "reviewer": "Codex separate critical pass, not independent human approval",
+    "fixed": [
+      "Expected runtime binding before admission and during capture validation",
+      "Durable local lost-ACK reconciliation without rerunning or refetching deleted copy",
+      "Unsafe TLS contexts and environment key logging rejected",
+      "Shutdown denies connected but not admitted requests",
+      "Explicit local Docker socket and no-pull import",
+      "No host tar extraction; distinguish directory inheritance from executable set-id"
+    ],
+    "new_python_packages": [],
+    "privilege": "Root dedicated-worker service and trusted Linux import tooling; no new candidate privilege",
+    "limitations": [
+      "Existing host/image advisories not waived",
+      "Import receipt is not a signature",
+      "Protected release config must independently pin blob and peers",
+      "Certificate rotation requires reviewed restart; no online CRL/hot reload"
+    ]
+  },
+  "not_run": [
+    "Real service installation and restart on Vultr",
+    "Real cross-VM TLS/firewall",
+    "Pinned runsc/systrap and pandas execution",
+    "Guest fork/thread/CPU/RAM/filesystem/inode/network enforcement",
+    "Deployed watchdog/collection/cleanup",
+    "Production database/provider composition",
+    "Real Vultr inference"
+  ],
+  "cloud_charges_incurred": false,
+  "cloud_services_created": 0,
+  "personal_spending_authorized": false,
+  "real_credentials_created": false,
+  "repository_visibility": "private; authenticated API rechecked",
+  "human_independent_review": "NOT_AVAILABLE",
+  "primary_references": [
+    "https://docs.python.org/3.12/library/ssl.html",
+    "https://docs.docker.com/reference/cli/docker/container/create/",
+    "https://docs.docker.com/reference/cli/docker/container/export/",
+    "https://manpages.ubuntu.com/manpages/noble/man1/mksquashfs.1.html"
+  ]
+}

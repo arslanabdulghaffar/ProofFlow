@@ -18,6 +18,8 @@ Inference client follow-up: R14-05/R24 and R46-03 have partial real PostgreSQL c
 
 Supervisor follow-up: R26-06/R27-03/07 and T07/T08/T15 have partial real local systemd evidence for watchdog-after-supervisor-death, stopped writers, bounded capture, startup denial and cleanup/recovery. Nine integration groups use fixed trusted fixtures only; 32 Linux collector/journal tests passed. No runsc/candidate/cloud execution occurred. Authenticated service composition and all deployed acceptance remain deferred; see [supervisor receipt](evidence/phase1-supervisor-2026-11-04.json).
 
+Authenticated service/import follow-up: R14/R26/R27/R39 now have additional partial evidence from nine real local TLS/lifecycle groups, three actual read-only image/mount groups and strict protocol/archive tests. Private service composition, runtime binding and durable transfer are implemented; deployed identity/resource/network/provider acceptance is still deferred. No requirement is promoted to fully accepted by local fixtures; [current receipt](evidence/phase1-worker-service-2026-11-04.json) preserves the distinction.
+
 Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/claim/crash evidence (14 groups); R27-04 has offline probe output/rate validation only. Deployed dispatcher, per-job budgets, alerting, provider meters and final billing coverage remain unproven. No full requirement status changes. See [budget receipt](evidence/phase1-budget-postgres-2026-11-04.json).
 
 | ID | PDF page | Class | Priority | Requirement / disposition scope | Planned component | Acceptance evidence | Dependency | Status |

@@ -153,3 +153,12 @@ class Journal:
             row = db.execute("SELECT receipt FROM executions WHERE id=?",
                              (identifier.hex,)).fetchone()
             return json.loads(row[0]) if row and row[0] else None
+
+    def scoped_status(self, identifier: UUID, job: UUID, generation: int) -> dict:
+        with self._db() as db:
+            row = db.execute("SELECT state,receipt FROM executions WHERE id=? AND job=? "
+                             "AND generation=?", (identifier.hex, job.hex, generation)).fetchone()
+            if row is None:
+                raise SupervisorError("EXECUTION_SCOPE_MISMATCH")
+            return {"execution": identifier.hex, "job": job.hex, "generation": generation,
+                    "state": row[0], "receipt": json.loads(row[1]) if row[1] else None}

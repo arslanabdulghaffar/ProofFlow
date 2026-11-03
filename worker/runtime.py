@@ -44,6 +44,7 @@ class RuntimePolicy:
     image_sha256: str
     rootfs: Path
     runsc: Path = Path("/usr/local/bin/runsc")
+    rootfs_sha256: str = ""  # Required by deployment composition; empty never validates.
 
     def validate(self) -> None:
         if os.geteuid() != 0 or not re.fullmatch(r"[a-f0-9]{32}", self.machine_id):
@@ -51,7 +52,7 @@ class RuntimePolicy:
         if Path("/etc/machine-id").read_text().strip() != self.machine_id:
             raise SupervisorError("WRONG_WORKER_HOST")
         if any(not re.fullmatch(r"[a-f0-9]{64}", digest)
-               for digest in (self.runsc_sha256, self.image_sha256)):
+               for digest in (self.runsc_sha256, self.image_sha256, self.rootfs_sha256)):
             raise SupervisorError("INVALID_RUNTIME_PIN")
         expected_rootfs = Path("/var/lib/proofflow-worker/images") / self.image_sha256 / "rootfs"
         if self.rootfs != expected_rootfs or self.runsc != Path("/usr/local/bin/runsc"):
@@ -67,17 +68,8 @@ class RuntimePolicy:
         if (not self.rootfs.is_absolute() or not stat.S_ISDIR(info.st_mode)
                 or info.st_uid != 0 or info.st_mode & 0o022):
             raise SupervisorError("UNSAFE_RUNTIME_ROOTFS")
-        # A root-owned deployment import receipt binds the immutable extracted tree
-        # to the Docker image. Import/tree-integrity verification is a deployment gate.
-        receipt = self.rootfs.parent / "image.sha256"
-        info = receipt.lstat()
-        if (not stat.S_ISREG(info.st_mode) or info.st_uid != 0 or info.st_mode & 0o022
-                or receipt.read_text().strip() != self.image_sha256):
-            raise SupervisorError("ROOTFS_IDENTITY_MISMATCH")
-        from worker.staging import mount_inventory
-        mount = mount_inventory().get(str(self.rootfs))
-        if not mount or "ro" not in mount[2]:
-            raise SupervisorError("IMMUTABLE_ROOTFS_MOUNT_REQUIRED")
+        from worker.rootfs import verify_mount
+        verify_mount(self.rootfs.parent, self.image_sha256, self.rootfs_sha256)
         if not Path("/sys/fs/cgroup/cgroup.controllers").is_file():
             raise SupervisorError("CGROUP_V2_REQUIRED")
 
@@ -127,8 +119,9 @@ class SystemdRunsc:
         # Bind replay to the trusted implementation as well as the guest image/runtime.
         # Deployment must install these root-owned files immutably and restart on update.
         sources = {}
-        for name in ("runtime", "launcher", "host", "start_gate", "staging", "collector",
-                     "protocol", "journal", "supervisor", "log_capture"):
+        for name in ("__init__", "runtime", "launcher", "host", "start_gate", "staging",
+                     "collector", "protocol", "journal", "supervisor", "log_capture", "rootfs",
+                     "wire", "service", "entrypoint"):
             source = Path(__file__).with_name(name + ".py")
             info = source.lstat()
             if (not stat.S_ISREG(info.st_mode) or info.st_uid != 0 or info.st_mode & 0o022
@@ -138,6 +131,7 @@ class SystemdRunsc:
         return {"runtime": "runsc", "platform": "systrap",
                 "runtime_sha256": self.policy.runsc_sha256,
                 "image_sha256": self.policy.image_sha256,
+                "rootfs_sha256": self.policy.rootfs_sha256,
                 "supervisor_sha256": hashlib.sha256(
                     json.dumps(sources, sort_keys=True).encode()).hexdigest(),
                 "host_tag": hashlib.sha256(self.policy.machine_id.encode()).hexdigest()}

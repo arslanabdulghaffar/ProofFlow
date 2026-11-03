@@ -1,5 +1,6 @@
 """Private staging, bounded host mounts, durable capture and exact owned cleanup."""
 
+import hashlib
 import json
 import os
 import re
@@ -113,6 +114,37 @@ class Staging:
             os.unlink(target / name)  # Exact private registry directory, no link traversal.
         target.rmdir()
         sync_directory(target.parent)
+
+    def read_result(self, identifier: UUID, receipt: dict) -> dict[str, bytes]:
+        target = self.root / "results" / identifier.hex
+        try:
+            private_directory(target)
+            expected = [(f["name"], f["bytes"], f["sha256"]) for f in receipt["files"]]
+            expected += [(f["stream"] + ".bin", f["retained"], f["sha256"])
+                         for f in receipt["logs"]]
+            names = {name for name, _, _ in expected} | {"capture.json"}
+            if (len(expected) > 5 or sum(size for _, size, _ in expected) > 10485760 + 102400
+                    or set(os.listdir(target)) != names):
+                raise SupervisorError("CAPTURE_CORRUPT")
+            result = {}
+            for name, size, digest in expected:
+                if name not in {"ledger.jsonl", "unresolved.jsonl", "rollups.jsonl",
+                                "stdout.bin", "stderr.bin"}:
+                    raise SupervisorError("CAPTURE_CORRUPT")
+                fd = os.open(target / name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+                with os.fdopen(fd, "rb") as source:
+                    info = os.fstat(source.fileno())
+                    if (not stat.S_ISREG(info.st_mode) or info.st_nlink != 1
+                            or info.st_uid != os.geteuid() or info.st_size != size
+                            or info.st_mode & 0o077):
+                        raise SupervisorError("CAPTURE_CORRUPT")
+                    data = source.read(size + 1)
+                if len(data) != size or hashlib.sha256(data).hexdigest() != digest:
+                    raise SupervisorError("CAPTURE_CORRUPT")
+                result[name] = data
+            return result
+        except FileNotFoundError:
+            raise SupervisorError("CAPTURE_EXPIRED_OR_ACKNOWLEDGED") from None
 
     def prune_results(self, protected: set[UUID]) -> int:
         # Each unfinished execution reserves its future result slot, including

@@ -1,0 +1,31 @@
+[Unit]
+Description=ProofFlow private authenticated worker supervisor
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=exec
+User=root
+Group=root
+WorkingDirectory=/opt/proofflow-worker
+ExecStart=/usr/bin/python3 -I -S -B /opt/proofflow-worker/worker/entrypoint.py
+Restart=on-failure
+RestartSec=2
+TimeoutStopSec=45
+KillMode=control-group
+UMask=0077
+UnsetEnvironment=PYTHONPATH PYTHONHOME SSLKEYLOGFILE LD_PRELOAD LD_LIBRARY_PATH OPENSSL_CONF
+LimitCORE=0
+MemoryMax=768M
+MemorySwapMax=0
+TasksMax=64
+CPUQuota=200%
+StandardOutput=null
+StandardError=journal
+# Fixed mount/systemd/runsc administration needs root. Candidate services have
+# their own isolated cgroups and watchdogs; this unit is not their resource limit.
+
+[Install]
+WantedBy=multi-user.target
