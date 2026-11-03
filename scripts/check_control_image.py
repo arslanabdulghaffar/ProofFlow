@@ -38,6 +38,7 @@ print(json.dumps({
     'archive_tar_modules_under_usr': sorted(tar_modules),
     'systemd_homed_present': Path('/usr/lib/systemd/systemd-homed').exists(),
     'infocmp_present': Path('/usr/bin/infocmp').exists(),
+    'bzip2recover_present': Path('/usr/bin/bzip2recover').exists(),
     'mount_present': Path('/usr/bin/mount').exists(),
     'nsenter_present': Path('/usr/bin/nsenter').exists(),
     'usr_aliases': {name: str(Path(name).resolve()) for name in ('/bin', '/sbin', '/lib')},

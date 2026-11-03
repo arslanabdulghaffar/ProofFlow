@@ -1609,6 +1609,7 @@
     "cleanup": "confirmed_absent",
     "hardening": {
       "archive_tar_modules_under_usr": [],
+      "bzip2recover_present": false,
       "fstab_entries": [],
       "infocmp_present": true,
       "inventory_errors": [],
@@ -1697,7 +1698,7 @@
     "scope": "trusted prior foundation image, not a candidate"
   },
   "other_findings_review": {
-    "status": "OPEN_INDIVIDUAL_VENDOR_AND_REACHABILITY_REVIEW",
+    "status": "SIX_PRIORITY_ADVISORIES_TRIAGED_FOR_HEALTH_ONLY; REMAINDER_AND_DEPLOYED_REVIEW_OPEN",
     "unique_advisories_by_severity": {
       "LOW": [
         "CVE-2005-2541",
@@ -1783,12 +1784,51 @@
       ]
     },
     "priority": "libc, libgcc, libbz2 and zlib are mapped in the service; prioritize function-level reachability before broadening the API or enabling outbound DNS. Library presence is not exploit proof; library absence is not future safety. UNKNOWN is not safe. CLI/PAM/archive findings stay tracked; health invokes none of these paths.",
-    "fixed_versions_reported": []
+    "fixed_versions_reported": [],
+    "reviewed_subset": {
+      "CVE-2026-6238": {
+        "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-6238",
+        "assessment": "Deprecated DNS printing/debugging functions, explicitly outside normal resolver path per Debian description. No such application call identified in the health shell; mapped libc alone does not establish reachability. No package fix or future-provider DNS clearance.",
+        "status": "LIMITED_HEALTH_SCOPE_TRIAGE_NOT_DEPLOYMENT_WAIVER",
+        "trixie_vendor_fix": "NOT_LISTED_AS_FIXED"
+      },
+      "CVE-2026-5435": {
+        "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-5435",
+        "assessment": "Same deprecated DNS printing family, caller buffer enforcement for TSIG records. No health debugging/printing path. Retain affected package status and re-review future native integrations.",
+        "status": "LIMITED_HEALTH_SCOPE_TRIAGE_NOT_DEPLOYMENT_WAIVER",
+        "trixie_vendor_fix": "NOT_LISTED_AS_FIXED"
+      },
+      "CVE-2026-42250": {
+        "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-42250",
+        "assessment": "Fault in bzip2recover CLI, not evidence of a vulnerable libbz2 decompression path. /usr/bin/bzip2recover absent in the checked image; no shell/archive dispatcher. Scanner source-package finding retained.",
+        "status": "LIMITED_HEALTH_SCOPE_TRIAGE_NOT_DEPLOYMENT_WAIVER",
+        "trixie_vendor_fix": "NOT_LISTED_AS_FIXED"
+      },
+      "CVE-2026-102010": {
+        "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-102010",
+        "assessment": "libstdc++ binary-heap erase_if use-after-free. libgcc mapped does not show that operation is called; libstdc++ absent from recorded service maps. No call identified in trusted Python health code; native dependency changes require fresh review.",
+        "status": "LIMITED_HEALTH_SCOPE_TRIAGE_NOT_DEPLOYMENT_WAIVER",
+        "trixie_vendor_fix": "NOT_LISTED_AS_FIXED"
+      },
+      "CVE-2026-27171": {
+        "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-27171",
+        "assessment": "CRC combine/gen64 loop. No CRC-combine operation in health/collector/log code. zlib is mapped, so do not waive the library generally or extrapolate to future compression/archive paths.",
+        "status": "LIMITED_HEALTH_SCOPE_TRIAGE_NOT_DEPLOYMENT_WAIVER",
+        "trixie_vendor_fix": "NOT_LISTED_AS_FIXED"
+      },
+      "CVE-2026-85091": {
+        "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-85091",
+        "assessment": "Nonblocking gzwrite/gzprintf stale buffer path. No gz* stream-writing operation in health/collector/log code. Affected-version description starts at 1.3.1.2 while Debian flags installed 1.3.1 package; preserve discrepancy and affected status, no version-only exclusion.",
+        "status": "LIMITED_HEALTH_SCOPE_TRIAGE_NOT_DEPLOYMENT_WAIVER",
+        "trixie_vendor_fix": "NOT_LISTED_AS_FIXED"
+      }
+    }
   },
   "review_limitations": [
     "No CVE suppression, package removal or clean-image claim. Permission hardening leaves counts unchanged.",
     "No current trixie fix listed for the nine HIGH advisories. Do not mix unstable distro libraries or switch bases solely to lower the scanner count.",
     "The local health-only exposure assessment does not approve production, worker, verifier, future API or VM host.",
     "No independent human review. No exploit code executed. Deployed containment and billing gates remain blocked."
-  ]
+  ],
+  "followup_review_at_utc": "2026-11-03T17:16:06.660932+00:00"
 }

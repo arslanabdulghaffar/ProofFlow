@@ -1,6 +1,6 @@
 # Threat model and controls
 
-Design / NOT RUN. Untrusted: public users, uploads, model output, candidate output and webhooks. Trusted but fallible: control services, configured verifier, supervisor, deployment administrator and dependency supply chain. Candidate code must not share the control host. “Independent verifier” means a permission/execution boundary from candidate code, not an unconfirmed independent human author/reviewer.
+Deployed controls remain Design / NOT RUN. Local health hardening and trusted collector/log-buffer checks are recorded in phase1-readiness.md and sandbox.md; they are not containment acceptance. Untrusted: public users, uploads, model output, candidate output and webhooks. Trusted but fallible: control services, configured verifier, supervisor, deployment administrator and dependency supply chain. Candidate code must not share the control host. “Independent verifier” means a permission/execution boundary from candidate code, not an unconfirmed independent human author/reviewer.
 
 | Asset / threat | Enforced design | Acceptance |
 | --- | --- | --- |

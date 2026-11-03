@@ -1,6 +1,6 @@
 # Acceptance and verification plan
 
-Application tests are **NOT RUN**: core implementation and cloud execution are gated. The only executed checks in Phase 0 are documented in environment-readiness.md and progress.md. Test cases below specify evidence, not test results. Use trusted test code; every uploaded/generated candidate and adversarial runtime probe executes only on the designated restricted worker.
+Phase 1 local evidence: 30 Windows tests pass (health, image-check validation, bounded logs); 24 Linux collector tests separately pass using trusted static fixtures. These are partial components only. Deployed/core acceptance tests remain **NOT RUN**; no candidate code executes locally. Phase 0 checks remain historical in environment-readiness.md and progress.md. Test cases below specify full acceptance evidence, not completed results. Use trusted test code; every uploaded/generated candidate and adversarial runtime probe executes only on the designated restricted worker.
 
 | ID / phase | Test and required observed outcome | Evidence |
 | --- | --- | --- |

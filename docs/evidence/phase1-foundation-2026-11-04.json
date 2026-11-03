@@ -1,30 +1,37 @@
 {
-  "recorded_at_utc": "2026-11-03T17:05:23.656807+00:00",
-  "base_commit": "1798c30accf9f4d333bfb21595e62dd73aac4a5c",
+  "recorded_at_utc": "2026-11-03T17:16:06.660932+00:00",
+  "base_commit": "7d5153f1e2b60a17164054541b59bad8d1e489e4",
   "phase": "1",
   "status": "IN_PROGRESS_NOT_ACCEPTED",
-  "scope": "trusted local foundation only",
+  "scope": "trusted local health and worker byte-collection components only",
   "files_sha256": {
     "api/app/main.py": "72ac27d0876e9b97ca705c6487dac1a581712dab1fc23b5afbc2bec2fd4d7576",
-    "pyproject.toml": "cbc3ccfe0db7b4aba0484199b14be37c854f60a6c96538cd1986a63e9b92bb8b",
+    "pyproject.toml": "c398304ff29213bd6a1a8b68f6305e1f6e169c6b3580b87a0efba644929c6c99",
     "uv.lock": "94ca4b85798241427acd213c1b44a5c57d480e723ae0f29baf9e14f7d1c40c08",
     ".dockerignore": "d6d2baba575f588297fbcecada332b88e4db3454f7a53d1ecbb4aff1902251f0",
     "infra/images/control.Dockerfile": "53394faf9a422edff987993cc5a8e57b788f16c5842cdf63812ed316e5079b7e",
     "infra/images/control-requirements.txt": "d213bf4d24fd17475d36ac2837c543b99ddc247833def52a907952af3ce83ba2",
     "infra/images/control-build-requirements.txt": "8e4da4de9431ea29429933f4a2169046e0c6205b7fbd6d4e609622732d2d801f",
-    "scripts/check_control_image.py": "2977c4ea41cde758a42a65a52e646e90924efc7110fc60c2c18caeb8627706ba",
+    "scripts/check_control_image.py": "5b7a06c4dafadac76557ff2bd07830308945dace01a729c3015c2186e5c07cd6",
     "tests/unit/test_health.py": "755a7e31579bc6760f3f857d503e22c11ed3ca9e7f26da2306059d769188698a",
     "tests/integration/test_health_http.py": "fd4b6f71524d247faa2671c532ec2ae37a2df93af85a1ccdf2a1cf26762ed371",
-    "tests/unit/test_control_image_hardening.py": "da221279bbc982bb950336b6f9f807785aa59676a20a2d74bd24df1e1c8ea9ea"
+    "tests/unit/test_control_image_hardening.py": "da221279bbc982bb950336b6f9f807785aa59676a20a2d74bd24df1e1c8ea9ea",
+    "worker/__init__.py": "0930f74db3b1c2bf464f225b6349c1f2a35c411e2504fb4a850b5f464bb6b9dc",
+    "worker/collector.py": "0e396d6f4c1e63b8b34f6c090445ecbe0cd6c056fcd4a2b27c1390c285023e38",
+    "worker/log_capture.py": "91f7ee7ea5725b2a2c92643c54b075d596f847f931d678be02cd6d68b7ab170e",
+    "tests/security/test_collector.py": "0c1302b9cbcc7a7181e603f736ad21c77a74384630815dfd9a4ed0968ee1602f",
+    "tests/unit/test_log_capture.py": "00a52fb3b7e27acc52a1e1c62a9d1b8f8a61e80713117e3536dfd245e28364ed"
   },
   "checks": {
     "pytest": {
-      "passed": 22,
-      "command": "uv run --locked pytest -q"
+      "passed": 30,
+      "command": "uv run --locked pytest -q",
+      "skipped": 24,
+      "skip_reason": "Linux collector tests skipped on Windows and separately executed under WSL"
     },
     "ruff": {
       "status": "PASS",
-      "command": "uv run --locked ruff check api tests scripts/check_control_image.py"
+      "command": "uv run --locked ruff check api worker tests scripts/check_control_image.py"
     },
     "runtime_only_sync": {
       "status": "PASS",
@@ -51,6 +58,7 @@
       "scope": "trusted control only; not candidate containment",
       "hardening": {
         "archive_tar_modules_under_usr": [],
+        "bzip2recover_present": false,
         "fstab_entries": [],
         "infocmp_present": true,
         "inventory_errors": [],
@@ -121,10 +129,35 @@
           "/lib": "/usr/lib",
           "/sbin": "/usr/sbin"
         }
-      }
+      },
+      "observation": "Same immutable control image; rerun trusted smoke after extending component inventory. Worker modules are not packaged into this image."
     },
     "image_scan": "control-image-scan-2026-11-04.json",
-    "negative_old_image_check": "REJECTED 11 setid utilities; cleanup confirmed; see image scan receipt"
+    "negative_old_image_check": "REJECTED 11 setid utilities; cleanup confirmed; see image scan receipt",
+    "collector_linux": {
+      "passed": 24,
+      "command": "python3 -m unittest discover -s tests/security -v",
+      "environment": "local WSL Ubuntu 24.04, Python 3.12.3",
+      "scope": "trusted component tests with static file fixtures and explicitly labeled fault injection; no candidate execution",
+      "limits": {
+        "combined_output_bytes": 10485760,
+        "combined_output_lines": 20000
+      },
+      "not_proven": [
+        "writer termination",
+        "gVisor identity",
+        "deployed filesystem/mount permissions",
+        "runtime watchdog",
+        "guest resource limits",
+        "durable artifact transport and cleanup"
+      ]
+    },
+    "log_capture": {
+      "passed_windows_cases": 8,
+      "combined_retained_bytes_limit": 102400,
+      "scope": "pure trusted buffer tests; no stream-drain/watchdog/UI integration"
+    },
+    "image_scan_observation": "Existing scan retained: no image/dependency change. Six lower-severity advisories received primary-source review."
   },
   "cloud": {
     "account_credit_usd": "200.00",

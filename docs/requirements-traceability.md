@@ -10,6 +10,8 @@ Coverage: 276 entries across 59 PDF pages. Mechanical page/field coverage is che
 
 Phase 1 kickoff on 2026-11-04: timing is satisfied. R11-04/05 and R14-01/04 have partial local foundation evidence (Python locks, health shell, unit/HTTP checks); their full acceptance remains DEFERRED_PHASE1 because images/deployment/runtime/provider evidence is incomplete. No full requirement is promoted to implemented by a local health check. See [readiness record](phase1-readiness.md). The public VM catalogue is evidence of advertised plans only. Follow-up trusted image privilege checks, 22 local tests and nine-advisory triage add partial supply-chain evidence for R39-02/04; deployed acceptance remains deferred.
 
+Local collection follow-up: R26-06 and R27-03/07 now have partial trusted component evidence (24 Linux collector tests and 8 Windows log-buffer tests). Their full runtime/termination/collection/cleanup and malformed-output acceptance remains deferred. No requirement is marked complete by component tests.
+
 | ID | PDF page | Class | Priority | Requirement / disposition scope | Planned component | Acceptance evidence | Dependency | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | R01-01 | 1 | CONTEXT | INFO | Record source version, planning status and no implied tests | [source-review.md](source-review.md) | PDF metadata/hash and review record | None | IMPLEMENTED_DOC |

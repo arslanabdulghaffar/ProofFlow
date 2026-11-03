@@ -41,3 +41,6 @@ No installed model/provider, product permission, cloud rate or test result is in
 
 - D29 (Nov 4 follow-up): strip unnecessary setid permissions while retaining packages/notices; inspect running service privileges and keep all CVEs visible. Nine HIGH findings have health-only triage, not a deployed waiver. No unstable-library substitution or weakened gate.
 - D30 (Nov 4 follow-up): official tax/allocation/stopped-VM guidance does not resolve the credit-only billing gate. Keep paid actions blocked, no repeated owner question; new authoritative account/event evidence is required.
+
+- D31 (Nov 4 local follow-up): implement only trusted collector/log components while cloud spending is blocked. Fixed retained-directory descriptor and O_PATH inode pinning precede regular-file I/O; no arbitrary path or stopped-writer flag. Supervisor must independently prove quiescence and exact execution ownership; metadata race tests do not substitute for it. No new dependency/privilege or changed contract cap.
+- D32: preserve unparsed exact output bytes/hash and bounded raw log prefixes; parsing, verification, immutable transport, escaping at display and runtime cleanup remain separate unimplemented stages. Local component tests never count as candidate execution or deployed acceptance.

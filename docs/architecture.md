@@ -1,12 +1,12 @@
 # Architecture plan
 
-Status: architecture design; only the trusted local FastAPI health shell is implemented so far. Next.js/React/TypeScript UI and FastAPI/Pydantic API behind Caddy on a Vultr control VM; PostgreSQL 18 with SQLAlchemy/Alembic stores durable state and queue; a separate restricted Linux worker has Docker + explicit pinned gVisor runsc (initial platform systrap). The trusted verifier is a separate restricted process/image on control, with no provider credential or candidate execution. Two VMs are a design choice, not an event-mandated count.
+Status: architecture design; the trusted local FastAPI health shell and standalone worker collector/log-buffer components are implemented so far. No supervisor, execution endpoint or deployed path exists. Next.js/React/TypeScript UI and FastAPI/Pydantic API behind Caddy on a Vultr control VM; PostgreSQL 18 with SQLAlchemy/Alembic stores durable state and queue; a separate restricted Linux worker has Docker + explicit pinned gVisor runsc (initial platform systrap). The trusted verifier is a separate restricted process/image on control, with no provider credential or candidate execution. Two VMs are a design choice, not an event-mandated count.
 
 Browser HTTPS → API/auth/immutable assets → PostgreSQL job and event transaction → orchestrator → Vultr inference or mTLS worker. Worker returns collected bytes and supervisor receipts → content-addressed storage → trusted verifier → pending approval. Exact approval activates a version; authenticated fresh batches bind it and repeat execution/verification. Separately approved PR intent enters a durable outbox and is reconciled against GitHub readback.
 
 Only the supervisor controls Docker. Candidate mounts contain its code, this execution's parsed source data and approved requirements; never the repository, hidden oracle, verifier, runtime socket or credentials. Candidate report files cannot become verifier reports. Worker identity cannot access control DB/integration secrets. Public browser fields cannot choose endpoint, image, command, mount, limits or pass status.
 
-## Module plan (only api/app foundation and trusted tests currently exist)
+## Module plan (api/app health, worker collector/log buffer and trusted tests exist)
 
 | Path | Responsibility |
 | --- | --- |

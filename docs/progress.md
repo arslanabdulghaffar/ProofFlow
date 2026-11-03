@@ -1,5 +1,13 @@
 # Progress
 
+## Phase 1 local collection follow-up — 2026-11-04 KST
+
+Started clean at verified local/remote `7d5153f1e2b60a17164054541b59bad8d1e489e4`. Added trusted Linux collector (fixed output names, O_PATH inode pinning before data I/O, aggregate byte/line limits, exact hashes, mutation detection and descriptor cleanup) plus a shared 100 KiB raw stdout/stderr buffer with truncation flags. No execution endpoint, subprocess dispatcher, candidate execution or cloud service. 30 Windows tests passed; 24 Linux collector cases skipped on Windows and separately passed in WSL. Ruff and unchanged control-image health/hardening/cleanup passed. Six MEDIUM advisories reviewed with Debian sources; package fixes and remaining review stay open, no suppressions. Details and separate critical review: [sandbox](sandbox.md), [readiness](phase1-readiness.md), [source receipt](evidence/phase1-foundation-2026-11-04.json).
+
+Phase 1 remains **IN PROGRESS / deployed gates BLOCKED**. Quiescence, gVisor isolation/resource limits, deployed capture/watchdog/cleanup, real inference and durable spend enforcement remain NOT RUN. No charges incurred; credit-only limits/private repository preserved. No independent human review. This is a WIP checkpoint, not phase acceptance.
+
+Checkpoint review: all 20 intended source/test/document/evidence files reviewed; no unrelated files or runtime artifacts staged. Source hashes, documentation/traceability, whitespace, lint and staged Gitleaks checks passed (zero secrets). GitHub exact repository privacy reverified. Commit/push/remote SHA readback identify this WIP checkpoint; it does not complete Phase 1.
+
 ## Phase 1 security follow-up — 2026-11-04 KST
 
 Continued from clean main with remote SHA `1798c30accf9f4d333bfb21595e62dd73aac4a5c`. Removed unnecessary setuid/setgid permissions from 11 trusted image utilities. Expanded the image checker to inspect actual service privileges, `/usr` inventory/aliases, fstab and advisory-specific components. Old image rejected; cleanup verified. Rebuilt image passed health/hardening/cleanup. 22 tests and Ruff passed. Rescan retains 45 HIGH/72 MEDIUM/61 LOW/7 UNKNOWN and no CRITICAL, Python zero: permission hardening is not a CVE patch. All nine HIGH advisories have official Debian-source triage; remaining unique findings are retained, individual lower-severity/deployed review open. No independent human sign-off.

@@ -13,7 +13,7 @@ dependencies = [
 package = false
 
 [tool.pytest.ini_options]
-testpaths = ["tests/unit", "tests/integration"]
+testpaths = ["tests/unit", "tests/integration", "tests/security"]
 pythonpath = ["."]
 
 [tool.ruff]
