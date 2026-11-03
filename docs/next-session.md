@@ -16,10 +16,12 @@ Repository: private arslanabdulghaffar/ProofFlow, checkout A:\hackathon\ProofFlo
 
 - Trusted FastAPI/Pydantic health shell: `/health/live` 200, `/health/ready` intentionally 503. No route admits candidates or changes readiness. No upload/job/verifier/approval/provider/worker interface exists yet.
 - `pyproject.toml` exact pins and `uv.lock`; Windows Python 3.12.10 clean runtime-only install passed. uv 0.13.5 under `.venv-tools/Scripts/uv.exe`; dependencies in ignored `.venv`.
-- Eight local tests passed (ASGI boundaries and real loopback HTTP); Ruff passed. pip-audit found no known vulnerabilities in 48 installed Python distributions. This is not an OS/image vulnerability clearance.
+- 22 local tests passed (ASGI boundaries and real loopback HTTP); Ruff passed. pip-audit found no known vulnerabilities in 48 installed Python distributions. This is not an OS/image vulnerability clearance.
 - Trusted control Dockerfile pins Docker Official Python 3.12.16 slim trixie linux/amd64 digest and wheel hashes. Local WSL build and non-root/read-only/no-mount smoke passed, readiness remained 503, test container cleanup verified. `scripts/check_control_image.py` operates only on this trusted health image; it is never a candidate sandbox test.
-- Trivy 0.76.1 image scan completed. Removed outdated runtime pip; final Python scan has zero findings. Debian retains 45 HIGH package/advisory pairs (9 unique), 72 MEDIUM, 61 LOW, 7 UNKNOWN, no CRITICAL. No suppression or clean-image claim. Full reachability/fix review remains open; receipt in docs/evidence/control-image-scan-2026-11-04.json.
+- Trivy 0.76.1 image scan completed. Removed outdated runtime pip; final Python scan has zero findings. Debian retains 45 HIGH package/advisory pairs (9 unique), 72 MEDIUM, 61 LOW, 7 UNKNOWN, no CRITICAL. No suppression or clean-image claim. All nine HIGH advisories now have primary-source, health-only triage; individual lower-severity and deployed review remain open. The image removes 11 unnecessary setid permission bits; actual service privileges, filesystem inventory, negative old-image rejection and cleanup were checked. Counts remain unchanged; receipt in docs/evidence/control-image-scan-2026-11-04.json.
 - See phase1-readiness for recorded image identity, exact commands, dependency/critical review and all NOT RUN gates. No candidate or pandas execution occurred locally or in cloud; no Vultr inference request occurred. Local Docker is not the designated worker.
+
+Official billing follow-up confirmed prices exclude taxes and stopped VMs remain billable until destroyed. No credit-only hard-stop guarantee found; do not repeat unchanged searches/questions. See phase1-readiness for source-backed decision and remaining evidence. Latest WIP includes 22 tests, refreshed image/scan/source receipts and security triage; no phase acceptance.
 
 ## Resume Phase 1
 

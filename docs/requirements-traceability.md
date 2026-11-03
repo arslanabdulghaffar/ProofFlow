@@ -8,7 +8,7 @@ Each row identifies page, classification, priority, component, required evidence
 
 Coverage: 276 entries across 59 PDF pages. Mechanical page/field coverage is checked by scripts/check_preparation.py; semantic completeness also requires the recorded manual source review.
 
-Phase 1 kickoff on 2026-11-04: timing is satisfied. R11-04/05 and R14-01/04 have partial local foundation evidence (Python locks, health shell, unit/HTTP checks); their full acceptance remains DEFERRED_PHASE1 because images/deployment/runtime/provider evidence is incomplete. No full requirement is promoted to implemented by a local health check. See [readiness record](phase1-readiness.md). The public VM catalogue is evidence of advertised plans only.
+Phase 1 kickoff on 2026-11-04: timing is satisfied. R11-04/05 and R14-01/04 have partial local foundation evidence (Python locks, health shell, unit/HTTP checks); their full acceptance remains DEFERRED_PHASE1 because images/deployment/runtime/provider evidence is incomplete. No full requirement is promoted to implemented by a local health check. See [readiness record](phase1-readiness.md). The public VM catalogue is evidence of advertised plans only. Follow-up trusted image privilege checks, 22 local tests and nine-advisory triage add partial supply-chain evidence for R39-02/04; deployed acceptance remains deferred.
 
 | ID | PDF page | Class | Priority | Requirement / disposition scope | Planned component | Acceptance evidence | Dependency | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |

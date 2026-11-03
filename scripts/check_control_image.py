@@ -12,6 +12,61 @@ import subprocess
 import time
 import uuid
 
+# Fixed trusted inspection code, never supplied by a caller or an uploaded file.
+# Only /usr regular files are inventoried; Debian's /bin and /sbin alias /usr.
+HARDENING_PROBE = """import json, os, stat
+from pathlib import Path
+status = dict(line.split(':', 1) for line in Path('/proc/1/status').read_text().splitlines())
+special = []
+tar_modules = []
+errors = []
+def onerror(error):
+    errors.append(str(error))
+for directory, dirs, files in os.walk('/usr', followlinks=False, onerror=onerror):
+    for name in files:
+        path = Path(directory) / name
+        mode = path.lstat().st_mode
+        if stat.S_ISREG(mode) and mode & (stat.S_ISUID | stat.S_ISGID):
+            special.append(str(path))
+        if name == 'Tar.pm' and path.parent.name == 'Archive':
+            tar_modules.append(str(path))
+print(json.dumps({
+    'pid1': {key: status[key].strip() for key in (
+        'Uid', 'Gid', 'CapInh', 'CapPrm', 'CapEff', 'CapBnd', 'CapAmb', 'NoNewPrivs')},
+    'setid_files_under_usr': sorted(special),
+    'inventory_errors': errors,
+    'archive_tar_modules_under_usr': sorted(tar_modules),
+    'systemd_homed_present': Path('/usr/lib/systemd/systemd-homed').exists(),
+    'infocmp_present': Path('/usr/bin/infocmp').exists(),
+    'mount_present': Path('/usr/bin/mount').exists(),
+    'nsenter_present': Path('/usr/bin/nsenter').exists(),
+    'usr_aliases': {name: str(Path(name).resolve()) for name in ('/bin', '/sbin', '/lib')},
+    'pid1_mapped_libraries': sorted({Path(line.split()[-1]).name
+        for line in Path('/proc/1/maps').read_text().splitlines()
+        if '/usr/' in line and '.so' in line}),
+    'fstab_entries': [line for line in Path('/etc/fstab').read_text().splitlines()
+                      if line.strip() and not line.lstrip().startswith('#')],
+}))
+"""
+
+
+def validate_hardening(observed: dict) -> None:
+    """Fail closed on absent/malformed observations or unexpected privilege."""
+    status = observed["pid1"]
+    for key in ("Uid", "Gid"):
+        if status[key].split() != ["10001"] * 4:
+            raise RuntimeError(f"Unexpected service {key}")
+    for key in ("CapInh", "CapPrm", "CapEff", "CapBnd", "CapAmb"):
+        if int(status[key], 16) != 0:
+            raise RuntimeError(f"Unexpected service {key}")
+    if status["NoNewPrivs"] != "1":
+        raise RuntimeError("Service can acquire new privileges")
+    for key in ("setid_files_under_usr", "inventory_errors", "fstab_entries"):
+        if observed[key] != []:
+            raise RuntimeError(f"Unexpected {key}: {observed[key]}")
+    if observed["usr_aliases"] != {"/bin": "/usr/bin", "/sbin": "/usr/sbin", "/lib": "/usr/lib"}:
+        raise RuntimeError("The /usr inventory does not cover expected Debian aliases")
+
 
 def docker(*args: str, timeout: int = 30) -> str:
     executable = shutil.which("docker")
@@ -82,6 +137,10 @@ except HTTPError as response:
     assert json.load(response)['reason'] == 'infrastructure_not_verified'
 """
         docker("exec", name, "python", "-I", "-c", readiness, timeout=3)
+        receipt["hardening"] = json.loads(
+            docker("exec", name, "python", "-I", "-c", HARDENING_PROBE, timeout=10)
+        )
+        validate_hardening(receipt["hardening"])
         receipt.update(liveness=200, readiness=503, uid=10001, mounts=0, network="none")
     finally:
         # Resolve only this generated test name. Never prune other containers.

@@ -22,11 +22,11 @@ Authenticated Create Inference notice: usage billing, **no monthly fee**, invoic
 | --- | --- |
 | Exact dependency resolution | uv 0.13.5, pyproject exact direct pins, 49 lock entries including project; Windows Python 3.12.10 |
 | Fresh runtime-only install | `uv sync --locked --no-dev --no-build` in ignored `.venv-runtime-check`; 14 runtime dependencies; trusted app import passed |
-| Unit + loopback HTTP | `uv run --locked pytest -q`: 8 passed; liveness 200, readiness 503; no unimplemented intake/approval/docs routes; caller flags cannot assert readiness |
+| Unit + loopback HTTP | `uv run --locked pytest -q`: 22 passed (8 health/HTTP + 14 hardening validation cases); liveness 200, readiness 503; no unimplemented intake/approval/docs routes; caller flags cannot assert readiness |
 | Static checks | Ruff on api, tests and control-image checker passed |
 | Python dependency audit | pip-audit 2.10.1: no known vulnerabilities in 48 installed distributions; not an OS/image or universal security clearance |
 | Image build | `infra/images/control.Dockerfile`, Linux amd64; Python 3.12.16 slim trixie digest `sha256:1148dbb014615300fa7e713b2f94f550c0d1c69780c0805f84f093ceee34dd0b`; binary wheels with required hashes; deny-by-default build context |
-| Built local image identity | `sha256:cc34d6503ff4b20d60ea2466f4457c935cbfab19b8e66cc11a72f74064ab2b51`; local build only, no registry push/deployment |
+| Built local image identity | `sha256:6f768888022d817e095a3f6267882aaa93cc8d8d09dadb20a5c78bdfb8f55a2c`; local build only, no registry push/deployment |
 | Trusted image smoke | Docker 29.9.1 in WSL; uid 10001, read-only root, no capabilities, no-new-privileges, no mounts/published ports, network none; configured 256MiB/0.5CPU/32 host PIDs. Health 200/503, Python 3.12.16, exact test container absent after cleanup |
 
 The smoke checks configurations and trusted health behavior; it does NOT stress-test resource enforcement, establish malicious-code containment or satisfy deployed Phase 1 gates. Candidate code never ran on this development machine. Linux image Python differs from the local Windows interpreter; both are recorded, neither silently substituted for a future worker identity.
@@ -47,6 +47,36 @@ Reviewed scope: FastAPI/Pydantic schemas and Uvicorn trusted HTTP serving; httpx
 Separate Codex critical pass: checked no candidate import/exec/dispatcher, no provider key access, no readiness override, loopback default for development, no exposed documentation or intake routes, restrictive build context, non-root runtime, exact-hash dependencies and named test cleanup. Corrected deprecated Starlette TestClient use by testing via HTTPX ASGITransport plus a real HTTP process test. Container checks are explicitly labeled trusted/local and do not claim runsc or enforced guest limits. These checks are not independent human approval; that review gap stays open.
 
 NOT RUN: deployed TLS/private topology/database, gVisor identity, benign pandas, hostile resource/network/output/watchdog/cleanup probes, real Vultr models/JSON/coding, provider spend reservations, deployed image provenance/reachability approval and all later product paths. Credit coverage and bounded spending still block deployed work; activation is now verified. No Phase 1 completion or feature advancement beyond this foundation is claimed.
+
+### Security follow-up from the verified foundation checkpoint
+
+Continued from clean local/remote `1798c30accf9f4d333bfb21595e62dd73aac4a5c`. The previous image still carried 11 setuid/setgid utility files. They were already constrained by no-new-privileges/capability removal in the smoke configuration, but the HTTP service has no reason to retain those permission bits. The Dockerfile now strips them under `/usr` while preserving package contents, license notices and scanner visibility. This is defense in depth, not a vendor patch.
+
+The checker now reads the actual service PID 1 UID/GID, all five capability sets and NoNewPrivs, inventories `/usr` without following symlinks, checks Debian aliases and empty fstab, and fails on incomplete inventory. It records relevant executable/module presence and mapped libraries. Against the old image it correctly failed on 11 setid utilities; named-container cleanup was confirmed afterward. Rebuilt image: no setid files found, PID 1 UID/GID 10001, capabilities zero, NoNewPrivs=1, health 200/503 and cleanup passed. Fourteen synthetic validation cases cover privileged identities, every capability set, missing evidence, inventory errors and scope mismatch; they are not containment probes. Total suite: 22 passed; Ruff passed.
+
+All nine unique HIGH advisories were checked against the linked Debian tracker pages. None lists the installed trixie package as fixed. Each result and source is recorded in the [image receipt](evidence/control-image-scan-2026-11-04.json):
+
+| Advisory | Current health-image assessment, not a deployed waiver |
+| --- | --- |
+| [CVE-2026-76642](https://security-tracker.debian.org/tracker/CVE-2026-76642) | Mount-helper hooks need privileges; no health mount path, capabilities, setid utilities or fstab entries |
+| [CVE-2026-78408](https://security-tracker.debian.org/tracker/CVE-2026-78408) | nsenter exists; no privileged nsenter/cgroup operation or dispatcher |
+| [CVE-2026-78409](https://security-tracker.debian.org/tracker/CVE-2026-78409) | Same mount restrictions; affected-version discrepancy remains open: Debian flags 2.41.5 while [upstream](https://github.com/util-linux/util-linux/security/advisories/GHSA-8f2p-47x3-43mv) says >=2.42. No not-affected claim |
+| [CVE-2026-78410](https://security-tracker.debian.org/tracker/CVE-2026-78410) | Privileged restricted bind-mount prerequisite absent in checked configuration |
+| [CVE-2026-54369](https://security-tracker.debian.org/tracker/CVE-2026-54369) | No privileged pathname ACL caller; libacl not in observed service maps |
+| [CVE-2025-69720](https://security-tracker.debian.org/tracker/CVE-2025-69720) | infocmp is present; health never invokes it. A subprocess feature would require new review |
+| [CVE-2026-119373](https://security-tracker.debian.org/tracker/CVE-2026-119373) | SQLite remains installed; health has no SQL path and library not mapped at observation |
+| [CVE-2026-16742](https://security-tracker.debian.org/tracker/CVE-2026-16742) | systemd-derived libraries are flagged, but systemd-homed executable absent; does not assess the future VM host |
+| [CVE-2026-9538](https://security-tracker.debian.org/tracker/CVE-2026-9538) | Perl-base present, Archive/Tar.pm absent from `/usr`; no archive/Perl application path |
+
+Rescan of the rebuilt image retains **45 HIGH, 72 MEDIUM, 61 LOW, 7 UNKNOWN, zero CRITICAL** package/advisory findings; Python findings remain zero. No suppressions or package removals. The receipt now inventories all remaining unique advisory IDs by severity. Individual lower-severity review remains open; prioritize mapped libc/libgcc/libbz2/zlib before outbound DNS or broader input processing. Mapped libraries are not proof of exploitation, and absent mappings cannot establish future safety. No exploit code executed. Do not mix unstable libraries into stable Debian to manufacture a clean scan.
+
+Separate Codex critical pass: checked the negative failure path and cleanup, source hashes, image identity, inventory scope, no package/notice deletion, and no security-policy relaxation. All mitigation claims are conditional on this health-only configuration; future API/worker/VM and deployed controls need fresh evidence. No independent human reviewer, production approval or Phase 1 acceptance is claimed.
+
+### Billing follow-up: official evidence and operational decision
+
+The [billing FAQ](https://docs.vultr.com/platform/billing/faq), updated October 23 and read with its tax answer expanded, says advertised prices exclude tax and taxes appear separately on invoices. The [account-limits guide](https://docs.vultr.com/platform/billing/manage-account-limits) describes maximum instance count/cost and requests to adjust those allocations. The [payment guide](https://docs.vultr.com/platform/billing/make-account-payments) warns about overdue bills; it does not establish credit-only enforcement. [Stopped-instance guidance](https://docs.vultr.com/support/platform/billing/are-stopped-instances-still-billed-on-vultr), updated October 26, requires destruction to stop VM billing. An in-guest shutdown or application request budget does not stop that charge.
+
+The event still promises $200, service use during the event and payment-method setup for later continuation, without an explicit non-overage/tax-coverage clause. Prior authenticated balance/expiry evidence remains $200/December 4; this follow-up did not obtain a new account-specific coverage agreement. Decision: **retain provisioning and paid inference BLOCKED**. A sufficient unblock would be official account/event terms confirming eligible Compute/Inference/tax treatment and a provider-enforced non-overage bound, together with final quotes and project reservation limits. No personal-spending exception, card/deposit, resource creation, subscription, paid call or support message. This records an evidence gap, not a claim that charges inevitably occur or that the provider has no possible special arrangement. Do not repeat the same owner question or reread unchanged sources every run; resume billing when new account/event evidence arrives. Continue authorized independent foundation work.
 
 ## Historical preparation record — 2026-10-24
 

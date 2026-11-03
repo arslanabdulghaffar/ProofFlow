@@ -31,3 +31,5 @@ These are bundled nonblocking follow-ups; do not repeatedly ask while useful aut
 | Catalogue/pricing drift | Rate/model metadata differs | Freeze costly work; recheck account; reprice before calls |
 
 Critical blockers for affected release: exposed secret, crossed workspace, absent/unbounded isolation, bad approval/promotion, falsified evidence, failed compatible unseen core workflow. Lower repair coverage permits narrower measured claims; it does not excuse a trust-boundary breach.
+
+Nov 4 security follow-up: setid permissions removed and service privilege checks passed locally. All nine HIGH image advisories triaged against Debian; package fixes and deployed/lower-severity review remain open. Source-package findings are not automatically exploitable or automatically waived. Q02 remains blocked after official tax and stopped-instance billing research; see phase1-readiness.

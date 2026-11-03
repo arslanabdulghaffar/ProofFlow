@@ -1,6 +1,6 @@
 {
-  "recorded_at_utc": "2026-11-03T16:53:29.905278+00:00",
-  "base_commit": "79ccf59ec61b7885ce3ba63d82d3e87d5bfc7233",
+  "recorded_at_utc": "2026-11-03T17:05:23.656807+00:00",
+  "base_commit": "1798c30accf9f4d333bfb21595e62dd73aac4a5c",
   "phase": "1",
   "status": "IN_PROGRESS_NOT_ACCEPTED",
   "scope": "trusted local foundation only",
@@ -9,16 +9,17 @@
     "pyproject.toml": "cbc3ccfe0db7b4aba0484199b14be37c854f60a6c96538cd1986a63e9b92bb8b",
     "uv.lock": "94ca4b85798241427acd213c1b44a5c57d480e723ae0f29baf9e14f7d1c40c08",
     ".dockerignore": "d6d2baba575f588297fbcecada332b88e4db3454f7a53d1ecbb4aff1902251f0",
-    "infra/images/control.Dockerfile": "0b1d270d33ed1ec45ae579d58f686ca125543e13a71d3f7fc7dea4a1ab6ea05f",
+    "infra/images/control.Dockerfile": "53394faf9a422edff987993cc5a8e57b788f16c5842cdf63812ed316e5079b7e",
     "infra/images/control-requirements.txt": "d213bf4d24fd17475d36ac2837c543b99ddc247833def52a907952af3ce83ba2",
     "infra/images/control-build-requirements.txt": "8e4da4de9431ea29429933f4a2169046e0c6205b7fbd6d4e609622732d2d801f",
-    "scripts/check_control_image.py": "b96422978f4948d90031e747594139b46f174bd4ced58796dbac9644922ef2c8",
+    "scripts/check_control_image.py": "2977c4ea41cde758a42a65a52e646e90924efc7110fc60c2c18caeb8627706ba",
     "tests/unit/test_health.py": "755a7e31579bc6760f3f857d503e22c11ed3ca9e7f26da2306059d769188698a",
-    "tests/integration/test_health_http.py": "fd4b6f71524d247faa2671c532ec2ae37a2df93af85a1ccdf2a1cf26762ed371"
+    "tests/integration/test_health_http.py": "fd4b6f71524d247faa2671c532ec2ae37a2df93af85a1ccdf2a1cf26762ed371",
+    "tests/unit/test_control_image_hardening.py": "da221279bbc982bb950336b6f9f807785aa59676a20a2d74bd24df1e1c8ea9ea"
   },
   "checks": {
     "pytest": {
-      "passed": 8,
+      "passed": 22,
       "command": "uv run --locked pytest -q"
     },
     "ruff": {
@@ -28,15 +29,17 @@
     "runtime_only_sync": {
       "status": "PASS",
       "python": "3.12.10",
-      "installed_packages": 14
+      "installed_packages": 14,
+      "observation": "Retained from previous checkpoint; dependency lock unchanged in this follow-up."
     },
     "pip_audit": {
       "version": "2.10.1",
       "installed_distributions": 48,
-      "known_vulnerabilities": 0
+      "known_vulnerabilities": 0,
+      "observation": "Retained from previous checkpoint; dependency lock unchanged in this follow-up."
     },
     "control_image": {
-      "id": "sha256:cc34d6503ff4b20d60ea2466f4457c935cbfab19b8e66cc11a72f74064ab2b51",
+      "id": "sha256:6f768888022d817e095a3f6267882aaa93cc8d8d09dadb20a5c78bdfb8f55a2c",
       "python": "3.12.16",
       "architecture": "linux/amd64",
       "liveness": 200,
@@ -45,9 +48,83 @@
       "mounts": 0,
       "network": "none",
       "cleanup": "confirmed_absent",
-      "scope": "trusted control only; not candidate containment"
+      "scope": "trusted control only; not candidate containment",
+      "hardening": {
+        "archive_tar_modules_under_usr": [],
+        "fstab_entries": [],
+        "infocmp_present": true,
+        "inventory_errors": [],
+        "mount_present": true,
+        "nsenter_present": true,
+        "pid1": {
+          "CapAmb": "0000000000000000",
+          "CapBnd": "0000000000000000",
+          "CapEff": "0000000000000000",
+          "CapInh": "0000000000000000",
+          "CapPrm": "0000000000000000",
+          "Gid": "10001\t10001\t10001\t10001",
+          "NoNewPrivs": "1",
+          "Uid": "10001\t10001\t10001\t10001"
+        },
+        "pid1_mapped_libraries": [
+          "_asyncio.cpython-312-x86_64-linux-gnu.so",
+          "_bisect.cpython-312-x86_64-linux-gnu.so",
+          "_blake2.cpython-312-x86_64-linux-gnu.so",
+          "_bz2.cpython-312-x86_64-linux-gnu.so",
+          "_contextvars.cpython-312-x86_64-linux-gnu.so",
+          "_csv.cpython-312-x86_64-linux-gnu.so",
+          "_datetime.cpython-312-x86_64-linux-gnu.so",
+          "_decimal.cpython-312-x86_64-linux-gnu.so",
+          "_hashlib.cpython-312-x86_64-linux-gnu.so",
+          "_heapq.cpython-312-x86_64-linux-gnu.so",
+          "_json.cpython-312-x86_64-linux-gnu.so",
+          "_lzma.cpython-312-x86_64-linux-gnu.so",
+          "_multiprocessing.cpython-312-x86_64-linux-gnu.so",
+          "_opcode.cpython-312-x86_64-linux-gnu.so",
+          "_pickle.cpython-312-x86_64-linux-gnu.so",
+          "_posixsubprocess.cpython-312-x86_64-linux-gnu.so",
+          "_pydantic_core.cpython-312-x86_64-linux-gnu.so",
+          "_queue.cpython-312-x86_64-linux-gnu.so",
+          "_random.cpython-312-x86_64-linux-gnu.so",
+          "_sha2.cpython-312-x86_64-linux-gnu.so",
+          "_socket.cpython-312-x86_64-linux-gnu.so",
+          "_ssl.cpython-312-x86_64-linux-gnu.so",
+          "_struct.cpython-312-x86_64-linux-gnu.so",
+          "_uuid.cpython-312-x86_64-linux-gnu.so",
+          "_zoneinfo.cpython-312-x86_64-linux-gnu.so",
+          "array.cpython-312-x86_64-linux-gnu.so",
+          "binascii.cpython-312-x86_64-linux-gnu.so",
+          "fcntl.cpython-312-x86_64-linux-gnu.so",
+          "ld-linux-x86-64.so.2",
+          "libbz2.so.1.0.4",
+          "libc.so.6",
+          "libcrypto.so.3",
+          "libdl.so.2",
+          "libgcc_s.so.1",
+          "liblzma.so.5.8.1",
+          "libm.so.6",
+          "libpthread.so.0",
+          "libpython3.12.so.1.0",
+          "librt.so.1",
+          "libssl.so.3",
+          "libuuid.so.1.3.0",
+          "libz.so.1.3.1",
+          "libzstd.so.1.5.7",
+          "math.cpython-312-x86_64-linux-gnu.so",
+          "select.cpython-312-x86_64-linux-gnu.so",
+          "zlib.cpython-312-x86_64-linux-gnu.so"
+        ],
+        "setid_files_under_usr": [],
+        "systemd_homed_present": false,
+        "usr_aliases": {
+          "/bin": "/usr/bin",
+          "/lib": "/usr/lib",
+          "/sbin": "/usr/sbin"
+        }
+      }
     },
-    "image_scan": "control-image-scan-2026-11-04.json"
+    "image_scan": "control-image-scan-2026-11-04.json",
+    "negative_old_image_check": "REJECTED 11 setid utilities; cleanup confirmed; see image scan receipt"
   },
   "cloud": {
     "account_credit_usd": "200.00",
@@ -59,7 +136,8 @@
     "subscription_created": false,
     "service_tax_coverage": "NOT_VERIFIED",
     "hard_non_overage_bound": "NOT_VERIFIED",
-    "personal_spending_authorized": false
+    "personal_spending_authorized": false,
+    "observation_note": "Credit/expiry retained from prior authenticated checkpoint; no paid action this follow-up. Public billing FAQ/limits/stopped-instance documentation rechecked."
   },
   "not_run": [
     "deployed_tls_private_network_database",

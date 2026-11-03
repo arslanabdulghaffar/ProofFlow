@@ -38,3 +38,6 @@ All decisions below dated 2026-10-24; implementation evidence remains NOT RUN. O
 - D28: Trivy image scan added to foundation review. Fixed outdated runtime pip by using hashed pip 26.3 during build then removing pip. Remaining Debian findings are retained, not suppressed; local health testing is not deployment/release security acceptance.
 
 No installed model/provider, product permission, cloud rate or test result is inferred from these planning decisions. Changes must record the old claim that is no longer valid and the acceptance evidence required.
+
+- D29 (Nov 4 follow-up): strip unnecessary setid permissions while retaining packages/notices; inspect running service privileges and keep all CVEs visible. Nine HIGH findings have health-only triage, not a deployed waiver. No unstable-library substitution or weakened gate.
+- D30 (Nov 4 follow-up): official tax/allocation/stopped-VM guidance does not resolve the credit-only billing gate. Keep paid actions blocked, no repeated owner question; new authoritative account/event evidence is required.

@@ -1,13 +1,13 @@
 {
-  "observed_at_utc": "2026-11-03T16:51:22.597364+00:00",
+  "observed_at_utc": "2026-11-03T17:05:23.656807+00:00",
   "scope": "local trusted control foundation only; not deployed security acceptance",
   "scanner": {
     "name": "Trivy",
     "version": "0.76.1",
     "release_archive_sha256": "c7cbe3137fb8a48a17574bede3dd6beb16742d1e9772929940fc90082c39d9c0"
   },
-  "image_id": "sha256:cc34d6503ff4b20d60ea2466f4457c935cbfab19b8e66cc11a72f74064ab2b51",
-  "raw_report_sha256": "a2d05af385b6fb68e0606fbb542656c102cea5c661095ff1456a7ffda3ee674d",
+  "image_id": "sha256:6f768888022d817e095a3f6267882aaa93cc8d8d09dadb20a5c78bdfb8f55a2c",
+  "raw_report_sha256": "d715c36639e86925f1c0d4b6c69d611ead3a18c4b02f9652636e68b753bf018d",
   "results": [
     {
       "target": "proofflow-control:phase1-local (debian 13.7)",
@@ -62,7 +62,14 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "affected"
+          "status": "affected",
+          "review": {
+            "status": "MITIGATED_LOCAL_HEALTH_ONLY",
+            "basis": "Privileged mount-helper hooks are not called by health routes. No service capabilities, no-new-privileges, no setid utilities or fstab entries observed. Package remains affected; recheck deployed configuration.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-76642",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance"
+          }
         },
         {
           "id": "CVE-2026-78408",
@@ -107,7 +114,14 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "affected"
+          "status": "affected",
+          "review": {
+            "status": "MITIGATED_LOCAL_HEALTH_ONLY",
+            "basis": "nsenter exists, but no privileged nsenter --join-cgroup is used. PID1 UID/GID and all five capability sets checked. Do not use this image for privileged operator tools.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-78408",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance"
+          }
         },
         {
           "id": "CVE-2026-78409",
@@ -152,7 +166,15 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "affected"
+          "status": "affected",
+          "review": {
+            "status": "AFFECTED_STATUS_UNRESOLVED_MITIGATED_LOCALLY",
+            "basis": "Debian marks installed 2.41.5 affected while upstream affected range says >=2.42 (also lists a 2.41.6 patch). Retain finding; do not infer not-affected without Debian patch inspection. No mount privileges, setid utilities or fstab entries in checked configuration.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-78409",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance",
+            "upstream_source": "https://github.com/util-linux/util-linux/security/advisories/GHSA-8f2p-47x3-43mv"
+          }
         },
         {
           "id": "CVE-2026-78410",
@@ -197,7 +219,14 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "affected"
+          "status": "affected",
+          "review": {
+            "status": "MITIGATED_LOCAL_HEALTH_ONLY",
+            "basis": "Restricted bind-mount race requires privileged mount and attacker-controlled authorized source. No setid utilities/fstab entries or service capabilities; health has no mount dispatcher. Not a package fix.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-78410",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance"
+          }
         },
         {
           "id": "CVE-2026-54369",
@@ -210,7 +239,14 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "affected"
+          "status": "affected",
+          "review": {
+            "status": "MITIGATED_LOCAL_HEALTH_ONLY",
+            "basis": "Pathname-based ACL calls require a privileged caller for escalation. Health does not call ACL functions or process supplied paths; PID1 unprivileged and libacl absent from observed maps. No claim for future collector/worker.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-54369",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance"
+          }
         },
         {
           "id": "CVE-2025-69720",
@@ -235,7 +271,14 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "affected"
+          "status": "affected",
+          "review": {
+            "status": "NO_HEALTH_CALL_PATH_IDENTIFIED",
+            "basis": "infocmp executable is present and vulnerable package retained. Health invokes no terminal comparison command. Not globally unreachable or fixed; reevaluate any future subprocess feature.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2025-69720",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance"
+          }
         },
         {
           "id": "CVE-2026-119373",
@@ -248,7 +291,14 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "affected"
+          "status": "affected",
+          "review": {
+            "status": "NO_HEALTH_CALL_PATH_IDENTIFIED",
+            "basis": "SQLite library remains installed. Health imports/executes no SQL and libsqlite is absent from observed PID1 maps. No malicious SQL probe run. Re-review before any SQLite feature or candidate image use.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-119373",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance"
+          }
         },
         {
           "id": "CVE-2026-16742",
@@ -265,7 +315,14 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "affected"
+          "status": "affected",
+          "review": {
+            "status": "AFFECTED_COMPONENT_NOT_FOUND_IN_CHECKED_IMAGE",
+            "basis": "Scanner flags systemd source-derived libraries; /usr/lib/systemd/systemd-homed is absent. No homed service or managed-user workflow in health image. Not a statement about future VM host.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-16742",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance"
+          }
         },
         {
           "id": "CVE-2026-9538",
@@ -278,7 +335,14 @@
             }
           ],
           "fixed_version_reported": null,
-          "status": "fix_deferred"
+          "status": "fix_deferred",
+          "review": {
+            "status": "AFFECTED_COMPONENT_NOT_FOUND_IN_CHECKED_IMAGE",
+            "basis": "Perl-base installed but /usr inventory found no Archive/Tar.pm. Health has no Perl/archive processing and no extra mounts. Future added packages/mounts invalidate this conclusion.",
+            "primary_source": "https://security-tracker.debian.org/tracker/CVE-2026-9538",
+            "debian_trixie_fix": "NOT_LISTED_AS_FIXED_ON_2026_11_04",
+            "review_scope": "current trusted health image only; no deployed acceptance"
+          }
         }
       ],
       "packages": [
@@ -1539,5 +1603,192 @@
     "os": "45 HIGH package/advisory pairs remain (9 unique advisories), plus 72 MEDIUM, 61 LOW, 7 UNKNOWN. No CRITICAL reported. Scanner reports no fixed version for HIGH entries. Current health application has no user file processing, subprocesses, SQL or mount APIs; this is a scope observation, not proof of non-exploitability. Full deployment/release reachability review and vendor fixes remain open.",
     "warnings": "Trivy warned about third-party SBOM accuracy and vendor severity selection. Counts describe scanner findings, not independently demonstrated exploits.",
     "signoff": "Codex critical review only; no independent human sign-off or clean-image claim."
-  }
+  },
+  "previous_checkpoint": "1798c30accf9f4d333bfb21595e62dd73aac4a5c",
+  "hardening_check": {
+    "cleanup": "confirmed_absent",
+    "hardening": {
+      "archive_tar_modules_under_usr": [],
+      "fstab_entries": [],
+      "infocmp_present": true,
+      "inventory_errors": [],
+      "mount_present": true,
+      "nsenter_present": true,
+      "pid1": {
+        "CapAmb": "0000000000000000",
+        "CapBnd": "0000000000000000",
+        "CapEff": "0000000000000000",
+        "CapInh": "0000000000000000",
+        "CapPrm": "0000000000000000",
+        "Gid": "10001\t10001\t10001\t10001",
+        "NoNewPrivs": "1",
+        "Uid": "10001\t10001\t10001\t10001"
+      },
+      "pid1_mapped_libraries": [
+        "_asyncio.cpython-312-x86_64-linux-gnu.so",
+        "_bisect.cpython-312-x86_64-linux-gnu.so",
+        "_blake2.cpython-312-x86_64-linux-gnu.so",
+        "_bz2.cpython-312-x86_64-linux-gnu.so",
+        "_contextvars.cpython-312-x86_64-linux-gnu.so",
+        "_csv.cpython-312-x86_64-linux-gnu.so",
+        "_datetime.cpython-312-x86_64-linux-gnu.so",
+        "_decimal.cpython-312-x86_64-linux-gnu.so",
+        "_hashlib.cpython-312-x86_64-linux-gnu.so",
+        "_heapq.cpython-312-x86_64-linux-gnu.so",
+        "_json.cpython-312-x86_64-linux-gnu.so",
+        "_lzma.cpython-312-x86_64-linux-gnu.so",
+        "_multiprocessing.cpython-312-x86_64-linux-gnu.so",
+        "_opcode.cpython-312-x86_64-linux-gnu.so",
+        "_pickle.cpython-312-x86_64-linux-gnu.so",
+        "_posixsubprocess.cpython-312-x86_64-linux-gnu.so",
+        "_pydantic_core.cpython-312-x86_64-linux-gnu.so",
+        "_queue.cpython-312-x86_64-linux-gnu.so",
+        "_random.cpython-312-x86_64-linux-gnu.so",
+        "_sha2.cpython-312-x86_64-linux-gnu.so",
+        "_socket.cpython-312-x86_64-linux-gnu.so",
+        "_ssl.cpython-312-x86_64-linux-gnu.so",
+        "_struct.cpython-312-x86_64-linux-gnu.so",
+        "_uuid.cpython-312-x86_64-linux-gnu.so",
+        "_zoneinfo.cpython-312-x86_64-linux-gnu.so",
+        "array.cpython-312-x86_64-linux-gnu.so",
+        "binascii.cpython-312-x86_64-linux-gnu.so",
+        "fcntl.cpython-312-x86_64-linux-gnu.so",
+        "ld-linux-x86-64.so.2",
+        "libbz2.so.1.0.4",
+        "libc.so.6",
+        "libcrypto.so.3",
+        "libdl.so.2",
+        "libgcc_s.so.1",
+        "liblzma.so.5.8.1",
+        "libm.so.6",
+        "libpthread.so.0",
+        "libpython3.12.so.1.0",
+        "librt.so.1",
+        "libssl.so.3",
+        "libuuid.so.1.3.0",
+        "libz.so.1.3.1",
+        "libzstd.so.1.5.7",
+        "math.cpython-312-x86_64-linux-gnu.so",
+        "select.cpython-312-x86_64-linux-gnu.so",
+        "zlib.cpython-312-x86_64-linux-gnu.so"
+      ],
+      "setid_files_under_usr": [],
+      "systemd_homed_present": false,
+      "usr_aliases": {
+        "/bin": "/usr/bin",
+        "/lib": "/usr/lib",
+        "/sbin": "/usr/sbin"
+      }
+    },
+    "image_id": "sha256:6f768888022d817e095a3f6267882aaa93cc8d8d09dadb20a5c78bdfb8f55a2c",
+    "liveness": 200,
+    "mounts": 0,
+    "network": "none",
+    "python": "3.12.16",
+    "readiness": 503,
+    "scope": "local_trusted_control_only",
+    "uid": 10001
+  },
+  "negative_check": {
+    "image_id": "sha256:cc34d6503ff4b20d60ea2466f4457c935cbfab19b8e66cc11a72f74064ab2b51",
+    "outcome": "REJECTED_SETID_FILES",
+    "setid_file_count": 11,
+    "cleanup": "confirmed_absent_by_docker_ps",
+    "scope": "trusted prior foundation image, not a candidate"
+  },
+  "other_findings_review": {
+    "status": "OPEN_INDIVIDUAL_VENDOR_AND_REACHABILITY_REVIEW",
+    "unique_advisories_by_severity": {
+      "LOW": [
+        "CVE-2005-2541",
+        "CVE-2007-5686",
+        "CVE-2010-4756",
+        "CVE-2011-3374",
+        "CVE-2011-4116",
+        "CVE-2013-4392",
+        "CVE-2017-18018",
+        "CVE-2018-20796",
+        "CVE-2019-1010022",
+        "CVE-2019-1010023",
+        "CVE-2019-1010024",
+        "CVE-2019-1010025",
+        "CVE-2019-9192",
+        "CVE-2021-45346",
+        "CVE-2022-0563",
+        "CVE-2023-31437",
+        "CVE-2023-31438",
+        "CVE-2023-31439",
+        "CVE-2024-56433",
+        "CVE-2025-5278",
+        "CVE-2025-6141",
+        "CVE-2025-70873",
+        "CVE-2026-102473",
+        "CVE-2026-102474",
+        "CVE-2026-40228",
+        "CVE-2026-53910",
+        "CVE-2026-56391",
+        "CVE-2026-56392",
+        "CVE-2026-97399",
+        "TEMP-0290435-0B57B5",
+        "TEMP-0517018-A83CE6",
+        "TEMP-0628843-DBAD28",
+        "TEMP-0841856-B18BAF"
+      ],
+      "MEDIUM": [
+        "CVE-2026-102010",
+        "CVE-2026-114690",
+        "CVE-2026-114691",
+        "CVE-2026-115455",
+        "CVE-2026-119378",
+        "CVE-2026-119591",
+        "CVE-2026-15059",
+        "CVE-2026-15534",
+        "CVE-2026-18374",
+        "CVE-2026-18477",
+        "CVE-2026-18508",
+        "CVE-2026-19499",
+        "CVE-2026-19542",
+        "CVE-2026-27171",
+        "CVE-2026-3184",
+        "CVE-2026-42250",
+        "CVE-2026-50812",
+        "CVE-2026-50813",
+        "CVE-2026-5435",
+        "CVE-2026-54370",
+        "CVE-2026-54371",
+        "CVE-2026-54411",
+        "CVE-2026-5704",
+        "CVE-2026-6238",
+        "CVE-2026-6368",
+        "CVE-2026-6791",
+        "CVE-2026-77117",
+        "CVE-2026-80489",
+        "CVE-2026-82560",
+        "CVE-2026-84243",
+        "CVE-2026-85091",
+        "CVE-2026-8674",
+        "CVE-2026-86805",
+        "CVE-2026-89092",
+        "CVE-2026-95619",
+        "CVE-2026-95818"
+      ],
+      "UNKNOWN": [
+        "CVE-2026-119371",
+        "CVE-2026-119372",
+        "CVE-2026-119374",
+        "CVE-2026-119375",
+        "CVE-2026-119376",
+        "CVE-2026-119377",
+        "CVE-2026-119379"
+      ]
+    },
+    "priority": "libc, libgcc, libbz2 and zlib are mapped in the service; prioritize function-level reachability before broadening the API or enabling outbound DNS. Library presence is not exploit proof; library absence is not future safety. UNKNOWN is not safe. CLI/PAM/archive findings stay tracked; health invokes none of these paths.",
+    "fixed_versions_reported": []
+  },
+  "review_limitations": [
+    "No CVE suppression, package removal or clean-image claim. Permission hardening leaves counts unchanged.",
+    "No current trixie fix listed for the nine HIGH advisories. Do not mix unstable distro libraries or switch bases solely to lower the scanner count.",
+    "The local health-only exposure assessment does not approve production, worker, verifier, future API or VM host.",
+    "No independent human review. No exploit code executed. Deployed containment and billing gates remain blocked."
+  ]
 }

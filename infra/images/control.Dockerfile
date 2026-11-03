@@ -13,6 +13,9 @@ COPY infra/images/control-requirements.txt /opt/proofflow/requirements.txt
 RUN python -m pip install --no-cache-dir --only-binary=:all: --require-hashes \
     -r /opt/proofflow/requirements.txt \
     && python -m pip uninstall --yes pip
+# The HTTP service needs no setuid/setgid utilities. Preserve packages/notices
+# and scanner visibility; this hardening does not patch their CVEs.
+RUN find /usr -xdev -type f -perm /6000 -exec chmod a-s {} +
 COPY api /app/api
 USER 10001:10001
 EXPOSE 8000

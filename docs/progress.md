@@ -1,5 +1,13 @@
 # Progress
 
+## Phase 1 security follow-up — 2026-11-04 KST
+
+Continued from clean main with remote SHA `1798c30accf9f4d333bfb21595e62dd73aac4a5c`. Removed unnecessary setuid/setgid permissions from 11 trusted image utilities. Expanded the image checker to inspect actual service privileges, `/usr` inventory/aliases, fstab and advisory-specific components. Old image rejected; cleanup verified. Rebuilt image passed health/hardening/cleanup. 22 tests and Ruff passed. Rescan retains 45 HIGH/72 MEDIUM/61 LOW/7 UNKNOWN and no CRITICAL, Python zero: permission hardening is not a CVE patch. All nine HIGH advisories have official Debian-source triage; remaining unique findings are retained, individual lower-severity/deployed review open. No independent human sign-off.
+
+Official billing FAQ confirms tax excluded from advertised rates; account limits are allocation controls and stopped VMs continue billing until destroyed. No account-specific inference/tax coverage or non-overage guarantee found. No cloud services, subscription, paid request, payment setup or external message. **Phase 1 still IN PROGRESS / deployed gates BLOCKED**, not DONE. Detailed sources, separate critical review and receipts: [readiness](phase1-readiness.md). This is another private WIP checkpoint; normal commit/push/remote verification required. Stop after eventual successful Phase 1 acceptance for owner review.
+
+Checkpoint review passed: all 11 intended source/document/evidence files reviewed; source hashes match, documentation/traceability and whitespace checks passed, staged Gitleaks found zero secrets. Authenticated GitHub metadata rechecked exact repository private=true, default main. No local caches, environments, raw browser/account state or unrelated files staged. Commit/push and SHA readback identify this WIP checkpoint; it is not Phase 1 acceptance.
+
 ## Phase 1 kickoff WIP — 2026-11-04 KST
 
 Started from clean main and matching remote `79ccf59ec61b7885ce3ba63d82d3e87d5bfc7233`; existing work preserved. Official timing gate PASSED: dashboard Live / Submissions open. Account activation PASSED after owner used the distinct Gift Code tab: authenticated Dashboard/ledger $200 Remaining Credit, expiry 2026-12-04, charges $0.00. Billing coverage/hard non-overage bounds remain BLOCKED. Owner asks autonomous official-source decisions while they sleep; no repeated question or assumed personal-spending exception. No cloud services created.
