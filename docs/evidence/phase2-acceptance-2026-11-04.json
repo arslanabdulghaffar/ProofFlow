@@ -1,0 +1,347 @@
+{
+  "phase": 2,
+  "technical_acceptance": "PASSED",
+  "checkpoint": "Requires ordinary push and matching remote SHA; final checkpoint report supplies it",
+  "observed_at": "2026-11-04T07:54:38.784546+00:00",
+  "base_checkpoint": "b0dd4e9762fa527a172dae683638190043ac9166",
+  "scope": "Original phase-plan schemas/backend/verifier gate; private synthetic workflow, not public release or finished product",
+  "product_image": "5c1840e90b0f8c291543fb6913411d44cebda452cf3a94398c3305c02d93abc8",
+  "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+  "unchanged_verifier_contract_sources": [
+    "contracts/codec.py",
+    "contracts/policy.py",
+    "contracts/scalars.py",
+    "contracts/source.py",
+    "verifier/canaries.py",
+    "verifier/compare.py",
+    "verifier/entrypoint.py",
+    "verifier/host.py",
+    "verifier/lineage.py",
+    "verifier/outputs.py",
+    "verifier/protocol.py",
+    "verifier/reference.py",
+    "verifier/socket_service.py"
+  ],
+  "migrations": 7,
+  "acceptance": {
+    "frozen_v11_schemas_hash_vectors": "passed; owner-approved Q08",
+    "authenticated_assets_migrations_queue": "passed; real SQL/SCRAM/HTTP and scoped idempotency",
+    "real_original_execution": "passed on designated worker, wrong-owner rejected",
+    "V01_V10_mutations": "passed; deterministic exact semantics and protected canaries",
+    "deployed_failure_view": "passed; actual source-derived witnesses and events",
+    "cancellation_recovery": "prior actual cancellation/controller-loss plus current same-job lost-response recovery",
+    "raw_retention": "current live real journal interruption/recovery and erasure; no false completed deletion"
+  },
+  "current_checks": {
+    "windows_passed": 498,
+    "linux_skipped_on_windows": 64,
+    "linux_assets_retention_passed": 19,
+    "javascript_recovery_groups": 3,
+    "deployed_acceptance": [
+      "lost_http_reply_reload_explicit_retry_same_committed_worker_job",
+      "actual_journal_partial_deletion_does_not_claim_completion",
+      "production_timer_recovers_and_erases_actual_assets_journal_and_registry",
+      "preexisting_workspace_asset_and_job_counts_preserved"
+    ],
+    "image_inventory_files": 58,
+    "ruff": "passed",
+    "generated_contract_drift": "passed in unit suite"
+  },
+  "live_fixture_receipt": {
+    "observed_at": "2026-11-04T07:51:47.873171+00:00",
+    "checks": [
+      "lost_http_reply_reload_explicit_retry_same_committed_worker_job",
+      "actual_journal_partial_deletion_does_not_claim_completion",
+      "production_timer_recovers_and_erases_actual_assets_journal_and_registry",
+      "preexisting_workspace_asset_and_job_counts_preserved"
+    ],
+    "scope": "actual_deployed_private_phase2_acceptance",
+    "fixture_only": true,
+    "job": "b94853f3-2134-4197-a264-a1ee6729d918",
+    "execution": "a52dd81b8d624f6081ee90a3b450ffca",
+    "disposable_workspace": "de84aaa6-dbb6-47c4-84c6-69098898ba6a",
+    "counts_before_after": {
+      "workspaces": 7,
+      "assets": 36,
+      "jobs": 9
+    },
+    "new_worker_executions": 1,
+    "new_provider_calls": 0,
+    "new_cloud_resources": 0,
+    "credit_guard": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-04T07:51:23.429177+00:00",
+      "remaining_credit": "198.81",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    }
+  },
+  "deployed_state": {
+    "counts": {
+      "workspaces": 7,
+      "assets": 36,
+      "uploads": 0,
+      "jobs": 9,
+      "deletions": 2
+    },
+    "product_admission": false,
+    "inference_admission": false,
+    "retention_timer": "active"
+  },
+  "credit_guard": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-04T07:54:29.861398+00:00",
+    "remaining_credit": "198.81",
+    "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+  },
+  "independent_human_review": "NOT_AVAILABLE; owner-authorized automated checks and separate critical review only",
+  "later_gates_not_waived": {
+    "phase3": [
+      "Real autonomous model patch and candidate/canary retries",
+      "Repair export and abstention"
+    ],
+    "phase4": [
+      "Exact version activation/revocation and fresh batches",
+      "External-action approval and actual PR readback",
+      "Operator access usability"
+    ],
+    "phase5": [
+      "Full guest metadata/tombstone/worker-history lifetime and public intake hardening",
+      "Held-out evaluation and runtime advisory dispositions"
+    ],
+    "phase6": [
+      "Consistent artifact/database portable encrypted backups with actual expiry/tombstone-safe restore",
+      "Public release/submission authorization and MIT ownership",
+      "Source/live package and funded judging uptime"
+    ]
+  },
+  "review_notes": [
+    "No candidate program executed on development/control/verifier",
+    "Session storage holds bounded workspace-scoped IDs only, never auth tokens or source bytes",
+    "Reload does not POST; explicit retry preserves committed idempotency",
+    "Synthetic lost response and deletion interruption are disclosed fault injection, not simulated worker success",
+    "Previously retained evidence row counts were unchanged; only disposable acceptance workspace was erased",
+    "No new provider call/resource; existing VMs continue credit-funded billing",
+    "Prior retention/backup gaps remain explicit later-phase release gates per original phase plan, not claimed implemented"
+  ],
+  "prior_evidence": [
+    {
+      "path": "docs/evidence/phase2-components-2026-11-04.json",
+      "sha256": "cf3cc29c9ad3dad22c2cb3d9963efe0a0ee9c996e175ee70661ccc942b2ee9f3"
+    },
+    {
+      "path": "docs/evidence/phase2-semantics-2026-11-04.json",
+      "sha256": "82f001996ffb01b9df64ff41d7b175e64e46e584cfefc39238c28ade38cd9752"
+    },
+    {
+      "path": "docs/evidence/phase2-bounded-verifier-2026-11-04.json",
+      "sha256": "e5119ff50dd3038e8af1be02777da5b0ce1057ed445d63c3314b6f7a9ae54b5f"
+    },
+    {
+      "path": "docs/evidence/phase2-private-integration-2026-11-04.json",
+      "sha256": "8e5358f87bb63ca475db9f61cd4197d7d35d1acda8ecb7464d304c8899c834f0"
+    },
+    {
+      "path": "docs/evidence/phase2-events-2026-11-04.json",
+      "sha256": "14fb60deec94c24003891cfc047f815c0adff97218fb4af981ae4c56dd3d5b92"
+    },
+    {
+      "path": "docs/evidence/phase2-browser-retention-2026-11-04.json",
+      "sha256": "391af6fc45db3360b7e64f9265b358a1a5827ea5d56fa5e9d28bf85b97d1bc73"
+    }
+  ],
+  "sources": [
+    {
+      "path": ".dockerignore",
+      "sha256": "d497ca3381afe506b319401c27e59a9e7c7f719b70aa9c350c90df4d620df4cd"
+    },
+    {
+      "path": ".gitattributes",
+      "sha256": "975f0fe17598602ad89ce2b6934b5847c36babc92db3bf7fa5a8264fdef46797"
+    },
+    {
+      "path": "api/app/__init__.py",
+      "sha256": "6b28ea34d68fc4a32ce595d3aeb6d1da523696e88e0ca436eed52f0c653707ec"
+    },
+    {
+      "path": "api/app/assets.py",
+      "sha256": "02a81c52579b3beb6111353136b6b912e297f7a11d3b917b1081ef63e3dcfeb7"
+    },
+    {
+      "path": "api/app/auth.py",
+      "sha256": "aee35336b26197f5c1468087e9d5b7909fafa9f8e0a19f07fa68212a13256d6b"
+    },
+    {
+      "path": "api/app/main.py",
+      "sha256": "72ac27d0876e9b97ca705c6487dac1a581712dab1fc23b5afbc2bec2fd4d7576"
+    },
+    {
+      "path": "api/app/product.py",
+      "sha256": "07699e846c9b07b44c10bc7450d4dc6f86b0b8dfea539e7b89bfd0e866ea3ef4"
+    },
+    {
+      "path": "api/app/product_bootstrap.py",
+      "sha256": "3556d93dae0ceaa3624b9bebeeba0a040675f297f9e018605b0ee106469539c6"
+    },
+    {
+      "path": "api/app/product_store.py",
+      "sha256": "2026f549f9e2320bacdd7f68a9c15700120dc5452dda1a9ccddaf2f53b5f3e60"
+    },
+    {
+      "path": "api/app/static/index.html",
+      "sha256": "0f37459d7c93dcb285142b8d3626b114faa8d6f5ea9ea85f005081c853b9996f"
+    },
+    {
+      "path": "api/app/static/intake.css",
+      "sha256": "9751aeed321b5a2de6cfbe06bc4a0fb7429d4a46b47264e6bae6e5c9b3e30bd3"
+    },
+    {
+      "path": "api/app/static/intake.js",
+      "sha256": "b9278889fa38f955b294e6119ad17fa9071e9c2feae092331e221f17ead0c3b2"
+    },
+    {
+      "path": "api/app/static/recovery.js",
+      "sha256": "de05f9744119061442de3956e02a54c4700d4a5866ff4fc83701ed1857149cc6"
+    },
+    {
+      "path": "api/app/wire.py",
+      "sha256": "e2b1c5e0b9d28fb2c2ba25aec4e2b542861c13d4e852dc8bb88a80540b22f459"
+    },
+    {
+      "path": "api/app/workspace_assets.py",
+      "sha256": "d8d401ce7b158823203345bad1e3ec3705bf2807127247fa9aab78cd0cb4655a"
+    },
+    {
+      "path": "contracts/__init__.py",
+      "sha256": "2a90177a882ac4d38782e631095acf11d2d51a7d0ad764c942def90c204e4442"
+    },
+    {
+      "path": "contracts/browser-v1.d.ts",
+      "sha256": "352005628037c4cac99126debb6cfc47f12fb2a21fa904db3a3be6dc3423463c"
+    },
+    {
+      "path": "contracts/browser-v1.schema.json",
+      "sha256": "4b68553208701289b221ea22ce4b681ad81830e088ef6a49ab1f34c570a67c36"
+    },
+    {
+      "path": "contracts/codec.py",
+      "sha256": "691c3c49305f8996967800736e23522be7b25298d7d8f8946a25f9e84939eb98"
+    },
+    {
+      "path": "contracts/policy.py",
+      "sha256": "ce9d7add2322982322cc8fa68a86ba37e76a30969356fee713b7f4d066aeb748"
+    },
+    {
+      "path": "contracts/scalars.py",
+      "sha256": "d396f77d3277567f766261b399fc5bd45981b1ccb5531f9adb2b5876ab830d06"
+    },
+    {
+      "path": "contracts/source.py",
+      "sha256": "c8f674eb525bde1ab3fb39e696073d2f91e4c5f29af109579b1205f5f1482b00"
+    },
+    {
+      "path": "db/phase2/001_identity_assets.sql",
+      "sha256": "8cbe9cf7403c0c5b0040ddf48ce4889faee749182e83a7a629c2ad91ffb818e3"
+    },
+    {
+      "path": "db/phase2/002_upload_reservations.sql",
+      "sha256": "4c54e548ebfccfe33105980ed796ff195c1d0f340c3abb5e1e864e145e833865"
+    },
+    {
+      "path": "db/phase2/003_original_queue.sql",
+      "sha256": "9e2ad2424895e8b4c34db680c3f44f1dd4b7118d390daaf80bea03e572f51401"
+    },
+    {
+      "path": "db/phase2/004_termination_evidence.sql",
+      "sha256": "bb1bf2b00ae64850e3ee866b8a83442af4fc57c0bb927cba2acb19621c9be81d"
+    },
+    {
+      "path": "db/phase2/005_job_event_replay.sql",
+      "sha256": "94a75b8464b401fd9743f3e46a95fede8ade87c6591871656a212096ff47598b"
+    },
+    {
+      "path": "db/phase2/006_browser_session.sql",
+      "sha256": "1d24f62f96429e4170b3df88aeb1caa2a6b3fe389601f4842245d7cd5cf1db70"
+    },
+    {
+      "path": "db/phase2/007_workspace_retention.sql",
+      "sha256": "584f5a533960a3803e358d7a831bbbb727ee4a9918d0490c43615ce68e8ca57f"
+    },
+    {
+      "path": "orchestrator/product_dispatcher.py",
+      "sha256": "e31ff6984f7875b07e01c8db87258b3ae17c900920d156dcf14c69bb9a2f9886"
+    },
+    {
+      "path": "orchestrator/retention.py",
+      "sha256": "92c0331da5db1d9c400383de8fd05ebe9c870441bf4fc478b9cbfaef2544eb0e"
+    },
+    {
+      "path": "orchestrator/verification_run.py",
+      "sha256": "92c3b0b51554c1556847ff5a82cbf3345d463e14413e1aa94c5f13e54c257c40"
+    },
+    {
+      "path": "orchestrator/verifier_client.py",
+      "sha256": "74a73f40017a580026604922e8491369d79a6720095ec22dfbb8aeed11e1bf80"
+    },
+    {
+      "path": "scripts/check_phase2_acceptance.py",
+      "sha256": "1265a5d75c9a6dcd5647b52a1e3459d8ac2b5d58a1e77b86114adce80ad7b9e0"
+    },
+    {
+      "path": "scripts/check_product_image.py",
+      "sha256": "9a7c26011e59970570a22336643cec0347909d3329c35c581b6e08b96f4d9c24"
+    },
+    {
+      "path": "scripts/install_product_services.py",
+      "sha256": "e52d5c518ef5faae25a6d5662eea13f2d270ab733c5a1f218da752c106811b3c"
+    },
+    {
+      "path": "tests/browser/recovery.test.mjs",
+      "sha256": "e73697b76f3b52b0f7b1565cd91180229a58698ad83c67422b41e3cfb8d1bc89"
+    },
+    {
+      "path": "tests/security/retention_deployed_fault.py",
+      "sha256": "c952c126f86be43ee6743af91b250212a6c40429fdcfa943b9c0a99f56eb7c81"
+    },
+    {
+      "path": "verifier/__init__.py",
+      "sha256": "9605eb77f51e6c18bf910db506b2ebce43b2e6a37f2d6d01aec8336bbbb08a8e"
+    },
+    {
+      "path": "verifier/canaries.py",
+      "sha256": "c47ce621574c73cebc035e4f94270cd2c940a70a8822be16888968c544fc3920"
+    },
+    {
+      "path": "verifier/compare.py",
+      "sha256": "8bac5fdbfef70ff17c1fe5f57f7370281081646a9ed6ab4aa527dba0fb8c26f4"
+    },
+    {
+      "path": "verifier/entrypoint.py",
+      "sha256": "782dcd32b59110c857bf90818664bf73457ba4436f64f4b6b72520fb76827e86"
+    },
+    {
+      "path": "verifier/host.py",
+      "sha256": "86f87fc88ff57eba03aed94e93e50a44666d816a99d5d834f87d07a813861aec"
+    },
+    {
+      "path": "verifier/lineage.py",
+      "sha256": "6b1e7ab766028e770c515eb7011b7b7faf6b20efc7be4ea8511458772bbca6ca"
+    },
+    {
+      "path": "verifier/outputs.py",
+      "sha256": "f500ac720b1ac942c25773f0601cdfded25b1eae48864246b450e56ab210971c"
+    },
+    {
+      "path": "verifier/protocol.py",
+      "sha256": "a9cd18f65378977d4dfa4fba70b2a0b2385521be2fe76832220459e311862fbf"
+    },
+    {
+      "path": "verifier/reference.py",
+      "sha256": "984fee691db58538a4ae04e550707ab003f6e4bfecd1ebca3171c71e1a6a443f"
+    },
+    {
+      "path": "verifier/socket_service.py",
+      "sha256": "be513b5b3b9fa58bd181d1d6414b0cf37eac3a86be7b1ea7c1392426c99e5dec"
+    }
+  ],
+  "deployed_verifier_rootfs_readback": "matches prior tested image"
+}

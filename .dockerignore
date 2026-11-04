@@ -16,6 +16,7 @@ api/app/**
 api/app/static/**
 !api/app/static/index.html
 !api/app/static/intake.js
+!api/app/static/recovery.js
 !api/app/static/intake.css
 !api/app/product_store.py
 !api/app/product_bootstrap.py

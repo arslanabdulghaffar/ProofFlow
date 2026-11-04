@@ -1,4 +1,5 @@
 // Private browser client. All execution, approval and evidence authority stays on the server.
+import {savePending, loadPending, clearPending} from "./recovery.js";
 const $ = id => document.getElementById(id);
 const kinds = ["pipeline", "transactions", "customers", "contract"];
 const limits = {pipeline:16384, transactions:5242880, customers:5242880, contract:32768};
@@ -7,6 +8,7 @@ const names = {QUEUED:"Queued", BASELINE_RUNNING:"Running original", BASELINE_VE
 const explanations = {match:"The original matched these inputs. No version has been activated.", mismatch:"The original output violates your approved contract. Inspect the differences below.", held:"Source data has unresolved problems. The batch remains held.", input_rejected:"These inputs could not be prepared under the contract. No pipeline executed.", infrastructure_failed:"The run failed. No verified result was published.", cancelled:"Cancellation and cleanup are recorded."};
 let session, assets = {}, uploadIds = {}, approved = false, requestBody = null, job = null, stream = null, lastEvent = 0n;
 function lockFiles(locked) { for(const kind of kinds) $(kind).disabled=locked; }
+function holdPending(locked) { lockFiles(locked); $("files").querySelector("button").disabled=locked; if(locked)$("approve").disabled=true; }
 function notice(text, error=false) { $("notice").textContent=text; $("notice").dataset.error=String(error); }
 function csrf() { return document.cookie.split("; ").find(v=>v.startsWith("__Host-proofflow-csrf="))?.split("=")[1] || ""; }
 async function api(path, method="GET", data, raw=false) {
@@ -22,9 +24,9 @@ async function refreshSession() {
     notice("Private workspace connected. Use synthetic data only.");
   } catch { resetWorkspace();session=null; $("access").hidden=false; $("workspace").hidden=true; notice("Open your provisioned workspace to begin."); }
 }
-function resetWorkspace(){stream?.close();stream=null;assets={};uploadIds={};approved=false;requestBody=null;job=null;lastEvent=0n;$("files").reset();for(const kind of kinds)invalidate(kind);$("job").hidden=true;$("confirm-delete").checked=false;$("delete").disabled=true;$("upload-status").textContent="";}
+function resetWorkspace(){holdPending(false);stream?.close();stream=null;assets={};uploadIds={};approved=false;requestBody=null;job=null;lastEvent=0n;$("files").reset();for(const kind of kinds)invalidate(kind);$("job").hidden=true;$("confirm-delete").checked=false;$("delete").disabled=true;$("upload-status").textContent="";}
 $("login").addEventListener("submit",async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;
-  try { await api("/v1/session/import","POST",{session_token:$("session-token").value,csrf_token:$("csrf-token").value}); $("login").reset(); await refreshSession(); }
+  try { await api("/v1/session/import","POST",{session_token:$("session-token").value,csrf_token:$("csrf-token").value}); $("login").reset(); await refreshSession();resumePending(); }
   catch(error){notice(error.message,true);}finally{button.disabled=false;}
 });
 function invalidate(kind) { delete assets[kind]; delete uploadIds[kind]; requestBody=null; $("retry").hidden=true; $("run").disabled=true;
@@ -46,7 +48,8 @@ $("approve").addEventListener("click",async()=>{$("approve").disabled=true;lockF
 });
 async function submitJob(){ $("run").disabled=true;$("retry").hidden=true;
   try{if(!requestBody){if(!approved||!kinds.every(k=>assets[k]))throw new Error("Upload and approve first.");requestBody={idempotency_key:crypto.randomUUID()};for(const kind of kinds)requestBody[kind+"_id"]=assets[kind].asset_id;}
-    const result=await api("/v1/jobs","POST",requestBody);job=result.job_id;lastEvent=0n;$("events").replaceChildren();history.replaceState(null,"","/?job="+job);await refreshJob();watch();
+    savePending(sessionStorage,session,requestBody);holdPending(true);
+    const result=await api("/v1/jobs","POST",requestBody);job=result.job_id;history.replaceState(null,"","/?job="+job);clearPending(sessionStorage,session);holdPending(false);lastEvent=0n;$("events").replaceChildren();await refreshJob();watch();
   }catch(error){notice(error.message+". The result may be uncertain; retry keeps the same request identity.",true);$("retry").hidden=false;}
 }
 $("run").addEventListener("click",submitJob);$("retry").addEventListener("click",submitJob);
@@ -63,7 +66,9 @@ function watch(){stream?.close();if(!job||$("cancel").disabled)return;stream=new
 }
 $("refresh").addEventListener("click",()=>refreshJob().catch(error=>notice(error.message,true)));
 $("cancel").addEventListener("click",async()=>{try{await api("/v1/jobs/"+job+"/cancel","POST");notice("Cancellation requested. Waiting for confirmed cleanup.");await refreshJob();}catch(error){notice(error.message,true);}});
-$("logout").addEventListener("click",async()=>{try{await api("/v1/logout","POST");stream?.close();await refreshSession();}catch(error){notice(error.message,true);}});
+$("logout").addEventListener("click",async()=>{try{await api("/v1/logout","POST");clearPending(sessionStorage,session);holdPending(false);stream?.close();await refreshSession();}catch(error){notice(error.message,true);}});
 $("confirm-delete").addEventListener("change",()=>{$("delete").disabled=!$("confirm-delete").checked;});
-$("delete").addEventListener("click",async()=>{if(!session||!$("confirm-delete").checked)return;try{await api("/v1/workspace/delete","POST",{workspace_id:session.workspace_id,confirm:true});stream?.close();await refreshSession();notice("Access revoked. Byte deletion is queued and waits for safe execution cleanup.");}catch(error){notice(error.message,true);}});
+$("delete").addEventListener("click",async()=>{if(!session||!$("confirm-delete").checked)return;try{await api("/v1/workspace/delete","POST",{workspace_id:session.workspace_id,confirm:true});clearPending(sessionStorage,session);holdPending(false);stream?.close();await refreshSession();notice("Access revoked. Byte deletion is queued and waits for safe execution cleanup.");}catch(error){notice(error.message,true);}});
 await refreshSession();const query=new URL(location.href).searchParams.get("job");if(session&&query&&/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(query)){job=query;await refreshJob().then(watch).catch(error=>notice(error.message,true));}
+function resumePending(){if(session&&!job){try{requestBody=loadPending(sessionStorage,session);if(requestBody){holdPending(true);$("retry").hidden=false;notice("An earlier job request has an uncertain response. Retry uses its saved identity; nothing was resubmitted automatically.");}}catch{notice("Request recovery storage is unavailable. Check recorded jobs before retrying.",true);}}}
+resumePending();

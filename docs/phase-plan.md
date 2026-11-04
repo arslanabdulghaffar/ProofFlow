@@ -1,5 +1,7 @@
 # Phase plan and solo-first backlog
 
+Current status: Phase1 DONE; Phase2 technical acceptance PASSED, with completion requiring its verified remote checkpoint. [Phase2 acceptance](evidence/phase2-acceptance-2026-11-04.json). The Phase2 gate remains the original row below. Metadata/worker retention hardening is Phase5/R37 and consistent portable backup/restore is Phase6/T22; those outstanding release obligations are not waived. Phase3 bounded repair is next.
+
 Only the project owner is a confirmed human; Codex assists. Human hours are unknown. The PDF's three-person, 140–180-hour assumption is **not** the committed plan. Its work estimates (132–170h +8–10h contingency) remain a warning about scope, not a solo productivity promise. Do one complete deployed workflow first. Do not schedule the owner as three simultaneous reviewers. No agent delegation/subagents were requested or used in Phase 0.
 
 | Phase / target KST | Dependencies | Acceptance evidence | Critical failure / checkpoint |

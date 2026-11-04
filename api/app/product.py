@@ -174,7 +174,8 @@ def create_product_app(store, assets, *, origin: str):
 
     @app.get("/static/{name}")
     async def static(name: str):
-        types = {"intake.js": "application/javascript", "intake.css": "text/css"}
+        types = {"intake.js": "application/javascript", "recovery.js": "application/javascript",
+                 "intake.css": "text/css"}
         if name not in types:
             raise HttpFailure(404, "ASSET_NOT_FOUND")
         return Response((STATIC / name).read_bytes(), media_type=types[name])

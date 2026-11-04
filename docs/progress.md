@@ -1,5 +1,15 @@
 # Progress
 
+## Phase2 technical acceptance passed — Nov4,16:54 KST
+
+The original schemas/backend/verifier phase gate now passes. [Phase2 acceptance](evidence/phase2-acceptance-2026-11-04.json) binds the current source/image, seven migrations, prior semantic/canary/API evidence and the final deployed checks. Commit/push and remote-SHA verification finish the mandatory checkpoint. This is a private synthetic original-run capability, not completed AI repair, version activation, fresh-batch processing, GitHub integration or public release.
+
+Added non-secret, workspace-scoped browser request recovery with explicit retry after reload. Actual fault test lost an acknowledged POST response, reloaded the browser, retried the saved identity and observed the same worker job and wrong-owner finding; job count did not increase twice. Added real execution-journal retirement fault acceptance: stopped the timer for the scoped drill, revoked the disposable guest, interrupted its physical deletion after rename/partial unlink, verified no completed DB deletion, then resumed the normal production service and confirmed bytes/rows removed. Existing evidence counts were unchanged. No candidate code ran on the development or control host.
+
+Validation:498 Windows passes/64 Linux skips,19 targeted Linux passes,3 JavaScript groups and4 final deployed acceptance groups; image58 file hashes/UID/modes matched, verifier rootfs read back unchanged,13 semantic sources unchanged, Ruff/generator/syntax checks passed. Current product image5c1840e90b0f8c291543fb6913411d44cebda452cf3a94398c3305c02d93abc8. Existing7 workspaces/36 assets/9 jobs preserved,0 uploads,2 completed tombstones. API/dispatcher/retention timer active; product and inference admission closed. Latest credit$198.81; no new resources/provider calls,1 new worker execution.
+
+Scope audit corrected the earlier handoff's combined Phase2/release backlog using the unchanged original phase plan. Full metadata/worker-history/tombstone pruning and public hardening remain Phase5; consistent portable backup/retention-aware restore remains Phase6/T22. They remain required release gates and are not represented as implemented. Separate critical review covered persistence before POST, no automatic retry, credential exclusion, expiry/workspace validation, idempotent same-job recovery and incomplete-deletion truthfulness. No independent human review. Next: Phase3 bounded repair.
+
 ## Phase2 browser and raw-retention checkpoint — Nov4
 
 Private browser intake is deployed on the existing control service. Exact preprovisioned session/CSRF import, bounded four-file uploads, exact contract approval, original execution, typed summary, real event stream, failure witnesses, refresh/cancel/logout and explicit workspace deletion are wired to real API/queue/storage. Browser-v1 Pydantic/JSON Schema/TypeScript contracts and uniform safe errors are versioned. No model call or candidate execution in the browser/control host.

@@ -5,7 +5,7 @@ import json
 import subprocess
 from pathlib import Path
 
-IMAGE = "87ff3f87bdb4e78d96578ca536993909f751ee5ce60606837701d9dee6e32c81"
+IMAGE = "5c1840e90b0f8c291543fb6913411d44cebda452cf3a94398c3305c02d93abc8"
 PROBE = """
 import hashlib,json,os,stat
 from pathlib import Path
