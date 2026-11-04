@@ -1,5 +1,7 @@
 # Requirements traceability
 
+Q08 is now owner-approved (hold missing required fields before filtering). R13-03/R16-04 have frozen v1.1 policy schema/parser; R28 V01–V09 and V10 extension mutations have local semantic evidence plus actual worker fixture rejection. Full statuses remain DEFERRED_PHASE2 pending bounded verifier, protected canary and durable API/queue/UI integration; no component result is a product approval. [Semantic evidence](evidence/phase2-semantics-2026-11-04.json).
+
 Phase2 identity/registry update: R21/R22/R35 have local token/origin/CSRF and real disposable PostgreSQL ownership, quota, revocation-race and restore checks. Status stays DEFERRED_PHASE2: actual product SCRAM/client/HTTP/retention/queue integration remains unfinished. See [component evidence](evidence/phase2-components-2026-11-04.json).
 
 Phase2 local component update: R16-04/R35-01 have bounded source parser tests; R13-03 has canonical byte/hash vectors; R28-02/03/04 have source-partition/identity/composite-owner mutations; R22-02 has Linux immutable-byte fault tests. They remain DEFERRED_PHASE2 until full policy/schema, isolated verifier, authorization, durable product DB and deployed integration acceptance. Partial tests confer no VERIFIED status. See contract.md, architecture.md and current progress.

@@ -1,0 +1,19 @@
+{
+  "schema_version": "merchant_revenue_v1.1",
+  "profile": "synthetic_merchant_revenue",
+  "identity": ["merchant_id", "transaction_id"],
+  "customer_join": ["merchant_id", "customer_id"],
+  "column_aliases": {},
+  "amount_unit": "decimal_major",
+  "currency_exponents": {"USD": 2, "JPY": 0},
+  "duplicate_policy": "collapse_exact_and_report",
+  "unresolved_policy": "hold_batch",
+  "timezone_policy": "explicit_offset_required",
+  "downstream": {
+    "include_currencies": null,
+    "occurred_at_from_utc": null,
+    "occurred_at_before_utc": null,
+    "customer_attributes": [],
+    "rollup": "none"
+  }
+}

@@ -1,6 +1,6 @@
 # API and protocol plan
 
-Public routes remain design-only; Phase2 now has local opaque-session/request parsing and PostgreSQL workspace/asset authorization components. Complete policy/schema freeze still awaits Q08; generated frontend types and route integration are unfinished. All lookups/mutations, streams, exports and downloads enforce workspace authorization; opaque IDs alone confer no access. Unknown fields fail. Browser gets no infrastructure secret or filesystem path.
+Public routes remain design-only; Phase2 now has local opaque-session/request parsing and PostgreSQL workspace/asset authorization components. Q08 is resolved and the synthetic v1.1 contract representation is frozen; generated frontend types and route integration are unfinished. All lookups/mutations, streams, exports and downloads enforce workspace authorization; opaque IDs alone confer no access. Unknown fields fail. Browser gets no infrastructure secret or filesystem path.
 
 The public API below remains planned. Phase 1 now implements a separate private TLS-framed worker protocol on fixed port 9443, with exact certificate/runtime identities, closed operations and durable transfer; it is not exposed to browsers. Its source and field rules are in worker/service.py, worker/wire.py and orchestrator/worker_client.py; setup/tests/limitations are documented in [sandbox](sandbox.md#authenticated-service-and-immutable-image-import--nov-4-follow-up). No private RPC result is a verifier or approval verdict.
 

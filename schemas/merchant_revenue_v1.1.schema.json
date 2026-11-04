@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:proofflow:merchant_revenue_v1.1",
+  "title": "ProofFlow synthetic merchant revenue contract v1.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "identity", "customer_join", "column_aliases", "amount_unit", "currency_exponents", "duplicate_policy", "unresolved_policy", "timezone_policy", "downstream"],
+  "properties": {
+    "schema_version": {"const": "merchant_revenue_v1.1"},
+    "profile": {"const": "synthetic_merchant_revenue"},
+    "identity": {"const": ["merchant_id", "transaction_id"]},
+    "customer_join": {"const": ["merchant_id", "customer_id"]},
+    "column_aliases": {
+      "type": "object", "maxProperties": 32,
+      "propertyNames": {"type": "string", "minLength": 1, "maxLength": 4096},
+      "additionalProperties": {"type": "string", "minLength": 1, "maxLength": 4096}
+    },
+    "amount_unit": {"enum": ["integer_minor", "decimal_major"]},
+    "currency_exponents": {
+      "type": "object", "minProperties": 1, "maxProperties": 32,
+      "propertyNames": {"pattern": "^[A-Z]{3}$", "minLength": 3, "maxLength": 3},
+      "additionalProperties": {"type": "integer", "minimum": 0, "maximum": 9}
+    },
+    "duplicate_policy": {"const": "collapse_exact_and_report"},
+    "unresolved_policy": {"const": "hold_batch"},
+    "timezone_policy": {"const": "explicit_offset_required"},
+    "downstream": {
+      "type": "object", "additionalProperties": false,
+      "required": ["include_currencies", "occurred_at_from_utc", "occurred_at_before_utc", "customer_attributes", "rollup"],
+      "properties": {
+        "include_currencies": {
+          "oneOf": [{"type": "null"}, {"type": "array", "minItems": 1, "maxItems": 32,
+            "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z]{3}$", "minLength": 3, "maxLength": 3}}]
+        },
+        "occurred_at_from_utc": {"$ref": "#/$defs/utc_or_null"},
+        "occurred_at_before_utc": {"$ref": "#/$defs/utc_or_null"},
+        "customer_attributes": {
+          "type": "array", "maxItems": 4, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1, "maxLength": 128}
+        },
+        "rollup": {"enum": ["none", "merchant_currency"]}
+      }
+    }
+  },
+  "$defs": {
+    "utc_or_null": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 27, "maxLength": 27,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$"}]}
+  },
+  "$comment": "Authoritative runtime also rejects duplicate keys/floats/non-scalar Unicode/NUL, limits raw and canonical JSON to32KiB/depth8/8192nodes, enforces UTF8 alias-name bytes<=4096, unique alias targets from approved fields, reserved attribute names, include-currency subset, valid calendar and paired ordered interval. Q08: missing required attribute always blocks before filtering. No real-customer policy or exact-contract approval is granted by schema validity."
+}

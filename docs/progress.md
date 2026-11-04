@@ -1,5 +1,13 @@
 # Progress
 
+## Q08 resolved; frozen semantics and actual worker rejection evidence — Nov4,10:37 KST
+
+The owner explicitly approved holding a batch for a missing required customer field even when its transaction is excluded by the date range. Recorded D59, resolved current Q08 instructions/risk/handoff, and froze synthetic v1.1 schema/example before semantic implementation. Required attributes precede all date/currency filters; every invalid exact duplicate remains blocking. This is business-policy approval, not human security review or automatic version activation.
+
+Implemented strict immutable policy parsing, independent complete-source derivation and bounded output comparison for V01–V09 and the V10 attribute/rollup extension.58 new tests cover Q08 date/currency/both exclusions, exact duplicates/earliest representative, conflicting raw spellings, all applicable violations, lookup ambiguity, same-total wrong ownership, integer precision/refunds/zero, half-open filter endpoints, raw attribute values and every rollup field. Current Windows suite449 passed/53 Linux-only skips; Ruff/docs checks pass. Existing Linux/PostgreSQL sources are unchanged.
+
+Three labeled fixture programs ran on the real worker, then again after exact receipt-type hardening (six actual executions, no inference): wrong owner fails V04 while sums match; hiding missing segment behind FILTERED_BY_CONTRACT fails V08; correct MISSING_ATTRIBUTE output matches but leaves2 blocking occurrences. All six exit0/cleanup confirmed. Source/capture/contract/runtime/manifest hashes and final run IDs are [in the evidence](evidence/phase2-semantics-2026-11-04.json); full receipts remain private. Candidate code never ran locally; the independent comparison was a trusted local component. The deployed bounded verifier, protected canary workflow, product API/queue/failure view and full Phase2 acceptance remain unfinished. No new cloud resources, dependencies or provider calls. Continue those engineering tasks without reopening Q08.
+
 ## Phase2 identity/registry checkpoint — Nov4,08:20 KST
 
 Continued after verified private checkpoint `9f5f08d897f8745a7051bd98fa63c462991ee923`, without waiting for continuation. Added opaque session/CSRF helpers and a separate product PostgreSQL migration with private nonlogin owner/API/provisioner roles, immutable workspace-scoped input registry, exact retry conflicts, expiry/revocation and fixed capacity/byte quotas. Public HTTP routes and the product DB client/deployment are still unfinished; no guest signup or permission to activate a version exists.

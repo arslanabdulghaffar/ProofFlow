@@ -1,0 +1,153 @@
+{
+  "activation": "NOT_AUTHORIZED",
+  "bounded_deployed_verifier": "NOT_RUN",
+  "final_receipts_after_strict_type_gate": true,
+  "observed_at": "2026-11-04T01:37:31.119154+00:00",
+  "owner_decision": {
+    "date_kst": "2026-11-04",
+    "id": "Q08",
+    "rule": "Missing required customer attribute holds batch even when transaction is filtered out",
+    "scope": "synthetic demo only"
+  },
+  "probes": [
+    {
+      "blocking_occurrences": 0,
+      "cleanup": "confirmed",
+      "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+      "customers_sha256": "7144c66d7982ee9ec4cbbe1f34f07adb63fa54f31f722082dbec25fd782af965",
+      "execution": "ed693d07f8be412ba61eacb759e0f586",
+      "execution_manifest_sha256": "aea328ac196fb4842f3ce1bafa1f2c4029404e77d7d1ad9a3381eecd8098006a",
+      "findings": [
+        "V04"
+      ],
+      "fixture": "wrong_owner",
+      "output_sha256": {
+        "ledger.jsonl": "4754f30a9a9ff37b3774c371987416d1049e81505107ecd35975889269448171",
+        "unresolved.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "pipeline_sha256": "5f10985fb67b7a8b346ff1a83aba02383341a941483130c7cb3aa6e89eba3929",
+      "runtime_exit": 0,
+      "runtime_identity_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "transactions_sha256": "1008dfe809840e00afd15b44e46e3d6c3af94e4f2ee9268d481d351666ba3fdb"
+    },
+    {
+      "blocking_occurrences": 2,
+      "cleanup": "confirmed",
+      "contract_sha256": "8fbd67faffa74ce47d510fc65703cffd580ca9fe507d4c590af10edbb5d07528",
+      "customers_sha256": "37fbbb7ffbea973bdcc11a4eac8a993ad361e5afa12ef40ecb321361753fff1b",
+      "execution": "aa927e113dde41f68c0beeb070acbef4",
+      "execution_manifest_sha256": "f73655d5525dd5b8a62c45cebdb37554e63ecbd4f8e3b7d6bfc2416121f994a3",
+      "findings": [
+        "V08"
+      ],
+      "fixture": "wrong_filter",
+      "output_sha256": {
+        "ledger.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "unresolved.jsonl": "f4b8c682558e47dc761b7cc31f1d9c13eeb8be4bd84699fba312803d0ac0e4f8"
+      },
+      "pipeline_sha256": "7db8a44199f79743b80d8f9ae587b9a3ac108ea0ccd6aa1ae94afbfe6ba6725b",
+      "runtime_exit": 0,
+      "runtime_identity_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "transactions_sha256": "19cfffda7094d4bfa79401c669b1bdb8f7bb748f1080512ca9c1e68c798ffb7a"
+    },
+    {
+      "blocking_occurrences": 2,
+      "cleanup": "confirmed",
+      "contract_sha256": "8fbd67faffa74ce47d510fc65703cffd580ca9fe507d4c590af10edbb5d07528",
+      "customers_sha256": "37fbbb7ffbea973bdcc11a4eac8a993ad361e5afa12ef40ecb321361753fff1b",
+      "execution": "5d3f4993d95f461798f9ec2db8e0c0c7",
+      "execution_manifest_sha256": "80c91dad344e319079521b1ea2d40c1441f77d5e5d7abf35a98ff052564be853",
+      "findings": [],
+      "fixture": "correct_held",
+      "output_sha256": {
+        "ledger.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "unresolved.jsonl": "e521f496b029cc6d94cf9dca678bfcf654c950407ec5d8641acba2022c918c79"
+      },
+      "pipeline_sha256": "bbffc4e330f86cb849e69bed74e7f28b55f6b4f69a4e4d028e72eb7529eca6e7",
+      "runtime_exit": 0,
+      "runtime_identity_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "transactions_sha256": "19cfffda7094d4bfa79401c669b1bdb8f7bb748f1080512ca9c1e68c798ffb7a"
+    }
+  ],
+  "protected_canary_workflow": "NOT_RUN",
+  "provider_calls": 0,
+  "scope": "actual_worker_fixtures_trusted_local_comparison",
+  "sources": [
+    {
+      "path": "contracts/policy.py",
+      "sha256": "37f382c8185bfabbe423f41e3df62a1c19c7c4c201cdf80d30215771e4517156"
+    },
+    {
+      "path": "contracts/codec.py",
+      "sha256": "691c3c49305f8996967800736e23522be7b25298d7d8f8946a25f9e84939eb98"
+    },
+    {
+      "path": "contracts/scalars.py",
+      "sha256": "d396f77d3277567f766261b399fc5bd45981b1ccb5531f9adb2b5876ab830d06"
+    },
+    {
+      "path": "contracts/source.py",
+      "sha256": "c8f674eb525bde1ab3fb39e696073d2f91e4c5f29af109579b1205f5f1482b00"
+    },
+    {
+      "path": "contracts/examples/synthetic-v1.1.json",
+      "sha256": "b04d968afa77711fca4b490b8523564c88f7669ddb3c6a293f4d1a34be3a596b"
+    },
+    {
+      "path": "schemas/merchant_revenue_v1.1.schema.json",
+      "sha256": "0e6306e501c01ffdfe008a182c5a0ef5097ef17c6f3f0094f43b87bbf41324b4"
+    },
+    {
+      "path": "verifier/outputs.py",
+      "sha256": "f500ac720b1ac942c25773f0601cdfded25b1eae48864246b450e56ab210971c"
+    },
+    {
+      "path": "verifier/lineage.py",
+      "sha256": "6b1e7ab766028e770c515eb7011b7b7faf6b20efc7be4ea8511458772bbca6ca"
+    },
+    {
+      "path": "verifier/reference.py",
+      "sha256": "984fee691db58538a4ae04e550707ab003f6e4bfecd1ebca3171c71e1a6a443f"
+    },
+    {
+      "path": "verifier/compare.py",
+      "sha256": "8bac5fdbfef70ff17c1fe5f57f7370281081646a9ed6ab4aa527dba0fb8c26f4"
+    },
+    {
+      "path": "scripts/run_semantic_probes.py",
+      "sha256": "d0c4d30c6f6aebb1af4744da133762d033ddd2a3226464b4faca189528208eaf"
+    },
+    {
+      "path": "scripts/probe_semantics_controller.py",
+      "sha256": "2cdd1df596ded447662f647c9ecb187f385b56cc92f4b6cc2c5eb0456c538b7f"
+    },
+    {
+      "path": "tests/unit/test_contract_policy.py",
+      "sha256": "2e4a244dab6db7edf5b0b82d1b6718dcc702194bb22a666a805473db2f5bfe37"
+    },
+    {
+      "path": "tests/unit/test_verifier_semantics.py",
+      "sha256": "f41f0fb8747b313ff9d4da3d60a04638cb9e5c2aa2eb1bf63f7db06c8a3831e1"
+    },
+    {
+      "path": "tests/fixtures/phase2/wrong_owner.py.txt",
+      "sha256": "5f10985fb67b7a8b346ff1a83aba02383341a941483130c7cb3aa6e89eba3929"
+    },
+    {
+      "path": "tests/fixtures/phase2/wrong_filter.py.txt",
+      "sha256": "7db8a44199f79743b80d8f9ae587b9a3ac108ea0ccd6aa1ae94afbfe6ba6725b"
+    },
+    {
+      "path": "tests/fixtures/phase2/correct_held.py.txt",
+      "sha256": "bbffc4e330f86cb849e69bed74e7f28b55f6b4f69a4e4d028e72eb7529eca6e7"
+    }
+  ],
+  "tests": {
+    "linux_skipped": 53,
+    "new_policy_semantic_cases": 58,
+    "ruff": "passed",
+    "separate_critical_review": "Codex; no independent human sign-off",
+    "windows_passed": 449
+  },
+  "total_actual_worker_executions_this_change": 6
+}

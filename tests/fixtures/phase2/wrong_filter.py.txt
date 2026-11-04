@@ -1,0 +1,10 @@
+# Deliberately wrong fixed synthetic probe. Execute ONLY on the designated worker.
+# Every fixture row is outside the date interval AND missing required segment.
+import json
+
+open('/output/ledger.jsonl', 'w').close()
+with open('/output/unresolved.jsonl', 'w') as output:
+    for line in open('/input/transactions.jsonl'):
+        tx = json.loads(line)
+        output.write(json.dumps({'source_row_id': tx['source_row_id'],
+                                 'reason_code': 'FILTERED_BY_CONTRACT'}) + '\n')

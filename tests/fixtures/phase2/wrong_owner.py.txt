@@ -1,0 +1,22 @@
+# Deliberately wrong synthetic probe. Execute ONLY on the designated worker.
+# Not a repair-agent result or general revenue implementation.
+import json
+from datetime import datetime, timezone
+from decimal import Decimal
+
+transactions = [json.loads(line) for line in open('/input/transactions.jsonl')]
+customers = [json.loads(line) for line in open('/input/customers.jsonl')]
+# Intentional defect: drops merchant from the composite lookup key.
+owners = {customer['customer_id']: customer['canonical_customer_id'] for customer in customers}
+with open('/output/ledger.jsonl', 'w') as output:
+    for tx in transactions:
+        value = {
+            'source_row_id': tx['source_row_id'], 'merchant_id': tx['merchant_id'],
+            'transaction_id': tx['transaction_id'], 'customer_id': tx['customer_id'],
+            'canonical_customer_id': owners[tx['customer_id']],
+            'amount_minor': int(Decimal(tx['amount']) * 100), 'currency': tx['currency'],
+            'occurred_at_utc': datetime.fromisoformat(tx['occurred_at']).astimezone(timezone.utc)
+                .isoformat(timespec='microseconds').replace('+00:00', 'Z'), 'attributes': {},
+        }
+        output.write(json.dumps(value) + '\n')
+open('/output/unresolved.jsonl', 'w').close()

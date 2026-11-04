@@ -1,0 +1,10 @@
+# Fixed positive quarantine fixture, NOT a general solution or model repair.
+# All supplied fixture rows lack required segment. Execute ONLY on the worker.
+import json
+
+open('/output/ledger.jsonl', 'w').close()
+with open('/output/unresolved.jsonl', 'w') as output:
+    for line in open('/input/transactions.jsonl'):
+        tx = json.loads(line)
+        output.write(json.dumps({'source_row_id': tx['source_row_id'],
+                                 'reason_code': 'MISSING_ATTRIBUTE'}) + '\n')
