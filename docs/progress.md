@@ -1,5 +1,9 @@
 # Progress
 
+## November5 KST — dedicated GitHub repository ready
+
+Owner login confirmed. Created private ProofFlow-Demo with README/main, disabled Actions, then verified exact private repo identity, no hooks, one-file tree and source repository privacy via real read-only administrator API. [Receipt](evidence/phase4-demo-setup-2026-11-05.json). Private App form is ready with minimal permissions and webhook off; registration/installation/key storage await the single browser persistent-access confirmation. No product PR, inference call, new cloud service or application change. Phase4 remains incomplete.
+
 ## Phase4 integration follow-up — November4, in progress
 
 Deployed signed batch ingress and the optional GitHub App/outbox path with migrations013/014 and product image3c89abc975a89545c53e23e6e1512b2765a95cd470b42367f2b8b23eddb4253c. Exact external preview/approval binds actor, repository/base/path, version/configuration and fixed draft content. Durable per-stage authorization precedes writes; uncertain responses receive read-only reconciliation, never blind resend. Signed events bind exact bytes/event/time, freeze the accepted version, reject changed replay and support revocation/retention. Browser double-submit and stale response guards were strengthened.

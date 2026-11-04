@@ -1,0 +1,20 @@
+{
+  "observed_at": "2026-11-04T15:40:08.740699+00:00",
+  "repository": "arslanabdulghaffar/ProofFlow-Demo",
+  "repository_id": 1445855571,
+  "private": true,
+  "default_branch": "main",
+  "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+  "tree_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+  "files": [
+    "README.md"
+  ],
+  "actions_enabled": false,
+  "webhooks": 0,
+  "source_repository_private": true,
+  "app_registration": "FORM_PREPARED_NOT_SUBMITTED",
+  "app_installed": false,
+  "credential_created": false,
+  "product_pr_created": false,
+  "mode": "real GitHub administrator read-only API confirmation after browser setup"
+}

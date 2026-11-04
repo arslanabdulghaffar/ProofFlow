@@ -1,5 +1,9 @@
 # Resume ProofFlow
 
+## November5 KST — GitHub setup assistance
+
+Owner signed in successfully. Created private arslanabdulghaffar/ProofFlow-Demo with main/README only and disabled Actions. Real read-only administrator API verifies repository1445855571, base de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f, no hooks and both repositories private. [Setup receipt](evidence/phase4-demo-setup-2026-11-05.json). The App form is filled but unsubmitted in tab11; tab12 shows the saved Actions policy. A single specific confirmation for creating/installing the App only on Demo and encrypted dedicated key storage is pending under browser persistent-access rules. No registration, key, installation or product PR yet. Do not ask for sign-in again or treat broad development permission as product PR approval. Current source checkpoint cdd2bed5f9dcac31aaedc5b459a623a94f6012de remains deployed; no application/SQL/cloud changes during this setup step.
+
 ## Phase4 integration checkpoint — current, November4
 
 Phase1–3 DONE. Phase4 IN PROGRESS: exact activation, browser fresh batches and signed events now have deployed evidence. GitHub App/outbox/preview/approval/readback are implemented and tested with local doubles and real PostgreSQL, but the actual GitHub PR gate is NOT RUN. [Current evidence](evidence/phase4-integrations-2026-11-04.json) supersedes older missing-component statements below. Continue authorized work through private checkpoints; do not ask to continue.
