@@ -1,5 +1,7 @@
 # Requirements traceability
 
+Event follow-up: R21-02 now has actual backend replay/resume/heartbeat framing and logout-stream evidence. Browser EventSource reconnect and overall Phase2 acceptance remain open, so the broader trace status is not silently promoted. [Event evidence](evidence/phase2-events-2026-11-04.json).
+
 Latest Phase2 integration adds actual private SCRAM/auth/upload/approval/queue/worker/verifier/failure-page/cancellation/controller-loss/restart/restore results. R16/R17/R28 primitives and R22-05 role separation have deployed evidence; broader rows remain DEFERRED_PHASE2 where generated types, events, lifecycle, candidate workflow or full acceptance are unfinished. Do not mark a multi-obligation row complete from one probe. See [private integration receipt](evidence/phase2-private-integration-2026-11-04.json). No original/canary match is activation or batch completion.
 
 Q08 is now owner-approved (hold missing required fields before filtering). R13-03/R16-04 have frozen v1.1 policy schema/parser; R28 V01–V09 and V10 extension mutations have local semantic evidence plus actual worker fixture rejection. Full statuses remain DEFERRED_PHASE2 pending bounded verifier, protected canary and durable API/queue/UI integration; no component result is a product approval. [Semantic evidence](evidence/phase2-semantics-2026-11-04.json).

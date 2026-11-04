@@ -30,6 +30,9 @@ class FixtureStore:
         self.asset_reads = 0
         self.revoke_on_readback = False
         self.job_result = None
+        self.job_events = []
+        self.event_reads = 0
+        self.revoke_events = False
 
     async def call(self, operation, *values):
         self.events.append(operation)
@@ -61,6 +64,11 @@ class FixtureStore:
             return (values[3],)
         if operation == "job":
             return (self.job_result,)
+        if operation == "events":
+            self.event_reads += 1
+            if self.revoke_events and self.event_reads > 1:
+                raise ProductFailure("ACCESS_DENIED")
+            return ([e for e in self.job_events if int(e["sequence"]) > values[3]],)
         raise AssertionError("Unexpected fixture operation")
 
 
@@ -255,3 +263,104 @@ def test_product_connection_fixed_identity_environment_and_operation_boundary(mo
     monkeypatch.setenv("PGSERVICE", "hostile")
     with pytest.raises(ProductFailure, match="PRODUCT_CONFIGURATION_INVALID"):
         config.parameters()
+
+
+def test_event_replay_resume_terminal_and_bound_cursor():
+    async def check():
+        db, _, client = fixture()
+        job = str(uuid4())
+        db.job_events = [{"sequence": str(n), "state": state, "event": "recorded",
+                          "occurred_at": "2026-11-04T00:00:00+00:00"}
+                         for n, state in ((1, "QUEUED"), (2, "NEEDS_REVIEW"))]
+        db.job_result = {"state": "NEEDS_REVIEW"}
+        async with client:
+            response = await client.get("/v1/jobs/" + job + "/events")
+            assert response.status_code == 200
+            assert response.headers["content-type"].startswith("text/event-stream")
+            assert response.text.count("event: job_state") == 2
+            assert '"sequence":"1"' in response.text
+            resumed = await client.get("/v1/jobs/" + job + "/events",
+                headers={"Last-Event-ID": job + ":1"})
+            assert "id: " + job + ":1" not in resumed.text
+            assert "id: " + job + ":2" in resumed.text
+            ended = await client.get("/v1/jobs/" + job + "/events",
+                headers={"Last-Event-ID": job + ":2"})
+            assert ended.status_code == 204
+            for value in (str(uuid4()) + ":1", job + ":-1", job + ":01",
+                          job + ":9223372036854775808", job + ":1\n"):
+                assert (await client.get("/v1/jobs/" + job + "/events",
+                    headers={"Last-Event-ID": value})).status_code == 400
+            assert (await client.get("/v1/jobs/" + job + "/events", headers=[
+                ("Last-Event-ID", job + ":1"), ("Last-Event-ID", job + ":1")])).status_code == 400
+    asyncio.run(check())
+
+
+def test_event_revalidation_before_first_disclosure():
+    async def check():
+        db, _, client = fixture()
+        db.job_events = [{"sequence": "1", "state": "NEEDS_REVIEW", "event": "secret"}]
+        db.revoke_events = True
+        async with client:
+            response = await client.get("/v1/jobs/" + str(uuid4()) + "/events")
+            assert response.status_code == 200
+            assert "STREAM_AUTHORITY_OR_STORE_UNAVAILABLE" in response.text
+            assert "secret" not in response.text and "id:" not in response.text
+    asyncio.run(check())
+
+
+def test_stream_capacity_reserves_other_request_slots():
+    async def check():
+        release, entered = asyncio.Event(), asyncio.Event()
+        active = 0
+        async def inner(scope, receive, send):
+            nonlocal active
+            if scope["path"].endswith("/events"):
+                active += 1
+                if active == 2:
+                    entered.set()
+                await release.wait()
+            await send({"type": "http.response.start", "status": 200, "headers": []})
+            await send({"type": "http.response.body", "body": b"", "more_body": False})
+        boundary = CapacityBoundary(inner)
+        async def receive():
+            return {"type": "http.request", "body": b""}
+        messages = []
+        async def send(message):
+            messages.append(message)
+        streams = [asyncio.create_task(boundary({"type": "http", "path": "/events"},
+                                               receive, send)) for _ in range(2)]
+        await entered.wait()
+        await boundary({"type": "http", "path": "/events"}, receive, send)
+        assert messages[0]["status"] == 429
+        messages.clear()
+        await boundary({"type": "http", "path": "/health/live"}, receive, send)
+        assert messages[0]["status"] == 200
+        release.set()
+        await asyncio.gather(*streams)
+        assert boundary.slots._value == 4 and boundary.event_slots._value == 2
+    asyncio.run(check())
+
+
+def test_event_rechecks_session_between_frames():
+    async def check():
+        db = FixtureStore()
+        db.job_events = [{"sequence": str(n), "state": state, "event": "recorded"}
+                         for n, state in ((1, "QUEUED"), (2, "NEEDS_REVIEW"))]
+        app = create_product_app(db, FixtureAssets(db), origin=ORIGIN)
+        messages = []
+        async def send(message):
+            messages.append(message)
+            if b"id: " in message.get("body", b""):
+                db.secrets = SessionSecrets.create()  # Labeled revocation double after disclosure1.
+        async def receive():
+            await asyncio.Event().wait()
+        scope = {"type": "http", "asgi": {"spec_version": "2.4"}, "method": "GET",
+                 "scheme": "https", "path": "/v1/jobs/" + str(uuid4()) + "/events",
+                 "query_string": b"", "headers": [(b"cookie", ("__Host-proofflow="
+                                                   + db.secrets.token).encode())]}
+        await app(scope, receive, send)
+        raw = b"".join(m.get("body", b"") for m in messages)
+        assert raw.count(b"id: ") == 1
+        assert b"STREAM_AUTHORITY_OR_STORE_UNAVAILABLE" in raw
+        assert b"NEEDS_REVIEW" not in raw
+    asyncio.run(check())

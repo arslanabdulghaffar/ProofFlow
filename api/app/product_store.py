@@ -17,6 +17,7 @@ API_OPERATIONS = {
     "revoke_contract": ("SELECT pf_product.revoke_contract(%s,%s,%s,%s)", 4),
     "enqueue": ("SELECT pf_product.enqueue_original(%s,%s,%s,%s,%s,%s,%s,%s,%s)", 9),
     "job": ("SELECT pf_product.get_job(%s,%s,%s)", 3),
+    "events": ("SELECT pf_product.read_job_events(%s,%s,%s,%s)", 4),
     "cancel": ("SELECT pf_product.cancel_job(%s,%s,%s,%s)", 4),
     "logout": ("SELECT pf_product.revoke_session(%s,%s,%s)", 3),
 }
@@ -34,7 +35,8 @@ KNOWN_ERRORS = frozenset({
     "ACCESS_DENIED", "ASSET_QUOTA", "INVALID_ASSET", "ASSET_IDEMPOTENCY_CONFLICT",
     "UPLOAD_RESERVATION_REQUIRED", "EXACT_CONTRACT_REQUIRED", "CONTRACT_REVOKED",
     "ADMISSION_CLOSED", "INVALID_JOB", "JOB_IDEMPOTENCY_CONFLICT", "JOB_ASSETS_INVALID",
-    "JOB_CAPACITY", "JOB_NOT_FOUND", "STALE_JOB_LEASE", "JOB_AUTHORITY_REVOKED",
+    "JOB_CAPACITY", "JOB_NOT_FOUND", "INVALID_EVENT_CURSOR", "STALE_JOB_LEASE",
+    "JOB_AUTHORITY_REVOKED",
     "EXECUTION_INTENT_CONFLICT", "COLLECTED_EXECUTION_MISMATCH", "CLEANUP_REQUIRED",
     "ORIGINAL_REPORT_INVALID", "ORIGINAL_REPORT_BINDING_MISMATCH", "ORIGINAL_SOURCE_HASH_MISMATCH",
     "ORIGINAL_CONTRACT_HASH_MISMATCH", "ORIGINAL_OUTPUT_BINDING_MISMATCH",

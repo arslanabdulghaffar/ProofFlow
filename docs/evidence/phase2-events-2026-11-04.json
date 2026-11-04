@@ -1,0 +1,84 @@
+{
+  "checks": [
+    "actual_committed_event_replay",
+    "exact_cursor_resume",
+    "terminal204_future_cursor400",
+    "cross_workspace404",
+    "live_logout_closes_no_new_ids",
+    "queued_fixture_cancel_without_execution"
+  ],
+  "existing_job": "278ced5c-af38-450f-9c85-e3f47c1c9c9c",
+  "fixture_job": "650e5e9e-289e-4471-9a9e-3567e3d7e665",
+  "events": 5,
+  "provider_calls": 0,
+  "observed_at": "2026-11-04T04:23:49.936217+00:00",
+  "credit_guard": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-04T04:23:24.676790+00:00",
+    "remaining_credit": "199.13",
+    "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+  },
+  "scope": "private backend event replay only; no browser integration",
+  "product_image": "213ee066eeb1783fa83d6e984704993b7ee966ca59cbad297cdda6b4f3fd9a22",
+  "windows_tests": {
+    "passed": 482,
+    "skipped_linux": 55
+  },
+  "postgres_groups": 11,
+  "product_module_inventory": 53,
+  "worker_executions": 0,
+  "independent_human_review": "NOT_AVAILABLE",
+  "sources": [
+    {
+      "path": "api/app/product.py",
+      "sha256": "1448c75bedce1f96a16cc76161be7efed877897134ac37cc30bb0d567c23521d"
+    },
+    {
+      "path": "api/app/product_store.py",
+      "sha256": "8c5245b239964df40b5eead45b540a1b186f1f1040d280d9433f76b2490208f2"
+    },
+    {
+      "path": "db/phase2/005_job_event_replay.sql",
+      "sha256": "94a75b8464b401fd9743f3e46a95fede8ade87c6591871656a212096ff47598b"
+    },
+    {
+      "path": "scripts/check_product_events.py",
+      "sha256": "87de1c439df14ea290b912445002bf9498acc77507df0307e2fa393ef0f2b29d"
+    },
+    {
+      "path": "scripts/check_product_image.py",
+      "sha256": "a5ba100f335fa2857f8fad1b57d4bb4098a5eb22064e6563198ae03870a83074"
+    },
+    {
+      "path": "scripts/check_product_queue.py",
+      "sha256": "9dc7b365b34f55cf7015e565a582feeda7795e7f2c413a1c9597b9de3b4a5758"
+    },
+    {
+      "path": "scripts/deploy_product_database.py",
+      "sha256": "f77061c1f3f97be8ebdc94ae64647179d9b20ddb3a0b67db9b131a692befff13"
+    },
+    {
+      "path": "scripts/install_product_database.py",
+      "sha256": "e3ea7448e022342b556bb29da9871033fd2d4995ba19a8846eeeb718d903e710"
+    },
+    {
+      "path": "scripts/install_product_services.py",
+      "sha256": "787bf9a47865ded2ae615e5d78ced1616979dedd438ad26101b923d0bf4125b8"
+    },
+    {
+      "path": "scripts/probe_product_events_http.py",
+      "sha256": "b7efb5d89b030622b5314e2bba134f4ea61fd36200f10523479442eb95906d5f"
+    },
+    {
+      "path": "tests/unit/test_product_http.py",
+      "sha256": "7dcb17b4ff6f76c4bf257d7d12bce3a2220f94a70ee9b18d9a514d68247995ca"
+    }
+  ],
+  "limitations": [
+    "browser EventSource/intake not implemented",
+    "remaining wire/generated-type/error contracts",
+    "retention/lifecycle/asset-journal backup remain open",
+    "previous original/restore checks apply to their recorded revision"
+  ],
+  "retained_build_failure": "networknone dependency installation failed; trusted default build reused pinned dependency layer"
+}

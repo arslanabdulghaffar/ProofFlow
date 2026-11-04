@@ -1,5 +1,13 @@
 # Progress
 
+## Authenticated event replay after the private API checkpoint — Nov4
+
+Pushed/verified `7398442424472d29cf72913b88557a6ffaa5bd94`, then continued without a permission pause. Additive migration005 exposes bounded authorized event reads; private SSE uses exact job-scoped cursor strings, committed monotonic events,15s comment heartbeat and finite connection lifetime. Two stream slots reserve room within the four-request API limit. Fresh authority is checked before the first disclosure and between frames; disconnect/revocation never creates a fake event ID. Terminal resume204 and invalid/foreign cursors400/404 are explicit.
+
+Actual deployed6 groups passed:5 committed events replayed, exact resume, terminal/future-cursor behavior, cross-workspace denial, live logout closure, queued fixture cancellation without execution. Reused existing workspaces/assets; no worker/model calls. Current image `213ee066eeb1783fa83d6e984704993b7ee966ca59cbad297cdda6b4f3fd9a22`;53 modules match source. Upgrade required closed idle queue, preserved stopped prior containers and retained all data.11 actual PostgreSQL groups and482 Windows tests/55 Linux skips pass. An initial network-disabled image build correctly could not install pinned dependencies; normal trusted build reused the existing locked dependency layer. Candidate isolation did not change.
+
+Phase2 remains IN PROGRESS for browser intake, remaining wire/generated-type/error contracts and lifecycle/retention. Admission closed after probes; private services restarted. Historical original/recovery/restore results retain their exact tested image/source binding. [Event receipt](evidence/phase2-events-2026-11-04.json). No human security sign-off or public release.
+
 ## Private original API/queue and failure evidence — Nov4
 
 Continued from verified private main `ae1bc6f8444e0c43ddf0b758337648525ff1c3c5`. Product migrations001–004 and separate functions-only SCRAM roles are deployed. The private networkless API supports immutable uploads/downloads, exact contract approval/revocation, idempotent original jobs, status/cancel/logout and a stored failure page. A separate restricted dispatcher runs only the fixed worker and bounded verifier; no provider credentials or new cloud service. Pre-write reservations and bounded staging recovery prevent crash leftovers from bypassing quotas. API concurrency covers the entire response.

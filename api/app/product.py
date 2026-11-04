@@ -2,15 +2,17 @@
 
 import asyncio
 import hashlib
+import re
+import time
 from html import escape
 from uuid import UUID, uuid4
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 
 from api.app.auth import AuthError, request_digests
 from api.app.product_store import ProductFailure
-from contracts.codec import InputError, parse_object
+from contracts.codec import InputError, canonical_bytes, parse_object
 from contracts.policy import parse_contract
 
 LIMITS = {"pipeline": 16384, "contract": 32768, "transactions": 5242880, "customers": 5242880}
@@ -57,6 +59,7 @@ class CapacityBoundary:
     def __init__(self, app):
         self.app = app
         self.slots = asyncio.Semaphore(4)
+        self.event_slots = asyncio.Semaphore(2)
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http":
@@ -74,6 +77,17 @@ class CapacityBoundary:
             return await JSONResponse({"error": {"code": "BUSY"}}, status_code=429)(
                 scope, receive, protected_send)
         async with self.slots:
+            if scope.get("path", "").endswith("/events"):
+                if self.event_slots.locked():
+                    return await JSONResponse({"error": {"code": "STREAM_BUSY"}}, status_code=429)(
+                        scope, receive, protected_send)
+                async with self.event_slots:
+                    try:
+                        async with asyncio.timeout(65):
+                            return await self.app(scope, receive, protected_send)
+                    except TimeoutError:
+                        # End this connection, not an invented event or resumed cursor.
+                        return None
             return await self.app(scope, receive, protected_send)
 
 
@@ -100,7 +114,8 @@ def create_product_app(store, assets, *, origin: str):
     @app.exception_handler(ProductFailure)
     async def store_failure(_, error):
         code = str(error)
-        status = (403 if code == "ACCESS_DENIED" else 429 if code in ("ASSET_QUOTA", "JOB_CAPACITY")
+        status = (400 if code == "INVALID_EVENT_CURSOR" else 403 if code == "ACCESS_DENIED"
+                  else 429 if code in ("ASSET_QUOTA", "JOB_CAPACITY")
                   else 404 if code == "JOB_NOT_FOUND" else 409 if code.endswith("CONFLICT")
                   or code in ("CONTRACT_REVOKED", "EXACT_CONTRACT_REQUIRED") else 503)
         return JSONResponse({"error": {"code": code}}, status_code=status)
@@ -212,6 +227,62 @@ def create_product_app(store, assets, *, origin: str):
         workspace, token, csrf = await authorize(request, True)
         await store.call("cancel", workspace, token, csrf, identifier(job_id))
         return {"cancellation_requested": True}
+
+    @app.get("/v1/jobs/{job_id}/events")
+    async def events(job_id: str, request: Request):
+        workspace, token, _ = await authorize(request)
+        job = identifier(job_id)
+        cursors = [v for k, v in request.scope["headers"] if k.lower() == b"last-event-id"]
+        if len(cursors) > 1:
+            raise HttpFailure(400, "INVALID_EVENT_CURSOR")
+        after = 0
+        if cursors:
+            try:
+                value = cursors[0].decode("ascii")
+            except UnicodeError:
+                raise HttpFailure(400, "INVALID_EVENT_CURSOR") from None
+            prefix, separator, number = value.partition(":")
+            if (prefix != job_id or separator != ":"
+                    or re.fullmatch(r"0|[1-9][0-9]{0,18}", number) is None
+                    or int(number) > 9223372036854775807):
+                raise HttpFailure(400, "INVALID_EVENT_CURSOR")
+            after = int(number)
+        # Fail auth/cursor checks before emitting HTTP200. Discard this read so
+        # generator reauthorizes immediately before its first disclosure too.
+        initial = (await store.call("events", workspace, token, job, after))[0]
+        if not initial:
+            current = (await store.call("job", workspace, token, job))[0]
+            if current["state"] in ("NEEDS_REVIEW", "FAILED_INFRA", "CANCELLED"):
+                return Response(status_code=204)
+
+        async def replay():
+            cursor = after
+            started = heartbeat_at = time.monotonic()
+            try:
+                while time.monotonic() - started < 60:
+                    rows = (await store.call("events", workspace, token, job, cursor))[0]
+                    for event in rows:
+                        await store.call("session", token)  # Recheck after each possibly slow send.
+                        sequence = int(event["sequence"])
+                        if sequence != cursor + 1:
+                            raise ProductFailure("PRODUCT_EVENT_SEQUENCE_INVALID")
+                        yield ("id: " + job_id + ":" + str(sequence) + "\nevent: job_state\ndata: "
+                               ).encode() + canonical_bytes(event) + b"\n\n"
+                        cursor = sequence
+                        if event["state"] in ("NEEDS_REVIEW", "FAILED_INFRA", "CANCELLED"):
+                            return
+                    if time.monotonic() - heartbeat_at >= 15:
+                        yield b": heartbeat\n\n"
+                        heartbeat_at = time.monotonic()
+                    if await request.is_disconnected():
+                        return
+                    await asyncio.sleep(1)
+            except ProductFailure:
+                # No event ID: reconnect can only resume from the last real event.
+                yield (b'event: stream_closed\ndata: '
+                       b'{"code":"STREAM_AUTHORITY_OR_STORE_UNAVAILABLE"}\n\n')
+        return StreamingResponse(replay(), media_type="text/event-stream", headers={
+            "X-Accel-Buffering": "no"})
 
     @app.get("/jobs/{job_id}")
     async def original_evidence(job_id: str, request: Request):

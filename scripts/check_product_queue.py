@@ -104,6 +104,17 @@ def main():
             "FROM pf_product.jobs WHERE workspace_id=:'w' AND id=:'j';", "admin",
             **new_lease, r=json.dumps(termination)) == "t", "Terminal cleanup evidence lost")
         checks.append("single_worker_atomic_claim_generation_fence_recovery_cleanup_gate")
+        events_sql = "SELECT pf_product.read_job_events(:'w',:'s',:'j',:'after');"
+        replay = json.loads(db.sql(events_sql, **job, after=0))
+        require([e["sequence"] for e in replay] == [str(i+1) for i in range(len(replay))],
+                "Event replay has gaps or unsafe numeric wire IDs")
+        require(replay[-1]["state"] == "FAILED_INFRA", "Missing committed terminal event")
+        require(json.loads(db.sql(events_sql, **job, after=2)) == replay[2:],
+                "Resume duplicated or skipped committed events")
+        db.expect(events_sql, "INVALID_EVENT_CURSOR", **job, after=len(replay)+1)
+        db.expect(events_sql, "ACCESS_DENIED", **{**job, "s": two["s"]}, after=0)
+        db.expect(events_sql, "permission denied", "dispatcher", **job, after=0)
+        checks.append("bounded_authorized_event_replay_cursor_and_role_isolation")
 
         job = {**job, "j": str(uuid4()), "i": str(uuid4())}
         db.sql(ENQUEUE, **job)

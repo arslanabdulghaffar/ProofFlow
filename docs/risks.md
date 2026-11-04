@@ -1,5 +1,7 @@
 # Risks and owner decisions
 
+Latest event follow-up closes the backend authenticated replay gap: actual resume, cursor/ownership and live logout checks passed. Browser EventSource/intake, remaining wire/generated types/errors, retention/deletion and asset/journal backups remain open.7/8 workspaces and8/16 jobs are retained; no caps raised or evidence deleted. Product admission is closed after probes. Older descriptions below are historical.
+
 Current Phase1 acceptance is documented in phase1-readiness and the acceptance receipt. Fork capacity remains limited but containment is proven by kernel denial/cleanup (D54). Supervisor/control death, database/restore, inference, generated-code worker checks, HTTPS and repaired reboot recovery passed. Remaining risks: native/runtime advisory inventory and absent full binary reachability review; no independent human sign-off; operator-only HTTPS, portable backup/public release work outstanding; full verifier/canary/product integration; delayed billing and Windows-dependent credit guard. Older risk entries below describe historical states.
 
 ## Current Phase2 component risks

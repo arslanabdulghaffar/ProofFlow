@@ -7,7 +7,8 @@ import stat
 import subprocess
 from pathlib import Path
 
-IMAGE = "061afb3a80e353a4d1a63ce2bdbae011990566c54523f07d8c575c53ff766380"
+IMAGE = "213ee066eeb1783fa83d6e984704993b7ee966ca59cbad297cdda6b4f3fd9a22"
+PREVIOUS = "061afb3a80e353a4d1a63ce2bdbae011990566c54523f07d8c575c53ff766380"
 DOCKER = ["/usr/bin/docker", "--host=unix:///var/run/docker.sock"]
 
 
@@ -168,6 +169,31 @@ WantedBy=sockets.target
             module = "orchestrator.product_bootstrap"
         args.extend(["sha256:" + IMAGE, "python", "-m", module])
         existing = command([*DOCKER, "ps", "-aq", "--filter=name=^/" + name + "$"])
+        if existing:
+            prior = json.loads(command([*DOCKER, "inspect", name]))[0]
+            if prior["Image"] == "sha256:" + PREVIOUS:
+                if (prior["Config"]["Labels"].get("proofflow.role") != "product-" + role
+                        or prior["Config"]["User"] != "10003:10003"
+                        or not prior["HostConfig"]["ReadonlyRootfs"]):
+                    raise RuntimeError("PRIOR_PRODUCT_IDENTITY_CHANGED")
+                # Preserve the stopped predecessor. No replacement while any job
+                # is active or admission open; migrations and assets stay intact.
+                ready = command([*DOCKER, "exec", "--user=70:70", "proofflow-budget",
+                    "psql", "-X", "-qAt", "-h", "/run/proofflow-budget", "-U", "postgres",
+                    "-d", "proofflow_product", "-c", "SELECT NOT EXISTS(SELECT 1 FROM "
+                    "pf_product.execution_policy WHERE enabled) AND NOT EXISTS(SELECT 1 FROM "
+                    "pf_product.jobs WHERE state NOT IN "
+                    "('NEEDS_REVIEW','FAILED_INFRA','CANCELLED'));"])
+                if ready != "t":
+                    raise RuntimeError("PRODUCT_UPGRADE_REQUIRES_CLOSED_IDLE_QUEUE")
+                archived = name + "-previous-" + PREVIOUS[:12]
+                if command([*DOCKER, "ps", "-aq", "--filter=name=^/" + archived + "$"]):
+                    raise RuntimeError("PRIOR_PRODUCT_ARCHIVE_ALREADY_EXISTS")
+                command(["/usr/bin/systemctl", "stop", name + ".service"])
+                if json.loads(command([*DOCKER, "inspect", name]))[0]["State"]["Running"]:
+                    raise RuntimeError("PRIOR_PRODUCT_STILL_RUNNING")
+                command([*DOCKER, "rename", name, archived])
+                existing = ""
         if not existing:
             command(args)
         config = json.loads(command([*DOCKER, "inspect", name]))[0]

@@ -1,5 +1,13 @@
 # Resume ProofFlow
 
+## Event replay follow-up — current head
+
+Checkpoint `7398442424472d29cf72913b88557a6ffaa5bd94` was pushed and remote-verified, then work continued. Product now also serves authenticated bounded SSE at `/v1/jobs/{uuid}/events`. Migration005 is applied; current product image is `213ee066eeb1783fa83d6e984704993b7ee966ca59cbad297cdda6b4f3fd9a22` (verifier/runtime unchanged). Old product containers are preserved stopped under `-previous-061afb3a80e3`, not deleted. Upgrades require closed admission and no active jobs, exact previous-image/role identity and confirmed stop before rename/create.
+
+SSE IDs are exact job UUID + colon + decimal sequence. Resume emits only committed later events; cursor must be canonical, bounded and same-job. Future cursor400, foreign job404, terminal-at-cursor204. Data sequence is a decimal string. Each query and each frame rechecks current authority.15s comment heartbeat;60s ordinary lifetime/65s outer bound;2 stream slots within4 request slots. Logout/store failure closes without inventing an event ID. Actual deployed6 event groups passed, including live session revocation, plus11 real local PostgreSQL groups and482 Windows tests/55 Linux skips. Added queued synthetic job was cancelled without execution; totals now7 workspaces/8 jobs, no new assets or provider calls. Product admission is closed again and dispatcher restarted.
+
+Continue remaining Phase2 browser intake, public wire/generated-type/error contracts and retention/lifecycle. Event replay is no longer an open backend item, but no browser EventSource/workbench integration or public guest intake has been claimed. Source-bound follow-up evidence records the current image and exact changes. Prior original/canary/recovery/restore evidence remains tied to its tested revision. No independent human review.
+
 ## Latest private original-path checkpoint — Nov4
 
 Phase1 DONE; Phase2 IN PROGRESS. This section supersedes older component-only/deployment-NOT-RUN descriptions below. Continued from remote-verified `ae1bc6f8444e0c43ddf0b758337648525ff1c3c5`. Current checkpoint SHA comes from Git HEAD and mandatory remote readback; keep private. No continuation question. No new provider calls or cloud resources.
