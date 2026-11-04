@@ -28,6 +28,27 @@ def claim(db, values):
     return {**values, "fence": result["generation"]}, result
 
 
+def takeover_pending(db, values, stage, receipt):
+    """Synthetic receipt plus real durable SQL lease loss; never touches product/GitHub."""
+    previous = dict(values)
+    db.sql(
+        "UPDATE pf_product.pr_intents SET lease_until=clock_timestamp()-interval '1 second' "
+        "WHERE id=:'intent';", "admin", **values,
+    )
+    values, current = claim(db, {**values, "controller": str(uuid4())})
+    require(
+        current["state"] == stage.upper() + "_PENDING"
+        and values["fence"] > previous["fence"], "Pending stage lost after controller replacement",
+    )
+    db.expect(READBACK, "STALE_PR_LEASE", "dispatcher", **previous, stage=stage, receipt=receipt)
+    db.expect(BEGIN, "PR_WRITE_ALREADY_PREPARED", "dispatcher", **values, stage=stage)
+    require(db.sql(
+        "SELECT count(*) FROM pf_product.pr_writes WHERE intent_id=:'intent' AND stage=:'stage';",
+        "admin", **values, stage=stage,
+    ) == "1", "Duplicate write after takeover")
+    return values
+
+
 def main():
     checks = []
     with database() as db:
@@ -117,6 +138,9 @@ def main():
             commit["path"].endswith("/contents/pipeline.py") and "sha" not in commit["payload"],
             "Commit scope changed",
         )
+        v = takeover_pending(
+            db, v, "commit", json.dumps({"head_sha": "c" * 40, "base_sha": "a" * 40})
+        )
         db.sql(
             READBACK,
             "dispatcher",
@@ -129,6 +153,12 @@ def main():
         require(
             pr["payload"]["draft"] is True and pr["payload"]["base"] == "main", "PR scope changed"
         )
+        v = takeover_pending(db, v, "pr", json.dumps({
+            "head_sha": "c" * 40, "base_sha": "a" * 40, "repository_id": 34,
+            "draft": True, "number": 1,
+            "url": "https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1",
+        }))
+        checks.append("commit_and_pr_pending_takeovers_fence_old_controller_and_cannot_redispatch")
         # A later revocation cannot undo an authorized external write. Confirm and expose history.
         db.sql("SELECT pf_product.revoke_version(:'w',:'s',:'c',:'r',1);", **v)
         db.sql(

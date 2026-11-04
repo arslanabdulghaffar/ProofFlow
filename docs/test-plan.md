@@ -1,5 +1,17 @@
 # Acceptance and verification plan
 
+## Phase4 acceptance audit — November5
+
+| Obligation | Evidence and remaining scope |
+| --- | --- |
+| T13 exact versions/revocation | Real SQL hash/actor/CAS/revocation checks and deployed synthetic activation/revocation; prior [version/batch](evidence/phase4-versions-batches-2026-11-04.json) and [browser](evidence/phase4-integrations-2026-11-04.json) receipts |
+| T14 immutable fresh batches | Deployed clean/held batches and queued revocation; real SQL activation versus existing batch binding; prior receipts above |
+| T15 controller/fencing/recovery | Prior deployed worker/controller cleanup evidence; new all-stage controller fault doubles and real disposable SQL pending takeover/fencing; no live GitHub response-loss injection claimed |
+| T16 signed delivery/idempotency | Prior deployed exact duplicate returns same batch; changed body/bad signature/revoked connection denied, with real SQL/HTTP signature cases |
+| T17 external action | Actual App setup/scoped authentication/read-only preview/base/tree passed; new tree/shape rejection tests and deployed static probes pass. Actual approved PR creation/readback/live recovery NOT RUN |
+
+[Current receipt](evidence/phase4-readback-hardening-2026-11-05.json):607 Windows passes/86 Linux-only skips, seven actual disposable PostgreSQL groups, four Chromium groups with mocked HTTP. Actual upgraded dispatcher uses installed App credentials only for GETs and scoped token issuance. No PR/branch/commit write or new preview. Product readiness remains503. Evaluation/lifecycle/portable backups retain Phase5/6 scope. No independent human sign-off.
+
 Phase2 gate is now technically accepted per phase-plan.md; [Phase2 acceptance](evidence/phase2-acceptance-2026-11-04.json). Current run:498 Windows tests pass (64 Linux skips),19 targeted Linux asset/retention tests,3 Node recovery groups and4 real deployed acceptance groups. Actual fault injection covers lost acknowledged POST plus reload/same-job retry and interrupted real-journal deletion plus production recovery. Earlier bounded verifier/canary/HTTP/events/SCRAM/cancel/controller/restart results remain historical source-bound evidence. T01–T05 and the Phase2 portions of T06/T08–T10/T15/T18 are satisfied for the private original path; candidate repair, version/batch/external writes, held-out evaluation and T22/T23 release checks retain their later gates. Human independent review is not available.
 
 Current evidence supersedes historical partial counts below: Phase1 accepted; Phase2 has478 Windows passes/55 Linux skips, separately executed10 Linux asset groups,10 actual PostgreSQL queue groups,6 verifier boundary and4 Unix-peer groups, plus6 deployed boundary groups,4 fresh worker canaries,7 private HTTP integration groups and2 actual cancellation/dispatcher-loss cases. Actual SCRAM role denials, restart and encrypted off-VM database restore passed. Source-bound integration receipt retains failures. Unimplemented SSE, guest intake, repair, activation, fresh batches and PR workflows are not covered. Fixture programs ran only on the designated worker; trusted tests ran locally/control. Human review remains unavailable.

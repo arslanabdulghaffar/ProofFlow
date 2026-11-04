@@ -7,8 +7,8 @@ import stat
 import subprocess
 from pathlib import Path
 
-IMAGE = "3c89abc975a89545c53e23e6e1512b2765a95cd470b42367f2b8b23eddb4253c"
-PREVIOUS = "fe3f04b2851b4db06c35c205520748425db615025f1fa60a6610eb3faefef8b2"
+IMAGE = "886e5044e05ce84b78c2fc10ae19019d577338b66e7808475d0020a4fb452bab"
+PREVIOUS = "3c89abc975a89545c53e23e6e1512b2765a95cd470b42367f2b8b23eddb4253c"
 DOCKER = ["/usr/bin/docker", "--host=unix:///var/run/docker.sock"]
 
 

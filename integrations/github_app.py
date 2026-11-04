@@ -71,6 +71,30 @@ def blob_sha(raw: bytes) -> str:
     ).hexdigest()
 
 
+def dedicated_tree(tree, expected_sha, candidate_path):
+    """A complete fixed-path regular-file tree; a matching blob alone is insufficient."""
+    require(type(tree) is dict, "GITHUB_TREE_INVALID")
+    entries = tree.get("tree")
+    require(
+        tree.get("sha") == expected_sha and tree.get("truncated") is False
+        and type(entries) is list and 1 <= len(entries) <= 2,
+        "GITHUB_DEDICATED_REPO_REQUIRED",
+    )
+    require(
+        all(
+            type(e) is dict and e.get("path") in ("README.md", candidate_path)
+            and e.get("type") == "blob" and e.get("mode") == "100644"
+            and type(e.get("sha")) is str and SHA.fullmatch(e["sha"])
+            for e in entries
+        ),
+        "GITHUB_DEDICATED_REPO_REQUIRED",
+    )
+    require(
+        len({e["path"] for e in entries}) == len(entries), "GITHUB_DEDICATED_REPO_REQUIRED"
+    )
+    return entries
+
+
 def _pairs(items):
     value = {}
     for key, item in items:
@@ -277,26 +301,11 @@ class GitHubApp:
             "GITHUB_BASE_INVALID",
         )
         commit = await self.request("GET", root + "/git/commits/" + sha, token)
+        require(commit.get("sha") == sha, "GITHUB_BASE_INVALID")
         tree_sha = commit.get("tree", {}).get("sha")
         require(type(tree_sha) is str and SHA.fullmatch(tree_sha), "GITHUB_TREE_INVALID")
         tree = await self.request("GET", root + "/git/trees/" + tree_sha + "?recursive=1", token)
-        entries = tree.get("tree")
-        require(
-            tree.get("truncated") is False and type(entries) is list and 1 <= len(entries) <= 2,
-            "GITHUB_DEDICATED_REPO_REQUIRED",
-        )
-        require(
-            len({e.get("path") for e in entries}) == len(entries)
-            and all(
-                e.get("path") in ("README.md", self.config.path)
-                and e.get("type") == "blob"
-                and e.get("mode") == "100644"
-                and type(e.get("sha")) is str
-                and SHA.fullmatch(e["sha"])
-                for e in entries
-            ),
-            "GITHUB_DEDICATED_REPO_REQUIRED",
-        )
+        entries = dedicated_tree(tree, tree_sha, self.config.path)
         prior = next((e["sha"] for e in entries if e["path"] == self.config.path), None)
         original = b""
         if prior:
@@ -375,6 +384,16 @@ class GitHubApp:
             == "ProofFlow verified candidate " + self.branch(intent).split("-")[-1],
             "GITHUB_COMMIT_CHANGED",
         )
+        tree_sha = commit.get("tree", {}).get("sha")
+        require(type(tree_sha) is str and SHA.fullmatch(tree_sha), "GITHUB_TREE_INVALID")
+        tree = await self.request(
+            "GET", self.config.prefix + "/git/trees/" + tree_sha + "?recursive=1", token
+        )
+        entries = dedicated_tree(tree, tree_sha, self.config.path)
+        require(
+            any(e["path"] == self.config.path and e["sha"] == blob_sha(source) for e in entries),
+            "GITHUB_CANDIDATE_CHANGED",
+        )
         # Compare API confirms no other path changed, not just the candidate hash.
         diff = await self.request(
             "GET", self.config.prefix + "/compare/" + base_sha + "..." + head, token
@@ -416,6 +435,7 @@ class GitHubApp:
             array=True,
         )
         require(type(values) is list and len(values) <= 1, "GITHUB_PR_IDENTITY_AMBIGUOUS")
+        require(not values or type(values[0]) is dict, "GITHUB_PR_INVALID")
         return values[0] if values else None
 
     async def create_pr(self, token, intent, title, body):
@@ -438,6 +458,7 @@ class GitHubApp:
         )
 
     def verify_pr(self, value, intent, head, base_sha, title, body):
+        require(type(value) is dict, "GITHUB_PR_INVALID")
         require(
             type(value.get("head")) is dict
             and type(value.get("base")) is dict

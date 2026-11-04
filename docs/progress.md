@@ -1,5 +1,11 @@
 # Progress
 
+## November5 03:24 KST — readback hardening and recovery coverage
+
+Completed the non-PR Phase4 review: fixed final-commit tree/mode verification and malformed PR object handling. Matching-byte executable/symlink/submodule trees, truncated/wrong/duplicate/extra/missing entries and malformed shapes now fail. Added lost-response/DB-ack controller tests across all three write stages and real SQL commit/PR takeover/fencing checks.607 local passes/86 Linux skips, seven real SQL groups and four browser HTTP-double groups pass. [Evidence](evidence/phase4-readback-hardening-2026-11-05.json).
+
+Deployed image886e5044e05ce84b78c2fc10ae19019d577338b66e7808475d0020a4fb452bab:72 exact modules, only adapter changed. Actual installed App/private base/tree reads, absent expired branches/PRs, trusted static rejection checks, active services and private TLS boundaries pass. No PR write/preview, candidate execution, inference call or new resource. Credit$197.63; admissions closed. Offline image build first lacked dependency RUN cache; normal trusted build reused the existing hash-pinned layer without dependency changes. Phase4 remains incomplete at actual approved PR/readback/live recovery. No new approval prompt or human sign-off.
+
 ## November5 03:04 KST — late exact answer, no external write
 
 The exact fresh-preview approval was processed at03:02:23 KST, after01:48:41 expiry. Completion helper stopped. Actual read-only reconciliation found no recorded product approval, no durable write, no branch/PR and an unauthorized saved session; working App authentication remains valid. Credit$197.75; no new provider call/resource/worker execution. [Receipt](evidence/phase4-refresh-expired-2026-11-05.json). Added an explicit read-only refresh reconciliation mode and two tests proving it never POSTs approval. Thirteen scoped tests/Ruff pass. Owner reiterated no further approval questions while unavailable; none sent. Phase4 remains incomplete; no expiry change, replacement intent or write bypass.

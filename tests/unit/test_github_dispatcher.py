@@ -22,6 +22,7 @@ class App:
         self.uncertain = False
         self.accept = True
         self.base = "a" * 40
+        self.pr = None
 
     async def token(self):
         return "fixture-token"
@@ -40,10 +41,26 @@ class App:
     async def request(self, method, path, token, payload):
         self.writes.append((method, path, payload))
         if self.accept:
-            self.head = payload["sha"]
+            if path.endswith("/git/refs"):
+                self.head = payload["sha"]
+            elif path.endswith("/contents/pipeline.py"):
+                self.head = "c" * 40
+            else:
+                assert path.endswith("/pulls")
+                self.pr = {"number": 1}
         if self.uncertain:
             raise GitHubUncertain("GITHUB_WRITE_UNCONFIRMED")
         return {"not_evidence": "intentionally untrusted reply"}
+
+    async def verify_commit(self, token, intent, head, base, source):
+        assert head == "c" * 40 and base == self.base
+
+    async def find_pr(self, token, intent):
+        return self.pr
+
+    def verify_pr(self, value, intent, head, base, title, body):
+        assert value == self.pr and title == "fixture" and body == "inert"
+        return {"head_sha": head, "base_sha": base, "draft": True, "number": 1}
 
 
 class Store:
@@ -57,9 +74,15 @@ class Store:
         if op == "pr_claim":
             return (copy.deepcopy(self.job),)
         if op == "pr_begin":
-            self.job["state"] = "BRANCH_PENDING"
+            stage = args[-1]
+            self.job["state"] = stage.upper() + "_PENDING"
             if self.fail_begin:
                 raise ProductFailure("PRODUCT_OPERATION_UNCERTAIN")
+            if stage != "branch":
+                return ({"method": "PUT" if stage == "commit" else "POST",
+                         "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/"
+                         + ("contents/pipeline.py" if stage == "commit" else "pulls"),
+                         "payload": {}},)
             return (
                 {
                     "method": "POST",
@@ -73,7 +96,11 @@ class Store:
         if op == "pr_readback":
             if self.fail_record:
                 raise ProductFailure("PRODUCT_OPERATION_UNCERTAIN")
-            self.job["state"] = "BRANCH_READY"
+            stage = args[-2]
+            self.job["state"] = {
+                "branch": "BRANCH_READY", "commit": "COMMIT_READY", "pr": "COMPLETE"
+            }[stage]
+            self.job["head_sha"] = args[-1].obj["head_sha"]
         return (True,)
 
 
@@ -88,9 +115,16 @@ def fixture(state="APPROVED"):
         "configuration": asdict(app.config),
         "candidate_source": source,
         "binding": {"candidate_sha256": hashlib.sha256(source.encode()).hexdigest()},
-        "preview": {"candidate_source": source, "inspection": {"base_sha": "a" * 40}},
+        "preview": {"candidate_source": source, "inspection": {"base_sha": "a" * 40},
+                    "title": "fixture", "body": "inert"},
         "head_sha": None,
     }
+    if state == "BRANCH_READY":
+        app.head = "a" * 40
+        job["head_sha"] = app.head
+    elif state == "COMMIT_READY":
+        app.head = "c" * 40
+        job["head_sha"] = app.head
     store = Store(job)
     return GitHubDispatcher(store, app), store, app
 
@@ -157,3 +191,31 @@ def test_inspection_diff_is_inert_fixed_path_and_no_change_rejected():
     assert result["diff"].startswith("--- a/pipeline.py\n+++ b/pipeline.py\n")
     with pytest.raises(GitHubFailure, match="GITHUB_NO_CHANGE"):
         inspection({**base, "original": b"# inert\n"}, b"# inert\n")
+
+
+@pytest.mark.parametrize("state", ["APPROVED", "BRANCH_READY", "COMMIT_READY"])
+@pytest.mark.parametrize("fault", ["unaccepted", "accepted", "begin_ack", "readback_ack"])
+def test_every_write_stage_recovers_without_resending(state, fault):
+    async def check():
+        dispatcher, store, app = fixture(state)
+        app.uncertain = fault in ("accepted", "unaccepted")
+        app.accept = fault != "unaccepted"
+        store.fail_begin = fault == "begin_ack"
+        store.fail_record = fault == "readback_ack"
+        assert await dispatcher.once()
+        expected_writes = 0 if fault == "begin_ack" else 1
+        assert len(app.writes) == expected_writes
+        pending = store.job["state"].endswith("_PENDING")
+        assert pending == (fault != "accepted")
+        if pending:
+            store.fail_begin = store.fail_record = False
+            # A fresh controller sees the durable pending stage, not the prior process memory.
+            recovered = GitHubDispatcher(store, app)
+            assert await recovered.once()
+            assert len(app.writes) == expected_writes
+            if fault == "readback_ack":
+                assert not store.job["state"].endswith("_PENDING")
+            else:
+                assert store.job["state"].endswith("_PENDING")
+
+    asyncio.run(check())

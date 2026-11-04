@@ -1,5 +1,13 @@
 # Resume ProofFlow
 
+## November5 03:24 KST — non-PR hardening deployed and checked
+
+Owner requested all remaining Phase4 work that needs no new PR approval. Fixed missing resulting-commit tree/mode checks and malformed PR shape handling, then deployed image `886e5044e05ce84b78c2fc10ae19019d577338b66e7808475d0020a4fb452bab` on the existing VM. Only integrations/github_app.py changed among72 exact image files. Worker/verifier/contract/SQL unchanged; prior containers preserved. [Current receipt](evidence/phase4-readback-hardening-2026-11-05.json).
+
+607 Windows tests pass/86 Linux-only skipped; seven real disposable PostgreSQL groups and four mocked-HTTP browser groups pass. All branch/commit/PR stages now have lost-reply/DB-ack controller cases; real SQL adds commit/PR takeover/fencing/no-redispatch checks. Actual installed dispatcher App auth/private base/tree reads and trusted static malformed/mode rejection passed. These are not candidate executions or actual PR success. Both expired intents remain without branch/PR; zero durable writes. API/dispatcher/retention timer active; private TLS live/workbench200, anonymous403 and truthful readiness503.
+
+Credit$197.63 at2026-11-04T18:23:20Z; both admissions closed; guard review deadline unchanged2026-11-06T21:05:35.177139Z. No new resources/provider calls/worker jobs/previews. Keep repositories private. Remaining Phase4 integration acceptance is actual approved PR write/readback and live recovery checks; do not count doubles or mark Phase4 DONE. No repeated approval request/auto-renewal while owner unavailable. Non-PR acceptance audit is in test-plan.md; evaluation/full lifecycle/backups/public release retain Phase5/6 scope. No independent human sign-off.
+
 ## November5 03:04 KST — second late approval reconciled; no repeated requests
 
 Owner approved the exact fresh preview, but processing began at03:02:23 KST, after its01:48:41 expiry. Completion helper stopped; actual reconciliation confirms saved session403, intent still PREVIEW with approved_at null/current authority false, zero durable external writes and no branch/PR. Working App authentication passed; credit$197.75. [Current receipt](evidence/phase4-refresh-expired-2026-11-05.json). No new resources, model calls, worker jobs or admission changes. Phase4 remains incomplete; do not claim PR acceptance.

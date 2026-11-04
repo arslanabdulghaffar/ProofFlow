@@ -90,7 +90,13 @@ def test_commit_requires_single_allowed_path_exact_candidate_and_parent():
                 "sha": "b" * 40,
                 "parents": [{"sha": "a" * 40}],
                 "message": "ProofFlow verified candidate " + identity.hex,
+                "tree": {"sha": "c" * 40},
             }
+        if "/git/trees/" in path:
+            return {"sha": "c" * 40, "truncated": False, "tree": [
+                {"path": "pipeline.py", "type": "blob", "mode": "100644",
+                 "sha": blob_sha(source)},
+            ]}
         if "/compare/" in path:
             files = [{"filename": "pipeline.py", "status": "added", "sha": blob_sha(source)}]
             if extra:
@@ -159,3 +165,55 @@ def test_broad_installation_scope_rejected_before_minting_token():
         with pytest.raises(GitHubFailure, match="GITHUB_INSTALLATION_SCOPE_INVALID"):
             asyncio.run(app.token())
     assert len(calls) == 1 and calls[0][0] == "GET"
+
+
+@pytest.mark.parametrize("value", [None, [], 17, "unexpected", {"head": [], "base": {}}])
+def test_malformed_pr_readback_has_only_a_fixed_diagnostic(value):
+    app = GitHubApp(GitHubConfig("id", 1, 2), b"unused")
+    with pytest.raises(GitHubFailure, match="^GITHUB_PR_INVALID$"):
+        app.verify_pr(value, uuid4(), "a" * 40, "b" * 40, "title", "body")
+
+
+@pytest.mark.parametrize("mutation", [
+    "executable", "symlink", "submodule", "truncated", "wrong_tree", "duplicate",
+    "extra_path", "bad_entry", "missing_candidate", "wrong_blob",
+])
+def test_commit_readback_rejects_tree_changes_even_with_matching_contents(mutation):
+    app = GitHubApp(GitHubConfig("id", 1, 2), b"unused")
+    identity, source = uuid4(), b"# inert bytes; never executed\n"
+    entry = {"path": "pipeline.py", "mode": "100644", "type": "blob", "sha": blob_sha(source)}
+    tree = {"sha": "c" * 40, "truncated": False, "tree": [entry]}
+    if mutation in ("executable", "symlink", "submodule"):
+        entry["mode"] = {"executable": "100755", "symlink": "120000", "submodule": "160000"}[
+            mutation
+        ]
+    elif mutation == "truncated":
+        tree["truncated"] = True
+    elif mutation == "wrong_tree":
+        tree["sha"] = "d" * 40
+    elif mutation == "duplicate":
+        tree["tree"].append(dict(entry))
+    elif mutation == "extra_path":
+        tree["tree"].append({**entry, "path": ".github/workflows/run.yml"})
+    elif mutation == "bad_entry":
+        tree["tree"] = [None]
+    elif mutation == "missing_candidate":
+        entry["path"] = "README.md"
+    else:
+        entry["sha"] = "d" * 40
+    reads = []
+
+    async def request(method, path, token, **kwargs):
+        assert method == "GET"
+        reads.append(path)
+        if "/git/commits/" in path:
+            return {"sha": "b" * 40, "parents": [{"sha": "a" * 40}],
+                    "message": "ProofFlow verified candidate " + identity.hex,
+                    "tree": {"sha": "c" * 40}}
+        assert "/git/trees/" in path
+        return tree
+
+    app.request = request
+    with pytest.raises(GitHubFailure):
+        asyncio.run(app.verify_commit("fixture", identity, "b" * 40, "a" * 40, source))
+    assert len(reads) == 2  # Reject before trusting compare or potentially dereferenced contents.
