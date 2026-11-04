@@ -1,5 +1,13 @@
 # Resume ProofFlow
 
+## November5 KST — fresh exact preview requested and prepared
+
+Owner explicitly requested a fresh preview, continued Phase4 work and private/credit-only operation, then said unavailable. Fresh intent `709af4a1-4367-44f8-884a-8b4ec4f86fe5` reuses eligible version `ad9e5f6b-46ff-4366-b153-6e0a269d798d` without new execution/inference. Digest `adb999a8604549e75f1654eb709696b136aab542d4c9631470c9c8ba70fdb92a`; expiry **Nov5 01:48:41 KST**. Exact full diff/base/title/body are in private deployment/evidence/phase4-pr-preview-709af4a1-4367-44f8-884a-8b4ec4f86fe5.md and linked in one pending async approval request. General approval does not remove the product's concrete approval requirement. Do not repeat that question, auto-renew previews or dispatch without a matching timely answer.
+
+Private deployment/evidence/phase4-pr-refresh-20261105.json retains this intent and its unique encrypted session filename. `refresh_phase4_pr_preview.py` refuses rerun. The original expired intent/session/evidence remain untouched. The new saved session passed actual ACL/decryption readback. Credit$197.85 at16:38:35Z; product/inference admissions remained closed; no writes were authorized. [Source-bound refresh receipt](evidence/phase4-pr-refresh-2026-11-05.json).
+
+After an actual approval of this exact digest, use `complete_phase4_pr_approval.py --approved-preview-sha256 <approved digest>` while authority remains valid. It uses normal API approval and deployed dispatcher, independently reads exact GitHub commit/PR, checks three confirmed write receipts, completed-state dispatcher restart and idempotent approval replay. It cannot renew intent/session/expiry and never edits status. This completion helper is locally tested but its actual external path is NOT RUN; external HTTP-response-loss injection is not claimed. If expiry or another critical gate fails, retain the result and report it honestly. Phase4 remains IN PROGRESS until actual write/readback/recovery acceptance and verified checkpoint. Eleven scoped tests passed; no independent human review. Continue authorized independent work without generic continuation questions.
+
 ## November5 KST — key cleanup and expired approval reconciled
 
 Current checkpoint supersedes pending-setup statements below. Owner approved the exact PR and removal of unused key5183052, then became unavailable. The preview expired at2026-11-04T16:02:50.806942Z, before approval processing at16:03:42Z. Do not extend it, rebind the answer, or create a replacement intent while the owner is away. The product's exact external-action approval remains required despite standing development authorization.

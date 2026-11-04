@@ -1,5 +1,7 @@
 # Requirements traceability
 
+R30 fresh-preview follow-up: actual deployed eligibility/read-only preview and unique encrypted actor readback passed for a new owner-requested intent. Completion/readback/restart harness is prepared with eleven scoped local checks; actual external write remains NOT RUN pending this preview's concrete approval. [Refresh evidence](evidence/phase4-pr-refresh-2026-11-05.json). No composite row or Phase4 completion is promoted.
+
 Latest R30 evidence: dedicated App installation/authentication and real read-only preview passed. Specifically approved unused key removed; working key still authenticates. Owner's PR answer was processed after preview expiry, so actual write/readback/recovery remains NOT RUN. Reconciliation confirms zero durable writes and no branch/PR. No composite requirement is promoted to complete. [Scoped receipt](evidence/phase4-expired-approval-2026-11-05.json).
 
 Phase4 integration update: R20/R23/R26 now include actual browser activation/revocation, fresh batch lost-reply recovery and signed-event duplicate/revocation acceptance. Fixed App scope, concrete external approval, fenced outbox and readback have real SQL plus explicitly mocked HTTP evidence. R30 actual draft PR/readback remains NOT RUN until dedicated account setup and exact operator approval; no composite requirement is marked complete by those doubles. [Current scoped evidence](evidence/phase4-integrations-2026-11-04.json). Phase4 remains IN PROGRESS.

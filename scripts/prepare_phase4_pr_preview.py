@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import subprocess
 import time
 from datetime import UTC, datetime
@@ -13,7 +14,12 @@ WORKSPACE = "1c7529c0-b6c4-4f83-919a-d10942dce4ff"
 PARENT = "3a0b0fe9-ab79-4616-b2e5-b7b3a10012d2"
 
 
-def save_session(secret):
+def save_session(secret, name="phase4-pr-session.dpapi"):
+    require(
+        name == "phase4-pr-session.dpapi"
+        or re.fullmatch(r"phase4-pr-[a-f0-9]{32}\.dpapi", name) is not None,
+        "PRIVATE_SESSION_NAME_INVALID",
+    )
     # Fixed stdin-only DPAPI conversion; neither plaintext nor native errors are printed.
     script = (
         "$ErrorActionPreference='Stop';"
@@ -35,7 +41,7 @@ def save_session(secret):
         env={k: v for k, v in os.environ.items() if k.upper() != "PSMODULEPATH"},
     )
     require(result.returncode == 0 and len(result.stdout) > 100, "SESSION_ENCRYPTION_FAILED")
-    target = PRIVATE / "phase4-pr-session.dpapi"
+    target = PRIVATE / name
     with target.open("xb") as output:
         output.write(result.stdout)
         output.flush()

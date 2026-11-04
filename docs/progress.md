@@ -1,5 +1,11 @@
 # Progress
 
+## November5 KST — fresh exact PR preview and completion harness
+
+On the owner's explicit request, generated one new real read-only preview of the existing active verified version. Actual API eligibility and unchanged candidate checks passed; encrypted actor save/ACL/decryption readback passed. No model call, worker job, new resource or external write. Credit$197.85; both admission controls stayed closed. Exact intent/digest/expiry and the complete review artifact were presented in one concrete approval request. Prior expired intent and evidence were preserved. [Receipt](evidence/phase4-pr-refresh-2026-11-05.json).
+
+Prepared a trusted completion harness for exact approved API dispatch, independent GitHub source/PR readback, three confirmed durable writes, completed-state restart and duplicate-approval checks. It is NOT RUN against the external write path until concrete approval arrives. Eleven scoped tests pass, including changed digest/content, expiry, revocation, repeat-approval and private-session path rejection; no live PR success is claimed. Phase4 remains IN PROGRESS. Broad permission and owner absence do not waive the product's exact external-action control.
+
 ## November5 KST — approved key cleanup, expired PR preserved
 
 Removed only the specifically approved unused App key5183052. Working key5183074 still authenticates against the private demo repository; Actions remain disabled and hooks absent. The owner's exact PR approval reached processing after its preview expired. No approval override or replacement intent was created. Actual reconciliation found zero durable external writes, no branch/PR and an unauthorized saved temporary session. The initial probe expected logout200 rather than204 and failed before saving its final receipt; the corrected readback records that limitation instead of claiming a retained expiry409 result. [Receipt](evidence/phase4-expired-approval-2026-11-05.json).

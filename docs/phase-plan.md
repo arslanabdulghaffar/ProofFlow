@@ -1,6 +1,6 @@
 # Phase plan and solo-first backlog
 
-Current status: Phase1–3 DONE; Phase4 IN PROGRESS. Deployed exact activation, fresh browser batches and signed ingress pass; GitHub integration has local/SQL evidence but actual separately approved PR/readback awaits dedicated App setup. [Phase4 integration checkpoint](evidence/phase4-integrations-2026-11-04.json). Final evaluation, full retention lifecycle and portable backups remain Phase5/6 gates.
+Current status: Phase1–3 DONE; Phase4 IN PROGRESS. Deployed exact activation, fresh browser batches and signed ingress pass; dedicated GitHub App setup/authentication and real read-only preview passed. A fresh exact preview has been presented; actual separately approved PR/readback is pending. [Current preview evidence](evidence/phase4-pr-refresh-2026-11-05.json). Final evaluation, full retention lifecycle and portable backups remain Phase5/6 gates.
 
 Only the project owner is a confirmed human; Codex assists. Human hours are unknown. The PDF's three-person, 140–180-hour assumption is **not** the committed plan. Its work estimates (132–170h +8–10h contingency) remain a warning about scope, not a solo productivity promise. Do one complete deployed workflow first. Do not schedule the owner as three simultaneous reviewers. No agent delegation/subagents were requested or used in Phase 0.
 

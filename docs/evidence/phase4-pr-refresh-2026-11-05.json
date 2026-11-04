@@ -1,0 +1,64 @@
+{
+  "status": "REAL_FRESH_PREVIEW_READY_EXACT_APPROVAL_PENDING_PHASE4_INCOMPLETE",
+  "observed_at": "2026-11-04T16:38:45.825588+00:00",
+  "intent": "709af4a1-4367-44f8-884a-8b4ec4f86fe5",
+  "version": "ad9e5f6b-46ff-4366-b153-6e0a269d798d",
+  "previous_intent_preserved": "5bcb30d6-05d9-4381-b466-6a2ba948909f",
+  "preview_sha256": "adb999a8604549e75f1654eb709696b136aab542d4c9631470c9c8ba70fdb92a",
+  "expires_at": "2026-11-04T16:48:41.534923+00:00",
+  "repository": "arslanabdulghaffar/ProofFlow-Demo",
+  "private": true,
+  "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+  "branch": "proofflow/intent-709af4a1436744f8884a8b4ec4f86fe5",
+  "candidate_sha256": "1f73e19f23332f1c4e7bc2731ca7aa878d681fb54d35ddcd9f438ea3ecc1880e",
+  "approved_at": null,
+  "writes": [],
+  "review_artifact_name": "phase4-pr-preview-709af4a1-4367-44f8-884a-8b4ec4f86fe5.md",
+  "review_artifact_sha256": "f719be8a1a63c4749a5a96a7496a1e552f87f49d67f26649b9d43a6e36e090c3",
+  "session_storage": "Unique DPAPI file outside Git; actual owner/SYSTEM ACL/decryption readback passed",
+  "new_worker_jobs": 0,
+  "new_model_calls": 0,
+  "new_cloud_resources": 0,
+  "product_inference_admission": "remained closed",
+  "credit": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-04T16:38:35.212993+00:00",
+    "remaining_credit": "197.85",
+    "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+  },
+  "checks": {
+    "scoped_pytest": "11 passed",
+    "ruff": "passed",
+    "actual_pr_write_readback_restart": "NOT_RUN pending exact approval",
+    "external_response_loss": "NOT_INJECTED; earlier SQL/HTTP doubles only"
+  },
+  "source_files": [
+    {
+      "path": "scripts/refresh_phase4_pr_preview.py",
+      "sha256": "a82311312a2fdf409c86d02c862c35354e82ea8c10f5add04b2c3dda8bb12403",
+      "pre_normalization_sha256": "a82311312a2fdf409c86d02c862c35354e82ea8c10f5add04b2c3dda8bb12403"
+    },
+    {
+      "path": "scripts/complete_phase4_pr_approval.py",
+      "sha256": "192189edf2702bdab0c014296abd5e002ade52407e725cce1acd7a15d5268255",
+      "pre_normalization_sha256": "192189edf2702bdab0c014296abd5e002ade52407e725cce1acd7a15d5268255"
+    },
+    {
+      "path": "scripts/prepare_phase4_pr_preview.py",
+      "sha256": "a688119cd877ec957835784fff47b64d098c286edaba21bdaf1fa847b64e8629",
+      "pre_normalization_sha256": "a688119cd877ec957835784fff47b64d098c286edaba21bdaf1fa847b64e8629"
+    },
+    {
+      "path": "scripts/check_phase4_expired_approval.py",
+      "sha256": "9b0711bed940dd4a46c170f6c0ca549b4219bdaa08a6cf93e37145ad8b80d7cc",
+      "pre_normalization_sha256": "9b0711bed940dd4a46c170f6c0ca549b4219bdaa08a6cf93e37145ad8b80d7cc"
+    },
+    {
+      "path": "tests/unit/test_pr_approval_admin.py",
+      "sha256": "694926d5f8cbf731553f59e7b9980119e495bf3004dbb588f49fac70f036106d",
+      "pre_normalization_sha256": "694926d5f8cbf731553f59e7b9980119e495bf3004dbb588f49fac70f036106d"
+    }
+  ],
+  "normalization": "CRLF to LF only; no semantic change",
+  "critical_review": "Separate Codex pass; not independent human review"
+}

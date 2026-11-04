@@ -3,6 +3,7 @@
 import asyncio
 import json
 import os
+import re
 import ssl
 import subprocess
 from datetime import UTC, datetime
@@ -12,10 +13,16 @@ from prepare_github_app import preflight, protected_local
 from product_live_session import ORIGIN, PRIVATE, LiveSession, require
 
 
-def existing_session():
+def existing_session(name="phase4-pr-session.dpapi"):
+    require(
+        name == "phase4-pr-session.dpapi"
+        or re.fullmatch(r"phase4-pr-[a-f0-9]{32}\.dpapi", name) is not None,
+        "PRIVATE_SESSION_NAME_INVALID",
+    )
     script = r"""
 $ErrorActionPreference='Stop'
-$path=Join-Path $env:USERPROFILE '.proofflow\deployment\phase4-pr-session.dpapi'
+$root=Join-Path $env:USERPROFILE '.proofflow\deployment'
+$path=Join-Path $root $env:PROOFFLOW_SESSION_FILE
 $item=Get-Item -LiteralPath $path -Force
 if($item.PSIsContainer -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -or
    $item.Length -gt 65536){throw 'path'}
@@ -39,7 +46,10 @@ finally {[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr);$secure.Dispose()
         ],
         capture_output=True,
         timeout=20,
-        env={k: v for k, v in os.environ.items() if k.upper() != "PSMODULEPATH"},
+        env={
+            **{k: v for k, v in os.environ.items() if k.upper() != "PSMODULEPATH"},
+            "PROOFFLOW_SESSION_FILE": name,
+        },
     )
     require(result.returncode == 0, "PRIVATE_SESSION_UNAVAILABLE")
     value = json.loads(result.stdout)
