@@ -15,8 +15,7 @@ from vultr_phase1 import PRIVATE, ROOT, Admin
 def main():
     deployment = json.loads((PRIVATE / "evidence/verifier-deployment.json").read_bytes())
     provider = json.loads((PRIVATE / "repair-provider.json").read_bytes())
-    if datetime.fromisoformat(provider["quote"]["valid_until"]) <= datetime.now(UTC):
-        raise RuntimeError("FRESH_REPAIR_QUOTE_REQUIRED")
+    quote_expired = datetime.fromisoformat(provider["quote"]["valid_until"]) <= datetime.now(UTC)
     settings = {"verifier_deployment": deployment["deployment"], "repair_provider": provider}
     files = {"settings.json": json.dumps(settings, sort_keys=True).encode(),
              "install_product_services.py": (
@@ -43,6 +42,14 @@ def main():
 
         if host("cat /etc/machine-id").decode().strip() != admin.state["control_machine_id"]:
             raise RuntimeError("DESIGNATED_CONTROL_CHANGED")
+        # Software-only work may retain an expired quote while paid dispatch is
+        # durably blocked. The provider itself still refuses every stale quote.
+        if quote_expired:
+            blocked = host("docker exec --user=70:70 proofflow-budget psql -X -qAt "
+                "-h /run/proofflow-budget -U postgres -d proofflow_budget -c "
+                '"SELECT count(*)=1 AND bool_and(blocked) FROM pf_budget.accounts;"').strip()
+            if blocked != b"t":
+                raise RuntimeError("FRESH_REPAIR_QUOTE_OR_BLOCKED_INFERENCE_REQUIRED")
         present = host("docker image ls --no-trunc --quiet sha256:" + IMAGE).strip()
         if not present:
             exported = subprocess.run(  # noqa: S603 - trusted pinned image; no candidate execution

@@ -1,5 +1,11 @@
 # Progress
 
+## Phase4 versions/batches checkpoint — continuing
+
+Exact-version approval and fresh-batch HTTP path now pass on the deployed worker. Clean fresh data completed; missing customer held with blocking evidence; invalid extra columns were rejected before execution; queued revocation cancelled work and preserved affected completed history. Real retirement erased the disposable version/batch/approval/journal state and preserved earlier records. Four SQL security groups cover actor/digest/CAS/idempotency, frozen assignment, revocation and global runtime rollback invalidation;11 prior queue groups and534 Windows tests pass. No provider calls or new cloud resources. [Source-bound evidence](evidence/phase4-versions-batches-2026-11-04.json).
+
+Phase4 remains IN PROGRESS. Browser controls are implemented but not yet live-tested. GitHub App setup is pending, while client/outbox/signed ingress development continues. No external PR or human approval claim. Checkpointing is not a request to stop.
+
 ## Phase3 bounded repair — acceptance passed, November4
 
 Completed the private bounded Vultr workflow with immutable proposals, three-call/five-minute/per-job money bounds, durable budget claims, exact worker/verifier bindings, fresh protected canaries, bounded retry/clarification/abstention, cancellation/reconciliation and raw retirement. Already-correct originals receive fresh checks with zero model calls. Passing produces reviewable export, never activation. Browser shows committed attempts/checks/events and model diagnosis as an unverified explanation; bounded ZIP contains hashed authorized evidence and isolated replay instructions, excludes protected rows and private reasoning.

@@ -1,4 +1,5 @@
 // Private browser client. All execution, approval and evidence authority stays on the server.
+import {installVersions} from "./versions.js";
 import {savePending, loadPending, clearPending} from "./recovery.js";
 const $ = id => document.getElementById(id);
 const kinds = ["pipeline", "transactions", "customers", "contract"];
@@ -18,13 +19,14 @@ async function api(path, method="GET", data, raw=false) {
   if (!response.ok) { const value=await response.json().catch(()=>({})); throw new Error((value.error?.code||"REQUEST_FAILED")+(value.error?.request_id?" · request "+value.error.request_id:"")); }
   return response.status===204 ? null : response.json();
 }
+const versions = installVersions({api, notice, currentSession:()=>session});
 async function refreshSession() {
   try { const current=await api("/v1/session");if(session&&session.workspace_id!==current.workspace_id)resetWorkspace();session=current; $("access").hidden=true; $("workspace").hidden=false;
     $("identity").textContent="Workspace "+session.workspace_id+" · access expires "+new Date(session.expires_at).toLocaleString();
     notice("Private workspace connected. Use synthetic data only.");
   } catch { resetWorkspace();session=null; $("access").hidden=false; $("workspace").hidden=true; notice("Open your provisioned workspace to begin."); }
 }
-function resetWorkspace(){holdPending(false);stream?.close();stream=null;assets={};uploadIds={};approved=false;requestBody=null;job=null;lastEvent=0n;$("files").reset();for(const kind of kinds)invalidate(kind);$("job").hidden=true;$("confirm-delete").checked=false;$("delete").disabled=true;$("upload-status").textContent="";}
+function resetWorkspace(){versions.reset();holdPending(false);stream?.close();stream=null;assets={};uploadIds={};approved=false;requestBody=null;job=null;lastEvent=0n;$("files").reset();for(const kind of kinds)invalidate(kind);$("job").hidden=true;$("confirm-delete").checked=false;$("delete").disabled=true;$("upload-status").textContent="";}
 $("login").addEventListener("submit",async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;
   try { await api("/v1/session/import","POST",{session_token:$("session-token").value,csrf_token:$("csrf-token").value}); $("login").reset(); await refreshSession();resumePending(); }
   catch(error){notice(error.message,true);}finally{button.disabled=false;}
@@ -77,6 +79,7 @@ resumePending();
 let repairId=new URL(location.href).searchParams.get("repair");
 if(repairId&&!/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(repairId))repairId=null;
 async function refreshRepair(){if(!repairId)return;const value=await api("/v1/repairs/"+repairId);
+  versions.repair(repairId,value.state);
   $("repair-state").textContent=value.state.replaceAll("_"," ")+" · "+(value.outcome||"Waiting for committed evidence")+" · "+value.calls+"/3 calls · $"+(value.reserved_micro/1000000).toFixed(4)+" reserved (not an invoice)";
   $("repair-attempts").replaceChildren();for(const attempt of value.attempts){const li=document.createElement("li");const p=attempt.proposal;li.textContent="Attempt "+attempt.ordinal+" · "+(p?.kind||attempt.outcome||"Provider outcome pending")+(p?.diagnosis?" · Model diagnosis (unverified explanation): "+p.diagnosis:"")+(p?.questions?" · "+p.questions.join("; "):"");$("repair-attempts").append(li);}
   for(const check of value.checks){const li=document.createElement("li");li.textContent="Execution "+check.generation+" · "+check.purpose.replaceAll("_"," ")+" · "+(check.comparison||"No accepted comparison")+" · "+(check.cleanup_confirmed?"cleanup confirmed":"cleanup pending");$("repair-attempts").append(li);}
@@ -93,3 +96,5 @@ $("repair-start").addEventListener("click",async()=>{if(!job)return;$("repair-st
 $("repair-refresh").addEventListener("click",()=>refreshRepair().catch(error=>notice(error.message,true)));
 $("repair-cancel").addEventListener("click",async()=>{try{await api("/v1/repairs/"+repairId+"/cancel","POST");await refreshRepair();}catch(error){notice(error.message,true);}});
 if(session&&repairId)await refreshRepair().catch(error=>notice(error.message,true));
+
+if(session)await versions.resume().catch(error=>notice(error.message,true));

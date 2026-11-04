@@ -169,9 +169,11 @@ def create_product_app(store, assets, *, origin: str, journals=None):
     async def store_failure(request, error):
         code = str(error)
         status = (400 if code == "INVALID_EVENT_CURSOR" else 403 if code == "ACCESS_DENIED"
-                  else 429 if code in ("ASSET_QUOTA", "JOB_CAPACITY")
-                  else 404 if code == "JOB_NOT_FOUND" else 409 if code.endswith("CONFLICT")
-                  or code in ("CONTRACT_REVOKED", "EXACT_CONTRACT_REQUIRED") else 503)
+                  else 429 if code in ("ASSET_QUOTA", "JOB_CAPACITY", "VERSION_CAPACITY")
+                  else 404 if code in ("JOB_NOT_FOUND", "VERSION_NOT_FOUND")
+                  else 409 if code.endswith("CONFLICT") or code in (
+                      "CONTRACT_REVOKED", "EXACT_CONTRACT_REQUIRED", "VERSION_NOT_ELIGIBLE",
+                      "EXACT_VERSION_APPROVAL_REQUIRED", "VERSION_ASSET_MISMATCH") else 503)
         return failure(request.scope, code, status)
 
     @app.get("/", response_class=Response)
@@ -180,7 +182,8 @@ def create_product_app(store, assets, *, origin: str, journals=None):
 
     @app.get("/static/{name}")
     async def static(name: str):
-        types = {"intake.js": "application/javascript", "recovery.js": "application/javascript",
+        types = {"versions.js": "application/javascript", "intake.js": "application/javascript",
+                 "recovery.js": "application/javascript",
                  "intake.css": "text/css"}
         if name not in types:
             raise HttpFailure(404, "ASSET_NOT_FOUND")
@@ -524,4 +527,6 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         await store.call("delete", workspace, token, csrf)
         return {"access_revoked": True, "deletion": "queued"}
 
+    from api.app.version_routes import install_version_routes
+    install_version_routes(app, store, assets, authorize)
     return app

@@ -11,12 +11,14 @@ api/app/**
 !api/app/assets.py
 !api/app/workspace_assets.py
 !api/app/evidence_bundle.py
+!api/app/version_routes.py
 !api/app/product.py
 !api/app/wire.py
 !api/app/static/
 api/app/static/**
 !api/app/static/index.html
 !api/app/static/intake.js
+!api/app/static/versions.js
 !api/app/static/recovery.js
 !api/app/static/intake.css
 !api/app/product_store.py

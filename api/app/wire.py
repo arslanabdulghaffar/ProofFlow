@@ -190,8 +190,15 @@ class RepairSummary(Wire):
     checks: Annotated[list[RepairCheck], Field(max_length=9)]
     id: Identifier
     parent_id: Identifier
-    state: Literal["QUEUED", "RUNNING", "RECONCILING", "AWAITING_APPROVAL", "NEEDS_REVIEW",
-                   "FAILED_INFRA", "CANCELLED"]
+    state: Literal[
+        "QUEUED",
+        "RUNNING",
+        "RECONCILING",
+        "AWAITING_APPROVAL",
+        "NEEDS_REVIEW",
+        "FAILED_INFRA",
+        "CANCELLED",
+    ]
     outcome: str | None
     calls: Annotated[int, Field(ge=0, le=3)]
     reserved_micro: Annotated[int, Field(ge=0, le=500000)]
@@ -208,7 +215,87 @@ class RepairExport(Wire):
     activation_approved: Literal[False]
 
 
+class VersionPrepareRequest(Wire):
+    prepare_verified_source: Literal[True]
+
+
+class VersionPrepared(Wire):
+    version_id: Identifier
+    pipeline_id: Identifier
+
+
+class VersionPreviewRequest(Wire):
+    intent_id: Identifier
+
+
+class ApprovalBundle(Wire):
+    schema_version: Literal["proofflow-approval-v1"]
+    workspace_id: Identifier
+    pipeline_id: Identifier
+    version_id: Identifier
+    repair_id: Identifier
+    candidate_sha256: Digest
+    contract_id: Identifier
+    contract_sha256: Digest
+    evidence_sha256: Digest
+    runtime_sha256: Digest
+    verifier_sha256: Digest
+    verification_epoch: Sequence
+    expected_active_version: Identifier | None
+    pipeline_revision: Sequence
+    revocation_epoch: Sequence
+    actor_sha256: Digest
+    intent_id: Identifier
+    action: Literal["activate_exact_version"]
+    created_at: str
+
+
+class VersionPreview(Wire):
+    intent_id: Identifier
+    bundle: ApprovalBundle
+    bundle_sha256: Digest
+    expires_at: str
+
+
+class VersionApprovalRequest(Wire):
+    intent_id: Identifier
+    bundle_sha256: Digest
+    confirm: Literal[True]
+
+
+class VersionApprovalResponse(Wire):
+    version_id: Identifier
+    approved: Literal[True]
+    already_applied: bool
+
+
+class VersionRevokeRequest(Wire):
+    expected_revision: Sequence
+    confirm: Literal[True]
+
+
+class BatchRequest(Wire):
+    version_id: Identifier
+    transactions_id: Identifier
+    customers_id: Identifier
+    idempotency_key: Identifier
+
+
+class BatchResponse(Wire):
+    batch_id: Identifier
+    status_url: Annotated[str, Field(pattern=r"^/v1/batches/[0-9a-f-]{36}$")]
+
+
 MODELS = (
+    VersionPrepareRequest,
+    VersionPrepared,
+    VersionPreviewRequest,
+    VersionPreview,
+    VersionApprovalRequest,
+    VersionApprovalResponse,
+    VersionRevokeRequest,
+    BatchRequest,
+    BatchResponse,
     RepairRequest,
     RepairResponse,
     RepairSummary,

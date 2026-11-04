@@ -1,5 +1,15 @@
 # Resume ProofFlow
 
+## Phase4 in progress — exact versions and fresh batches passed
+
+Phase1–3 DONE (Phase3 remote7a4bb06fcc354098c805ea48ca2d31aa9ec4adfb). Phase4 is authorized and IN PROGRESS; continue through checkpoints without asking to continue. Current product image fe3f04b2851b4db06c35c205520748425db615025f1fa60a6610eb3faefef8b2,65 allowlisted files; migrations001–012 applied. Preserve every applied SQL byte:011/012 are LF;008–010 retain their explicit -text attributes. Runtime/verifier/contract unchanged. [Evidence](evidence/phase4-versions-batches-2026-11-04.json).
+
+Implemented server-bound version prepare/preview/approve/revoke and immutable fresh-batch assignment over the proven queue. Same-intent approval is historical replay, stale previews fail, ordinary activation never rebinds old batches, revocation guards dispatch/capture/completion and historical eligibility. Runtime/verifier changes away and back cannot revive old verification. New browser controls exist; Phase4 browser acceptance has NOT RUN yet.534 Windows tests/78 Linux skips;4 new real SQL groups and11 existing queue groups pass; real HTTP isolated clean/held/cancel/retention passed with zero provider calls. First held fixture added an undeclared segment column and correctly received input_rejected; same preserved workspace was resumed with a missing-customer fixture, which actually executed and held. No contract/verifier/limit changed. Disposable guest deleted; prior7 workspaces/40 assets/10 jobs preserved,0 retained versions. Do not blindly rerun phase4-batches intents; actual results are outside Git.
+
+Next: GitHub App client, exact concrete PR preview/approval/outbox/readback and signed replay-safe batch ingress, plus browser/recovery acceptance. Account setup is pending via the single async request and [GitHub setup](github-setup.md); do not repeatedly ask or put development Git credentials into product. No real external PR authorized/performed. A concrete final PR preview requires separate operator approval. Optional cryptography50.0.2/cffi2.1.1/pycparser3.12 locked/installed locally; no known advisories in the scoped scan, not deployed yet. No independent human review.
+
+Product and inference admission are closed after probes. Existing quote may be expired: software-only upgrades are allowed only with the durable inference budget blocked; paid requests still require fresh verified rates/quote. No new services/resources. Keep $150/$25 credit-only limits and existing guard review deadline. Phase4 is not DONE until all acceptance including actual authorized GitHub readback and mandatory remote checkpoint pass.
+
 ## Phase3 acceptance passed — current checkpoint
 
 Phase1/2 DONE. Phase3 technical acceptance PASSED; ordinary commit/push and remote SHA match complete this checkpoint (read final report/Git HEAD). Continue the owner's authorized work without generic continuation questions. No owner action is currently needed. Keep private and credit-only $150 total/$25 inference. [Phase3 acceptance](evidence/phase3-acceptance-2026-11-04.json) supersedes older status below.

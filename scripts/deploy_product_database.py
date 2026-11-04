@@ -16,7 +16,8 @@ def main():
               "004_termination_evidence.sql", "005_job_event_replay.sql",
               "006_browser_session.sql", "007_workspace_retention.sql",
               "008_bounded_repair.sql", "009_repair_retention.sql",
-              "010_original_proof_bundle.sql")}
+              "010_original_proof_bundle.sql",
+              "011_versions_batches.sql", "012_version_retention.sql")}
     files = {name: path.read_bytes() for name, path in paths.items()}
     manifest = {"migrations": {
         name: hashlib.sha256(raw).hexdigest() for name, raw in files.items()}}

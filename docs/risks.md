@@ -1,5 +1,7 @@
 # Risks and owner decisions
 
+Phase4 current: actual private version approval/fresh batch/held/revocation/retirement path passes. GitHub App credential/setup is the pending external dependency; one async request and github-setup.md provide the exact private setup. Continue independent outbox/ingress/browser/recovery work. Never substitute development Git credentials or count mocked PR responses as integration. Concrete product PR approval remains separate. No Phase4 completion or independent human sign-off claimed.
+
 Phase3 acceptance now passed: actual model patch, isolated candidate/protected checks, unchanged-source zero-model path, exact-byte replay, browser/bundle and raw repair deletion. Prior failed proposals/runs remain evidence, not hidden successes. No owner input needed. Private synthetic only; Phase4 activation/batch/external approval, Phase5 held-out evaluation/metadata-worker lifecycle and Phase6 deletion-aware backups/publication remain. No independent human sign-off, provider hard-stop guarantee or personal spending authorization.
 
 Operational follow-up: provider quotes expire after one hour. Install a reviewed closed-idle quote refresh before future paid calls; current config immutability deliberately rejects blind replacement. Project/inference admissions remain closed after probes; no need to re-ask billing/continuation. Credit$198.50 observed, total inference held$0.390761, existing guard review deadline unchanged. [Phase3 acceptance](evidence/phase3-acceptance-2026-11-04.json).

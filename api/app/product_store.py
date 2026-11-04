@@ -9,6 +9,13 @@ import psycopg
 from orchestrator.budget_store import BudgetConnection, BudgetUnavailable
 
 API_OPERATIONS = {
+    "version_prepare": ("SELECT pf_product.prepare_version(%s,%s,%s,%s,%s)", 5),
+    "version_get": ("SELECT pf_product.get_version(%s,%s,%s)", 3),
+    "version_preview": ("SELECT pf_product.preview_version(%s,%s,%s,%s,%s)", 5),
+    "version_approve": ("SELECT pf_product.approve_version(%s,%s,%s,%s,%s,%s)", 6),
+    "version_revoke": ("SELECT pf_product.revoke_version(%s,%s,%s,%s,%s)", 5),
+    "batch_enqueue": ("SELECT pf_product.enqueue_batch(%s,%s,%s,%s,%s,%s,%s,%s,%s)", 9),
+    "batch_get": ("SELECT pf_product.get_batch(%s,%s,%s)", 3),
     "repair_enqueue": ("SELECT pf_product.enqueue_repair(%s,%s,%s,%s,%s,%s)", 6),
     "repair_bundle": ("SELECT pf_product.repair_bundle(%s,%s,%s)", 3),
     "repair_export": ("SELECT pf_product.export_repair(%s,%s,%s)", 3),
@@ -49,6 +56,8 @@ DISPATCH_OPERATIONS = {
     "fail": ("SELECT pf_product.fail_original(%s,%s,%s,%s,%s)", 5),
 }
 KNOWN_ERRORS = frozenset({
+    "VERSION_NOT_ELIGIBLE", "VERSION_ASSET_MISMATCH", "VERSION_CONFLICT", "VERSION_CAPACITY",
+    "EXACT_VERSION_APPROVAL_REQUIRED", "VERSION_NOT_FOUND",
     "REPAIR_PARENT_INVALID", "REPAIR_CALL_ALREADY_PREPARED", "REPAIR_BUDGET_EXHAUSTED",
     "REPAIR_OUTCOME_UNCERTAIN", "REPAIR_DEVELOPMENT_ALLOCATION", "REPAIR_RECEIPT_CONFLICT",
     "REPAIR_PROPOSAL_INVALID", "REPAIR_OUTCOME_INVALID", "REPAIR_PROOF_INCOMPLETE",

@@ -2,6 +2,135 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:proofflow:browser:v1",
   "$defs": {
+    "ApprovalBundle": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "proofflow-approval-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "workspace_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "pipeline_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Pipeline Id",
+          "type": "string"
+        },
+        "version_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "repair_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Repair Id",
+          "type": "string"
+        },
+        "candidate_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Candidate Sha256",
+          "type": "string"
+        },
+        "contract_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Contract Id",
+          "type": "string"
+        },
+        "contract_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "evidence_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidence Sha256",
+          "type": "string"
+        },
+        "runtime_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Sha256",
+          "type": "string"
+        },
+        "verifier_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Verifier Sha256",
+          "type": "string"
+        },
+        "verification_epoch": {
+          "pattern": "^(0|[1-9][0-9]{0,18})$",
+          "title": "Verification Epoch",
+          "type": "string"
+        },
+        "expected_active_version": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Active Version"
+        },
+        "pipeline_revision": {
+          "pattern": "^(0|[1-9][0-9]{0,18})$",
+          "title": "Pipeline Revision",
+          "type": "string"
+        },
+        "revocation_epoch": {
+          "pattern": "^(0|[1-9][0-9]{0,18})$",
+          "title": "Revocation Epoch",
+          "type": "string"
+        },
+        "actor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Actor Sha256",
+          "type": "string"
+        },
+        "intent_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Intent Id",
+          "type": "string"
+        },
+        "action": {
+          "const": "activate_exact_version",
+          "title": "Action",
+          "type": "string"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "workspace_id",
+        "pipeline_id",
+        "version_id",
+        "repair_id",
+        "candidate_sha256",
+        "contract_id",
+        "contract_sha256",
+        "evidence_sha256",
+        "runtime_sha256",
+        "verifier_sha256",
+        "verification_epoch",
+        "expected_active_version",
+        "pipeline_revision",
+        "revocation_epoch",
+        "actor_sha256",
+        "intent_id",
+        "action",
+        "created_at"
+      ],
+      "title": "ApprovalBundle",
+      "type": "object"
+    },
     "ApprovalRequest": {
       "additionalProperties": false,
       "properties": {
@@ -99,6 +228,60 @@
         "validation"
       ],
       "title": "AssetResponse",
+      "type": "object"
+    },
+    "BatchRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "version_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "transactions_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Transactions Id",
+          "type": "string"
+        },
+        "customers_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Customers Id",
+          "type": "string"
+        },
+        "idempotency_key": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Idempotency Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version_id",
+        "transactions_id",
+        "customers_id",
+        "idempotency_key"
+      ],
+      "title": "BatchRequest",
+      "type": "object"
+    },
+    "BatchResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Batch Id",
+          "type": "string"
+        },
+        "status_url": {
+          "pattern": "^/v1/batches/[0-9a-f-]{36}$",
+          "title": "Status Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "batch_id",
+        "status_url"
+      ],
+      "title": "BatchResponse",
       "type": "object"
     },
     "BrowserSessionRequest": {
@@ -978,6 +1161,161 @@
         "expires_at"
       ],
       "title": "SessionResponse",
+      "type": "object"
+    },
+    "VersionApprovalRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "intent_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Intent Id",
+          "type": "string"
+        },
+        "bundle_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Bundle Sha256",
+          "type": "string"
+        },
+        "confirm": {
+          "const": true,
+          "title": "Confirm",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "intent_id",
+        "bundle_sha256",
+        "confirm"
+      ],
+      "title": "VersionApprovalRequest",
+      "type": "object"
+    },
+    "VersionApprovalResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "version_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "approved": {
+          "const": true,
+          "title": "Approved",
+          "type": "boolean"
+        },
+        "already_applied": {
+          "title": "Already Applied",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "version_id",
+        "approved",
+        "already_applied"
+      ],
+      "title": "VersionApprovalResponse",
+      "type": "object"
+    },
+    "VersionPrepareRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "prepare_verified_source": {
+          "const": true,
+          "title": "Prepare Verified Source",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "prepare_verified_source"
+      ],
+      "title": "VersionPrepareRequest",
+      "type": "object"
+    },
+    "VersionPrepared": {
+      "additionalProperties": false,
+      "properties": {
+        "version_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "pipeline_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Pipeline Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version_id",
+        "pipeline_id"
+      ],
+      "title": "VersionPrepared",
+      "type": "object"
+    },
+    "VersionPreview": {
+      "additionalProperties": false,
+      "properties": {
+        "intent_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Intent Id",
+          "type": "string"
+        },
+        "bundle": {
+          "$ref": "#/$defs/ApprovalBundle"
+        },
+        "bundle_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Bundle Sha256",
+          "type": "string"
+        },
+        "expires_at": {
+          "title": "Expires At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intent_id",
+        "bundle",
+        "bundle_sha256",
+        "expires_at"
+      ],
+      "title": "VersionPreview",
+      "type": "object"
+    },
+    "VersionPreviewRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "intent_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Intent Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intent_id"
+      ],
+      "title": "VersionPreviewRequest",
+      "type": "object"
+    },
+    "VersionRevokeRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_revision": {
+          "pattern": "^(0|[1-9][0-9]{0,18})$",
+          "title": "Expected Revision",
+          "type": "string"
+        },
+        "confirm": {
+          "const": true,
+          "title": "Confirm",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expected_revision",
+        "confirm"
+      ],
+      "title": "VersionRevokeRequest",
       "type": "object"
     }
   }
