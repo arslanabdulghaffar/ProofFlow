@@ -14,7 +14,7 @@ from vultr_credit_guard import run as credit_guard
 from vultr_phase1 import PRIVATE, Admin
 
 TABLES = ("workspaces", "sessions", "assets", "uploads", "execution_policy",
-          "contract_approvals", "jobs", "job_events")
+          "contract_approvals", "jobs", "job_events", "deletions")
 AUTH_PROBE = """
 import json,sys,psycopg
 from api.app.product_store import ProductConnection
@@ -90,6 +90,9 @@ def main():
                 + policy["runtime_sha256"] + "','" + policy["verifier_sha256"] + "',false);")
         host("systemctl stop proofflow-product-api.service proofflow-product-dispatcher.service")
         stopped = True
+        if sql("SELECT (SELECT count(*) FROM pf_product.workspaces WHERE kind='guest') + "
+               "(SELECT count(*) FROM pf_product.deletions);") != b"0":
+            raise RuntimeError("GUEST_OR_DELETION_BACKUP_REQUIRES_RETENTION_AWARE_RESTORE")
         before = snapshot()
         counts = {t: int(sql("SELECT count(*) FROM pf_product." + t + ";")) for t in TABLES}  # noqa: S608
         old_budget = snapshot("proofflow_budget", "pf_budget", ("accounts", "reservations",

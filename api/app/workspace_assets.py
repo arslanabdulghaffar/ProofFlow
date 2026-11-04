@@ -2,6 +2,7 @@
 
 import os
 import stat
+from contextlib import contextmanager
 from uuid import UUID
 
 from api.app.assets import AssetError, put_asset, read_asset
@@ -33,11 +34,33 @@ class WorkspaceAssets:
             raise ProductFailure("ASSET_WORKSPACE_UNSAFE")
         return fd
 
+    @contextmanager
+    def lease(self, workspace):
+        import fcntl
+        if type(workspace) is not UUID:
+            raise ProductFailure("ASSET_WORKSPACE_INVALID")
+        root = os.open(".", os.O_RDONLY | os.O_DIRECTORY, dir_fd=self.root)
+        try:
+            fcntl.flock(root, fcntl.LOCK_SH)
+            try:
+                os.stat(".deleted-" + workspace.hex, dir_fd=root, follow_symlinks=False)
+            except FileNotFoundError:
+                yield
+            else:
+                raise ProductFailure("ACCESS_DENIED")
+        finally:
+            os.close(root)
+
+    def assert_live(self, workspace):
+        with self.lease(workspace):
+            pass
+
     def put(self, workspace, raw):
         fd = None
         try:
-            fd = self._directory(workspace, create=True)
-            return put_asset(fd, raw)
+            with self.lease(workspace):
+                fd = self._directory(workspace, create=True)
+                return put_asset(fd, raw)
         except (OSError, AssetError):
             raise ProductFailure("ASSET_PUBLICATION_UNCERTAIN") from None
         finally:
@@ -47,8 +70,9 @@ class WorkspaceAssets:
     def read(self, workspace, digest):
         fd = None
         try:
-            fd = self._directory(workspace, create=False)
-            return read_asset(fd, digest)
+            with self.lease(workspace):
+                fd = self._directory(workspace, create=False)
+                return read_asset(fd, digest)
         except (OSError, AssetError):
             raise ProductFailure("ASSET_READ_FAILED") from None
         finally:

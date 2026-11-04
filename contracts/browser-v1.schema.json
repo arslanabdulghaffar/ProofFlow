@@ -1,0 +1,555 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:proofflow:browser:v1",
+  "$defs": {
+    "ApprovalRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Expected Sha256",
+          "type": "string"
+        },
+        "confirm": {
+          "const": true,
+          "title": "Confirm",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "expected_sha256",
+        "confirm"
+      ],
+      "title": "ApprovalRequest",
+      "type": "object"
+    },
+    "ApprovalResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "raw_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Sha256",
+          "type": "string"
+        },
+        "canonical_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Canonical Sha256",
+          "type": "string"
+        },
+        "approved": {
+          "const": true,
+          "title": "Approved",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "asset_id",
+        "raw_sha256",
+        "canonical_sha256",
+        "approved"
+      ],
+      "title": "ApprovalResponse",
+      "type": "object"
+    },
+    "AssetResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "pipeline",
+            "transactions",
+            "customers",
+            "contract"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "bytes": {
+          "maximum": 5242880,
+          "minimum": 1,
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "validation": {
+          "const": "unvalidated",
+          "title": "Validation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "asset_id",
+        "kind",
+        "sha256",
+        "bytes",
+        "validation"
+      ],
+      "title": "AssetResponse",
+      "type": "object"
+    },
+    "BrowserSessionRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "session_token": {
+          "pattern": "^pf_s_[0-9a-f]{64}$",
+          "title": "Session Token",
+          "type": "string"
+        },
+        "csrf_token": {
+          "pattern": "^pf_c_[0-9a-f]{64}$",
+          "title": "Csrf Token",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_token",
+        "csrf_token"
+      ],
+      "title": "BrowserSessionRequest",
+      "type": "object"
+    },
+    "CancellationResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "cancellation_requested": {
+          "const": true,
+          "title": "Cancellation Requested",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "cancellation_requested"
+      ],
+      "title": "CancellationResponse",
+      "type": "object"
+    },
+    "DeleteRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "workspace_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "confirm": {
+          "const": true,
+          "title": "Confirm",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "confirm"
+      ],
+      "title": "DeleteRequest",
+      "type": "object"
+    },
+    "DeleteResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "access_revoked": {
+          "const": true,
+          "title": "Access Revoked",
+          "type": "boolean"
+        },
+        "deletion": {
+          "const": "queued",
+          "title": "Deletion",
+          "type": "string"
+        }
+      },
+      "required": [
+        "access_revoked",
+        "deletion"
+      ],
+      "title": "DeleteResponse",
+      "type": "object"
+    },
+    "EnqueueRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "idempotency_key": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Idempotency Key",
+          "type": "string"
+        },
+        "pipeline_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Pipeline Id",
+          "type": "string"
+        },
+        "transactions_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Transactions Id",
+          "type": "string"
+        },
+        "customers_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Customers Id",
+          "type": "string"
+        },
+        "contract_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Contract Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "idempotency_key",
+        "pipeline_id",
+        "transactions_id",
+        "customers_id",
+        "contract_id"
+      ],
+      "title": "EnqueueRequest",
+      "type": "object"
+    },
+    "EnqueueResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "job_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Job Id",
+          "type": "string"
+        },
+        "status_url": {
+          "pattern": "^/v1/jobs/[0-9a-f-]{36}$",
+          "title": "Status Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id",
+        "status_url"
+      ],
+      "title": "EnqueueResponse",
+      "type": "object"
+    },
+    "ErrorDetail": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "pattern": "^[A-Z_]{1,80}$",
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "request_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Request Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "retryable",
+        "request_id"
+      ],
+      "title": "ErrorDetail",
+      "type": "object"
+    },
+    "ErrorResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "$ref": "#/$defs/ErrorDetail"
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "title": "ErrorResponse",
+      "type": "object"
+    },
+    "Finding": {
+      "additionalProperties": false,
+      "properties": {
+        "check": {
+          "pattern": "^V(0[1-9]|10)$",
+          "title": "Check",
+          "type": "string"
+        },
+        "code": {
+          "pattern": "^[A-Z_]{1,80}$",
+          "title": "Code",
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source"
+        }
+      },
+      "required": [
+        "check",
+        "code",
+        "source"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "JobEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "sequence": {
+          "pattern": "^(0|[1-9][0-9]{0,18})$",
+          "title": "Sequence",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "QUEUED",
+            "BASELINE_RUNNING",
+            "BASELINE_VERIFYING",
+            "RECONCILING",
+            "NEEDS_REVIEW",
+            "FAILED_INFRA",
+            "CANCELLED"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "event": {
+          "pattern": "^[a-z_]{1,80}$",
+          "title": "Event",
+          "type": "string"
+        },
+        "occurred_at": {
+          "title": "Occurred At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sequence",
+        "state",
+        "event",
+        "occurred_at"
+      ],
+      "title": "JobEvent",
+      "type": "object"
+    },
+    "JobSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "wire_version": {
+          "const": "proofflow-browser-v1",
+          "title": "Wire Version",
+          "type": "string"
+        },
+        "job_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Job Id",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "QUEUED",
+            "BASELINE_RUNNING",
+            "BASELINE_VERIFYING",
+            "RECONCILING",
+            "NEEDS_REVIEW",
+            "FAILED_INFRA",
+            "CANCELLED"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "enum": [
+                "match",
+                "mismatch",
+                "held",
+                "input_rejected",
+                "infrastructure_failed",
+                "cancelled"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Outcome"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        },
+        "sequence": {
+          "pattern": "^(0|[1-9][0-9]{0,18})$",
+          "title": "Sequence",
+          "type": "string"
+        },
+        "blocking_occurrences": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Blocking Occurrences"
+        },
+        "finding_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Finding Count"
+        },
+        "findings": {
+          "items": {
+            "$ref": "#/$defs/Finding"
+          },
+          "maxItems": 20,
+          "title": "Findings",
+          "type": "array"
+        },
+        "ownership_witnesses": {
+          "items": {
+            "$ref": "#/$defs/OwnershipWitness"
+          },
+          "maxItems": 3,
+          "title": "Ownership Witnesses",
+          "type": "array"
+        }
+      },
+      "required": [
+        "wire_version",
+        "job_id",
+        "state",
+        "outcome",
+        "created_at",
+        "sequence",
+        "blocking_occurrences",
+        "finding_count",
+        "findings",
+        "ownership_witnesses"
+      ],
+      "title": "JobSummary",
+      "type": "object"
+    },
+    "OwnershipWitness": {
+      "additionalProperties": false,
+      "properties": {
+        "check": {
+          "const": "V04",
+          "title": "Check",
+          "type": "string"
+        },
+        "source_row_id": {
+          "title": "Source Row Id",
+          "type": "string"
+        },
+        "merchant_id": {
+          "title": "Merchant Id",
+          "type": "string"
+        },
+        "customer_id": {
+          "title": "Customer Id",
+          "type": "string"
+        },
+        "expected_owner": {
+          "title": "Expected Owner",
+          "type": "string"
+        },
+        "actual_owner": {
+          "title": "Actual Owner",
+          "type": "string"
+        }
+      },
+      "required": [
+        "check",
+        "source_row_id",
+        "merchant_id",
+        "customer_id",
+        "expected_owner",
+        "actual_owner"
+      ],
+      "title": "OwnershipWitness",
+      "type": "object"
+    },
+    "RevocationResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "revoked": {
+          "const": true,
+          "title": "Revoked",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "revoked"
+      ],
+      "title": "RevocationResponse",
+      "type": "object"
+    },
+    "SessionResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "workspace_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "guest",
+            "operator"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "expires_at": {
+          "title": "Expires At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "kind",
+        "expires_at"
+      ],
+      "title": "SessionResponse",
+      "type": "object"
+    }
+  }
+}

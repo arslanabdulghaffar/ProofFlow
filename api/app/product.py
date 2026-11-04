@@ -4,18 +4,44 @@ import asyncio
 import hashlib
 import re
 import time
+from datetime import UTC, datetime
 from html import escape
+from pathlib import Path
 from uuid import UUID, uuid4
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, Response, StreamingResponse
+from pydantic import ValidationError
+from starlette.exceptions import HTTPException
 
-from api.app.auth import AuthError, request_digests
+from api.app.auth import AuthError, SessionSecrets, request_digests
 from api.app.product_store import ProductFailure
+from api.app.wire import (
+    ApprovalResponse,
+    AssetResponse,
+    BrowserSessionRequest,
+    CancellationResponse,
+    DeleteRequest,
+    DeleteResponse,
+    EnqueueResponse,
+    JobEvent,
+    JobSummary,
+    RevocationResponse,
+    SessionResponse,
+)
 from contracts.codec import InputError, canonical_bytes, parse_object
 from contracts.policy import parse_contract
 
 LIMITS = {"pipeline": 16384, "contract": 32768, "transactions": 5242880, "customers": 5242880}
+STATIC = Path(__file__).parent / "static"
+
+
+def failure(scope, code, status):
+    if re.fullmatch(r"[A-Z_]{1,80}", code) is None:
+        code = "REQUEST_FAILED"
+    return JSONResponse({"error": {"code": code,
+        "message": "Request could not be completed. Check the recorded status before retrying.",
+        "retryable": status in (429, 503), "request_id": scope["request_id"]}}, status_code=status)
 
 
 class HttpFailure(Exception):
@@ -64,61 +90,116 @@ class CapacityBoundary:
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http":
             return await self.app(scope, receive, send)
+        scope["request_id"] = str(uuid4())  # Never trust a caller-supplied request ID.
 
         async def protected_send(message):
             if message["type"] == "http.response.start":
                 message = {**message, "headers": [*message.get("headers", []),
                     (b"cache-control", b"no-store"), (b"x-content-type-options", b"nosniff"),
                     (b"referrer-policy", b"no-referrer"),
+                    (b"x-request-id", scope["request_id"].encode()),
                     (b"content-security-policy", b"default-src 'none'; frame-ancestors 'none'; "
-                     b"base-uri 'none'; form-action 'self'")]}
+                     b"base-uri 'none'; form-action 'self'; script-src 'self'; "
+                     b"style-src 'self'; connect-src 'self'")]}
             await send(message)
+
+        async def dispatch():
+            started = False
+
+            async def tracked_send(message):
+                nonlocal started
+                started |= message["type"] == "http.response.start"
+                await protected_send(message)
+
+            try:
+                return await self.app(scope, receive, tracked_send)
+            except Exception:
+                if started:
+                    raise
+                return await failure(scope, "INTERNAL_ERROR", 500)(scope, receive, protected_send)
         if self.slots.locked():
-            return await JSONResponse({"error": {"code": "BUSY"}}, status_code=429)(
+            return await failure(scope, "BUSY", 429)(
                 scope, receive, protected_send)
         async with self.slots:
             if scope.get("path", "").endswith("/events"):
                 if self.event_slots.locked():
-                    return await JSONResponse({"error": {"code": "STREAM_BUSY"}}, status_code=429)(
+                    return await failure(scope, "STREAM_BUSY", 429)(
                         scope, receive, protected_send)
                 async with self.event_slots:
                     try:
                         async with asyncio.timeout(65):
-                            return await self.app(scope, receive, protected_send)
+                            return await dispatch()
                     except TimeoutError:
                         # End this connection, not an invented event or resumed cursor.
                         return None
-            return await self.app(scope, receive, protected_send)
+            return await dispatch()
 
 
 def create_product_app(store, assets, *, origin: str):
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
     app.add_middleware(CapacityBoundary)
 
+    @app.exception_handler(HTTPException)
+    async def route_failure(request, error):
+        return failure(request.scope, "ROUTE_NOT_AVAILABLE", error.status_code)
+
     @app.exception_handler(TimeoutError)
-    async def timeout_failure(_, __):
-        return JSONResponse({"error": {"code": "REQUEST_TIMEOUT"}}, status_code=408)
+    async def timeout_failure(request, __):
+        return failure(request.scope, "REQUEST_TIMEOUT", 408)
 
     @app.exception_handler(HttpFailure)
-    async def http_failure(_, error):
-        return JSONResponse({"error": {"code": error.code}}, status_code=error.status)
+    async def http_failure(request, error):
+        return failure(request.scope, error.code, error.status)
 
     @app.exception_handler(AuthError)
-    async def auth_failure(_, error):
-        return JSONResponse({"error": {"code": str(error)}}, status_code=403)
+    async def auth_failure(request, error):
+        return failure(request.scope, str(error), 403)
 
     @app.exception_handler(InputError)
-    async def input_failure(_, error):
-        return JSONResponse({"error": {"code": str(error)}}, status_code=422)
+    async def input_failure(request, error):
+        return failure(request.scope, str(error), 422)
 
     @app.exception_handler(ProductFailure)
-    async def store_failure(_, error):
+    async def store_failure(request, error):
         code = str(error)
         status = (400 if code == "INVALID_EVENT_CURSOR" else 403 if code == "ACCESS_DENIED"
                   else 429 if code in ("ASSET_QUOTA", "JOB_CAPACITY")
                   else 404 if code == "JOB_NOT_FOUND" else 409 if code.endswith("CONFLICT")
                   or code in ("CONTRACT_REVOKED", "EXACT_CONTRACT_REQUIRED") else 503)
-        return JSONResponse({"error": {"code": code}}, status_code=status)
+        return failure(request.scope, code, status)
+
+    @app.get("/", response_class=Response)
+    async def intake():
+        return Response((STATIC / "index.html").read_bytes(), media_type="text/html")
+
+    @app.get("/static/{name}")
+    async def static(name: str):
+        types = {"intake.js": "application/javascript", "intake.css": "text/css"}
+        if name not in types:
+            raise HttpFailure(404, "ASSET_NOT_FOUND")
+        return Response((STATIC / name).read_bytes(), media_type=types[name])
+
+    @app.post("/v1/session/import")
+    async def import_session(request: Request):
+        try:
+            value = BrowserSessionRequest.model_validate(parse_object(await body(request, 1024)))
+        except ValidationError:
+            raise HttpFailure(400, "INVALID_SESSION_FIELDS") from None
+        headers = [(k, v) for k, v in request.scope["headers"]
+                   if k.lower() not in (b"cookie", b"x-proofflow-csrf")]
+        headers += [(b"cookie", ("__Host-proofflow=" + value.session_token).encode()),
+                    (b"x-proofflow-csrf", value.csrf_token.encode())]
+        token, csrf = request_digests(headers, expected_origin=origin, writing=True)
+        workspace, kind, expiry = await store.call("browser_session", token, csrf)
+        await asyncio.to_thread(assets.assert_live, workspace)
+        age = max(1, min(43200, int((expiry - datetime.now(UTC)).total_seconds())))
+        response = JSONResponse(SessionResponse(workspace_id=str(workspace), kind=kind,
+                                                expires_at=expiry.isoformat()).model_dump())
+        response.headers.append("Set-Cookie", SessionSecrets(value.session_token,
+            value.csrf_token).cookie(max_age=age))
+        response.headers.append("Set-Cookie", "__Host-proofflow-csrf=" + value.csrf_token
+            + "; Path=/; Max-Age=" + str(age) + "; Secure; SameSite=Strict")
+        return response
 
     async def authorize(request, writing=False):
         session, csrf = request_digests(request.scope["headers"], expected_origin=origin,
@@ -126,6 +207,7 @@ def create_product_app(store, assets, *, origin: str):
         row = await store.call("session", session)
         if row is None or len(row) != 3 or type(row[0]) is not UUID:
             raise ProductFailure("PRODUCT_RESULT_INVALID")
+        await asyncio.to_thread(assets.assert_live, row[0])
         return row[0], session, csrf
 
     async def json_body(request, fields):
@@ -142,18 +224,26 @@ def create_product_app(store, assets, *, origin: str):
     async def ready():
         return {"status": "not_ready", "reason": "product_acceptance_incomplete"}
 
-    @app.get("/v1/session")
+    @app.get("/v1/session", response_model=SessionResponse)
     async def session(request: Request):
-        workspace, _, _ = await authorize(request)
-        return {"workspace_id": str(workspace)}
+        workspace, token, _ = await authorize(request)
+        _, kind, expiry = await store.call("session", token)
+        return {"workspace_id": str(workspace), "kind": kind, "expires_at": expiry.isoformat()}
 
-    @app.post("/v1/assets/{kind}/{asset_id}", status_code=201)
+    @app.post("/v1/assets/{kind}/{asset_id}", status_code=201, response_model=AssetResponse)
     async def upload(kind: str, asset_id: str, request: Request):
         workspace, token, csrf = await authorize(request, True)
         asset = identifier(asset_id)
         if kind not in LIMITS:
             raise HttpFailure(400, "INVALID_ASSET_KIND")
         raw = await body(request, LIMITS[kind])
+        if kind == "pipeline":
+            try:
+                source = raw.decode("utf-8", errors="strict")
+            except UnicodeError:
+                raise HttpFailure(422, "PIPELINE_ENCODING_INVALID") from None
+            if "\x00" in source:
+                raise HttpFailure(422, "PIPELINE_ENCODING_INVALID")
         digest = hashlib.sha256(raw).hexdigest()
         # A COMMIT failure cannot authorize filesystem writes. A publication or
         # finalization failure preserves the reservation, never silently frees it.
@@ -187,7 +277,7 @@ def create_product_app(store, assets, *, origin: str):
         return Response(raw, media_type="application/octet-stream", headers={
             "Content-Disposition": 'attachment; filename="' + kind + '.txt"'})
 
-    @app.post("/v1/contracts/{asset_id}/approve")
+    @app.post("/v1/contracts/{asset_id}/approve", response_model=ApprovalResponse)
     async def approve(asset_id: str, request: Request):
         workspace, token, csrf, asset, kind, digest, raw = await get_asset(request, asset_id, True)
         value = await json_body(request, ("expected_sha256", "confirm"))
@@ -198,13 +288,13 @@ def create_product_app(store, assets, *, origin: str):
         return {"asset_id": str(asset), "raw_sha256": digest, "canonical_sha256": policy.sha256,
                 "approved": True}
 
-    @app.post("/v1/contracts/{asset_id}/revoke")
+    @app.post("/v1/contracts/{asset_id}/revoke", response_model=RevocationResponse)
     async def revoke(asset_id: str, request: Request):
         workspace, token, csrf = await authorize(request, True)
         await store.call("revoke_contract", workspace, token, csrf, identifier(asset_id))
         return {"revoked": True}
 
-    @app.post("/v1/jobs", status_code=202)
+    @app.post("/v1/jobs", status_code=202, response_model=EnqueueResponse)
     async def enqueue(request: Request):
         workspace, token, csrf = await authorize(request, True)
         value = await json_body(request, ("idempotency_key", "pipeline_id", "transactions_id",
@@ -222,7 +312,19 @@ def create_product_app(store, assets, *, origin: str):
             raise HttpFailure(404, "JOB_NOT_FOUND")
         return result[0]
 
-    @app.post("/v1/jobs/{job_id}/cancel")
+    @app.get("/v1/jobs/{job_id}/summary", response_model=JobSummary)
+    async def summary(job_id: str, request: Request):
+        value = await job(job_id, request)
+        semantic = (value.get("report") or {}).get("semantic") or {}
+        report = semantic.get("report", {}).get("result", {})
+        return {"wire_version": "proofflow-browser-v1", "job_id": job_id,
+            "state": value["state"], "outcome": value["outcome"], "created_at": value["created_at"],
+            "sequence": str(value["sequence"]),
+            "blocking_occurrences": report.get("blocking_occurrences"),
+            "finding_count": report.get("finding_count"), "findings": report.get("findings", []),
+            "ownership_witnesses": report.get("ownership_witnesses", [])}
+
+    @app.post("/v1/jobs/{job_id}/cancel", response_model=CancellationResponse)
     async def cancel(job_id: str, request: Request):
         workspace, token, csrf = await authorize(request, True)
         await store.call("cancel", workspace, token, csrf, identifier(job_id))
@@ -263,6 +365,8 @@ def create_product_app(store, assets, *, origin: str):
                     rows = (await store.call("events", workspace, token, job, cursor))[0]
                     for event in rows:
                         await store.call("session", token)  # Recheck after each possibly slow send.
+                        await asyncio.to_thread(assets.assert_live, workspace)
+                        event = JobEvent.model_validate(event).model_dump()
                         sequence = int(event["sequence"])
                         if sequence != cursor + 1:
                             raise ProductFailure("PRODUCT_EVENT_SEQUENCE_INVALID")
@@ -277,7 +381,7 @@ def create_product_app(store, assets, *, origin: str):
                     if await request.is_disconnected():
                         return
                     await asyncio.sleep(1)
-            except ProductFailure:
+            except (ProductFailure, ValidationError):
                 # No event ID: reconnect can only resume from the last real event.
                 yield (b'event: stream_closed\ndata: '
                        b'{"code":"STREAM_AUTHORITY_OR_STORE_UNAVAILABLE"}\n\n')
@@ -326,7 +430,23 @@ def create_product_app(store, assets, *, origin: str):
     async def logout(request: Request):
         workspace, token, csrf = await authorize(request, True)
         await store.call("logout", workspace, token, csrf)
-        return Response(status_code=204, headers={"Set-Cookie": "__Host-proofflow=; Path=/; "
-                        "Max-Age=0; Secure; HttpOnly; SameSite=Strict"})
+        response = Response(status_code=204)
+        for name, suffix in (("__Host-proofflow", "; HttpOnly"), ("__Host-proofflow-csrf", "")):
+            response.headers.append("Set-Cookie", name + "=; Path=/; Max-Age=0; Secure; "
+                                    "SameSite=Strict" + suffix)
+        return response
+
+    @app.post("/v1/workspace/delete", response_model=DeleteResponse)
+    async def delete_workspace(request: Request):
+        workspace, token, csrf = await authorize(request, True)
+        raw = parse_object(await body(request, 1024))
+        try:
+            value = DeleteRequest.model_validate(raw)
+        except ValidationError:
+            raise HttpFailure(400, "INVALID_DELETE_CONFIRMATION") from None
+        if value.workspace_id != str(workspace) or raw.get("confirm") is not True:
+            raise HttpFailure(409, "EXACT_WORKSPACE_REQUIRED")
+        await store.call("delete", workspace, token, csrf)
+        return {"access_revoked": True, "deletion": "queued"}
 
     return app

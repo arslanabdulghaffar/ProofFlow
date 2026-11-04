@@ -1,5 +1,7 @@
 # Requirements traceability
 
+Browser/retention follow-up: R21 browser event use, remaining browser wire/errors/generated types, R22 authenticated intake and R35 raw deletion now have implemented paths and actual private browser evidence. Four real Chromium groups pass; local19 filesystem and15 combined SQL groups cover related boundaries. Composite phase statuses remain unchanged until full acceptance, metadata/backup/worker retention and public provisioning are resolved. Browser summary wire is separate from internal raw receipts; original mismatch still means NEEDS_REVIEW, never activation. [Source-bound evidence](evidence/phase2-browser-retention-2026-11-04.json).
+
 Event follow-up: R21-02 now has actual backend replay/resume/heartbeat framing and logout-stream evidence. Browser EventSource reconnect and overall Phase2 acceptance remain open, so the broader trace status is not silently promoted. [Event evidence](evidence/phase2-events-2026-11-04.json).
 
 Latest Phase2 integration adds actual private SCRAM/auth/upload/approval/queue/worker/verifier/failure-page/cancellation/controller-loss/restart/restore results. R16/R17/R28 primitives and R22-05 role separation have deployed evidence; broader rows remain DEFERRED_PHASE2 where generated types, events, lifecycle, candidate workflow or full acceptance are unfinished. Do not mark a multi-obligation row complete from one probe. See [private integration receipt](evidence/phase2-private-integration-2026-11-04.json). No original/canary match is activation or batch completion.

@@ -1,0 +1,217 @@
+{
+  "observed_at": "2026-11-04T07:07:12.919398+00:00",
+  "scope": "private synthetic browser intake and raw workspace retirement",
+  "phase2": "IN_PROGRESS",
+  "base_checkpoint": "d00b10272907139989203c665a39033c42f35e08",
+  "product_image": "87ff3f87bdb4e78d96578ca536993909f751ee5ce60606837701d9dee6e32c81",
+  "retention_revision": "1bf75fe45047ffab4220cfdf562debf30b8947b9349268fc434f0a6ed0aea404",
+  "migrations": 7,
+  "checks": {
+    "windows": {
+      "passed": 498,
+      "linux_skipped": 64
+    },
+    "linux_assets_and_retention": {
+      "passed": 19
+    },
+    "disposable_postgres_queue": {
+      "groups": 11
+    },
+    "disposable_postgres_browser_retention": {
+      "groups": 4
+    },
+    "actual_browser": [
+      "actual_tls_bridge_secure_cookies_and_secret_form_cleared",
+      "browser_upload_exact_approval_actual_worker_wrong_owner_rejected",
+      "committed_sse_and_refresh_without_resubmit",
+      "browser_logout_cross_workspace_revocation_and_actual_byte_deletion"
+    ],
+    "image_inventory": {
+      "files": 57,
+      "source_hashes_match": true
+    },
+    "static_checks": [
+      "ruff",
+      "node_syntax",
+      "generated_type_drift",
+      "diff_whitespace"
+    ],
+    "visual_review": {
+      "desktop": 1366,
+      "mobile": 390,
+      "page_overflow": false
+    }
+  },
+  "deployed_state": {
+    "counts": {
+      "workspaces": 7,
+      "assets": 36,
+      "uploads": 0,
+      "jobs": 9,
+      "deletions": 1
+    },
+    "product_admission": false,
+    "inference_admission": false,
+    "api_dispatcher_retention_timer": "active",
+    "new_worker_executions": 1,
+    "new_provider_calls": 0,
+    "new_cloud_resources": 0
+  },
+  "credit_guard": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-04T07:07:05.707169+00:00",
+    "remaining_credit": "198.92",
+    "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+  },
+  "review": {
+    "independent_human": false,
+    "separate_critical_pass": true,
+    "findings_fixed": [
+      "upload selection and approval race",
+      "stable upload retry identity",
+      "workspace change clears browser state",
+      "safe unexpected error envelope",
+      "deletion markers checked by API and execution journal",
+      "leases serialize late writers against retirement",
+      "rename-bound partial deletion recovery",
+      "backup helper refuses guest/deletion state without retention-aware restore"
+    ]
+  },
+  "preserved_failures": [
+    "Playwright request client did not inherit Chromium SPKI trust; replaced with same-origin browser fetch, no global bypass",
+    "Event visibility assertion required opening collapsed details; resumed exact existing job without another execution"
+  ],
+  "limitations": [
+    "Private administrator-provisioned browser only; no public signup/release",
+    "Metadata/tombstone pruning and backup lifetime/portable restore are unfinished",
+    "Only empty-job guest physical deletion tested live; journal deletion/crash/restore tests are Linux local",
+    "Deletion awaits confirmed cleanup; no claim of immediate erasure under host outage or failed cleanup",
+    "Existing operator synthetic evidence retained; worker metadata lifecycle remains separate",
+    "Raw internal job receipt remains a separate representation from browser-v1",
+    "Pending enqueue identity survives same-page retry but not browser reload before job URL is known",
+    "No independent human approval; existing native/runtime advisory gaps remain",
+    "Credit guard depends on Windows/network and delayed billing; no provider hard-stop guarantee"
+  ],
+  "sources": [
+    {
+      "path": ".dockerignore",
+      "sha256": "19f8fafc6572a7795906664d9014bdb93c0a82566e3f844fb726eb3c4f43b47d"
+    },
+    {
+      "path": ".gitattributes",
+      "sha256": "ca482ecb703b0135ecdd8007d2cbaf1c7d3cd8f1331decb3cdd0b126639683ca"
+    },
+    {
+      "path": "api/app/product.py",
+      "sha256": "aaf26135ea0e3357c5c03fe510db28a76855e699d22f8d0ca8bec6a06b994518"
+    },
+    {
+      "path": "api/app/product_store.py",
+      "sha256": "2026f549f9e2320bacdd7f68a9c15700120dc5452dda1a9ccddaf2f53b5f3e60"
+    },
+    {
+      "path": "api/app/static/index.html",
+      "sha256": "0f37459d7c93dcb285142b8d3626b114faa8d6f5ea9ea85f005081c853b9996f"
+    },
+    {
+      "path": "api/app/static/intake.css",
+      "sha256": "9751aeed321b5a2de6cfbe06bc4a0fb7429d4a46b47264e6bae6e5c9b3e30bd3"
+    },
+    {
+      "path": "api/app/static/intake.js",
+      "sha256": "9d30da96083d7fdd96aa1ce31453bc074e91e56abfbcdb3e68f27a911f1bdd1a"
+    },
+    {
+      "path": "api/app/wire.py",
+      "sha256": "e2b1c5e0b9d28fb2c2ba25aec4e2b542861c13d4e852dc8bb88a80540b22f459"
+    },
+    {
+      "path": "api/app/workspace_assets.py",
+      "sha256": "d8d401ce7b158823203345bad1e3ec3705bf2807127247fa9aab78cd0cb4655a"
+    },
+    {
+      "path": "contracts/browser-v1.d.ts",
+      "sha256": "352005628037c4cac99126debb6cfc47f12fb2a21fa904db3a3be6dc3423463c"
+    },
+    {
+      "path": "contracts/browser-v1.schema.json",
+      "sha256": "4b68553208701289b221ea22ce4b681ad81830e088ef6a49ab1f34c570a67c36"
+    },
+    {
+      "path": "db/phase2/006_browser_session.sql",
+      "sha256": "1d24f62f96429e4170b3df88aeb1caa2a6b3fe389601f4842245d7cd5cf1db70"
+    },
+    {
+      "path": "db/phase2/007_workspace_retention.sql",
+      "sha256": "584f5a533960a3803e358d7a831bbbb727ee4a9918d0490c43615ce68e8ca57f"
+    },
+    {
+      "path": "infra/testing/browser-requirements.txt",
+      "sha256": "b153e538825f487bd26e3605c21465ea7dc1eb233cca64e7142366d303f7553a"
+    },
+    {
+      "path": "orchestrator/retention.py",
+      "sha256": "92c0331da5db1d9c400383de8fd05ebe9c870441bf4fc478b9cbfaef2544eb0e"
+    },
+    {
+      "path": "orchestrator/verification_run.py",
+      "sha256": "92c3b0b51554c1556847ff5a82cbf3345d463e14413e1aa94c5f13e54c257c40"
+    },
+    {
+      "path": "scripts/check_product_browser.py",
+      "sha256": "c4ad78a5b68fd5c0add4bb89840a886785b1528eddf979ae6146b95f21e40138"
+    },
+    {
+      "path": "scripts/check_product_image.py",
+      "sha256": "86f2aa21060ed7fb91d299b9fb5f04beed73a2505d2e872dccfdc32f2903b68a"
+    },
+    {
+      "path": "scripts/check_product_integrity.py",
+      "sha256": "b0c39c6ad0b78a191942616f2d6d6c3edbc57876ebf335ca30ae8eba10de8c58"
+    },
+    {
+      "path": "scripts/check_product_retention.py",
+      "sha256": "cc508202ef9fab221f4846df9cee35306e24a8d835facde50e9b73165300afb8"
+    },
+    {
+      "path": "scripts/deploy_product_database.py",
+      "sha256": "1a608288dd4c0b46d92ac8a839d796629c7b19383e6064cfc9214c2318c9233a"
+    },
+    {
+      "path": "scripts/deploy_product_retention.py",
+      "sha256": "2d2f2a839bd297568ef4be5fb36e973d7d58073ad6bc12806633637d090dc4dd"
+    },
+    {
+      "path": "scripts/generate_browser_types.py",
+      "sha256": "b0956b7f51654586792dee25b186cb8d3fbfd1d24ab26a36de316a062225e6d4"
+    },
+    {
+      "path": "scripts/install_product_database.py",
+      "sha256": "da1eaa3cdf7b4eb64fd02b3f7390068185a970a2a3884a7fb0f715f2f4f40dda"
+    },
+    {
+      "path": "scripts/install_product_retention.py",
+      "sha256": "5e5622ac3225974845ad10221e5ba4cf7d876b10b149253002effcbdff7d60a5"
+    },
+    {
+      "path": "scripts/install_product_services.py",
+      "sha256": "21aeea9efe4717dc4ae205e7b9bca68d23fd21d85eb4adf51570897633d2c410"
+    },
+    {
+      "path": "scripts/product_retention_host.py",
+      "sha256": "591faae5b8d97c8b0500b014aa62f774a225a3082ad075490dd5b260ab048050"
+    },
+    {
+      "path": "tests/security/test_retention_linux.py",
+      "sha256": "62506878a3e914a4e33cfa6fadaaf50f406c8f9efc9c4adde598da3e9567e1af"
+    },
+    {
+      "path": "tests/unit/test_browser_wire.py",
+      "sha256": "a5b8c505364a2ea3ebe7120e76310231453f23dfa6cb1a01df65d8300886381d"
+    },
+    {
+      "path": "tests/unit/test_product_http.py",
+      "sha256": "43fd39a847a28f4a1096cc959c56a2f8e510f70c00ad66c4af75a6b0d2fe19d9"
+    }
+  ]
+}

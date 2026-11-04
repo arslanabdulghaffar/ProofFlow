@@ -48,6 +48,20 @@ class VerificationRun:
 
     def execute(self, *, execution: UUID, job: UUID, generation: int, pipeline: bytes,
                 contract: bytes, transactions: bytes, customers: bytes, purpose: str):
+        fd = os.open(self.journal, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_SH | fcntl.LOCK_NB)
+            deleted = self.journal / (".deleted-" + job.hex)
+            if deleted.exists() or deleted.is_symlink():
+                raise SupervisorError("VERIFICATION_JOB_DELETED")
+            return self._execute(execution=execution, job=job, generation=generation,
+                pipeline=pipeline, contract=contract, transactions=transactions,
+                customers=customers, purpose=purpose)
+        finally:
+            os.close(fd)
+
+    def _execute(self, *, execution: UUID, job: UUID, generation: int, pipeline: bytes,
+                 contract: bytes, transactions: bytes, customers: bytes, purpose: str):
         if purpose not in ("original", "canary_ownership", "canary_quarantine"):
             raise SupervisorError("VERIFICATION_PURPOSE_INVALID")
         prepared = self.bounded({"operation": "prepare", "contract": encode(contract),
@@ -79,7 +93,7 @@ class VerificationRun:
             fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
             # Includes failed/uncertain intents. No eviction or hidden retry to
             # reclaim capacity; later retention must reconcile worker ownership.
-            if len(list(self.journal.iterdir())) >= 65:
+            if sum(p.is_dir() for p in self.journal.iterdir()) >= 64:
                 raise SupervisorError("VERIFICATION_JOURNAL_CAPACITY")
             directory.mkdir(mode=0o700)
             sync_directory(self.journal)

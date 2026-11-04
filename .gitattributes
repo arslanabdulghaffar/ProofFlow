@@ -16,3 +16,7 @@
 *.conf text eol=lf
 *.ps1 text eol=lf
 *.sh text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.ts text eol=lf

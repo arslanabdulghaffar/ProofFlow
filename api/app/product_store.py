@@ -9,6 +9,8 @@ import psycopg
 from orchestrator.budget_store import BudgetConnection, BudgetUnavailable
 
 API_OPERATIONS = {
+    "browser_session": ("SELECT * FROM pf_product.browser_session(%s,%s)", 2),
+    "delete": ("SELECT pf_product.request_deletion(%s,%s,%s)", 3),
     "session": ("SELECT * FROM pf_product.session_context(%s)", 1),
     "asset": ("SELECT * FROM pf_product.get_asset(%s,%s,%s)", 3),
     "reserve": ("SELECT pf_product.reserve_upload(%s,%s,%s,%s,%s,%s,%s)", 7),

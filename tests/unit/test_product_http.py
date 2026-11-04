@@ -6,7 +6,7 @@ No candidate source is executed; upload bytes are inert.
 
 import asyncio
 import hashlib
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from uuid import uuid4
 
@@ -39,10 +39,12 @@ class FixtureStore:
         if self.failure == operation:
             raise ProductFailure("ASSET_QUOTA" if operation == "reserve"
                                  else "PRODUCT_OPERATION_UNCERTAIN")
-        if operation == "session":
+        if operation in ("session", "browser_session"):
             if values[0] != session_digest(self.secrets.token):
                 raise ProductFailure("ACCESS_DENIED")
-            return self.workspace, "operator", datetime.now(UTC)
+            if operation == "browser_session" and values[1] != csrf_digest(self.secrets.csrf):
+                raise ProductFailure("ACCESS_DENIED")
+            return self.workspace, "operator", datetime.now(UTC) + timedelta(hours=1)
         if values[0] != self.workspace:
             raise ProductFailure("ACCESS_DENIED")
         if operation in ("reserve", "publish", "approve", "enqueue", "cancel", "logout"):
@@ -58,7 +60,7 @@ class FixtureStore:
             if self.revoke_on_readback and self.asset_reads == 2:
                 raise ProductFailure("ACCESS_DENIED")
             return self.registry.get(values[2])
-        if operation in ("approve", "cancel", "logout"):
+        if operation in ("approve", "cancel", "logout", "delete"):
             return (True,)
         if operation == "enqueue":
             return (values[3],)
@@ -77,6 +79,9 @@ class FixtureAssets:
         self.store = store
         self.values = {}
         self.failure = False
+
+    def assert_live(self, workspace):
+        assert workspace == self.store.workspace
 
     def put(self, workspace, raw):
         self.store.events.append("bytes_published")
@@ -344,7 +349,8 @@ def test_stream_capacity_reserves_other_request_slots():
 def test_event_rechecks_session_between_frames():
     async def check():
         db = FixtureStore()
-        db.job_events = [{"sequence": str(n), "state": state, "event": "recorded"}
+        db.job_events = [{"sequence": str(n), "state": state, "event": "recorded",
+                          "occurred_at": "2026-11-04T00:00:00Z"}
                          for n, state in ((1, "QUEUED"), (2, "NEEDS_REVIEW"))]
         app = create_product_app(db, FixtureAssets(db), origin=ORIGIN)
         messages = []
@@ -363,4 +369,100 @@ def test_event_rechecks_session_between_frames():
         assert raw.count(b"id: ") == 1
         assert b"STREAM_AUTHORITY_OR_STORE_UNAVAILABLE" in raw
         assert b"NEEDS_REVIEW" not in raw
+    asyncio.run(check())
+
+
+def test_browser_bridge_exact_pair_cookie_flags_origin_and_no_authority_mint():
+    async def check():
+        db, _, client = fixture()
+        data = {"session_token": db.secrets.token, "csrf_token": db.secrets.csrf}
+        async with client:
+            denied = await client.post("/v1/session/import", json=data,
+                                       headers={"Origin": "https://foreign.invalid"})
+            assert denied.status_code == 403 and "browser_session" not in db.events
+            wrong = await client.post("/v1/session/import", json={**data,
+                "csrf_token": SessionSecrets.create().csrf})
+            assert wrong.status_code == 403
+            good = await client.post("/v1/session/import", json=data)
+            assert good.status_code == 200 and good.json()["workspace_id"] == str(db.workspace)
+            cookies = good.headers.get_list("set-cookie")
+            assert len(cookies) == 2
+            assert "HttpOnly" in cookies[0] and "HttpOnly" not in cookies[1]
+            assert all("Secure" in c and "SameSite=Strict" in c and "Domain=" not in c
+                       for c in cookies)
+            assert db.secrets.token not in good.text and db.secrets.csrf not in good.text
+            assert "create_session" not in db.events
+    asyncio.run(check())
+
+
+@pytest.mark.parametrize("confirm", [False, 1, "true", None])
+def test_delete_requires_literal_confirmation(confirm):
+    async def check():
+        db, _, client = fixture()
+        async with client:
+            result = await client.post("/v1/workspace/delete", json={
+                "workspace_id": str(db.workspace), "confirm": confirm})
+            assert result.status_code in (400, 409) and "delete" not in db.events
+    asyncio.run(check())
+
+
+def test_delete_is_exact_workspace_and_reports_only_queued():
+    async def check():
+        db, _, client = fixture()
+        async with client:
+            result = await client.post("/v1/workspace/delete", json={
+                "workspace_id": str(uuid4()), "confirm": True})
+            assert result.status_code == 409 and "delete" not in db.events
+            result = await client.post("/v1/workspace/delete", json={
+                "workspace_id": str(db.workspace), "confirm": True})
+            assert result.json() == {"access_revoked": True, "deletion": "queued"}
+    asyncio.run(check())
+
+
+def test_static_allowlist_uniform_errors_and_private_exception_redaction():
+    async def check():
+        db, _, client = fixture()
+        async with client:
+            page = await client.get("/")
+            assert page.status_code == 200 and "script-src 'self'" in page.headers[
+                "content-security-policy"]
+            for path in ("/static/auth.py", "/missing"):
+                denied = await client.get(path)
+                assert denied.status_code == 404
+                assert denied.json()["error"]["request_id"] == denied.headers["x-request-id"]
+            async def broken(*args):
+                raise RuntimeError("private native error")
+            db.call = broken
+            failed = await client.get("/v1/session")
+            assert failed.status_code == 500 and "private native" not in failed.text
+            assert failed.json()["error"]["code"] == "INTERNAL_ERROR"
+    asyncio.run(check())
+
+
+def test_pipeline_rejects_non_utf8_before_reservation():
+    async def check():
+        db, _, client = fixture()
+        async with client:
+            for raw in (b"\xff", b"a\x00b"):
+                result = await client.post("/v1/assets/pipeline/" + str(uuid4()), content=raw)
+                assert result.status_code == 422 and "reserve" not in db.events
+    asyncio.run(check())
+
+
+def test_browser_summary_keeps_large_sequence_exact_and_strips_internal_receipts():
+    async def check():
+        db, _, client = fixture()
+        db.job_result = {"state": "NEEDS_REVIEW", "outcome": "mismatch",
+            "created_at": "2026-11-04T00:00:00Z", "sequence": 9007199254740993,
+            "report": {"worker": {"private_internal": "not browser data"},
+                "semantic": {"report": {"result": {"blocking_occurrences": 0,
+                    "finding_count": 1, "findings": [{"check": "V04",
+                        "code": "CANONICAL_CUSTOMER_MISMATCH", "source": "source:1"}],
+                    "ownership_witnesses": []}}}}}
+        async with client:
+            response = await client.get("/v1/jobs/" + str(uuid4()) + "/summary")
+            assert response.status_code == 200
+            assert response.json()["sequence"] == "9007199254740993"
+            assert "private_internal" not in response.text
+            assert response.json()["finding_count"] == 1
     asyncio.run(check())

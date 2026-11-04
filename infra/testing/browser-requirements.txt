@@ -1,0 +1,6 @@
+# Development-only browser probe; never included in a product/worker/verifier image.
+# Reviewed in docs/decisions.md D63. Browser: playwright install chromium --only-shell.
+playwright==1.64.1
+pyee==14.0.0
+greenlet==3.5.6
+typing_extensions==4.16.0

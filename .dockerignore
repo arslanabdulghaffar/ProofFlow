@@ -11,6 +11,12 @@ api/app/**
 !api/app/assets.py
 !api/app/workspace_assets.py
 !api/app/product.py
+!api/app/wire.py
+!api/app/static/
+api/app/static/**
+!api/app/static/index.html
+!api/app/static/intake.js
+!api/app/static/intake.css
 !api/app/product_store.py
 !api/app/product_bootstrap.py
 !infra/

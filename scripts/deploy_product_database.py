@@ -13,7 +13,8 @@ from vultr_phase1 import PRIVATE, ROOT, Admin
 def main():
     paths = {name: ROOT / "db/phase2" / name for name in
              ("001_identity_assets.sql", "002_upload_reservations.sql", "003_original_queue.sql",
-              "004_termination_evidence.sql", "005_job_event_replay.sql")}
+              "004_termination_evidence.sql", "005_job_event_replay.sql",
+              "006_browser_session.sql", "007_workspace_retention.sql")}
     files = {name: path.read_bytes() for name, path in paths.items()}
     manifest = {"migrations": {
         name: hashlib.sha256(raw).hexdigest() for name, raw in files.items()}}
