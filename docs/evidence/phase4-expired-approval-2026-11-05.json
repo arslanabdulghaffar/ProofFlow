@@ -1,0 +1,50 @@
+{
+  "observed_at": "2026-11-04T16:11:10.711813+00:00",
+  "intent": "5bcb30d6-05d9-4381-b466-6a2ba948909f",
+  "preview_sha256": "4c386c491321018df7ab6abc33a5f40174eff61d77226ecffc1a98e5dc6c0495",
+  "expired_at": "2026-11-04T16:02:50.806942+00:00",
+  "initial_session_http_status": 403,
+  "approval_http_status": null,
+  "prior_probe_limitation": "Initial harness expected logout 200 instead of the documented 204; no final receipt retained. Reconciliation does not recreate approval or session.",
+  "durable_external_writes": 0,
+  "external_readback": {
+    "app_authentication": "passed_after_unused_key_revocation",
+    "branch_exists": false,
+    "pr_exists": false,
+    "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f"
+  },
+  "temporary_session_revoked": true,
+  "credit": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-04T16:10:57.387064+00:00",
+    "remaining_credit": "197.85",
+    "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+  },
+  "new_worker_executions": 0,
+  "provider_calls": 0,
+  "new_cloud_resources": 0,
+  "admission": "remained_closed",
+  "unused_key_revoked": 5183052,
+  "working_key_preserved": 5183074,
+  "user_authorization": "expired PR and unused key removal approved; no rebinding",
+  "status": "RECONCILED_NO_EXTERNAL_WRITE_PHASE4_INCOMPLETE",
+  "source_checkpoint_before_this_change": "6cd7fa532a2b99404ac8a773a144de6da82fb5c0",
+  "source_files": [
+    {
+      "path": "scripts/check_phase4_expired_approval.py",
+      "sha256": "df10740e32a45b41b1cf4aace35d33a7df0e6030cbcf8ed93536403ea92d5122"
+    }
+  ],
+  "key_removal_evidence": {
+    "method": "GitHub settings browser UI; confirmed one remaining key5183074",
+    "private_screenshot_name": "github-working-key-only.jpg",
+    "sha256": "9a4783068a11fbd502d2fbb241c5145c888a04580108e57b53c489c0e0f17c10"
+  },
+  "approval_processing_clock_utc": "2026-11-04T16:03:42Z",
+  "live_expired_approval_http_receipt": "NOT_RETAINED; no captured 409 acceptance claim",
+  "actual_pr_write_readback_recovery": "NOT_RUN; fresh exact operator approval required",
+  "independent_human_review": "NOT_AVAILABLE",
+  "review": "Separate Codex critical pass; no policy, SQL, runtime or service changes",
+  "executed_source_sha256": "df10740e32a45b41b1cf4aace35d33a7df0e6030cbcf8ed93536403ea92d5122",
+  "source_normalization": "Only CRLF to LF for Git; no semantic change after reconciliation"
+}

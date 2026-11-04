@@ -1,5 +1,11 @@
 # Progress
 
+## November5 KST — approved key cleanup, expired PR preserved
+
+Removed only the specifically approved unused App key5183052. Working key5183074 still authenticates against the private demo repository; Actions remain disabled and hooks absent. The owner's exact PR approval reached processing after its preview expired. No approval override or replacement intent was created. Actual reconciliation found zero durable external writes, no branch/PR and an unauthorized saved temporary session. The initial probe expected logout200 rather than204 and failed before saving its final receipt; the corrected readback records that limitation instead of claiming a retained expiry409 result. [Receipt](evidence/phase4-expired-approval-2026-11-05.json).
+
+No new worker execution, provider call or cloud resource. Admission stayed closed and fresh credit was$197.85. Phase4 remains IN PROGRESS pending fresh exact approval and actual PR write/readback/recovery. No independent human sign-off. This is a private WIP checkpoint, not Phase4 completion or a request to continue.
+
 ## November5 KST — actual App connection and PR preview
 
 Dedicated private App setup was explicitly approved, completed and verified. Scope is one private demo repository; fixed minimal permissions, Actions disabled, hooks absent, dispatcher-only secret. Actual scoped token authentication and deployed read-only base/diff preview passed. Three additional real isolated unchanged-source checks matched with cleanup, then exact synthetic version activation. Zero model calls/new resources; no external write authorized or sent. [Receipt](evidence/phase4-app-installed-2026-11-05.json). Exact draft-PR approval and removal of an unused first generated key are separately pending. Corrected Windows credential-helper ACL persistence and administrator ACL reading after actual failures, without relaxing access. Phase4 remains IN PROGRESS.

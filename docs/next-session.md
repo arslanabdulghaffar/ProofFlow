@@ -1,5 +1,15 @@
 # Resume ProofFlow
 
+## November5 KST — key cleanup and expired approval reconciled
+
+Current checkpoint supersedes pending-setup statements below. Owner approved the exact PR and removal of unused key5183052, then became unavailable. The preview expired at2026-11-04T16:02:50.806942Z, before approval processing at16:03:42Z. Do not extend it, rebind the answer, or create a replacement intent while the owner is away. The product's exact external-action approval remains required despite standing development authorization.
+
+Unused key5183052 was removed through GitHub; only working key5183074 remains and actual App authentication still passes. Read-only reconciliation found zero durable pr_writes, no intent branch and no PR. The saved temporary actor now receives403 and must not be reused. Initial probe incorrectly expected logout200 instead of204 and retained no final receipt; the corrected reconciliation does not claim a captured expiry409 or recreate the session. [Current receipt](evidence/phase4-expired-approval-2026-11-05.json).
+
+Phase4 remains IN PROGRESS: actual approved PR write/readback/recovery is NOT RUN. App setup and the three fresh isolated checks are complete; no need to repeat them. When the owner is available, create a new authenticated exact preview for the existing eligible version, present its actual diff/base/digest/expiry and obtain fresh approval. Do not automatically regenerate a short-lived preview now. No generic continuation question is needed. Phase5/6 release gates, independent human review and MIT ownership remain open.
+
+Product/inference admission stayed closed; zero new worker executions/model calls/resources. Credit$197.85 observed2026-11-04T16:10:57Z; existing $150/$25 promotional-only limits and guard review deadline2026-11-06T21:05:35.177139Z unchanged. Preserve private repositories, retained evidence, applied SQL and the active synthetic version. Never substitute development Git credentials for the App or bypass approval to finish a phase.
+
 ## November5 KST — App installed, exact PR approval pending
 
 Owner explicitly approved dedicated App setup. App5613818/client Iv23liOHGBy6UtIO3bKK, installation178607272, selected repo1445855571 (private ProofFlow-Demo) are configured on existing dispatcher. Actual scoped authentication, disabled Actions/no hooks/private tree preflight and deployed read-only PR preview passed. Key is DPAPI-encrypted outside Git; downloaded PEM has owner/SYSTEM-only ACL. Working public fingerprint5BYwF799WlswFqLokzfxTQaXJoTHy9MdoLqG5rpLN8E= (key5183074); unused first key5183052 removal awaits the specific pending answer. No new resources or inference calls. [Current receipt](evidence/phase4-app-installed-2026-11-05.json).
