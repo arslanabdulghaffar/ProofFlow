@@ -1,0 +1,121 @@
+{
+  "status": "LOCAL_HUMAN_APPROVAL_HANDOFF_READY_PHASE4_INCOMPLETE",
+  "prior_checkpoint": "e00f91a72636f2891e4c39cf900ec533ab55ed2a",
+  "approval_processing_clock_utc": "2026-11-04T23:41:40Z",
+  "expired_preview_reconciliation": {
+    "observed_at": "2026-11-04T23:44:22.350433+00:00",
+    "intent": "a8f4b7c6-7b61-4025-a19a-b536221d4e3d",
+    "preview_sha256": "387bda4953895e1d46eab6f758761abe81a0e34964f27faa28178efa5e701dd9",
+    "expired_at": "2026-11-04T22:50:15.920603+00:00",
+    "initial_session_http_status": 403,
+    "approval_http_status": null,
+    "durable_intent": {
+      "state": "PREVIEW",
+      "expires_at": "2026-11-04T22:50:15.920603+00:00",
+      "approved_at": null,
+      "currently_authorized": false
+    },
+    "prior_probe_limitation": null,
+    "durable_external_writes": 0,
+    "external_readback": {
+      "app_authentication": "passed_after_unused_key_revocation",
+      "branch_exists": false,
+      "pr_exists": false,
+      "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f"
+    },
+    "temporary_session_unauthorized": true,
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-04T23:44:09.240930+00:00",
+      "remaining_credit": "197.1",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "new_worker_executions": 0,
+    "provider_calls": 0,
+    "new_cloud_resources": 0,
+    "admission": "remained_closed",
+    "unused_key_revoked": 5183052,
+    "working_key_preserved": 5183074,
+    "user_authorization": "exact PR approved after expiry; no rebinding"
+  },
+  "post_attempt_services": {
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "fault_probe_container_present": false,
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-04T23:45:29.017404+00:00",
+      "remaining_credit": "197.1",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    }
+  },
+  "deployed_product_image_unchanged": "886e5044e05ce84b78c2fc10ae19019d577338b66e7808475d0020a4fb452bab",
+  "checks": {
+    "windows_pytest": {
+      "passed": 617,
+      "skipped_linux_only": 86
+    },
+    "focused_confirmation_fault_driver_admin_tests": 21,
+    "ruff": "passed",
+    "powershell_wrapper_parse": "passed",
+    "notepad_exists": true
+  },
+  "not_run": [
+    "human-operated local confirmation",
+    "actual GitHub PR creation/readback",
+    "live final-response-loss and controller recovery",
+    "independent human review"
+  ],
+  "safety": {
+    "approval_expiry_unchanged": true,
+    "no_automatic_confirmation": true,
+    "no_new_chat_preview_request": true,
+    "no_new_resources_provider_calls_worker_jobs": true,
+    "private_repositories_required": true,
+    "credit_caps_usd": {
+      "project": 150,
+      "inference": 25
+    }
+  },
+  "source_files": [
+    {
+      "path": "scripts/Approve-Phase4PR.ps1",
+      "sha256": "4e1f1f95d501275902bcc92179da711b1e6886fdf7c923500ad2067b9d618b02"
+    },
+    {
+      "path": "scripts/approve_phase4_pr_locally.py",
+      "sha256": "7397bb59b2fa3ec52faa23098e05c04f3041cc6b773ec06d40ca6a0d090f7a11"
+    },
+    {
+      "path": "scripts/check_phase4_expired_approval.py",
+      "sha256": "220cadb385f36b5250167d2f707ab7cb38e657c78f9ce518f55e96bbe89b58b8"
+    },
+    {
+      "path": "scripts/complete_phase4_pr_approval.py",
+      "sha256": "e6af217f84d0e3457a93ae199f008e9daa1075d54f1f7105f6f11079ed06d7ba"
+    },
+    {
+      "path": "scripts/probe_phase4_pr_reply_loss.py",
+      "sha256": "c7e7e34f0da013c688bdbe6aa341cc8a6c600b5c181ac4e4677fb44ad45bf3f3"
+    },
+    {
+      "path": "scripts/refresh_phase4_pr_preview.py",
+      "sha256": "717d97c252b26cb6044faae8db479880828859060438cbdd46d9b357dfd2a42f"
+    },
+    {
+      "path": "tests/unit/test_local_pr_confirmation.py",
+      "sha256": "155c99359b790b8c4fed403bed3d759e6dec7dfa52a684cd2415eeb51eb2deac"
+    },
+    {
+      "path": "tests/unit/test_pr_approval_admin.py",
+      "sha256": "27ba460b6bcccf19202c037c19d7d154d9a09878927326c9ead55c2251dc69fa"
+    },
+    {
+      "path": "tests/unit/test_pr_reply_loss_probe.py",
+      "sha256": "d42178f538c4352f681d5fcc674e481f31c9e0951e22535e529341d882f13c50"
+    }
+  ]
+}

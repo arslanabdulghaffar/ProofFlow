@@ -9,7 +9,7 @@ from check_phase4_expired_approval import existing_session
 from prepare_phase4_pr_preview import save_session
 from product_live_session import PRIVATE, LiveSession, require
 
-RECORD = PRIVATE / "evidence/phase4-pr-refresh-20261105.json"
+RECORD = PRIVATE / "evidence/phase4-pr-refresh-20261105-0740.json"
 
 
 def render_preview(record):
@@ -44,8 +44,10 @@ def render_preview(record):
     return str(destination)
 
 
-def main():
-    require(not RECORD.exists(), "RECONCILE_EXISTING_REFRESH_RECORD")
+def main(record_path=None, emit=True):
+    record_path = RECORD if record_path is None else record_path
+    require(record_path.parent == PRIVATE / "evidence", "PRIVATE_RECORD_PATH_REQUIRED")
+    require(not record_path.exists(), "RECONCILE_EXISTING_REFRESH_RECORD")
     prior = json.loads((PRIVATE / "evidence/phase4-pr-preview-intent.json").read_bytes())
     identity = uuid4()
     record = {
@@ -56,11 +58,11 @@ def main():
         "session_file": "phase4-pr-" + identity.hex + ".dpapi",
         "external_approval": False,
     }
-    with RECORD.open("x", encoding="utf-8") as output:
+    with record_path.open("x", encoding="utf-8") as output:
         json.dump(record, output)
 
     def save():
-        RECORD.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+        record_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
 
     with LiveSession() as live:
         require(
@@ -106,13 +108,16 @@ def main():
         record["credit"] = live.credit
         record["review_artifact"] = render_preview(record)
         save()
-        print(json.dumps({
+        summary = {
             "intent": record["pr_intent"], "preview_sha256": status["preview_sha256"],
             "expires_at": status["expires_at"], "review_artifact": record["review_artifact"],
             "base_sha": status["preview"]["inspection"]["base_sha"],
             "branch": status["preview"]["branch"], "credit": live.credit,
             "new_worker_jobs": 0, "new_model_calls": 0, "external_writes": 0,
-        }))
+        }
+        if emit:
+            print(json.dumps(summary))
+        return record
 
 
 if __name__ == "__main__":

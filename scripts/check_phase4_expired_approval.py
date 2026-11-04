@@ -73,10 +73,14 @@ async def external_readback(intent):
     }
 
 
-def main(refresh=False):
+def main(refresh=False, latest=False):
     source = PRIVATE / "evidence" / (
         "phase4-pr-refresh-20261105.json" if refresh else "phase4-pr-preview-intent.json"
     )
+    if latest:
+        from refresh_phase4_pr_preview import RECORD
+
+        source, refresh = RECORD, True
     original = json.loads(source.read_bytes())
     preview = original["pr"]
     require(
@@ -159,6 +163,8 @@ def main(refresh=False):
         destination = "phase4-refresh-expired-result.json" if refresh else (
             "phase4-expired-approval-result.json"
         )
+        if latest:
+            destination = "phase4-expired-" + identity + ".json"
         (PRIVATE / "evidence" / destination).write_text(
             json.dumps(result, indent=2) + "\n", encoding="utf-8"
         )
@@ -170,8 +176,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--refresh", action="store_true", help="Read-only fresh-intent reconciliation"
     )
+    parser.add_argument("--latest", action="store_true", help="Read-only latest retained preview")
     args = parser.parse_args()
     try:
-        main(args.refresh)
+        main(args.refresh, args.latest)
     except Exception:
         raise SystemExit("EXPIRED_APPROVAL_CHECK_FAILED_RECONCILE_PRIVATE_STATE") from None

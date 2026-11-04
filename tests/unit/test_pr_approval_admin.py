@@ -45,6 +45,8 @@ def test_exact_admin_gate_does_not_rebind_or_repeat_approval(monkeypatch, change
         with pytest.raises(RuntimeError):
             approve_exact(client, record, digest, now)
     else:
+        assert approve_exact(client, record, digest, now, check_only=True) == current
+        assert not posts
         approve_exact(client, record, digest, now)
     assert len(posts) == (1 if change is None else 0)
     if posts:

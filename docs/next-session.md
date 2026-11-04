@@ -1,5 +1,15 @@
 # Resume ProofFlow
 
+## November5 08:46 KST — local approval handoff ready; third late chat answer preserved
+
+Owner approved intent a8f4b7c6-7b61-4025-a19a-b536221d4e3d/digest387bda4953895e1d46eab6f758761abe81a0e34964f27faa28178efa5e701dd9, but processing began08:41:40 KST after07:50:15 expiry. Actual reconciliation finds session403, PREVIEW/approved_at null/current authority false, zero writes and no branch/PR. The temporary dispatcher stop was followed by successful restart; API/dispatcher/retention timer active and no fault container remains. Credit$197.10, admissions closed, no new resources/calls/jobs. [Receipt](evidence/phase4-local-approval-ready-2026-11-05.json).
+
+Do not repeat expiring chat approval requests. A human-operated local command is ready in [github-setup.md](github-setup.md): Approve-Phase4PR.ps1 creates a unique preview, opens the exact text in Notepad, requires the displayed full digest in an interactive terminal and submits immediately through normal API controls. No default yes/piped input/assistant-synthesized confirmation. It does not extend expiry or reuse expired approvals. The user must operate it; no live local approval or PR success is claimed.
+
+The prepared one-shot real response-loss driver uses only existing minimal DB/App credentials and pinned product image, then normal production readback after natural lease expiry. Fixed resource/time bounds, owned-container cleanup and service restart in finally; exact claim scope; no SQL status edits. Actual live fault path remains NOT RUN.617 Windows tests pass/86 Linux-only skipped; targeted21 tests, Ruff and PowerShell parsing pass. Deployed product remains886e5044e05ce84b78c2fc10ae19019d577338b66e7808475d0020a4fb452bab; no production source/SQL change.
+
+After the owner runs the local command, inspect the new private phase4-pr-interactive-*.json and matching phase4-pr-result-<intent>.json/fault receipt rather than the static old chat RECORD. If actual exact readback/recovery passes, complete the Phase4 evidence/checkpoint; otherwise preserve/reconcile the specific failure. Phase4 remains incomplete. Keep source/Demo private, $150/$25 promotional-only caps and unchanged guard deadline2026-11-06T21:05:35.177139Z. No independent human security sign-off.
+
 ## November5 03:24 KST — non-PR hardening deployed and checked
 
 Owner requested all remaining Phase4 work that needs no new PR approval. Fixed missing resulting-commit tree/mode checks and malformed PR shape handling, then deployed image `886e5044e05ce84b78c2fc10ae19019d577338b66e7808475d0020a4fb452bab` on the existing VM. Only integrations/github_app.py changed among72 exact image files. Worker/verifier/contract/SQL unchanged; prior containers preserved. [Current receipt](evidence/phase4-readback-hardening-2026-11-05.json).

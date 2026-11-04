@@ -1,5 +1,11 @@
 # Progress
 
+## November5 08:46 KST — remove chat timing from the approval handoff
+
+A third exact preview was approved but processed after expiry; actual API/SQL/GitHub reconciliation confirms no approval/write/branch/PR. Services are active, no fault container remains, and credit is$197.10. Prepared a human-operated local preview/Notepad/full-digest confirmation command so the owner can submit within the same validity window without another chat round trip. Unique records/sessions preserve history; terminal/expiry/authority checks fail closed. No actual local approval has been performed. [Receipt](evidence/phase4-local-approval-ready-2026-11-05.json).
+
+Prepared and locally tested the final real-response-loss driver: normal approved branch/commit/PR operations, discard only the final response before confirmation, then normal lease-expiry readback/restart/replay checks. Actual external path remains NOT RUN.617 tests pass/86 Linux-only skipped; no deployed source/SQL/policy change, new resource/inference/candidate run, PR or publication. Phase4 stays incomplete until actual operator action, readback/recovery and verified completion checkpoint.
+
 ## November5 03:24 KST — readback hardening and recovery coverage
 
 Completed the non-PR Phase4 review: fixed final-commit tree/mode verification and malformed PR object handling. Matching-byte executable/symlink/submodule trees, truncated/wrong/duplicate/extra/missing entries and malformed shapes now fail. Added lost-response/DB-ack controller tests across all three write stages and real SQL commit/PR takeover/fencing checks.607 local passes/86 Linux skips, seven real SQL groups and four browser HTTP-double groups pass. [Evidence](evidence/phase4-readback-hardening-2026-11-05.json).
