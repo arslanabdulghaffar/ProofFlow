@@ -1,5 +1,7 @@
 # Product and UX specification
 
+Current Phase4 status supersedes historical future-tense statements below: exact version activation/revocation, fresh browser batches and signed events have deployed acceptance. Dedicated GitHub draft preview/approval/outbox/readback are implemented, but actual GitHub account integration is NOT RUN. Phase4 is incomplete until the dedicated App and concrete operator-approved PR pass. [Integration evidence](evidence/phase4-integrations-2026-11-04.json). Public access/evaluation remain later gates.
+
 Current Phase3 acceptance supersedes the historical missing-repair status below. Private browser supports original failure evidence, bounded real Vultr repair, fresh isolated candidate/protected checks, unchanged-source checks with zero model calls, owned source/diff/evidence download and raw retirement. AWAITING_APPROVAL never activates a version. Exact activation, fresh batches and external actions remain Phase4; public access/evaluation remain later gates. [Actual Phase3 evidence](evidence/phase3-acceptance-2026-11-04.json).
 
 Phase1 is complete at verified private checkpoint `0a24f45467b64132b0a3ca95a503aa8f4799ebff`; see [acceptance](evidence/phase1-acceptance-2026-11-04.json). Phase2 is technically accepted; the verified phase checkpoint report supplies its completion SHA. Private original-run browser intake and exact contract approval are implemented; public signup, repair, version activation and the broader workbench below remain planned.

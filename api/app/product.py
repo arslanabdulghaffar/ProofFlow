@@ -169,10 +169,14 @@ def create_product_app(store, assets, *, origin: str, journals=None):
     async def store_failure(request, error):
         code = str(error)
         status = (400 if code == "INVALID_EVENT_CURSOR" else 403 if code == "ACCESS_DENIED"
-                  else 429 if code in ("ASSET_QUOTA", "JOB_CAPACITY", "VERSION_CAPACITY")
+                  else 429 if code in ("ASSET_QUOTA", "JOB_CAPACITY", "VERSION_CAPACITY",
+                                       "PR_CAPACITY",
+                                       "BATCH_CONNECTION_CAPACITY", "BATCH_DELIVERY_CAPACITY")
                   else 404 if code in ("JOB_NOT_FOUND", "VERSION_NOT_FOUND")
                   else 409 if code.endswith("CONFLICT") or code in (
                       "CONTRACT_REVOKED", "EXACT_CONTRACT_REQUIRED", "VERSION_NOT_ELIGIBLE",
+                      "GITHUB_NOT_CONFIGURED", "EXACT_PR_APPROVAL_REQUIRED", "PR_AUTHORITY_REVOKED",
+                      "BATCH_CONNECTION_UNAVAILABLE", "BATCH_DELIVERY_INVALID",
                       "EXACT_VERSION_APPROVAL_REQUIRED", "VERSION_ASSET_MISMATCH") else 503)
         return failure(request.scope, code, status)
 
@@ -182,7 +186,8 @@ def create_product_app(store, assets, *, origin: str, journals=None):
 
     @app.get("/static/{name}")
     async def static(name: str):
-        types = {"versions.js": "application/javascript", "intake.js": "application/javascript",
+        types = {"github.js": "application/javascript", "versions.js": "application/javascript",
+                 "intake.js": "application/javascript",
                  "recovery.js": "application/javascript",
                  "intake.css": "text/css"}
         if name not in types:
@@ -527,6 +532,10 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         await store.call("delete", workspace, token, csrf)
         return {"access_revoked": True, "deletion": "queued"}
 
+    from api.app.batch_events import install_batch_event_routes
+    from api.app.github_routes import install_github_routes
     from api.app.version_routes import install_version_routes
     install_version_routes(app, store, assets, authorize)
+    install_github_routes(app, store, authorize)
+    install_batch_event_routes(app, store, authorize)
     return app

@@ -12,6 +12,8 @@ api/app/**
 !api/app/workspace_assets.py
 !api/app/evidence_bundle.py
 !api/app/version_routes.py
+!api/app/github_routes.py
+!api/app/batch_events.py
 !api/app/product.py
 !api/app/wire.py
 !api/app/static/
@@ -19,6 +21,7 @@ api/app/static/**
 !api/app/static/index.html
 !api/app/static/intake.js
 !api/app/static/versions.js
+!api/app/static/github.js
 !api/app/static/recovery.js
 !api/app/static/intake.css
 !api/app/product_store.py
@@ -33,6 +36,7 @@ infra/images/**
 !infra/images/control-build-requirements.txt
 !infra/images/inference-check.Dockerfile
 !infra/images/inference-check-requirements.txt
+!infra/images/product-requirements.txt
 !orchestrator/
 orchestrator/**
 !orchestrator/__init__.py
@@ -46,6 +50,7 @@ orchestrator/**
 !orchestrator/verification_run.py
 !orchestrator/verifier_client.py
 !orchestrator/product_dispatcher.py
+!orchestrator/github_dispatcher.py
 !orchestrator/product_setup.py
 !orchestrator/product_bootstrap.py
 !tests/
@@ -101,3 +106,8 @@ verifier/**
 !orchestrator/repair_evidence.py
 !orchestrator/repair_provider.py
 !orchestrator/repair_dispatcher.py
+!integrations/
+integrations/**
+!integrations/__init__.py
+!integrations/github_app.py
+!integrations/github_setup.py

@@ -1,5 +1,13 @@
 # Progress
 
+## Phase4 integration follow-up — November4, in progress
+
+Deployed signed batch ingress and the optional GitHub App/outbox path with migrations013/014 and product image3c89abc975a89545c53e23e6e1512b2765a95cd470b42367f2b8b23eddb4253c. Exact external preview/approval binds actor, repository/base/path, version/configuration and fixed draft content. Durable per-stage authorization precedes writes; uncertain responses receive read-only reconciliation, never blind resend. Signed events bind exact bytes/event/time, freeze the accepted version, reject changed replay and support revocation/retention. Browser double-submit and stale response guards were strengthened.
+
+Actual browser and signed ingress produced two fresh completed/matching isolated batches, with lost-reply same-job recovery, dispatcher restart, duplicate-event recovery, signature/body/revocation denials and desktop/mobile/logout readback. Version/connection revoked after checks; completed history retained. Zero new provider calls/resources; latest credit$198.17 and unchanged guard deadline.569 Windows tests pass/86 Linux skips;8 targeted Linux, real SQL5+6+4 new groups and11+5 regression groups,4 mocked-browser groups pass. [Source-bound evidence](evidence/phase4-integrations-2026-11-04.json) distinguishes live results, doubles and harness failures.
+
+GitHub App account setup and actual separately approved draft PR/readback remain NOT RUN; the owner requested setup-screen help and GitHub sign-in is pending. Helpers are tested, no key installed. Phase4 is not DONE. This private WIP checkpoint preserves progress without requesting generic continuation. No independent human approval or public release.
+
 ## Phase4 versions/batches checkpoint — continuing
 
 Exact-version approval and fresh-batch HTTP path now pass on the deployed worker. Clean fresh data completed; missing customer held with blocking evidence; invalid extra columns were rejected before execution; queued revocation cancelled work and preserved affected completed history. Real retirement erased the disposable version/batch/approval/journal state and preserved earlier records. Four SQL security groups cover actor/digest/CAS/idempotency, frozen assignment, revocation and global runtime rollback invalidation;11 prior queue groups and534 Windows tests pass. No provider calls or new cloud resources. [Source-bound evidence](evidence/phase4-versions-batches-2026-11-04.json).

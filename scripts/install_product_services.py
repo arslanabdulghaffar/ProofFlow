@@ -7,8 +7,8 @@ import stat
 import subprocess
 from pathlib import Path
 
-IMAGE = "fe3f04b2851b4db06c35c205520748425db615025f1fa60a6610eb3faefef8b2"
-PREVIOUS = "ca50ce8a71b2a9631cf06caaee1c9b93c939ebb236b0e8a8d67435681b5da4d7"
+IMAGE = "3c89abc975a89545c53e23e6e1512b2765a95cd470b42367f2b8b23eddb4253c"
+PREVIOUS = "fe3f04b2851b4db06c35c205520748425db615025f1fa60a6610eb3faefef8b2"
 DOCKER = ["/usr/bin/docker", "--host=unix:///var/run/docker.sock"]
 
 
@@ -153,6 +153,16 @@ WantedBy=sockets.target
                 or stat.S_IMODE(info.st_mode) != 0o400):
             raise RuntimeError("PROVIDER_CREDENTIAL_IDENTITY_CHANGED")
         write(Path("/etc/proofflow-repair/credentials") / secret_name, source.read_bytes(), 10003)
+    directory("/etc/proofflow-github", 10003)
+    directory("/etc/proofflow-batch-events", 10003)
+    master = Path("/etc/proofflow-batch-events/master")
+    if master.exists() or master.is_symlink():
+        info = master.lstat()
+        if (not stat.S_ISREG(info.st_mode) or info.st_uid != 10003 or info.st_nlink != 1
+                or info.st_size != 32 or stat.S_IMODE(info.st_mode) != 0o400):
+            raise RuntimeError("BATCH_MASTER_IDENTITY_CHANGED")
+    else:
+        write(master, os.urandom(32), 10003)
     for role in ("api", "dispatcher"):
         name = "proofflow-product-" + role
         # No Docker management socket, host PID namespace or API-management key.
@@ -169,13 +179,15 @@ WantedBy=sockets.target
                 "dst=/var/lib/proofflow-product/assets"
                 + (",readonly" if role == "dispatcher" else "")]
         if role == "api":
-            args.extend(["--mount=type=bind,src=/var/lib/proofflow-product/jobs,"
+            args.extend(["--mount=type=bind,src=/etc/proofflow-batch-events,dst=/etc/proofflow-batch-events,readonly",
+                         "--mount=type=bind,src=/var/lib/proofflow-product/jobs,"
                          "dst=/var/lib/proofflow-product/jobs,readonly","--mount=type=bind,src=/run/proofflow-product-api,dst=/run/proofflow-product-api",
                          "--mount=type=bind,src=/etc/proofflow-product-api/tls,"
                          "dst=/etc/proofflow-product/tls,readonly"])
             module = "api.app.product_bootstrap"
         else:
-            args.extend(["--mount=type=bind,src=/etc/proofflow-repair,dst=/etc/proofflow-repair,readonly",
+            args.extend(["--mount=type=bind,src=/etc/proofflow-github,dst=/etc/proofflow-github,readonly",
+                         "--mount=type=bind,src=/etc/proofflow-repair,dst=/etc/proofflow-repair,readonly",
                          "--mount=type=bind,src=/etc/proofflow-product-dispatcher/worker,"
                          "dst=/etc/proofflow-product/worker,readonly",
                          "--mount=type=bind,src=/run/proofflow-verifier,dst=/run/proofflow-verifier,readonly",
@@ -199,7 +211,10 @@ WantedBy=sockets.target
                     "pf_product.execution_policy WHERE enabled) AND NOT EXISTS(SELECT 1 FROM "
                     "pf_product.jobs WHERE state NOT IN "
                     "('NEEDS_REVIEW','FAILED_INFRA','CANCELLED')) AND NOT EXISTS(SELECT 1 FROM "
-                    "pf_product.repairs WHERE state IN ('QUEUED','RUNNING','RECONCILING'));"])
+                    "pf_product.repairs WHERE state IN ('QUEUED','RUNNING','RECONCILING')) "
+                    "AND NOT EXISTS(SELECT 1 FROM pf_product.pr_intents "
+                    "WHERE lease_owner IS NOT NULL "
+                    "OR state IN ('BRANCH_PENDING','COMMIT_PENDING','PR_PENDING'));"])
                 if ready != "t":
                     raise RuntimeError("PRODUCT_UPGRADE_REQUIRES_CLOSED_IDLE_QUEUE")
                 archived = name + "-previous-" + PREVIOUS[:12]
@@ -242,6 +257,7 @@ WantedBy=multi-user.target
     print(json.dumps({"image": IMAGE, "api_network": "none", "api_transport": "private_unix_tls",
                       "dispatcher_targets": "fixed_vultr_worker_and_local_database_verifier",
                       "inference_credentials_mounted": "dispatcher_only",
+                      "github_credentials_mounted": "dispatcher_only_optional",
                       "new_cloud_resources": 0}))
 
 

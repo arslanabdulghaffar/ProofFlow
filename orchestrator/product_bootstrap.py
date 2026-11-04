@@ -9,7 +9,9 @@ from uuid import UUID
 
 from api.app.product_store import ProductConnection, ProductStore
 from api.app.workspace_assets import WorkspaceAssets
+from integrations.github_setup import load_github_app
 from orchestrator.budget_store import BudgetConnection
+from orchestrator.github_dispatcher import GitHubDispatcher
 from orchestrator.probe_plan import RateQuote
 from orchestrator.product_dispatcher import ProductDispatcher
 from orchestrator.product_setup import database_password
@@ -69,9 +71,13 @@ async def main():
             verifier_sha256=config["verifier_sha256"],
             journal=Path("/var/lib/proofflow-product/jobs"),
         )
+        github_app = load_github_app()
+        github = GitHubDispatcher(store, github_app) if github_app is not None else None
         while True:
             if not await dispatcher.once():
                 await repair.once()
+            if github is not None:
+                await github.once()
             await asyncio.sleep(1)
     finally:
         os.close(root)

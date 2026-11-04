@@ -766,6 +766,48 @@
       "title": "PatchProposal",
       "type": "object"
     },
+    "PrApprovalRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "preview_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Preview Sha256",
+          "type": "string"
+        },
+        "confirm": {
+          "const": true,
+          "title": "Confirm",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "preview_sha256",
+        "confirm"
+      ],
+      "title": "PrApprovalRequest",
+      "type": "object"
+    },
+    "PrIntentResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "intent_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Intent Id",
+          "type": "string"
+        },
+        "status_url": {
+          "pattern": "^/v1/pr-intents/[0-9a-f-]{36}$",
+          "title": "Status Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intent_id",
+        "status_url"
+      ],
+      "title": "PrIntentResponse",
+      "type": "object"
+    },
     "RejectedProposal": {
       "additionalProperties": false,
       "properties": {
@@ -1161,6 +1203,27 @@
         "expires_at"
       ],
       "title": "SessionResponse",
+      "type": "object"
+    },
+    "SignedBatchRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "transactions_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Transactions Id",
+          "type": "string"
+        },
+        "customers_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Customers Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transactions_id",
+        "customers_id"
+      ],
+      "title": "SignedBatchRequest",
       "type": "object"
     },
     "VersionApprovalRequest": {

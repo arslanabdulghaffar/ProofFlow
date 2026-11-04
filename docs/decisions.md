@@ -1,5 +1,21 @@
 # Decision log
 
+## D68: single-use external writes and signed fresh batches
+
+Phase4 uses migrations013/014, now applied and immutable. GitHub preview binds exact actor/version/semantic epoch/configuration/base/diff/path/draft text and expires after ten minutes. Every branch/commit/PR stage durably records its exact request before HTTP; a lost database acknowledgement sends no request. Pending stages reconcile through read-only exact repository/branch/commit bytes/PR checks, even after local revocation, and never resend unknown writes. Bounded retry exhaustion stays UNCERTAIN with a retention hold. Provisioner resume_pr_readback can only restore readback of the last existing stage and expires write authority. It cannot approve or retry a new external mutation. Revocation after committed dispatch cannot recall an already authorized HTTP call; preserve actual external history and block later stages.
+
+Signed ingress authenticates exact bounded bytes before parsing, uses a per-connection derived key, five-minute skew and durable scoped event identity. First acceptance freezes the current exact version; replay cannot rebind it. Connection authority is owner/session-bound and expiry-bounded, with explicit revocation cancelling unfinished jobs. Keep GitHub and batch master secrets in distinct least-privilege service mounts. New optional cryptography dependency is now in the pinned product image only; candidate/verifier dependencies unchanged.
+
+Separate critical review covered fixed API origin/no redirects/proxies, malformed upstream shapes, streamed errors/response bounds, private descriptor reads, permission/repository/tree scope, locking/fencing/commit acknowledgement, concurrent approval CAS, retention holds, pending readback after revocation, replay binding and browser stale/double-submit behavior. Added tests and stable sanitized errors address the findings. This is Codex review plus automated verification, not independent human sign-off.
+
+## D69: deployed acceptance and honest harness recovery
+
+Browser and signed-event acceptance used existing paid infrastructure with zero new inference calls/resources. Two fresh isolated executions matched; dispatcher restart, same-event/lost-reply recovery and revocation preserved exact identities. Final version and connection are revoked; any later PR demonstration needs a new legitimate proof/version. Never modify revoked history. Source-bound receipts preserve failed harness runs and resumed readback, rather than claiming one uninterrupted pass.
+
+Initial Playwright route.fetch used a client without the project CA; its native error exposed temporary synthetic session/CSRF in tool output. Immediately revoked that exact session, retained the already-completed batch, changed only the trusted harness transport/diagnostics, and reconciled without duplicate execution. No provider/App/cloud key was involved. Later harness-only corrections opened a collapsed revoke control and used the actual proofflow-product-retention.timer unit. Final browser revocation/mobile/logout and both receipts passed. Private raw evidence stays outside Git; no independent human approval or universal security claim follows.
+
+Dedicated App setup helpers validate encrypted local key ACLs and account scope before fixed pinned-SSH installation. Existing development authentication is used only for read-only administrator repo/Actions/hooks preflight, never mounted or forwarded to product. Actual installation and product GitHub writes remain NOT RUN pending owner sign-in/setup and concrete exact PR approval. The current owner request for setup help does not grant the product a broad write bypass.
+
 D52 — Deployed probes drive exact-mode input writes, bounded failure diagnostics, dotted cgroup counters, real /tmp plus shared bounded binds and a two-second kernel-termination observation grace. Execution limits are unchanged; collection still requires zero writers. D53 — Preserve default fork capacity failure; voluntary32-task fixture proves guest fork accounting, not default63-child capacity.
 
 ## Latest owner and deployment decisions — Nov 4

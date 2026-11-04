@@ -3,6 +3,7 @@
 import hashlib
 import json
 import subprocess
+from concurrent.futures import ThreadPoolExecutor
 from uuid import uuid4
 
 from scripts.check_budget_postgres import require
@@ -183,6 +184,30 @@ def main():
         db.expect(PREVIEW, "VERSION_NOT_ELIGIBLE", **{**fresh_b, "intent": str(uuid4())})
         db.expect(PREPARE, "VERSION_NOT_ELIGIBLE", **second)
         checks.append("global_runtime_roundtrip_does_not_revive_verification_or_approval")
+        other_assets = {
+            k: db.asset(foreign, k) for k in ("pipeline", "transactions", "customers", "contract")
+        }
+        db.sql(APPROVE, **other_assets["contract"])
+        racers = [
+            preview(db, verified_fixture(db, foreign, other_assets, source))
+            for source in ("first inert racer", "second inert racer")
+        ]
+
+        def activate(value):
+            try:
+                return json.loads(db.sql(ACTIVATE, **value))
+            except subprocess.CalledProcessError as error:
+                require("VERSION_CONFLICT" in error.stderr, "Unexpected race failure")
+                return "conflict"
+
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            results = list(pool.map(activate, racers))
+        require(
+            sum(item == "conflict" for item in results) == 1, "Concurrent previews both activated"
+        )
+        winner = next(item for item in results if item != "conflict")
+        require(winner["approved"] and not winner["already_applied"], "Race winner absent")
+        checks.append("concurrent_distinct_exact_previews_only_one_CAS_winner")
     print(
         json.dumps(
             {

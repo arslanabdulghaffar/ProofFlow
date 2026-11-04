@@ -5,7 +5,7 @@ import json
 import subprocess
 from pathlib import Path
 
-IMAGE = "fe3f04b2851b4db06c35c205520748425db615025f1fa60a6610eb3faefef8b2"
+IMAGE = "3c89abc975a89545c53e23e6e1512b2765a95cd470b42367f2b8b23eddb4253c"
 PROBE = """
 import hashlib,json,os,stat
 from pathlib import Path
@@ -30,7 +30,8 @@ def main():
          "--cpus=1", "--pids-limit=32", "--user=10003:10003", "--entrypoint=python",
          "sha256:" + IMAGE, "-c", PROBE], capture_output=True, check=True, timeout=30)
     inventory = json.loads(result.stdout)
-    packages = ("!api/", "!contracts/", "!orchestrator/", "!verifier/", "!worker/")
+    packages = ("!api/", "!contracts/", "!orchestrator/",
+                "!integrations/", "!verifier/", "!worker/")
     expected = {line[1:] for line in Path(".dockerignore").read_text().splitlines()
                 if line.startswith(packages)
                 and line.endswith((".py", ".html", ".js", ".css"))}

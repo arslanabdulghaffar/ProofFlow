@@ -286,7 +286,25 @@ class BatchResponse(Wire):
     status_url: Annotated[str, Field(pattern=r"^/v1/batches/[0-9a-f-]{36}$")]
 
 
+class PrApprovalRequest(Wire):
+    preview_sha256: Digest
+    confirm: Literal[True]
+
+
+class SignedBatchRequest(Wire):
+    transactions_id: Identifier
+    customers_id: Identifier
+
+
+class PrIntentResponse(Wire):
+    intent_id: Identifier
+    status_url: Annotated[str, Field(pattern=r"^/v1/pr-intents/[0-9a-f-]{36}$")]
+
+
 MODELS = (
+    SignedBatchRequest,
+    PrApprovalRequest,
+    PrIntentResponse,
     VersionPrepareRequest,
     VersionPrepared,
     VersionPreviewRequest,

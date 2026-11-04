@@ -9,6 +9,11 @@ import psycopg
 from orchestrator.budget_store import BudgetConnection, BudgetUnavailable
 
 API_OPERATIONS = {
+    "batch_event": ("SELECT pf_product.accept_batch_event(%s,%s,%s,%s,%s,%s)", 6),
+    "batch_connection_revoke": ("SELECT pf_product.revoke_batch_connection(%s,%s,%s,%s)", 4),
+    "pr_request": ("SELECT pf_product.request_pr_preview(%s,%s,%s,%s,%s)", 5),
+    "pr_get": ("SELECT pf_product.get_pr_intent(%s,%s,%s)", 3),
+    "pr_approve": ("SELECT pf_product.approve_pr(%s,%s,%s,%s,%s)", 5),
     "version_prepare": ("SELECT pf_product.prepare_version(%s,%s,%s,%s,%s)", 5),
     "version_get": ("SELECT pf_product.get_version(%s,%s,%s)", 3),
     "version_preview": ("SELECT pf_product.preview_version(%s,%s,%s,%s,%s)", 5),
@@ -36,6 +41,11 @@ API_OPERATIONS = {
     "logout": ("SELECT pf_product.revoke_session(%s,%s,%s)", 3),
 }
 DISPATCH_OPERATIONS = {
+    "pr_claim": ("SELECT pf_product.claim_pr(%s)", 1),
+    "pr_preview_record": ("SELECT pf_product.record_pr_preview(%s,%s,%s,%s,%s)", 5),
+    "pr_begin": ("SELECT pf_product.begin_pr_write(%s,%s,%s,%s,%s)", 5),
+    "pr_readback": ("SELECT pf_product.record_pr_readback(%s,%s,%s,%s,%s,%s)", 6),
+    "pr_defer": ("SELECT pf_product.defer_pr(%s,%s,%s,%s,%s,%s)", 6),
     "repair_original": ("SELECT pf_product.original_repair_candidate(%s,%s,%s,%s,%s)", 5),
     "repair_claim": ("SELECT pf_product.claim_repair(%s)", 1),
     "repair_heartbeat": ("SELECT pf_product.heartbeat_repair(%s,%s,%s,%s,%s)", 5),
@@ -56,6 +66,12 @@ DISPATCH_OPERATIONS = {
     "fail": ("SELECT pf_product.fail_original(%s,%s,%s,%s,%s)", 5),
 }
 KNOWN_ERRORS = frozenset({
+    "BATCH_CONNECTION_UNAVAILABLE", "BATCH_CONNECTION_INVALID", "BATCH_DELIVERY_INVALID",
+    "BATCH_DELIVERY_CONFLICT", "BATCH_CONNECTION_CAPACITY", "BATCH_DELIVERY_CAPACITY",
+    "GITHUB_NOT_CONFIGURED", "GITHUB_CONFIGURATION_INVALID", "PR_CONFLICT", "PR_CAPACITY",
+    "EXACT_PR_APPROVAL_REQUIRED", "PR_AUTHORITY_REVOKED", "STALE_PR_LEASE", "PR_PREVIEW_INVALID",
+    "PR_WRITE_ALREADY_PREPARED", "PR_READBACK_INVALID", "PR_DIAGNOSTIC_INVALID",
+    "PR_RECONCILIATION_REQUIRED",
     "VERSION_NOT_ELIGIBLE", "VERSION_ASSET_MISMATCH", "VERSION_CONFLICT", "VERSION_CAPACITY",
     "EXACT_VERSION_APPROVAL_REQUIRED", "VERSION_NOT_FOUND",
     "REPAIR_PARENT_INVALID", "REPAIR_CALL_ALREADY_PREPARED", "REPAIR_BUDGET_EXHAUSTED",
