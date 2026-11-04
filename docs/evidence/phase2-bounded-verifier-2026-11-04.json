@@ -1,0 +1,230 @@
+{
+  "boundary": {
+    "checks": [
+      "fixed_protocol_rejection",
+      "uid_capabilities_secret_files_readonly_ipv4_ipv6_unix_denied",
+      "independent_wall_timeout_after_controller_exit",
+      "memory_swap_limit_oom_cleanup",
+      "output_file_hard_limit",
+      "task_ceiling_and_descendant_cleanup"
+    ],
+    "cleanup_confirmed": true,
+    "fixture_only": true,
+    "passed": 6,
+    "rootfs_sha256": "35e0663e9dd2d89d814174d77d2cd773323eb6dc1848c045e8c91aebb70b0c24"
+  },
+  "deployment": "d4c3f9666a35000574c1431f4eb73575d92beffebd7da7b8df380b50effb8564",
+  "image_sha256": "1ec6b77378d3ab18dae2ff7529b626bb1c99547867b49a6a47771e9ed4a4a52e",
+  "independent_human_review": "NOT_AVAILABLE",
+  "limitations": [
+    "Phase2 incomplete: authenticated product API/queue/failure UI not integrated",
+    "Fixed positive fixture is not an AI repair or general production pipeline",
+    "Canary seed/data remain private; mutation fixtures are not held-out evaluations",
+    "No independent human security sign-off",
+    "No activation or batch-completion permission",
+    "No new cloud resource or provider call; existing VMs continue credit-funded billing"
+  ],
+  "local_tests": {
+    "deployed_boundary_groups": 6,
+    "linux_only_skipped_on_windows": 53,
+    "local_boundary_groups": 6,
+    "new_protocol_cases": 14,
+    "windows_passed": 463
+  },
+  "observed_at": "2026-11-04T03:02:06.585869+00:00",
+  "probes": [
+    {
+      "blocking_occurrences": 0,
+      "checks": [],
+      "cleanup": "confirmed",
+      "comparison": "match",
+      "contract_raw_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+      "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+      "customers_sha256": "5d003df213482b595b01fd3aee22d5e418f2a263d6d5675f5d11a9d8b8ea7201",
+      "execution": "19fadaab458643bd8f9922abc1cfc09a",
+      "extended": false,
+      "fixture": "canary_correct",
+      "generation": 1,
+      "generation_report_sha256": "d9364bf96ec95181333fceca0304520c93e85cebca622fb36817171b54c8c0b7",
+      "job": "cf6cb1c1c05c4777ba837e65214fd2e2",
+      "manifest_sha256": "b84e30cbadfdebe3c9f7dddf539bb13cdf34c2e5bd60a37390408528fac55cc2",
+      "output_sha256": {
+        "ledger.jsonl": "ae1597bc5d976c546160d75f83e1b9db1004f6dcad6f95da6cce99094a76161f",
+        "unresolved.jsonl": "2de22e9b5d9c340697df82d70baa21d5763d780c7fdfe406730ae9fca7871b73"
+      },
+      "pipeline_sha256": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+      "purpose": "canary_ownership",
+      "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "seed_sha256": "68b620e6868a4065bb0e270fa39b1d49c2ccf3873c8669a1e14d19c4c907671a",
+      "transactions_sha256": "dd9906d9e6ab22de473951cb55953406a079789f0b90dd469351d4d4c3d83716",
+      "verification_report_sha256": "6c68f06519724ab31bf17948506bf0f42736e87a99fb4b6bb41f5af2459e1d2e",
+      "verifier_rootfs": "35e0663e9dd2d89d814174d77d2cd773323eb6dc1848c045e8c91aebb70b0c24"
+    },
+    {
+      "blocking_occurrences": 4,
+      "checks": [],
+      "cleanup": "confirmed",
+      "comparison": "match",
+      "contract_raw_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+      "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+      "customers_sha256": "8b8da6a36279d1456a3142eb4433d284971b2ab31f5df8e64cf5f3cf1f577448",
+      "execution": "9ed3aa4692d643ab9e8f5a2145f521ce",
+      "extended": false,
+      "fixture": "canary_correct",
+      "generation": 1,
+      "generation_report_sha256": "56bdca75cf72ef2f2c6e4f20bbe263aca6d25a90282ae2205bdc2418505ec9ad",
+      "job": "585e5bf0cd704a67a716588b32789408",
+      "manifest_sha256": "b9489c656f121b1dbbdc3260a4931264d97fdcbfaf65c71bc440b87b2a02af98",
+      "output_sha256": {
+        "ledger.jsonl": "8c528a391d796a6e756b6668a091b489f6c231b029e6a8173543de56dc93aec0",
+        "unresolved.jsonl": "fbfc5d2222b41f93c1948995f7c777d347cf57be9789e295aeaa2b3521388b4e"
+      },
+      "pipeline_sha256": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+      "purpose": "canary_quarantine",
+      "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "seed_sha256": "8897c4f6f7ab3c86fbbb860e9443b823ced76cdf9a3dfb031a0e7f97bee3555d",
+      "transactions_sha256": "a412cefb6015f6286fc1f007b641a1f78512c533c98706277d90841414e8cfa7",
+      "verification_report_sha256": "7114e650daed5bc897dd74cb3f8cc1a86bdc868da38f163c4baf189fbd8f74d2",
+      "verifier_rootfs": "35e0663e9dd2d89d814174d77d2cd773323eb6dc1848c045e8c91aebb70b0c24"
+    },
+    {
+      "blocking_occurrences": 5,
+      "checks": [],
+      "cleanup": "confirmed",
+      "comparison": "match",
+      "contract_raw_sha256": "1d86babe2a680bbc82b8635a3849a1d71950dda934c8d9cee91e34c2fbe2fe39",
+      "contract_sha256": "1d86babe2a680bbc82b8635a3849a1d71950dda934c8d9cee91e34c2fbe2fe39",
+      "customers_sha256": "7001fbba4dfdfde6268d0188601a46ab5424c92b8fd1dba4d16f5c8cfe19a4b7",
+      "execution": "42f7cfd782af440186453231c37a9e77",
+      "extended": true,
+      "fixture": "canary_correct",
+      "generation": 1,
+      "generation_report_sha256": "ed4ad4250f8e5b6148cef76a814c809dd17a6039e07a568dec22ac0f97b435ec",
+      "job": "ea5e89378a1b43c4a934b6f1f404654e",
+      "manifest_sha256": "6653b2e81589a0b669277e109e7a6ac894f7b2931c977d8ec380fce2dfc7e42a",
+      "output_sha256": {
+        "ledger.jsonl": "3871047a707108392920467c39950937ec82293ffab678d197bc49d23492a374",
+        "rollups.jsonl": "f4248a8b757479ad9794eead3d27a04052742c047e12295421610198307d79f6",
+        "unresolved.jsonl": "2171fab8b82bf572cc6f188fad2a44e2e06ff13fa3b71c2aa82bed14c750ebb1"
+      },
+      "pipeline_sha256": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+      "purpose": "canary_quarantine",
+      "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "seed_sha256": "0eb89b359aaa7b6cd542b2b8954267ed03221a0d042169456bb8e59fff0bc5d6",
+      "transactions_sha256": "161db445087f13222956551d2f03ea123382d922e6fd76d431267b3eda03a9e9",
+      "verification_report_sha256": "3ac7e46aaa0d69567baf7d1971da92cd371eb1b2f66c541ef7c12a49f13cd2e4",
+      "verifier_rootfs": "35e0663e9dd2d89d814174d77d2cd773323eb6dc1848c045e8c91aebb70b0c24"
+    },
+    {
+      "blocking_occurrences": 0,
+      "checks": [
+        "V04",
+        "V05",
+        "V07",
+        "V08",
+        "V09"
+      ],
+      "cleanup": "confirmed",
+      "comparison": "mismatch",
+      "contract_raw_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+      "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+      "customers_sha256": "19d93c105dcaf9a13d23fc00abe7f204e7b7e0de8d36709c470b39f2db2e4c69",
+      "execution": "5a1f90c21ad147dfb272ec18720638f5",
+      "extended": false,
+      "fixture": "wrong_owner",
+      "generation": 1,
+      "generation_report_sha256": "50456d420892c93305539653d4cc07a020493158a6826dd00012dbfeb5250381",
+      "job": "db41740493a843f59b13c77e2c531fc3",
+      "manifest_sha256": "46567905334f29a32a3ef14725fe5d5264cb404ed1c807e61097a4b762b1dfb1",
+      "output_sha256": {
+        "ledger.jsonl": "7318658cd4a5debeeac3c7a920199a60c7b385eaaaf2d7184a3cf9688353c7ec",
+        "unresolved.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "pipeline_sha256": "5f10985fb67b7a8b346ff1a83aba02383341a941483130c7cb3aa6e89eba3929",
+      "purpose": "canary_ownership",
+      "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "seed_sha256": "3c5e85df5502b17a66fe311672fa6d600fb8985b93cb4ab46458b81b098b8d85",
+      "transactions_sha256": "bbba3e3ddec7eec767ad5c1f14d3f415f5a8d900a05faa7d618d49ab6ec4541b",
+      "verification_report_sha256": "8f59e46bc52e41a72d082391ce80f705c756e2c91e1187c21399f529f2c01176",
+      "verifier_rootfs": "35e0663e9dd2d89d814174d77d2cd773323eb6dc1848c045e8c91aebb70b0c24"
+    }
+  ],
+  "product_api_queue": "NOT_RUN",
+  "provider_calls": 0,
+  "rootfs_sha256": "35e0663e9dd2d89d814174d77d2cd773323eb6dc1848c045e8c91aebb70b0c24",
+  "scope": "actual_deployed_bounded_verifier_and_worker_only_canary_fixtures",
+  "sources": [
+    {
+      "path": ".dockerignore",
+      "sha256": "51ea9d87c7046ca0d1a5ce8517b3aaf7104f12aa9580dd60ef0e0f569d6bf9cb"
+    },
+    {
+      "path": "contracts/policy.py",
+      "sha256": "ce9d7add2322982322cc8fa68a86ba37e76a30969356fee713b7f4d066aeb748"
+    },
+    {
+      "path": "infra/images/verifier.Dockerfile",
+      "sha256": "806941393f6738c68ee64b0bb440218deeaa376cd1c909e270bf1ed013f701c2"
+    },
+    {
+      "path": "infra/images/verifier_main.py",
+      "sha256": "d889cef9fadb6696f0a0f0021bafa5cc292a251c397c30e166e7fc5a3bf10cd1"
+    },
+    {
+      "path": "orchestrator/verification_run.py",
+      "sha256": "e0e02a29753e5ca4ad2aa7df2bc4f18b73f9c2d201fdb2cd27e9c1740545f6e0"
+    },
+    {
+      "path": "scripts/check_verifier_boundary.py",
+      "sha256": "b6047c9ed1feda7af7677852dcedd15c93daa2742515ccee34ed57b8a87017fa"
+    },
+    {
+      "path": "scripts/deploy_verifier.py",
+      "sha256": "230ee8288daeee994c0b84a2cab1d3381204d12500458fc27d90784ba6d8b386"
+    },
+    {
+      "path": "scripts/prepare_verifier_identity.sh",
+      "sha256": "f406f772b5cae6738b2046b8ea2250203e6d0f7ea2d62d7db832391638ca3183"
+    },
+    {
+      "path": "scripts/verifier_admin.py",
+      "sha256": "2d0232d743589d2a9955e93069c789e5c396e863b11803d7a74cf75fdfdc6939"
+    },
+    {
+      "path": "scripts/probe_verifier_controller.py",
+      "sha256": "5d7514a70dc23376a5fe6fa7af73454587643aa67002992d63f4f29eca6554e3"
+    },
+    {
+      "path": "scripts/run_verifier_probes.py",
+      "sha256": "9312e4444b13a3bd2b87d7a2d7d180cec66e70cc351b1625eca46d3e8e23e959"
+    },
+    {
+      "path": "tests/fixtures/phase2/canary_correct.py.txt",
+      "sha256": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3"
+    },
+    {
+      "path": "tests/security/verifier_boundary_linux_check.py",
+      "sha256": "f28a55f32f7405c7c61fdc659cd0fddf778130e2a4e61e5236f39387e672ead4"
+    },
+    {
+      "path": "tests/unit/test_verifier_protocol.py",
+      "sha256": "6899025b124912063ff3b90225a3832c96f0614c1cf5e3ddd4113f26b137f313"
+    },
+    {
+      "path": "verifier/canaries.py",
+      "sha256": "c47ce621574c73cebc035e4f94270cd2c940a70a8822be16888968c544fc3920"
+    },
+    {
+      "path": "verifier/entrypoint.py",
+      "sha256": "782dcd32b59110c857bf90818664bf73457ba4436f64f4b6b72520fb76827e86"
+    },
+    {
+      "path": "verifier/host.py",
+      "sha256": "86f87fc88ff57eba03aed94e93e50a44666d816a99d5d834f87d07a813861aec"
+    },
+    {
+      "path": "verifier/protocol.py",
+      "sha256": "e518e33637f0c986c1cebd13221da73266a91ae1d45df17c7e1f4651f6031128"
+    }
+  ]
+}

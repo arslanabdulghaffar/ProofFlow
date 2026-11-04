@@ -73,6 +73,11 @@ def parse_contract(raw: bytes) -> Contract:
             or len(set(aliases.values())) != len(aliases)
             or not set(aliases.values()) <= (reserved - {"source_row_id"}) | set(attrs)):
         raise InputError("HEADER_ALIAS_INVALID")
+    # Every required canonical field needs a representable physical header.
+    # Aliasing away a canonical name without an inverse makes all CSVs invalid.
+    for field in (reserved - {"source_row_id"}) | set(attrs):
+        if field in aliases and field not in aliases.values():
+            raise InputError("HEADER_ALIAS_UNREPRESENTABLE")
     include = downstream["include_currencies"]
     if include is not None and (type(include) is not list or not 1 <= len(include) <= 32
                                or any(type(item) is not str for item in include)

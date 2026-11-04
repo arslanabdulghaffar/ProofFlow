@@ -1,5 +1,13 @@
 # Progress
 
+## Bounded verifier and protected canaries — Nov4
+
+The trusted verifier is deployed on the existing control VM in a pinned read-only SquashFS: separate UID10002, no credentials/candidate code/network sockets, 512MiB/no swap,1CPU/32 tasks,10s systemd watchdog and15MiB output ceiling. Single-slot root-only admission, request/report/image hashes and confirmed cgroup cleanup precede receipt return. The watchdog survives controller exit; the next invocation reconciles the prior slot. Prepare/canary/verify are fixed byte operations, not arbitrary code dispatch.
+
+Actual local and deployed checks each passed6 groups: fixed protocol rejection; UID/capability/read-only/secret and IPv4/IPv6/Unix socket denial; independent timeout; OOM; output ceiling; task ceiling/descendant cleanup. Four fresh worker executions passed: correct ownership/duplicates/refunds matched with0 blocking occurrences; correct quarantine matched with4; Q08+attributes/date/rollups matched with5; wrong ownership was rejected. Quarantine matches remain held. No inference/new resource.463 Windows tests pass/53 Linux-only skips;14 new protocol cases. [Source-bound evidence](evidence/phase2-bounded-verifier-2026-11-04.json).
+
+Critical review corrected Docker directory exceptions that included bytecode/host modules, explicit image modes/traversable directories, missing Linux service identity and journal capacity (64 retained intents including failures). Final image inventory and boundary checks passed; intermediate builds were not deployed. No independent human sign-off. API/queue/retention/original failure UI and Phase2 acceptance remain unfinished. Continue integration after this WIP checkpoint.
+
 ## Q08 resolved; frozen semantics and actual worker rejection evidence — Nov4,10:37 KST
 
 The owner explicitly approved holding a batch for a missing required customer field even when its transaction is excluded by the date range. Recorded D59, resolved current Q08 instructions/risk/handoff, and froze synthetic v1.1 schema/example before semantic implementation. Required attributes precede all date/currency filters; every invalid exact duplicate remains blocking. This is business-policy approval, not human security review or automatic version activation.

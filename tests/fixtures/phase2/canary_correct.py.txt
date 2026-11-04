@@ -1,0 +1,68 @@
+# Reviewed synthetic positive fixture, not generated repair or production code.
+# Execute ONLY on the designated worker. Handles the declared canary profiles.
+import json
+from collections import defaultdict
+from datetime import datetime, timezone
+from decimal import Decimal
+
+txs = [json.loads(line) for line in open('/input/transactions.jsonl')]
+customers = [json.loads(line) for line in open('/input/customers.jsonl')]
+contract = json.load(open('/input/requirements.json'))
+policy = contract['downstream']
+lookup = defaultdict(list)
+groups = defaultdict(list)
+for c in customers:
+    lookup[(c['merchant_id'], c['customer_id'])].append(c)
+for tx in txs:
+    groups[(tx['merchant_id'], tx['transaction_id'])].append(tx)
+ledger, unresolved = [], []
+for tx in txs:
+    reason = None
+    group = groups[(tx['merchant_id'], tx['transaction_id'])]
+    tuples = {tuple(t[k] for k in ('merchant_id', 'transaction_id', 'customer_id', 'amount',
+                                  'currency', 'occurred_at')) for t in group}
+    joined = lookup[(tx['merchant_id'], tx['customer_id'])]
+    utc = datetime.fromisoformat(tx['occurred_at']).astimezone(timezone.utc).isoformat(
+        timespec='microseconds').replace('+00:00', 'Z')
+    if len(tuples) > 1:
+        reason = 'CONFLICTING_DUPLICATE'
+    elif len(joined) > 1:
+        reason = 'AMBIGUOUS_CUSTOMER'
+    elif not joined:
+        reason = 'MISSING_CUSTOMER'
+    elif any(not joined[0][attr] for attr in policy['customer_attributes']):
+        reason = 'MISSING_ATTRIBUTE'
+    elif ((policy['include_currencies'] is not None and tx['currency'] not in policy['include_currencies'])
+          or (policy['occurred_at_from_utc'] is not None and
+              not policy['occurred_at_from_utc'] <= utc < policy['occurred_at_before_utc'])):
+        reason = 'FILTERED_BY_CONTRACT'
+    representative = min(group, key=lambda t: int(t['source_row_id'].rsplit(':', 1)[1]))
+    if reason is None and tx is not representative:
+        reason = 'DUPLICATE_EXACT'
+    if reason:
+        item = {'source_row_id': tx['source_row_id'], 'reason_code': reason}
+        if reason == 'DUPLICATE_EXACT':
+            item['duplicate_of_source_row_id'] = representative['source_row_id']
+        unresolved.append(item)
+    else:
+        factor = 1 if contract['amount_unit'] == 'integer_minor' else 10**contract['currency_exponents'][tx['currency']]
+        ledger.append({'source_row_id': tx['source_row_id'], 'merchant_id': tx['merchant_id'],
+                       'transaction_id': tx['transaction_id'], 'customer_id': tx['customer_id'],
+                       'canonical_customer_id': joined[0]['canonical_customer_id'],
+                       'amount_minor': int(Decimal(tx['amount']) * factor), 'currency': tx['currency'],
+                       'occurred_at_utc': utc,
+                       'attributes': {attr: joined[0][attr] for attr in policy['customer_attributes']}})
+for name, rows in [('ledger', ledger), ('unresolved', unresolved)]:
+    with open('/output/' + name + '.jsonl', 'w') as f:
+        for row in rows:
+            f.write(json.dumps(row) + '\n')
+if policy['rollup'] == 'merchant_currency':
+    totals = defaultdict(lambda: [0, 0])
+    for row in ledger:
+        total = totals[(row['merchant_id'], row['currency'])]
+        total[0] += 1
+        total[1] += row['amount_minor']
+    with open('/output/rollups.jsonl', 'w') as f:
+        for (merchant, currency), (count, amount) in sorted(totals.items()):
+            f.write(json.dumps({'merchant_id': merchant, 'currency': currency,
+                                'transaction_count': count, 'amount_minor_total': str(amount)}) + '\n')
