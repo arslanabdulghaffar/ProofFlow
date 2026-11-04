@@ -57,6 +57,7 @@ async function refreshJob(){if(!job)return;const value=await api("/v1/jobs/"+job
   $("job").hidden=false;$("job-id").textContent="Job "+job;$("state").textContent=names[value.state];$("run-status").textContent="Recorded state, updated from the server. Refreshing never resubmits a job.";$("blocked").textContent=value.blocking_occurrences??"—";$("finding-count").textContent=value.finding_count??"—";$("outcome").textContent=explanations[value.outcome]||"Waiting for execution and independent comparison.";$("cancel").disabled=terminal.has(value.state);$("evidence-link").href="/jobs/"+job;
   $("witnesses").replaceChildren();for(const witness of value.ownership_witnesses){const row=document.createElement("tr");for(const key of ["merchant_id","customer_id","expected_owner","actual_owner"]){const cell=document.createElement("td");cell.textContent=witness[key];row.append(cell);}$("witnesses").append(row);}
   $("findings").replaceChildren();for(const finding of value.findings){const li=document.createElement("li");li.textContent=finding.check+" · "+finding.code;$("findings").append(li);}
+  $("repair-start").disabled=!(["mismatch","match"].includes(value.outcome)&&value.blocking_occurrences===0);
   if(terminal.has(value.state)){stream?.close();stream=null;}return value;
 }
 function watch(){stream?.close();if(!job||$("cancel").disabled)return;stream=new EventSource("/v1/jobs/"+job+"/events");
@@ -72,3 +73,23 @@ $("delete").addEventListener("click",async()=>{if(!session||!$("confirm-delete")
 await refreshSession();const query=new URL(location.href).searchParams.get("job");if(session&&query&&/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(query)){job=query;await refreshJob().then(watch).catch(error=>notice(error.message,true));}
 function resumePending(){if(session&&!job){try{requestBody=loadPending(sessionStorage,session);if(requestBody){holdPending(true);$("retry").hidden=false;notice("An earlier job request has an uncertain response. Retry uses its saved identity; nothing was resubmitted automatically.");}}catch{notice("Request recovery storage is unavailable. Check recorded jobs before retrying.",true);}}}
 resumePending();
+
+let repairId=new URL(location.href).searchParams.get("repair");
+if(repairId&&!/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(repairId))repairId=null;
+async function refreshRepair(){if(!repairId)return;const value=await api("/v1/repairs/"+repairId);
+  $("repair-state").textContent=value.state.replaceAll("_"," ")+" · "+(value.outcome||"Waiting for committed evidence")+" · "+value.calls+"/3 calls · $"+(value.reserved_micro/1000000).toFixed(4)+" reserved (not an invoice)";
+  $("repair-attempts").replaceChildren();for(const attempt of value.attempts){const li=document.createElement("li");const p=attempt.proposal;li.textContent="Attempt "+attempt.ordinal+" · "+(p?.kind||attempt.outcome||"Provider outcome pending")+(p?.diagnosis?" · Model diagnosis (unverified explanation): "+p.diagnosis:"")+(p?.questions?" · "+p.questions.join("; "):"");$("repair-attempts").append(li);}
+  for(const check of value.checks){const li=document.createElement("li");li.textContent="Execution "+check.generation+" · "+check.purpose.replaceAll("_"," ")+" · "+(check.comparison||"No accepted comparison")+" · "+(check.cleanup_confirmed?"cleanup confirmed":"cleanup pending");$("repair-attempts").append(li);}
+  $("repair-events").replaceChildren();for(const event of value.events){const li=document.createElement("li");li.textContent=event.sequence+" · "+event.occurred_at+" · "+event.event.replaceAll("_"," ");$("repair-events").append(li);}
+  if(value.mode==="original")$("repair-state").textContent+=" · Original source, no AI repair or provider call.";
+  $("repair-bundle").hidden=["QUEUED","RUNNING","RECONCILING"].includes(value.state);$("repair-bundle").href="/v1/repairs/"+repairId+"/bundle";
+  $("repair-refresh").disabled=false;$("repair-cancel").disabled=!["QUEUED","RUNNING","RECONCILING"].includes(value.state);
+  $("repair-export").hidden=value.state!=="AWAITING_APPROVAL";$("repair-export").href="/v1/repairs/"+repairId+"/export";
+}
+$("repair-start").addEventListener("click",async()=>{if(!job)return;$("repair-start").disabled=true;
+  try{const result=await api("/v1/repairs","POST",{parent_id:job,idempotency_key:job});repairId=result.repair_id;history.replaceState(null,"","/?job="+job+"&repair="+repairId);await refreshRepair();}
+  catch(error){notice(error.message+". Refresh or retry the same original job; its repair request identity is unchanged.",true);$("repair-start").disabled=false;}
+});
+$("repair-refresh").addEventListener("click",()=>refreshRepair().catch(error=>notice(error.message,true)));
+$("repair-cancel").addEventListener("click",async()=>{try{await api("/v1/repairs/"+repairId+"/cancel","POST");await refreshRepair();}catch(error){notice(error.message,true);}});
+if(session&&repairId)await refreshRepair().catch(error=>notice(error.message,true));

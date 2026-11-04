@@ -1,5 +1,11 @@
 # Vultr inference plan
 
+Phase3 actual fixed-provider implementation is now proven privately; older NOT RUN statements below are historical. `repair_provider.py` uses the same durable fixed Vultr transport, no redirect/environment proxy/tool dispatcher/fallback. Flash Next uses optional reasoning.enabled=false, one completion,8,192 output tokens; strict patch/clarification variants. Three calls maximum per job (stricter than five-request design ceiling),16KiB prompt/source limits,300s deadline,$0.50/job and persistent$5 development allocation. Reserve full-context monetary bound before claim/send; retain unknown/failed reservations. Missing/out-of-bound reported usage stops the job.20,480 per-call input allowance is a conservative byte-BPE/framing bound, not a local tokenizer measurement.
+
+Every retry uses immutable original, public contract/interface, bounded failure witness and prior hash summaries. No canary rows/seeds/expected outputs/verifier source. Generated source is inert until the isolated worker's bounded Python runtime parses/executes it; no separate local AST/import preflight is claimed. Server computes diff from immutable source bytes. Diagnostic explanation remains a model hypothesis.
+
+Actual development: truncated reasoning response rejected; malformed proposal rejected; next candidate failedV07/V08/V09 and context bound. Final planner/prompt revision passed one call and all three fresh checks. All four calls remain counted; this is development tuning, not held-out evaluation. Quote expires in one hour; no stale-quote inference. Changed quote installation requires reviewed closed-idle refresh. Exact-byte replay makes no model call; a provider model name does not pin future weights. [Phase3 acceptance](evidence/phase3-acceptance-2026-11-04.json).
+
 Public primary documentation checked 2026-10-24; **no authenticated inference/model/account probe was run**. No subscription was provisioned. Catalogue metadata is not account access, coding reliability, latency, billing confirmation or model selection.
 
 | Probe candidate | Listed input/output USD per million tokens | Listed context; subscription limits | Decision |

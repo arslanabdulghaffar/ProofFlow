@@ -9,6 +9,11 @@ import psycopg
 from orchestrator.budget_store import BudgetConnection, BudgetUnavailable
 
 API_OPERATIONS = {
+    "repair_enqueue": ("SELECT pf_product.enqueue_repair(%s,%s,%s,%s,%s,%s)", 6),
+    "repair_bundle": ("SELECT pf_product.repair_bundle(%s,%s,%s)", 3),
+    "repair_export": ("SELECT pf_product.export_repair(%s,%s,%s)", 3),
+    "repair_get": ("SELECT pf_product.get_repair(%s,%s,%s)", 3),
+    "repair_cancel": ("SELECT pf_product.cancel_repair(%s,%s,%s,%s)", 4),
     "browser_session": ("SELECT * FROM pf_product.browser_session(%s,%s)", 2),
     "delete": ("SELECT pf_product.request_deletion(%s,%s,%s)", 3),
     "session": ("SELECT * FROM pf_product.session_context(%s)", 1),
@@ -24,6 +29,16 @@ API_OPERATIONS = {
     "logout": ("SELECT pf_product.revoke_session(%s,%s,%s)", 3),
 }
 DISPATCH_OPERATIONS = {
+    "repair_original": ("SELECT pf_product.original_repair_candidate(%s,%s,%s,%s,%s)", 5),
+    "repair_claim": ("SELECT pf_product.claim_repair(%s)", 1),
+    "repair_heartbeat": ("SELECT pf_product.heartbeat_repair(%s,%s,%s,%s,%s)", 5),
+    "repair_assets": ("SELECT pf_product.repair_assets(%s,%s,%s,%s)", 4),
+    "repair_prepare": ("SELECT pf_product.prepare_repair_call(%s,%s,%s,%s,%s,%s,%s,%s,%s)", 9),
+    "repair_response": ("SELECT pf_product.record_repair_call(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 10),
+    "repair_proposal": ("SELECT pf_product.repair_proposal(%s,%s,%s,%s,%s,%s)", 6),
+    "repair_begin": ("SELECT pf_product.begin_repair_execution(%s,%s,%s,%s,%s,%s,%s)", 7),
+    "repair_execution": ("SELECT pf_product.record_repair_execution(%s,%s,%s,%s,%s,%s)", 6),
+    "repair_finish": ("SELECT pf_product.finish_repair(%s,%s,%s,%s,%s)", 5),
     "claim": ("SELECT pf_product.claim_original(%s)", 1),
     "heartbeat": ("SELECT pf_product.heartbeat_original(%s,%s,%s,%s)", 4),
     "assets": ("SELECT pf_product.dispatch_assets(%s,%s,%s,%s)", 4),
@@ -34,6 +49,9 @@ DISPATCH_OPERATIONS = {
     "fail": ("SELECT pf_product.fail_original(%s,%s,%s,%s,%s)", 5),
 }
 KNOWN_ERRORS = frozenset({
+    "REPAIR_PARENT_INVALID", "REPAIR_CALL_ALREADY_PREPARED", "REPAIR_BUDGET_EXHAUSTED",
+    "REPAIR_OUTCOME_UNCERTAIN", "REPAIR_DEVELOPMENT_ALLOCATION", "REPAIR_RECEIPT_CONFLICT",
+    "REPAIR_PROPOSAL_INVALID", "REPAIR_OUTCOME_INVALID", "REPAIR_PROOF_INCOMPLETE",
     "ACCESS_DENIED", "ASSET_QUOTA", "INVALID_ASSET", "ASSET_IDEMPOTENCY_CONFLICT",
     "UPLOAD_RESERVATION_REQUIRED", "EXACT_CONTRACT_REQUIRED", "CONTRACT_REVOKED",
     "ADMISSION_CLOSED", "INVALID_JOB", "JOB_IDEMPOTENCY_CONFLICT", "JOB_ASSETS_INVALID",

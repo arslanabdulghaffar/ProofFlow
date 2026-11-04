@@ -21,3 +21,8 @@
 *.js text eol=lf
 *.mjs text eol=lf
 *.ts text eol=lf
+
+# Preserve exact already-applied Phase3 migration bytes, including CRLF.
+db/phase2/008_bounded_repair.sql -text whitespace=cr-at-eol
+db/phase2/009_repair_retention.sql -text whitespace=cr-at-eol
+db/phase2/010_original_proof_bundle.sql -text whitespace=cr-at-eol

@@ -74,7 +74,8 @@ def main():
         "REVOKE ALL ON public.proofflow_migrations FROM PUBLIC;")
     names = ("001_identity_assets.sql", "002_upload_reservations.sql", "003_original_queue.sql",
              "004_termination_evidence.sql", "005_job_event_replay.sql",
-             "006_browser_session.sql", "007_workspace_retention.sql")
+             "006_browser_session.sql", "007_workspace_retention.sql",
+              "008_bounded_repair.sql", "009_repair_retention.sql", "010_original_proof_bundle.sql")
     for name in names:
         raw = (SETUP / name).read_bytes()
         digest = hashlib.sha256(raw).hexdigest()

@@ -2,9 +2,11 @@
 
 import os
 import ssl
+from pathlib import Path
 
 import uvicorn
 
+from api.app.evidence_bundle import JournalOutputs
 from api.app.product import create_product_app
 from api.app.product_store import ProductConnection, ProductStore
 from api.app.workspace_assets import WorkspaceAssets
@@ -17,7 +19,8 @@ def main():
                    os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
     try:
         app = create_product_app(ProductStore(ProductConnection(database_password())),
-                                 WorkspaceAssets(root), origin="https://127.0.0.1:18443")
+                                 WorkspaceAssets(root), origin="https://127.0.0.1:18443",
+                                 journals=JournalOutputs(Path("/var/lib/proofflow-product/jobs")))
 
         def tls(_, factory):
             context = factory()

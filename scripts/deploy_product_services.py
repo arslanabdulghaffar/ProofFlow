@@ -14,7 +14,10 @@ from vultr_phase1 import PRIVATE, ROOT, Admin
 
 def main():
     deployment = json.loads((PRIVATE / "evidence/verifier-deployment.json").read_bytes())
-    settings = {"verifier_deployment": deployment["deployment"]}
+    provider = json.loads((PRIVATE / "repair-provider.json").read_bytes())
+    if datetime.fromisoformat(provider["quote"]["valid_until"]) <= datetime.now(UTC):
+        raise RuntimeError("FRESH_REPAIR_QUOTE_REQUIRED")
+    settings = {"verifier_deployment": deployment["deployment"], "repair_provider": provider}
     files = {"settings.json": json.dumps(settings, sort_keys=True).encode(),
              "install_product_services.py": (
                  ROOT / "scripts/install_product_services.py").read_bytes()}

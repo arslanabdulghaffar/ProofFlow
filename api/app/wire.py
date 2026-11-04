@@ -134,7 +134,85 @@ class DeleteResponse(Wire):
     deletion: Literal["queued"]
 
 
+class RepairRequest(Wire):
+    parent_id: Identifier
+    idempotency_key: Identifier
+
+
+class RepairResponse(Wire):
+    repair_id: Identifier
+    status_url: Annotated[str, Field(pattern=r"^/v1/repairs/[0-9a-f-]{36}$")]
+
+
+class PatchProposal(Wire):
+    kind: Literal["propose_patch"]
+    diagnosis: Annotated[str, Field(min_length=1, max_length=2048)]
+    changed_file: Literal["pipeline.py"]
+    candidate_source: Annotated[str, Field(min_length=1, max_length=16384)]
+    expected_effect: Annotated[str, Field(min_length=1, max_length=2048)]
+    uncertainties: Annotated[list[str], Field(max_length=5)]
+
+
+class ClarificationProposal(Wire):
+    kind: Literal["needs_clarification"]
+    questions: Annotated[list[str], Field(min_length=1, max_length=5)]
+
+
+class RejectedProposal(Wire):
+    kind: Literal["rejected"]
+    code: Literal["INVALID_PROPOSAL"]
+
+
+class RepairAttempt(Wire):
+    ordinal: Annotated[int, Field(ge=1, le=3)]
+    request_id: Identifier
+    outcome: Literal["PARSED_RESPONSE", "OUTCOME_UNKNOWN"] | None
+    proposal: PatchProposal | ClarificationProposal | RejectedProposal | None
+
+
+class RepairCheck(Wire):
+    generation: Annotated[int, Field(ge=1, le=9)]
+    attempt: Annotated[int, Field(ge=0, le=3)]
+    purpose: Literal["candidate", "canary_ownership", "canary_quarantine"]
+    comparison: Literal["match", "mismatch"] | None
+    cleanup_confirmed: bool
+
+
+class RepairEvent(Wire):
+    sequence: Annotated[int, Field(ge=1, le=64)]
+    occurred_at: str
+    event: Annotated[str, Field(pattern=r"^[a-z_]{1,64}$")]
+
+
+class RepairSummary(Wire):
+    events: Annotated[list[RepairEvent], Field(max_length=64)]
+    mode: Literal["original", "ai_repair"]
+    checks: Annotated[list[RepairCheck], Field(max_length=9)]
+    id: Identifier
+    parent_id: Identifier
+    state: Literal["QUEUED", "RUNNING", "RECONCILING", "AWAITING_APPROVAL", "NEEDS_REVIEW",
+                   "FAILED_INFRA", "CANCELLED"]
+    outcome: str | None
+    calls: Annotated[int, Field(ge=0, le=3)]
+    reserved_micro: Annotated[int, Field(ge=0, le=500000)]
+    created_at: str
+    deadline: str | None
+    attempts: Annotated[list[RepairAttempt], Field(max_length=3)]
+
+
+class RepairExport(Wire):
+    repair_id: Identifier
+    candidate_sha256: Digest
+    candidate_source: Annotated[str, Field(max_length=16384)]
+    diff: Annotated[str, Field(max_length=131072)]
+    activation_approved: Literal[False]
+
+
 MODELS = (
+    RepairRequest,
+    RepairResponse,
+    RepairSummary,
+    RepairExport,
     BrowserSessionRequest,
     SessionResponse,
     AssetResponse,

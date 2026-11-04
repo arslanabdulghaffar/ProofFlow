@@ -137,6 +137,31 @@
       "title": "CancellationResponse",
       "type": "object"
     },
+    "ClarificationProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "needs_clarification",
+          "title": "Kind",
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Questions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "questions"
+      ],
+      "title": "ClarificationProposal",
+      "type": "object"
+    },
     "DeleteRequest": {
       "additionalProperties": false,
       "properties": {
@@ -505,6 +530,410 @@
         "actual_owner"
       ],
       "title": "OwnershipWitness",
+      "type": "object"
+    },
+    "PatchProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "propose_patch",
+          "title": "Kind",
+          "type": "string"
+        },
+        "diagnosis": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Diagnosis",
+          "type": "string"
+        },
+        "changed_file": {
+          "const": "pipeline.py",
+          "title": "Changed File",
+          "type": "string"
+        },
+        "candidate_source": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Candidate Source",
+          "type": "string"
+        },
+        "expected_effect": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Expected Effect",
+          "type": "string"
+        },
+        "uncertainties": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 5,
+          "title": "Uncertainties",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "diagnosis",
+        "changed_file",
+        "candidate_source",
+        "expected_effect",
+        "uncertainties"
+      ],
+      "title": "PatchProposal",
+      "type": "object"
+    },
+    "RejectedProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "rejected",
+          "title": "Kind",
+          "type": "string"
+        },
+        "code": {
+          "const": "INVALID_PROPOSAL",
+          "title": "Code",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "code"
+      ],
+      "title": "RejectedProposal",
+      "type": "object"
+    },
+    "RepairAttempt": {
+      "additionalProperties": false,
+      "properties": {
+        "ordinal": {
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Ordinal",
+          "type": "integer"
+        },
+        "request_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "enum": [
+                "PARSED_RESPONSE",
+                "OUTCOME_UNKNOWN"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Outcome"
+        },
+        "proposal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PatchProposal"
+            },
+            {
+              "$ref": "#/$defs/ClarificationProposal"
+            },
+            {
+              "$ref": "#/$defs/RejectedProposal"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Proposal"
+        }
+      },
+      "required": [
+        "ordinal",
+        "request_id",
+        "outcome",
+        "proposal"
+      ],
+      "title": "RepairAttempt",
+      "type": "object"
+    },
+    "RepairCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "generation": {
+          "maximum": 9,
+          "minimum": 1,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "attempt": {
+          "maximum": 3,
+          "minimum": 0,
+          "title": "Attempt",
+          "type": "integer"
+        },
+        "purpose": {
+          "enum": [
+            "candidate",
+            "canary_ownership",
+            "canary_quarantine"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "comparison": {
+          "anyOf": [
+            {
+              "enum": [
+                "match",
+                "mismatch"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Comparison"
+        },
+        "cleanup_confirmed": {
+          "title": "Cleanup Confirmed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "generation",
+        "attempt",
+        "purpose",
+        "comparison",
+        "cleanup_confirmed"
+      ],
+      "title": "RepairCheck",
+      "type": "object"
+    },
+    "RepairEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "sequence": {
+          "maximum": 64,
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "occurred_at": {
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "event": {
+          "pattern": "^[a-z_]{1,64}$",
+          "title": "Event",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sequence",
+        "occurred_at",
+        "event"
+      ],
+      "title": "RepairEvent",
+      "type": "object"
+    },
+    "RepairExport": {
+      "additionalProperties": false,
+      "properties": {
+        "repair_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Repair Id",
+          "type": "string"
+        },
+        "candidate_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Candidate Sha256",
+          "type": "string"
+        },
+        "candidate_source": {
+          "maxLength": 16384,
+          "title": "Candidate Source",
+          "type": "string"
+        },
+        "diff": {
+          "maxLength": 131072,
+          "title": "Diff",
+          "type": "string"
+        },
+        "activation_approved": {
+          "const": false,
+          "title": "Activation Approved",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "repair_id",
+        "candidate_sha256",
+        "candidate_source",
+        "diff",
+        "activation_approved"
+      ],
+      "title": "RepairExport",
+      "type": "object"
+    },
+    "RepairRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "parent_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Parent Id",
+          "type": "string"
+        },
+        "idempotency_key": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Idempotency Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "parent_id",
+        "idempotency_key"
+      ],
+      "title": "RepairRequest",
+      "type": "object"
+    },
+    "RepairResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "repair_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Repair Id",
+          "type": "string"
+        },
+        "status_url": {
+          "pattern": "^/v1/repairs/[0-9a-f-]{36}$",
+          "title": "Status Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repair_id",
+        "status_url"
+      ],
+      "title": "RepairResponse",
+      "type": "object"
+    },
+    "RepairSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "events": {
+          "items": {
+            "$ref": "#/$defs/RepairEvent"
+          },
+          "maxItems": 64,
+          "title": "Events",
+          "type": "array"
+        },
+        "mode": {
+          "enum": [
+            "original",
+            "ai_repair"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/RepairCheck"
+          },
+          "maxItems": 9,
+          "title": "Checks",
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "parent_id": {
+          "pattern": "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$",
+          "title": "Parent Id",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "QUEUED",
+            "RUNNING",
+            "RECONCILING",
+            "AWAITING_APPROVAL",
+            "NEEDS_REVIEW",
+            "FAILED_INFRA",
+            "CANCELLED"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Outcome"
+        },
+        "calls": {
+          "maximum": 3,
+          "minimum": 0,
+          "title": "Calls",
+          "type": "integer"
+        },
+        "reserved_micro": {
+          "maximum": 500000,
+          "minimum": 0,
+          "title": "Reserved Micro",
+          "type": "integer"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        },
+        "deadline": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deadline"
+        },
+        "attempts": {
+          "items": {
+            "$ref": "#/$defs/RepairAttempt"
+          },
+          "maxItems": 3,
+          "title": "Attempts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "events",
+        "mode",
+        "checks",
+        "id",
+        "parent_id",
+        "state",
+        "outcome",
+        "calls",
+        "reserved_micro",
+        "created_at",
+        "deadline",
+        "attempts"
+      ],
+      "title": "RepairSummary",
       "type": "object"
     },
     "RevocationResponse": {

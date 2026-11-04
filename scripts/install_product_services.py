@@ -7,8 +7,8 @@ import stat
 import subprocess
 from pathlib import Path
 
-IMAGE = "5c1840e90b0f8c291543fb6913411d44cebda452cf3a94398c3305c02d93abc8"
-PREVIOUS = "87ff3f87bdb4e78d96578ca536993909f751ee5ce60606837701d9dee6e32c81"
+IMAGE = "ca50ce8a71b2a9631cf06caaee1c9b93c939ebb236b0e8a8d67435681b5da4d7"
+PREVIOUS = "d8478dfd50c0a64656f2e5ec561bd225fedea49f80bfd5f5ad52fa2689eacc5c"
 DOCKER = ["/usr/bin/docker", "--host=unix:///var/run/docker.sock"]
 
 
@@ -140,9 +140,22 @@ WantedBy=sockets.target
 """
     write("/etc/systemd/system/proofflow-verifier-helper.service", helper, mode=0o644)
     write("/etc/systemd/system/proofflow-verifier-helper.socket", socket, mode=0o644)
+    # Only the trusted dispatcher gets inference/budget credentials. API, worker
+    # and verifier receive neither. No management key is installed on either VM.
+    directory("/etc/proofflow-repair", mode=0o755)
+    directory("/etc/proofflow-repair/credentials", 10003)
+    write("/etc/proofflow-repair/config.json",
+          json.dumps(settings["repair_provider"], sort_keys=True).encode(), mode=0o444)
+    for secret_name in ("vultr-api-key", "budget-password"):
+        source = Path("/etc/proofflow/credentials") / secret_name
+        info = source.lstat()
+        if (not stat.S_ISREG(info.st_mode) or info.st_uid != 10001 or info.st_nlink != 1
+                or stat.S_IMODE(info.st_mode) != 0o400):
+            raise RuntimeError("PROVIDER_CREDENTIAL_IDENTITY_CHANGED")
+        write(Path("/etc/proofflow-repair/credentials") / secret_name, source.read_bytes(), 10003)
     for role in ("api", "dispatcher"):
         name = "proofflow-product-" + role
-        # No Docker management socket, host PID namespace, provider or API-management key.
+        # No Docker management socket, host PID namespace or API-management key.
         args = [*DOCKER, "create", "--pull=never", "--name=" + name,
                 "--label=proofflow.role=product-" + role, "--read-only", "--cap-drop=ALL",
                 "--security-opt=no-new-privileges", "--user=10003:10003", "--group-add=10001",
@@ -156,12 +169,14 @@ WantedBy=sockets.target
                 "dst=/var/lib/proofflow-product/assets"
                 + (",readonly" if role == "dispatcher" else "")]
         if role == "api":
-            args.extend(["--mount=type=bind,src=/run/proofflow-product-api,dst=/run/proofflow-product-api",
+            args.extend(["--mount=type=bind,src=/var/lib/proofflow-product/jobs,"
+                         "dst=/var/lib/proofflow-product/jobs,readonly","--mount=type=bind,src=/run/proofflow-product-api,dst=/run/proofflow-product-api",
                          "--mount=type=bind,src=/etc/proofflow-product-api/tls,"
                          "dst=/etc/proofflow-product/tls,readonly"])
             module = "api.app.product_bootstrap"
         else:
-            args.extend(["--mount=type=bind,src=/etc/proofflow-product-dispatcher/worker,"
+            args.extend(["--mount=type=bind,src=/etc/proofflow-repair,dst=/etc/proofflow-repair,readonly",
+                         "--mount=type=bind,src=/etc/proofflow-product-dispatcher/worker,"
                          "dst=/etc/proofflow-product/worker,readonly",
                          "--mount=type=bind,src=/run/proofflow-verifier,dst=/run/proofflow-verifier,readonly",
                          "--mount=type=bind,src=/var/lib/proofflow-product/jobs,"
@@ -183,7 +198,8 @@ WantedBy=sockets.target
                     "-d", "proofflow_product", "-c", "SELECT NOT EXISTS(SELECT 1 FROM "
                     "pf_product.execution_policy WHERE enabled) AND NOT EXISTS(SELECT 1 FROM "
                     "pf_product.jobs WHERE state NOT IN "
-                    "('NEEDS_REVIEW','FAILED_INFRA','CANCELLED'));"])
+                    "('NEEDS_REVIEW','FAILED_INFRA','CANCELLED')) AND NOT EXISTS(SELECT 1 FROM "
+                    "pf_product.repairs WHERE state IN ('QUEUED','RUNNING','RECONCILING'));"])
                 if ready != "t":
                     raise RuntimeError("PRODUCT_UPGRADE_REQUIRES_CLOSED_IDLE_QUEUE")
                 archived = name + "-previous-" + PREVIOUS[:12]
@@ -224,8 +240,9 @@ WantedBy=multi-user.target
     command(["/usr/bin/systemctl", "enable", "--now", "proofflow-verifier-helper.socket",
              "proofflow-product-api.service", "proofflow-product-dispatcher.service"])
     print(json.dumps({"image": IMAGE, "api_network": "none", "api_transport": "private_unix_tls",
-                      "dispatcher_targets": "fixed_worker_and_local_database_verifier",
-                      "inference_credentials_mounted": False, "new_cloud_resources": 0}))
+                      "dispatcher_targets": "fixed_vultr_worker_and_local_database_verifier",
+                      "inference_credentials_mounted": "dispatcher_only",
+                      "new_cloud_resources": 0}))
 
 
 if __name__ == "__main__":

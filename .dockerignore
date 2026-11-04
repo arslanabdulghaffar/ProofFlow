@@ -10,6 +10,7 @@ api/app/**
 !api/app/auth.py
 !api/app/assets.py
 !api/app/workspace_assets.py
+!api/app/evidence_bundle.py
 !api/app/product.py
 !api/app/wire.py
 !api/app/static/
@@ -93,3 +94,8 @@ verifier/**
 !verifier/protocol.py
 !verifier/entrypoint.py
 !verifier/host.py
+
+!orchestrator/repair_proposal.py
+!orchestrator/repair_evidence.py
+!orchestrator/repair_provider.py
+!orchestrator/repair_dispatcher.py

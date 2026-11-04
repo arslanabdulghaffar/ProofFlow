@@ -1,0 +1,422 @@
+{
+  "phase": 3,
+  "technical_acceptance": "PASSED",
+  "checkpoint": "Requires normal private push and remote SHA readback; final report/Git HEAD gives exact SHA",
+  "base_checkpoint": "adc060a8fd7ff32782fa9aa44a4d8dd0a1701cd2",
+  "observed_at": "2026-11-04T11:01:35.172604+00:00",
+  "scope": "Private synthetic bounded repair, not activation, public release or final evaluation",
+  "product_image": "ca50ce8a71b2a9631cf06caaee1c9b93c939ebb236b0e8a8d67435681b5da4d7",
+  "acceptance_image": "d8478dfd50c0a64656f2e5ec561bd225fedea49f80bfd5f5ad52fa2689eacc5c",
+  "final_image_delta": "Application LF normalization and explicit model-diagnosis hypothesis label only; final image inventory matches source. Worker/verifier/contract/candidate bytes unchanged.",
+  "migrations": {
+    "001_identity_assets.sql": "8cbe9cf7403c0c5b0040ddf48ce4889faee749182e83a7a629c2ad91ffb818e3",
+    "002_upload_reservations.sql": "4c54e548ebfccfe33105980ed796ff195c1d0f340c3abb5e1e864e145e833865",
+    "003_original_queue.sql": "9e2ad2424895e8b4c34db680c3f44f1dd4b7118d390daaf80bea03e572f51401",
+    "004_termination_evidence.sql": "bb1bf2b00ae64850e3ee866b8a83442af4fc57c0bb927cba2acb19621c9be81d",
+    "005_job_event_replay.sql": "94a75b8464b401fd9743f3e46a95fede8ade87c6591871656a212096ff47598b",
+    "006_browser_session.sql": "1d24f62f96429e4170b3df88aeb1caa2a6b3fe389601f4842245d7cd5cf1db70",
+    "007_workspace_retention.sql": "584f5a533960a3803e358d7a831bbbb727ee4a9918d0490c43615ce68e8ca57f",
+    "008_bounded_repair.sql": "7fd06fb9d1fbd05429c994fc0961d1850661a4401ecb39a293511a200fe09d99",
+    "009_repair_retention.sql": "57482415fa885529e6ab219c556db4dbf66a8e31cbce2b49dc973dfe6d325a44",
+    "010_original_proof_bundle.sql": "ec5bb1ae3e93aca7f6a4950d2f3251f665c104d1d5e5d73bb3226a0efb0dd453"
+  },
+  "phase3_migration_bytes": "008-010 CRLF preserved exactly via specific -text Git attributes; do not normalize or rewrite applied SQL",
+  "checks": {
+    "windows_passed": 532,
+    "linux_only_skipped_on_windows": 78,
+    "linux_targeted_passed": 14,
+    "real_disposable_postgres_groups": 5,
+    "live_final_groups": [
+      "actual_owned_bundle_exact_source_inputs_outputs_receipts_inventory",
+      "actual_browser_check_receipts_download_desktop_mobile",
+      "exact_byte_worker_replay_original_plus_fresh_canaries_zero_model_monotonic_events",
+      "actual_repair_journal_candidate_registry_revocation_deletion_preserves_existing"
+    ],
+    "image_allowlisted_files": 63,
+    "ruff": "passed",
+    "javascript_syntax": "passed",
+    "wire_generation_drift": "passed in unit suite",
+    "staged_secret_scan": "gitleaks passed; no leaks",
+    "staged_source_and_migration_pins": "all source pins and ten migration digests equal Git index bytes",
+    "protected_semantic_sources": "13 unchanged from Phase2",
+    "remote_before_checkpoint": "private main at adc060a8fd7ff32782fa9aa44a4d8dd0a1701cd2",
+    "documentation_hygiene": "passed; 276 rows,59 pages,42 source entries,links/templates/ignore rules"
+  },
+  "development_runs": [
+    {
+      "id": "8a03c6e8-653b-4394-b410-005a78ae4e09",
+      "state": "NEEDS_REVIEW",
+      "outcome": "provider_unavailable",
+      "calls": 1,
+      "reserved_micro": 27853,
+      "execution_generation": 0
+    },
+    {
+      "id": "b3470c0e-e86d-44a1-b884-bc3fbcdaeafd",
+      "state": "NEEDS_REVIEW",
+      "outcome": "context_limit",
+      "calls": 2,
+      "reserved_micro": 55706,
+      "execution_generation": 1
+    },
+    {
+      "id": "2f9959bf-9533-4aed-bde6-74bc59425a8a",
+      "state": "AWAITING_APPROVAL",
+      "outcome": "candidate_passed",
+      "calls": 1,
+      "reserved_micro": 27853,
+      "execution_generation": 3
+    }
+  ],
+  "provider_receipts": [
+    {
+      "repair_id": "2f9959bf-9533-4aed-bde6-74bc59425a8a",
+      "ordinal": 1,
+      "request_id": "af7ec25e-15bf-4313-bbf2-b7807652674b",
+      "request_sha256": "d3be56209a8788ec016b958b46b54186f3c974bd402e27cffc029477f78be9e9",
+      "payload_sha256": "d6dae015f65fc9661eacc4d9a57b939b75185b37abcf05441e674cc02e605493",
+      "response_sha256": "a77a1207ea0fb1808a6a6a4cd26883a470ba5b520b0ae86a060636e14b192145",
+      "quote_sha256": "04187fec704e11b199dd5c44b85a5b2fec764396d93a9989c67088255d07353f",
+      "reserved_micro": 27853,
+      "outcome": "PARSED_RESPONSE",
+      "elapsed_ms": 9185
+    },
+    {
+      "repair_id": "8a03c6e8-653b-4394-b410-005a78ae4e09",
+      "ordinal": 1,
+      "request_id": "1764d021-1eae-4bbf-8346-e7415787ac1e",
+      "request_sha256": "08cfa6f4c9e63d05e7657ee26a61af23b445e681c548d479fb029f15c1efc9bd",
+      "payload_sha256": "7da6dbea7ba8e28c848ebf52fd51651ea67af58d507cc0397cfebcf823937e7a",
+      "response_sha256": "ab7a4914450f883189463ad11124c23d69f231d293766a3c62780693c91a9f8a",
+      "quote_sha256": "04187fec704e11b199dd5c44b85a5b2fec764396d93a9989c67088255d07353f",
+      "reserved_micro": 27853,
+      "outcome": "OUTCOME_UNKNOWN",
+      "elapsed_ms": 24166
+    },
+    {
+      "repair_id": "b3470c0e-e86d-44a1-b884-bc3fbcdaeafd",
+      "ordinal": 1,
+      "request_id": "158611e6-c995-4899-8fec-0fa906f65c7a",
+      "request_sha256": "ae059d08f746c4b4a466003b9b02e135e0a1bcdb6b2e38c6705056eff8ab168e",
+      "payload_sha256": "5248f915455f11c88e933386b698834fd43494a167220550f24a70715d32cb0e",
+      "response_sha256": "f26bc64839f5cfe8c3400c9d6fca1eca4e0f60a345e6556dbea983d92d21d981",
+      "quote_sha256": "04187fec704e11b199dd5c44b85a5b2fec764396d93a9989c67088255d07353f",
+      "reserved_micro": 27853,
+      "outcome": "PARSED_RESPONSE",
+      "elapsed_ms": 4607
+    },
+    {
+      "repair_id": "b3470c0e-e86d-44a1-b884-bc3fbcdaeafd",
+      "ordinal": 2,
+      "request_id": "b5fcfcef-6bc5-4fa8-8990-97ae9b6dc424",
+      "request_sha256": "86149c6e19cc785c2a24bc25a610c907c77f973fd8de6a6dba884acc1fe68a96",
+      "payload_sha256": "66f745a9c9ae33bdd5aa8c082761d19206051fd40ca419eb2557ad7163e0b5eb",
+      "response_sha256": "eaf61f93f75c44533d3dd08a9ac88805a3bb665f395fb72ac0eacfe604d9b3c9",
+      "quote_sha256": "04187fec704e11b199dd5c44b85a5b2fec764396d93a9989c67088255d07353f",
+      "reserved_micro": 27853,
+      "outcome": "PARSED_RESPONSE",
+      "elapsed_ms": 10972
+    }
+  ],
+  "successful_model_call": {
+    "elapsed_ms": 9185,
+    "model": "qwen3.8-flash-next",
+    "ordinal": 1,
+    "outcome": "PARSED_RESPONSE",
+    "payload_sha256": "d6dae015f65fc9661eacc4d9a57b939b75185b37abcf05441e674cc02e605493",
+    "provider_id": "chatcmpl-ca27446a-61e2-4834-a331-42e216d479a3",
+    "quote_sha256": "04187fec704e11b199dd5c44b85a5b2fec764396d93a9989c67088255d07353f",
+    "reported_usage": {
+      "completion_tokens": 3951,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "prompt_tokens": 1896,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 5847
+    },
+    "request_id": "af7ec25e-15bf-4313-bbf2-b7807652674b",
+    "request_sha256": "d3be56209a8788ec016b958b46b54186f3c974bd402e27cffc029477f78be9e9",
+    "reserved_micro": 27853,
+    "response_sha256": "a77a1207ea0fb1808a6a6a4cd26883a470ba5b520b0ae86a060636e14b192145"
+  },
+  "successful_worker_executions": [
+    {
+      "execution_id": "8147cdea-98ca-4dbe-92a2-5be03a57bd37",
+      "generation": 1,
+      "purpose": "candidate",
+      "intent": {
+        "contract_raw_sha256": "b04d968afa77711fca4b490b8523564c88f7669ddb3c6a293f4d1a34be3a596b",
+        "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "customers_sha256": "7bd599ac0967e2160257f53b15885fb0775b2d96629d415c29f29ad39142c7e3",
+        "execution": "8147cdea98ca4dbe92a25be03a57bd37",
+        "generation": 1,
+        "job": "2f9959bf95334aedbde674bc59425a8a",
+        "manifest_sha256": "1aa389e548668ac78779cd53b09597cd411690c42476001db182ee83b21208f6",
+        "pipeline_sha256": "1f73e19f23332f1c4e7bc2731ca7aa878d681fb54d35ddcd9f438ea3ecc1880e",
+        "purpose": "candidate",
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "transactions_sha256": "8e856e1cf9d5dd71a5493b3fdbcefee1085038cf0fac2fc2e4483beb506c8734",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f"
+      },
+      "comparison": "match",
+      "cleanup": "confirmed"
+    },
+    {
+      "execution_id": "7492a2b0-7916-4c84-bc77-2ee1df6caf9e",
+      "generation": 2,
+      "purpose": "canary_ownership",
+      "intent": {
+        "contract_raw_sha256": "b04d968afa77711fca4b490b8523564c88f7669ddb3c6a293f4d1a34be3a596b",
+        "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "customers_sha256": "794847c4dee88027e6a80fc9d82812e2955bda0e85a4be6def747ca376a07d33",
+        "execution": "7492a2b079164c84bc772ee1df6caf9e",
+        "generation": 2,
+        "job": "2f9959bf95334aedbde674bc59425a8a",
+        "manifest_sha256": "e2fb2cc223915e0a97830d1307f5e117ac5f31dbf4bcbaa294a07f8272af2669",
+        "pipeline_sha256": "1f73e19f23332f1c4e7bc2731ca7aa878d681fb54d35ddcd9f438ea3ecc1880e",
+        "purpose": "canary_ownership",
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "transactions_sha256": "d0c3bd521b3ae0c85428c9726aeb7aab55fbfb0ae21050b59402d59438ae7ac4",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f"
+      },
+      "comparison": "match",
+      "cleanup": "confirmed"
+    },
+    {
+      "execution_id": "f115e974-f495-40cf-a034-d5da0c73090c",
+      "generation": 3,
+      "purpose": "canary_quarantine",
+      "intent": {
+        "contract_raw_sha256": "b04d968afa77711fca4b490b8523564c88f7669ddb3c6a293f4d1a34be3a596b",
+        "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "customers_sha256": "c3e13eda599d3ff0049744a3434aa831dc161366c6e5b2ebdf6f2bad288e921a",
+        "execution": "f115e974f49540cfa034d5da0c73090c",
+        "generation": 3,
+        "job": "2f9959bf95334aedbde674bc59425a8a",
+        "manifest_sha256": "9c78c0605d38cf7d403d2ce85dede061e3db4fc51e53c7afec4c6c0131238122",
+        "pipeline_sha256": "1f73e19f23332f1c4e7bc2731ca7aa878d681fb54d35ddcd9f438ea3ecc1880e",
+        "purpose": "canary_quarantine",
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "transactions_sha256": "4b00030f375d001de9639ffb0068e1438ce6a582deaeceaf9974043cb13f5aef",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f"
+      },
+      "comparison": "match",
+      "cleanup": "confirmed"
+    }
+  ],
+  "replay": {
+    "original_id": "c99da2ac-0bd2-49ed-aedd-271ffd374dd0",
+    "unchanged": {
+      "events": [
+        {
+          "sequence": 1,
+          "occurred_at": "2026-11-04T10:57:14.123357+00:00",
+          "event": "state_queued"
+        },
+        {
+          "sequence": 2,
+          "occurred_at": "2026-11-04T10:57:14.164339+00:00",
+          "event": "state_running"
+        },
+        {
+          "sequence": 3,
+          "occurred_at": "2026-11-04T10:57:14.751185+00:00",
+          "event": "execution_intent_committed"
+        },
+        {
+          "sequence": 4,
+          "occurred_at": "2026-11-04T10:57:16.356628+00:00",
+          "event": "execution_result_recorded"
+        },
+        {
+          "sequence": 5,
+          "occurred_at": "2026-11-04T10:57:17.336678+00:00",
+          "event": "execution_intent_committed"
+        },
+        {
+          "sequence": 6,
+          "occurred_at": "2026-11-04T10:57:19.048724+00:00",
+          "event": "execution_result_recorded"
+        },
+        {
+          "sequence": 7,
+          "occurred_at": "2026-11-04T10:57:20.066591+00:00",
+          "event": "execution_intent_committed"
+        },
+        {
+          "sequence": 8,
+          "occurred_at": "2026-11-04T10:57:21.739565+00:00",
+          "event": "execution_result_recorded"
+        },
+        {
+          "sequence": 9,
+          "occurred_at": "2026-11-04T10:57:21.766752+00:00",
+          "event": "state_awaiting_approval"
+        }
+      ],
+      "mode": "original",
+      "checks": [
+        {
+          "generation": 1,
+          "attempt": 0,
+          "purpose": "candidate",
+          "comparison": "match",
+          "cleanup_confirmed": true
+        },
+        {
+          "generation": 2,
+          "attempt": 0,
+          "purpose": "canary_ownership",
+          "comparison": "match",
+          "cleanup_confirmed": true
+        },
+        {
+          "generation": 3,
+          "attempt": 0,
+          "purpose": "canary_quarantine",
+          "comparison": "match",
+          "cleanup_confirmed": true
+        }
+      ],
+      "id": "2edc4e21-ece8-4e5d-a853-93db993cf6be",
+      "parent_id": "c99da2ac-0bd2-49ed-aedd-271ffd374dd0",
+      "state": "AWAITING_APPROVAL",
+      "outcome": "candidate_passed",
+      "calls": 0,
+      "reserved_micro": 0,
+      "created_at": "2026-11-04T10:57:14.1212+00:00",
+      "deadline": "2026-11-04T11:02:14.162631+00:00",
+      "attempts": []
+    },
+    "exact_output_hashes_equal": true,
+    "provider_calls": 0,
+    "fresh_worker_executions": 4,
+    "guest_deleted": true,
+    "retained_counts": {
+      "workspaces": 7,
+      "assets": 40,
+      "jobs": 10,
+      "repairs": 3
+    },
+    "bundle_sha256": "ab6db7b963f63bc9a4d0d484b3f9b85827919ef2a8b651ad7e4747918af8114e"
+  },
+  "new_provider_calls": 4,
+  "new_worker_executions": 9,
+  "new_cloud_resources": 0,
+  "failure_history": [
+    "Initial optional reasoning used all8192 completion tokens; truncated response stopped with held reservation and no candidate execution.",
+    "Second run rejected malformed proposal; next proposal executed but failed V07/V08/V09. Retry hit16KiB context cap; limits/verifier unchanged.",
+    "Third logical development run used immutable original plus concise feedback and optional reasoning disabled; one model call passed candidate and two protected comparisons.",
+    "Initial desktop succeeded but mobile overflow failed; wrapping fixed and actual final desktop/mobile readback passed."
+  ],
+  "budgets": {
+    "project_cap_usd": 150,
+    "inference_cap_usd": 25,
+    "new_inference_reserved_micro_usd": 111412,
+    "total_inference_reserved_micro_usd": 390761,
+    "project_held_reservations": [
+      {
+        "purpose": "inference",
+        "count": 4,
+        "reserved_micro": 111412
+      },
+      {
+        "purpose": "compute",
+        "count": 1,
+        "reserved_micro": 72000000
+      },
+      {
+        "purpose": "probe",
+        "count": 8,
+        "reserved_micro": 279349
+      },
+      {
+        "purpose": "other",
+        "count": 1,
+        "reserved_micro": 48000000
+      }
+    ],
+    "reservation_is_invoice": false,
+    "settled_from_estimates": false,
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-04T11:01:34.383297+00:00",
+      "remaining_credit": "198.5",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "no_personal_spending": true,
+    "provider_hard_stop_guarantee": false
+  },
+  "post_probe": {
+    "product_admission": false,
+    "inference_blocked": true,
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "development_allocation_reserved_micro": 111412
+  },
+  "limitations": [
+    "Synthetic development evidence; no held-out A/B/C/D quality or human-time baseline claim.",
+    "No independent human sign-off. Separate critical pass and automated checks only.",
+    "Exact activation/batches/external-action approvals remain Phase4; passing/export never activates.",
+    "Public session provisioning, full metadata/worker retention, portable deletion-aware backup/restore and public-release permission remain later gates.",
+    "Quotes expire after one hour. Refresh authenticated catalogue and install a reviewed closed-idle quote update before later paid requests; existing install refuses changed configuration, never overwrite blindly.",
+    "Prior pre-event-migration repair histories have no fabricated backfilled events.",
+    "Provider model identifier is recorded, not a guarantee of immutable provider weights. Exact-byte worker replay uses no model call."
+  ],
+  "source_sha256": {
+    "api/app/evidence_bundle.py": "e9a3949f83e663dae9bfef8a287211dd0bd9812344fe6d103385aa46ccabd72b",
+    "db/phase2/008_bounded_repair.sql": "7fd06fb9d1fbd05429c994fc0961d1850661a4401ecb39a293511a200fe09d99",
+    "db/phase2/009_repair_retention.sql": "57482415fa885529e6ab219c556db4dbf66a8e31cbce2b49dc973dfe6d325a44",
+    "db/phase2/010_original_proof_bundle.sql": "ec5bb1ae3e93aca7f6a4950d2f3251f665c104d1d5e5d73bb3226a0efb0dd453",
+    "orchestrator/repair_dispatcher.py": "eae7633ff39cc6c5a10ecd4e1a92961f35b5f9ab04060cf106ce50a6a1a2c172",
+    "orchestrator/repair_evidence.py": "cc6885876a38131e38a88eff8863f6d453d42126fccfeb4cd58830ea71aae3b3",
+    "orchestrator/repair_proposal.py": "a2cabf3792e6dbc761afcd4bda7ad9ea1d7f48dea94dc812aa2bd083b049ea5a",
+    "orchestrator/repair_provider.py": "ec34faa192b56e1451c48fa790d4787b3ac46f5156c92288f4fa7783d3e1607a",
+    "scripts/check_phase3_live.py": "01b2b663e1037add7ed207e80c7e5980f79c6e4524273a99d0f56f90d2ba6afa",
+    "scripts/check_phase3_readback.py": "ee3bdfd8f3f7e388608d3084e695fc9e6bfcb4a236de4d1a308b11be98e978e8",
+    "scripts/check_repair_queue.py": "7180e2f0afc84bc2aa0fa863a43720441f6ccc4227c75b5542f0141f950843be",
+    "scripts/prepare_repair_provider.py": "7f26fd862177daee9990810abd81ab789328baf203feeda1cf0d78a3cc5d86d2",
+    "scripts/product_live_session.py": "63af450e7e307a6ddc24595f00943b82ca2dd6636e23c8f99047d3fe2c478024",
+    "tests/security/test_evidence_bundle_files.py": "3b142d47a12c1b4bca612c53a24535f17a6a789c92502dc3dfcff9be5c2494c7",
+    "tests/security/test_repair_dispatcher.py": "3d1f2592b3eed1b68a5aa230b96dad06e2666b066695281052d57cd395eb8c23",
+    "tests/unit/test_evidence_bundle.py": "be8778c47207d83824f06490834657093aa7703bd3906fe2c68f0500a15653d6",
+    "tests/unit/test_repair_evidence.py": "febb0dfbb3bb1e7d1235630f58ccc7f9034430ce360c1fba19ae39a76c19fa9b",
+    "tests/unit/test_repair_http.py": "eb041004ed01b658521235e3400f7da6630fdb96f9cda81c63611d7174bf473e",
+    "tests/unit/test_repair_plan.py": "1480f808ef92b2cf9503001d351f5934503306fd04650ef2c01c4ef510d0e9c2",
+    "tests/unit/test_repair_proposal.py": "edf0aff4f55f26d9599bff3c3f3a8ec119cd7d4f5f3abf032464b3e728831097",
+    "api/app/product.py": "1e96a644ea5dee994a5f65b6d29230208676c66006a0c56159cedb4d9e931b23",
+    "api/app/product_bootstrap.py": "9db71d9b9ae6f2d5cdd177f940603eea93921b38ef266493115507ecdf922334",
+    "api/app/product_store.py": "0ca1a8ff217ef70f1dec59ecc69ab2b6a4b674a5458779b8051db47e351db302",
+    "api/app/static/index.html": "827f9b5365569b0bad4cb204b4a4945e8186b2d98f1511639b428954225bf3fa",
+    "api/app/static/intake.css": "7b48127bb824ade58c4a5ff175df90ee74f4e5ee3738b5ef9750f75e5e31c6ec",
+    "api/app/static/intake.js": "6cd039160911e5311641e6236204cad13c4970861816e9c1277954549e2bfb05",
+    "api/app/wire.py": "0bfa6d770113617e4dcb0742a220e1c086ddc897e85a3c1d9c1a46a95cddf3bc",
+    "contracts/browser-v1.d.ts": "13ca77dd815c22a7bc8efb647d2682f6dab1abacba73a6e43b558c72ce1b2e10",
+    "contracts/browser-v1.schema.json": "1672d883deaf86a04cef50cd37ef228a32fe670584887bc036aef714c3995d50",
+    "orchestrator/product_bootstrap.py": "ec6264cfdbd37bf26786716e43db56e254515b416fd6e0ed34b6cab4c29abed1",
+    "orchestrator/verification_run.py": "e54c9d465c28d4425990cc3c1f9b31c8c7f353780539805101a08cc22ec93e83",
+    "orchestrator/vultr_probe.py": "c54e3f6c29dd15a23b028a0b059261d1ea6757cac02c3975e7f1d18a083f1077",
+    "scripts/check_product_image.py": "27455218259bd5342132597f79e2843b5068ee2e6492bd868611579f902aec5c",
+    "scripts/deploy_product_database.py": "d9a319be61fb236fd0417ebe3159ed859accd26b4ea73465c8681b1b4b7864bc",
+    "scripts/deploy_product_services.py": "706f317f98c76789504f7c930effa9f33a6f46ce19728f8168d58a520a693d3d",
+    "scripts/install_product_database.py": "eea9055b0de5249f67da3a8d4c492a0234dbef4cde139c0c1ded5e1839dec09d",
+    "scripts/install_product_services.py": "072778b7228499b3f0c3b9933deeb8c1815255167661e40a053f59e3a902c1eb",
+    "scripts/check_preparation.py": "670ca7cd6162c03011215aea3fe3eaf693b6b23d17d6070996a9aaee6456df2f"
+  },
+  "final_image_readback": {
+    "checks": [
+      "final_image_owned_bundle_hashes",
+      "final_desktop_mobile_model_hypothesis_label"
+    ],
+    "image": "ca50ce8a71b2a9631cf06caaee1c9b93c939ebb236b0e8a8d67435681b5da4d7",
+    "provider_calls": 0,
+    "worker_executions": 0,
+    "admission_opened": false
+  }
+}

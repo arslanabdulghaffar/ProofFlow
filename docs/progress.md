@@ -1,5 +1,13 @@
 # Progress
 
+## Phase3 bounded repair — acceptance passed, November4
+
+Completed the private bounded Vultr workflow with immutable proposals, three-call/five-minute/per-job money bounds, durable budget claims, exact worker/verifier bindings, fresh protected canaries, bounded retry/clarification/abstention, cancellation/reconciliation and raw retirement. Already-correct originals receive fresh checks with zero model calls. Passing produces reviewable export, never activation. Browser shows committed attempts/checks/events and model diagnosis as an unverified explanation; bounded ZIP contains hashed authorized evidence and isolated replay instructions, excludes protected rows and private reasoning.
+
+Actual new development run: one final model call (9.185s,reported1,896 prompt/3,951 completion tokens) produced a candidate passing all three fresh checks. Earlier three model calls remain counted and failed evidence preserved. Four calls reserve$0.111412; estimates are not invoices. Exact-byte replay and zero-model original path pass; actual guest deletion preserves existing records.532 Windows,14 targeted Linux,5 PostgreSQL groups and4 final live acceptance groups pass;78 Linux-only skips on Windows. Source-bound [Phase3 acceptance](evidence/phase3-acceptance-2026-11-04.json) records image/migrations/calls/executions/budgets and failed probes. No new cloud resources; credit$198.50, admissions closed, private repo.
+
+Mandatory phase commit/push/remote verification follows acceptance; final checkpoint report supplies SHA. Phase4 activation/batches/integration remain unimplemented. Final evaluation, full metadata/worker lifecycle, portable backups/publication and independent human review remain explicit later gaps. One-hour quote expiry fails closed; changed quote installation needs reviewed closed-idle refresh before later inference.
+
 ## Phase2 technical acceptance passed — Nov4,16:54 KST
 
 The original schemas/backend/verifier phase gate now passes. [Phase2 acceptance](evidence/phase2-acceptance-2026-11-04.json) binds the current source/image, seven migrations, prior semantic/canary/API evidence and the final deployed checks. Commit/push and remote-SHA verification finish the mandatory checkpoint. This is a private synthetic original-run capability, not completed AI repair, version activation, fresh-batch processing, GitHub integration or public release.

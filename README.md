@@ -1,8 +1,8 @@
 # ProofFlow
 
-ProofFlow is a planned product for repairing supported Python revenue-import pipelines, checking their actual records against human-approved business rules, and using an exact approved version for subsequent batches.
+ProofFlow is a private prototype for repairing supported Python revenue-import pipelines, checking their actual records against human-approved business rules, and using an exact approved version for subsequent batches.
 
-**Phase 1 DONE; Phase 2 IN PROGRESS. Repository and deployment remain private.** Real Vultr inference and isolated worker execution passed Phase 1. The deployed bounded verifier, protected canaries and authenticated original-run API/queue now have real integration evidence. Wrong customer ownership is rejected, unresolved source data stays held, and cancellation/controller-loss require cleanup before terminal state. Readiness remains503 while product acceptance is unfinished. No autonomous repair, public demo or benchmark result is claimed. See [progress](docs/progress.md) and [resume instructions](docs/next-session.md).
+**Phases 1–3 accepted; repository and deployment remain private.** The bounded repair workflow uses real Vultr inference, isolated candidate execution, an independent deterministic verifier and fresh protected checks. A model-generated patch passed the new synthetic input and both canaries; exact-byte replay and the already-correct path passed without further model calls. Browser evidence, bounded export and raw retirement are implemented. Passing means AWAITING_APPROVAL, never activation. Exact version activation, fresh batches and external GitHub actions remain Phase4; no public demo or benchmark result is claimed. See [acceptance evidence](docs/evidence/phase3-acceptance-2026-11-04.json), [progress](docs/progress.md) and [resume instructions](docs/next-session.md).
 
 The intended workflow is intake → original execution → independent checks → bounded Vultr-generated repair → fresh sandbox → independent verification → human approval → verified fresh batch. A separate operator approval permits an actual draft GitHub PR. Humans supply inputs and business decisions; they do not manually repair code or advance repair stages.
 
@@ -18,7 +18,7 @@ The intended workflow is intake → original execution → independent checks �
 
 One UTF-8 Python file, small transaction/customer CSVs, a declarative approved contract, and one pinned Python/pandas runtime. Money uses exact integer minor units. Implemented checks cover every source occurrence, merchant/customer ownership, values, currencies, timestamps, duplicates, justified exclusions, and declared downstream behavior. These rules are approved for synthetic demo data only; real customer policies are not approved.
 
-Next.js/React/TypeScript and FastAPI/Pydantic run on a Vultr control VM with PostgreSQL state/queue. A separate Linux worker uses explicit gVisor `runsc`. Application agent LLM calls use Vultr Serverless Inference. Development tools such as Codex are separate from this runtime provider requirement.
+Vanilla HTML/CSS/JavaScript with generated TypeScript wire types and FastAPI/Pydantic run on a Vultr control VM with PostgreSQL state/queue. A separate Linux worker uses explicit gVisor `runsc`. Application agent LLM calls use Vultr Serverless Inference. Development tools such as Codex are separate from this runtime provider requirement.
 
 No arbitrary repositories, package installation, candidate networking, live accounting writes, financial transfers, browser automation, enterprise SSO, large datasets, or certification claims. “Proof” means inspectable evidence for specified checks, not formal proof or universal correctness.
 
@@ -35,7 +35,7 @@ Trusted service development (uv 0.13.5):
 .\.venv-tools\Scripts\uv.exe run --locked uvicorn api.app.main:app --host 127.0.0.1 --port 8000 --no-access-log --no-server-header --no-proxy-headers
 ```
 
-`GET /health/live` returns 200 for process liveness. `GET /health/ready` returns 503 until actual infrastructure checks are implemented and pass. No public upload, execution or approval API exists. The private authenticated worker RPC and immutable image import have local trusted tests; see [sandbox](docs/sandbox.md). Never run a submitted/model candidate here. Local checks do not establish deployed containment or provider success.
+The command above serves the trusted health shell, not the deployed product. Its readiness503 is not an end-to-end acceptance claim. The separate private product uses authenticated TLS over a Unix socket and pinned operator SSH forwarding, with no public provisioning. Worker RPC, runtime and provider evidence are documented in [sandbox](docs/sandbox.md) and phase acceptance receipts. Never execute uploaded/model source on the development or control computer; only the designated isolated worker may run it.
 
 ## Planned judge walkthrough
 

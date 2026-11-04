@@ -1,6 +1,7 @@
 """Private authenticated Phase2 HTTP surface. No inference or candidate execution here."""
 
 import asyncio
+import difflib
 import hashlib
 import re
 import time
@@ -15,6 +16,7 @@ from pydantic import ValidationError
 from starlette.exceptions import HTTPException
 
 from api.app.auth import AuthError, SessionSecrets, request_digests
+from api.app.evidence_bundle import build_bundle
 from api.app.product_store import ProductFailure
 from api.app.wire import (
     ApprovalResponse,
@@ -26,6 +28,9 @@ from api.app.wire import (
     EnqueueResponse,
     JobEvent,
     JobSummary,
+    RepairExport,
+    RepairResponse,
+    RepairSummary,
     RevocationResponse,
     SessionResponse,
 )
@@ -135,7 +140,8 @@ class CapacityBoundary:
             return await dispatch()
 
 
-def create_product_app(store, assets, *, origin: str):
+def create_product_app(store, assets, *, origin: str, journals=None):
+    bundle_slot = asyncio.Semaphore(1)
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
     app.add_middleware(CapacityBoundary)
 
@@ -330,6 +336,74 @@ def create_product_app(store, assets, *, origin: str):
         workspace, token, csrf = await authorize(request, True)
         await store.call("cancel", workspace, token, csrf, identifier(job_id))
         return {"cancellation_requested": True}
+
+    @app.post("/v1/repairs", status_code=202, response_model=RepairResponse)
+    async def enqueue_repair(request: Request):
+        workspace, token, csrf = await authorize(request, True)
+        value = await json_body(request, ("parent_id", "idempotency_key"))
+        result = await store.call("repair_enqueue", workspace, token, csrf, uuid4(),
+            identifier(value["idempotency_key"]), identifier(value["parent_id"]))
+        return {"repair_id": str(result[0]), "status_url": "/v1/repairs/" + str(result[0])}
+
+    @app.get("/v1/repairs/{repair_id}", response_model=RepairSummary)
+    async def repair_status(repair_id: str, request: Request):
+        workspace, token, _ = await authorize(request)
+        value = await store.call("repair_get", workspace, token, identifier(repair_id))
+        if value is None or value[0] is None:
+            raise HttpFailure(404, "JOB_NOT_FOUND")
+        return value[0]
+
+    @app.post("/v1/repairs/{repair_id}/cancel", response_model=CancellationResponse)
+    async def repair_cancel(repair_id: str, request: Request):
+        workspace, token, csrf = await authorize(request, True)
+        await store.call("repair_cancel", workspace, token, csrf, identifier(repair_id))
+        return {"cancellation_requested": True}
+
+    @app.get("/v1/repairs/{repair_id}/export", response_model=RepairExport)
+    async def repair_export(repair_id: str, request: Request):
+        workspace, token, _ = await authorize(request)
+        identity = identifier(repair_id)
+        row = await store.call("repair_export", workspace, token, identity)
+        if row is None or row[0] is None:
+            raise HttpFailure(409, "REPAIR_PROOF_INCOMPLETE")
+        value = row[0]
+        raw = value["candidate_source"].encode("utf-8")
+        if not 1 <= len(raw) <= 16384:
+            raise ProductFailure("REPAIR_EXPORT_INVALID")
+        original = await asyncio.to_thread(assets.read, workspace, value["original_sha256"])
+        if await store.call("repair_export", workspace, token, identity) != row:
+            raise ProductFailure("REPAIR_AUTHORITY_CHANGED")
+        diff = "".join(difflib.unified_diff(original.decode("utf-8").splitlines(keepends=True),
+            raw.decode("utf-8").splitlines(keepends=True), fromfile="original/pipeline.py",
+            tofile="candidate/pipeline.py"))
+        return JSONResponse({"repair_id": repair_id,
+            "candidate_sha256": hashlib.sha256(raw).hexdigest(),
+            "candidate_source": raw.decode("utf-8"), "diff": diff,
+            "activation_approved": False}, headers={
+                "Content-Disposition": 'attachment; filename="proofflow-candidate.json"'})
+
+    @app.get("/v1/repairs/{repair_id}/bundle")
+    async def repair_bundle(repair_id: str, request: Request):
+        workspace, token, _ = await authorize(request)
+        identity = identifier(repair_id)
+        if journals is None:
+            raise HttpFailure(503, "REPAIR_ARTIFACT_UNAVAILABLE")
+        try:
+            await asyncio.wait_for(bundle_slot.acquire(), 0.01)
+        except TimeoutError:
+            raise HttpFailure(429, "EXPORT_CAPACITY") from None
+        try:
+            row = await store.call("repair_bundle", workspace, token, identity)
+            if row is None or row[0] is None:
+                raise HttpFailure(404, "JOB_NOT_FOUND")
+            raw = await asyncio.to_thread(build_bundle, row[0], workspace, assets, journals)
+            if await store.call("repair_bundle", workspace, token, identity) != row:
+                raise ProductFailure("REPAIR_AUTHORITY_CHANGED")
+            return Response(raw, media_type="application/zip", headers={
+                "Content-Disposition": 'attachment; filename="proofflow-evidence.zip"',
+                "X-ProofFlow-SHA256": hashlib.sha256(raw).hexdigest()})
+        finally:
+            bundle_slot.release()
 
     @app.get("/v1/jobs/{job_id}/events")
     async def events(job_id: str, request: Request):

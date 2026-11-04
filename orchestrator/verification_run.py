@@ -62,7 +62,7 @@ class VerificationRun:
 
     def _execute(self, *, execution: UUID, job: UUID, generation: int, pipeline: bytes,
                  contract: bytes, transactions: bytes, customers: bytes, purpose: str):
-        if purpose not in ("original", "canary_ownership", "canary_quarantine"):
+        if purpose not in ("original", "candidate", "canary_ownership", "canary_quarantine"):
             raise SupervisorError("VERIFICATION_PURPOSE_INVALID")
         prepared = self.bounded({"operation": "prepare", "contract": encode(contract),
                                  "transactions": encode(transactions),
