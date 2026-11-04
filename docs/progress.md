@@ -1,5 +1,9 @@
 # Progress
 
+## November5 03:04 KST — late exact answer, no external write
+
+The exact fresh-preview approval was processed at03:02:23 KST, after01:48:41 expiry. Completion helper stopped. Actual read-only reconciliation found no recorded product approval, no durable write, no branch/PR and an unauthorized saved session; working App authentication remains valid. Credit$197.75; no new provider call/resource/worker execution. [Receipt](evidence/phase4-refresh-expired-2026-11-05.json). Added an explicit read-only refresh reconciliation mode and two tests proving it never POSTs approval. Thirteen scoped tests/Ruff pass. Owner reiterated no further approval questions while unavailable; none sent. Phase4 remains incomplete; no expiry change, replacement intent or write bypass.
+
 ## November5 KST — fresh exact PR preview and completion harness
 
 On the owner's explicit request, generated one new real read-only preview of the existing active verified version. Actual API eligibility and unchanged candidate checks passed; encrypted actor save/ACL/decryption readback passed. No model call, worker job, new resource or external write. Credit$197.85; both admission controls stayed closed. Exact intent/digest/expiry and the complete review artifact were presented in one concrete approval request. Prior expired intent and evidence were preserved. [Receipt](evidence/phase4-pr-refresh-2026-11-05.json).

@@ -1,5 +1,13 @@
 # Resume ProofFlow
 
+## November5 03:04 KST — second late approval reconciled; no repeated requests
+
+Owner approved the exact fresh preview, but processing began at03:02:23 KST, after its01:48:41 expiry. Completion helper stopped; actual reconciliation confirms saved session403, intent still PREVIEW with approved_at null/current authority false, zero durable external writes and no branch/PR. Working App authentication passed; credit$197.75. [Current receipt](evidence/phase4-refresh-expired-2026-11-05.json). No new resources, model calls, worker jobs or admission changes. Phase4 remains incomplete; do not claim PR acceptance.
+
+Owner then explicitly reiterated unavailability and no repeated approval questions. Respect that: do not issue another approval prompt or automatically generate another expiring preview. General development authorization remains in force, with private repositories and credit-only limits. Preserve both expired intents and sessions; do not reuse them or edit their expiry/approval state. A future exact product action must use the existing approval control with a currently valid preview; no rule weakening or direct GitHub bypass. Continue useful independent work only, without presenting WIP checkpoints as phase completion.
+
+Read-only refresh reconciliation is now explicit via check_phase4_expired_approval.py --refresh. It never POSTs approval even with a valid session; two regression cases cover valid/expired actor paths. Thirteen scoped tests and Ruff passed. Completion/readback/restart acceptance is still NOT RUN. Do not invoke the old completion command with the expired digest again. Current receipt binds the reviewed helper source; no deployed product/SQL changes or independent human sign-off.
+
 ## November5 KST — fresh exact preview requested and prepared
 
 Owner explicitly requested a fresh preview, continued Phase4 work and private/credit-only operation, then said unavailable. Fresh intent `709af4a1-4367-44f8-884a-8b4ec4f86fe5` reuses eligible version `ad9e5f6b-46ff-4366-b153-6e0a269d798d` without new execution/inference. Digest `adb999a8604549e75f1654eb709696b136aab542d4c9631470c9c8ba70fdb92a`; expiry **Nov5 01:48:41 KST**. Exact full diff/base/title/body are in private deployment/evidence/phase4-pr-preview-709af4a1-4367-44f8-884a-8b4ec4f86fe5.md and linked in one pending async approval request. General approval does not remove the product's concrete approval requirement. Do not repeat that question, auto-renew previews or dispatch without a matching timely answer.

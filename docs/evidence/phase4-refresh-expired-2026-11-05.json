@@ -1,0 +1,56 @@
+{
+  "observed_at": "2026-11-04T18:03:49.312404+00:00",
+  "intent": "709af4a1-4367-44f8-884a-8b4ec4f86fe5",
+  "preview_sha256": "adb999a8604549e75f1654eb709696b136aab542d4c9631470c9c8ba70fdb92a",
+  "expired_at": "2026-11-04T16:48:41.534923+00:00",
+  "initial_session_http_status": 403,
+  "approval_http_status": null,
+  "durable_intent": {
+    "state": "PREVIEW",
+    "expires_at": "2026-11-04T16:48:41.534923+00:00",
+    "approved_at": null,
+    "currently_authorized": false
+  },
+  "prior_probe_limitation": null,
+  "durable_external_writes": 0,
+  "external_readback": {
+    "app_authentication": "passed_after_unused_key_revocation",
+    "branch_exists": false,
+    "pr_exists": false,
+    "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f"
+  },
+  "temporary_session_unauthorized": true,
+  "credit": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-04T18:03:35.728383+00:00",
+    "remaining_credit": "197.75",
+    "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+  },
+  "new_worker_executions": 0,
+  "provider_calls": 0,
+  "new_cloud_resources": 0,
+  "admission": "remained_closed",
+  "unused_key_revoked": 5183052,
+  "working_key_preserved": 5183074,
+  "user_authorization": "exact PR approved after expiry; no rebinding",
+  "status": "EXPIRED_EXACT_ANSWER_NO_WRITE_PHASE4_INCOMPLETE",
+  "approval_processing_clock_utc": "2026-11-04T18:02:23Z",
+  "owner_followup": "No repeated approval questions while unavailable; no new preview requested",
+  "checks": {
+    "scoped_pytest": "13 passed",
+    "ruff": "passed",
+    "actual_pr_write_readback_restart": "NOT_RUN; expired authority"
+  },
+  "source_files": [
+    {
+      "path": "scripts/check_phase4_expired_approval.py",
+      "sha256": "ba5d95ee42faf8c508193c968dedb19e7705697541a1d032420dad3df7a34f3d"
+    },
+    {
+      "path": "tests/unit/test_pr_approval_admin.py",
+      "sha256": "58c63925dfeda942558fb079d2232279a5519957f744c6f7668094b27d40bf21"
+    }
+  ],
+  "source_note": "Post-run edits only added a lint comment and formatting; no behavior change",
+  "review": "Separate Codex critical pass; no independent human sign-off"
+}

@@ -1,5 +1,7 @@
 # Requirements traceability
 
+R30 current: the fresh preview's exact answer was processed after expiry. Actual reconciliation confirms no approval or external writes; PR readback/recovery acceptance remains NOT RUN. Read-only refresh reconciliation and two no-approval-POST regressions pass. [Receipt](evidence/phase4-refresh-expired-2026-11-05.json). No Phase4 completion or new operator request is implied.
+
 R30 fresh-preview follow-up: actual deployed eligibility/read-only preview and unique encrypted actor readback passed for a new owner-requested intent. Completion/readback/restart harness is prepared with eleven scoped local checks; actual external write remains NOT RUN pending this preview's concrete approval. [Refresh evidence](evidence/phase4-pr-refresh-2026-11-05.json). No composite row or Phase4 completion is promoted.
 
 Latest R30 evidence: dedicated App installation/authentication and real read-only preview passed. Specifically approved unused key removed; working key still authenticates. Owner's PR answer was processed after preview expiry, so actual write/readback/recovery remains NOT RUN. Reconciliation confirms zero durable writes and no branch/PR. No composite requirement is promoted to complete. [Scoped receipt](evidence/phase4-expired-approval-2026-11-05.json).

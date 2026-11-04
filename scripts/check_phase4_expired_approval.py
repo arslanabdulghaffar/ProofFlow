@@ -1,5 +1,6 @@
 """Actual expired preview rejection and read-only GitHub reconciliation; no new PR intent."""
 
+import argparse
 import asyncio
 import json
 import os
@@ -7,6 +8,7 @@ import re
 import ssl
 import subprocess
 from datetime import UTC, datetime
+from uuid import UUID
 
 import httpx
 from prepare_github_app import preflight, protected_local
@@ -71,14 +73,16 @@ async def external_readback(intent):
     }
 
 
-def main():
-    source = PRIVATE / "evidence/phase4-pr-preview-intent.json"
+def main(refresh=False):
+    source = PRIVATE / "evidence" / (
+        "phase4-pr-refresh-20261105.json" if refresh else "phase4-pr-preview-intent.json"
+    )
     original = json.loads(source.read_bytes())
     preview = original["pr"]
     require(
         datetime.now(UTC) > datetime.fromisoformat(preview["expires_at"]), "PREVIEW_NOT_EXPIRED"
     )
-    saved = existing_session()
+    saved = existing_session(original["session_file"] if refresh else "phase4-pr-session.dpapi")
     with LiveSession() as live:
         live.client = httpx.Client(
             base_url=ORIGIN,
@@ -94,7 +98,7 @@ def main():
         session_status = live.client.get("/v1/session").status_code
         require(session_status in (200, 403), "ACTOR_SESSION_UNEXPECTED")
         approval_status = None
-        if session_status == 200:
+        if session_status == 200 and not refresh:
             response = live.client.post(
                 "/v1/pr-intents/" + original["pr_intent"] + "/approve",
                 json={"confirm": True, "preview_sha256": preview["preview_sha256"]},
@@ -106,6 +110,19 @@ def main():
             "UNEXPECTED_WRITE_INTENT",
         )
         external = asyncio.run(external_readback(original["pr_intent"]))
+        identity = str(UUID(original["pr_intent"]))
+        # Only a parsed/canonical UUID is interpolated into this administrator read.
+        statement = (
+            "SELECT jsonb_build_object('state',a.state,'approved_at',a.approved_at,"  # noqa: S608
+            "'expires_at',a.expires_at,'currently_authorized',"
+            "COALESCE(pf_product.pr_current(a),false)) FROM pf_product.pr_intents a "
+            "WHERE a.id='" + identity + "';"
+        )
+        durable = json.loads(live.sql(statement))
+        require(
+            durable["approved_at"] is None and durable["currently_authorized"] is False,
+            "UNEXPECTED_APPROVAL_STATE",
+        )
         # This temporary actor is no longer useful; revoke via the normal authenticated route.
         if session_status == 200:
             require(
@@ -122,13 +139,14 @@ def main():
             "expired_at": preview["expires_at"],
             "initial_session_http_status": session_status,
             "approval_http_status": approval_status,
-            "prior_probe_limitation": (
+            "durable_intent": durable,
+            "prior_probe_limitation": None if refresh else (
                 "Initial harness expected logout 200 instead of the documented 204; "
                 "no final receipt retained. Reconciliation does not recreate approval or session."
             ),
             "durable_external_writes": 0,
             "external_readback": external,
-            "temporary_session_revoked": True,
+            "temporary_session_unauthorized": True,
             "credit": live.credit,
             "new_worker_executions": 0,
             "provider_calls": 0,
@@ -136,16 +154,24 @@ def main():
             "admission": "remained_closed",
             "unused_key_revoked": 5183052,
             "working_key_preserved": 5183074,
-            "user_authorization": "expired PR and unused key removal approved; no rebinding",
+            "user_authorization": "exact PR approved after expiry; no rebinding",
         }
-        (PRIVATE / "evidence/phase4-expired-approval-result.json").write_text(
+        destination = "phase4-refresh-expired-result.json" if refresh else (
+            "phase4-expired-approval-result.json"
+        )
+        (PRIVATE / "evidence" / destination).write_text(
             json.dumps(result, indent=2) + "\n", encoding="utf-8"
         )
         print(json.dumps(result))
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--refresh", action="store_true", help="Read-only fresh-intent reconciliation"
+    )
+    args = parser.parse_args()
     try:
-        main()
+        main(args.refresh)
     except Exception:
         raise SystemExit("EXPIRED_APPROVAL_CHECK_FAILED_RECONCILE_PRIVATE_STATE") from None
