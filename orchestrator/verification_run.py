@@ -21,14 +21,18 @@ from worker.protocol import ExecutionRequest, SupervisorError
 
 
 class VerificationRun:
-    def __init__(self, client: WorkerClient, image: Path, image_sha256: str, journal: Path):
+    def __init__(self, client: WorkerClient, image: Path, image_sha256: str, journal: Path,
+                 verifier=None, before_dispatch=None, after_capture=None):
         self.client, self.image = client, image
         self.image_sha256, self.journal = image_sha256, journal
+        self.verifier = verifier
+        self.before_dispatch, self.after_capture = before_dispatch, after_capture
         private_directory(journal)
 
     def bounded(self, message):
         raw = canonical_bytes(message, max_bytes=MAX_REQUEST)
-        receipt = run(raw, image=self.image, image_sha256=self.image_sha256)
+        receipt = (self.verifier(raw) if self.verifier is not None
+                   else run(raw, image=self.image, image_sha256=self.image_sha256))
         if receipt["cleanup_confirmed"] is not True:
             raise SupervisorError("VERIFIER_CLEANUP_UNCERTAIN")
         return receipt
@@ -69,7 +73,8 @@ class VerificationRun:
         fd = os.open(self.journal / "lock", os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600)
         try:
             info = os.fstat(fd)
-            if not stat.S_ISREG(info.st_mode) or info.st_uid != 0 or info.st_nlink != 1:
+            if (not stat.S_ISREG(info.st_mode) or info.st_uid != os.geteuid()
+                    or info.st_nlink != 1):
                 raise SupervisorError("VERIFICATION_JOURNAL_LOCK_INVALID")
             fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
             # Includes failed/uncertain intents. No eviction or hidden retry to
@@ -86,6 +91,8 @@ class VerificationRun:
             synced_write(directory / name, raw)
         sync_directory(directory)
         sync_directory(self.journal)
+        if self.before_dispatch is not None:
+            self.before_dispatch(request, intent)
         worker = self.client.create(request)
         synced_write(directory / "worker.json", canonical_bytes(worker, max_bytes=65536))
         sync_directory(directory)
@@ -110,6 +117,8 @@ class VerificationRun:
                 files[name] = raw
             if sum(map(len, files.values())) > 10 * 1024 * 1024:
                 raise SupervisorError("VERIFICATION_OUTPUT_LIMIT")
+            if self.after_capture is not None:
+                self.after_capture(request, worker)
             result["semantic"] = self.bounded({"operation": "verify", "contract": encode(contract),
                 "transactions": encode(transactions), "customers": encode(customers),
                 "outputs": {name: encode(raw) for name, raw in files.items()}})

@@ -1,0 +1,464 @@
+{
+  "observed_at": "2026-11-04T04:16:53.580153+00:00",
+  "phase": "2_in_progress",
+  "scope": "private synthetic original API/queue plus bounded verifier/canaries; no repair or public release",
+  "product_image": "061afb3a80e353a4d1a63ce2bdbae011990566c54523f07d8c575c53ff766380",
+  "verifier_image": "cc7ad06d96c2235c4e4306d8490caf86c4424a22c21971ee1d3838f6af7ecb9d",
+  "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+  "sources": [
+    {
+      "path": ".dockerignore",
+      "sha256": "0e230e342642007cb99e8e2d59c7fd2097f03c195b7934d17e9eb62ab72bab38"
+    },
+    {
+      "path": "api/app/assets.py",
+      "sha256": "02a81c52579b3beb6111353136b6b912e297f7a11d3b917b1081ef63e3dcfeb7"
+    },
+    {
+      "path": "api/app/product.py",
+      "sha256": "bb93050e77df58ee82fd3ff8ac9b1d90f7269bb21121f6094cc7fc2a7c2d8b80"
+    },
+    {
+      "path": "api/app/product_bootstrap.py",
+      "sha256": "3556d93dae0ceaa3624b9bebeeba0a040675f297f9e018605b0ee106469539c6"
+    },
+    {
+      "path": "api/app/product_store.py",
+      "sha256": "b5b78b46ce4266570794e7698a24c77d823af6a8db8ca56eb322e6c208126819"
+    },
+    {
+      "path": "api/app/workspace_assets.py",
+      "sha256": "2bba73f32efec0b2600a70e2e5285ad54e3093fd9b08455bfb3cdc3fd92643dd"
+    },
+    {
+      "path": "db/phase2/002_upload_reservations.sql",
+      "sha256": "4c54e548ebfccfe33105980ed796ff195c1d0f340c3abb5e1e864e145e833865"
+    },
+    {
+      "path": "db/phase2/003_original_queue.sql",
+      "sha256": "9e2ad2424895e8b4c34db680c3f44f1dd4b7118d390daaf80bea03e572f51401"
+    },
+    {
+      "path": "db/phase2/004_termination_evidence.sql",
+      "sha256": "bb1bf2b00ae64850e3ee866b8a83442af4fc57c0bb927cba2acb19621c9be81d"
+    },
+    {
+      "path": "infra/images/product.Dockerfile",
+      "sha256": "e7ac300497a83fcb2a487e33b9854ef49c177b5e23750b11da5b7741dd567859"
+    },
+    {
+      "path": "orchestrator/product_bootstrap.py",
+      "sha256": "7795328344cc608d37cc3a76da2d50f47d24f6556640c78695b26342c5a576c9"
+    },
+    {
+      "path": "orchestrator/product_dispatcher.py",
+      "sha256": "e31ff6984f7875b07e01c8db87258b3ae17c900920d156dcf14c69bb9a2f9886"
+    },
+    {
+      "path": "orchestrator/product_setup.py",
+      "sha256": "bcb8e6221f3c4ddda12247496c14ac26ae541a74fa8cffb0eb0f38eddad3eec4"
+    },
+    {
+      "path": "orchestrator/verification_run.py",
+      "sha256": "d7ed2303f9bbec95d34853532c2ba58031e196ab0ead9e5b2eb342e8cc8e7b4c"
+    },
+    {
+      "path": "orchestrator/verifier_client.py",
+      "sha256": "74a73f40017a580026604922e8491369d79a6720095ec22dfbb8aeed11e1bf80"
+    },
+    {
+      "path": "scripts/check_deployed_product.py",
+      "sha256": "17bbfbc1b482bb1e85cc51f69a14441d6262ffe4ad8aa24d69ca8c413c150629"
+    },
+    {
+      "path": "scripts/check_product_image.py",
+      "sha256": "0008685e54e8eae77380a4556cc344aa996d8c8addc05c249279c2ee2f55f4f8"
+    },
+    {
+      "path": "scripts/check_product_integrity.py",
+      "sha256": "326a092b7ca27bb6f399c54e08a3da2286afe0c65f42b2ca211ea946b88ea1e3"
+    },
+    {
+      "path": "scripts/check_product_queue.py",
+      "sha256": "436e55ee7dbeee1d4bf330522529b30f5eb7ad4fea81d76883d29af469853866"
+    },
+    {
+      "path": "scripts/check_product_recovery.py",
+      "sha256": "479865902249c4e5f4c40cce95d83e55d5a33392dcb3a7719e0671c1d7b13504"
+    },
+    {
+      "path": "scripts/deploy_product_database.py",
+      "sha256": "7c0f1041b5fd3d82fb396a13cea0c982605e6c6696ce6a58fffb2698ee79e96c"
+    },
+    {
+      "path": "scripts/deploy_product_services.py",
+      "sha256": "b8ebf2ce4206b80883dcfbe7c613f625b57bcc160513a923e6f8a2f9b74a3d35"
+    },
+    {
+      "path": "scripts/deploy_verifier.py",
+      "sha256": "f96b33b7e179d279c0374e1e11108d1bfc10282b67523757590bcdaa02b489d4"
+    },
+    {
+      "path": "scripts/install_product_database.py",
+      "sha256": "08620faed44d55c571c2ec291a2002f2b38ba074f06be429b6827f4bbb7668d5"
+    },
+    {
+      "path": "scripts/install_product_services.py",
+      "sha256": "a0d41dc4813b7f93acc956812dc1fd46fb5341f2fde18dca1a530f056a4c2a8c"
+    },
+    {
+      "path": "scripts/prepare_product_identity.sh",
+      "sha256": "90d40020fe2c343e6844930fca4c1a0590b1e3362d32ad4b96501de145d65c10"
+    },
+    {
+      "path": "scripts/probe_product_http.py",
+      "sha256": "91463360cc738ba6a6c1f387fd7922bfa148a755b01b6a435cbd83e4d7336fc8"
+    },
+    {
+      "path": "scripts/probe_product_recovery_http.py",
+      "sha256": "0759917811c9ca7ec1caf781c81bb10aa080a9646db2d3eac3be82c3e247e584"
+    },
+    {
+      "path": "scripts/run_verifier_probes.py",
+      "sha256": "a9db5e20cf3d4b04ccd1f1c154b8e3f72ac0beea8a7a400b2f6b9ab910ead425"
+    },
+    {
+      "path": "scripts/verifier_socket_admin.py",
+      "sha256": "66c8850bbbea43caf3cf3fa2909bcd9830e74462b367ebb7ebca0d640dadf7d5"
+    },
+    {
+      "path": "tests/fixtures/phase2/deadline.py.txt",
+      "sha256": "fa4a67e1ccf1ef03c1d308cc7881f8084f598679655790d06d894fa9f5735844"
+    },
+    {
+      "path": "tests/integration/product_database_fixture.py",
+      "sha256": "278bacbe0474ca0d937130164b952269d669ced6c940a8370d0403674d5000cb"
+    },
+    {
+      "path": "tests/security/test_assets_linux.py",
+      "sha256": "7077a1c4d92261c0a40282765ee43c2064fe2a467af16676aeb6ba63aa71d47c"
+    },
+    {
+      "path": "tests/security/verifier_socket_linux_check.py",
+      "sha256": "d169a6392fc684500696f6314f0e604bf0c3d53747de031d4f738f5df7678204"
+    },
+    {
+      "path": "tests/unit/test_product_http.py",
+      "sha256": "97b3d4752217c7c326dd79820f15190574f2bfe1769cf3af4940a13468d714ad"
+    },
+    {
+      "path": "tests/unit/test_verifier_protocol.py",
+      "sha256": "2c003606caf80084622d12b76d5125dc2d251dc4ee90bcba0c27d5fe44a1520f"
+    },
+    {
+      "path": "verifier/protocol.py",
+      "sha256": "a9cd18f65378977d4dfa4fba70b2a0b2385521be2fe76832220459e311862fbf"
+    },
+    {
+      "path": "verifier/socket_service.py",
+      "sha256": "be513b5b3b9fa58bd181d1d6414b0cf37eac3a86be7b1ea7c1392426c99e5dec"
+    }
+  ],
+  "windows_tests": {
+    "passed": 478,
+    "skipped_linux_only": 55
+  },
+  "linux_groups": {
+    "asset_store": 10,
+    "postgres_queue": 10,
+    "verifier_boundary": 6,
+    "verifier_peer_frame": 4
+  },
+  "deployed_verifier": {
+    "observed_at": "2026-11-04T03:59:51.911928+00:00",
+    "boundary": {
+      "fixture_only": true,
+      "rootfs_sha256": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+      "checks": [
+        "fixed_protocol_rejection",
+        "uid_capabilities_secret_files_readonly_ipv4_ipv6_unix_denied",
+        "independent_wall_timeout_after_controller_exit",
+        "memory_swap_limit_oom_cleanup",
+        "output_file_hard_limit",
+        "task_ceiling_and_descendant_cleanup"
+      ],
+      "passed": 6,
+      "cleanup_confirmed": true
+    },
+    "probes": [
+      {
+        "contract_raw_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "customers_sha256": "08117483fedfc4dfea9a83bbe5fa412f938d7365ec2b40441c205b95e9afb38f",
+        "execution": "277527d3c9a64228a641ecc351ba78f7",
+        "generation": 1,
+        "job": "7c17b02f2a954713832c934b2c070e2e",
+        "manifest_sha256": "97a95e85f2d1a6370ff8e8e4524f9b731e20db79ce329c4d4daa7715b41787cd",
+        "pipeline_sha256": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+        "purpose": "canary_ownership",
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "transactions_sha256": "0a2eb88ff5144131eebb8ff01326a17170cf539fd0db985f8c7ec2b3ef955890",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+        "fixture": "canary_correct",
+        "extended": false,
+        "generation_report_sha256": "c09d17023a98b27b22d4f5e9801346d3ca71f70e85ba0fe29ecec55f46fa9b93",
+        "seed_sha256": "800d5582e392770c54a737de57256667101aa29a00165d6b9a54537a22906434",
+        "verification_report_sha256": "21591798bcc551df77a7540e3b0261fb6314b7e2cecb37c778eb771398533fc0",
+        "comparison": "match",
+        "blocking_occurrences": 0,
+        "checks": [],
+        "output_sha256": {
+          "ledger.jsonl": "7cc133f7ae565ccb0073d201e1644ced43c769a210af92f6c15224731406521b",
+          "unresolved.jsonl": "524e06abf844681b79a3ab4905946995d3a53cbbbc5e8767c650a8d3af180398"
+        },
+        "cleanup": "confirmed"
+      },
+      {
+        "contract_raw_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "customers_sha256": "5a76f1374ea114aa2b3d44af4b1c0618ce058ef48cc6e9a7d85c55c027b58ad9",
+        "execution": "2da0ce24817940d2b35c55065f8b9799",
+        "generation": 1,
+        "job": "6456678885de4e3f98e81fa68525f96c",
+        "manifest_sha256": "8a4d23fe5f91d71e4bc5687c0718b5685af448d3ce3b7f80290b2dfb9b55d188",
+        "pipeline_sha256": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+        "purpose": "canary_quarantine",
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "transactions_sha256": "e5ceb5595d4969e8ee5ce9634f3b99b734a71b0731cc4ff78f686faf78695d5c",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+        "fixture": "canary_correct",
+        "extended": false,
+        "generation_report_sha256": "cd94d5ef7b0ddb8001e3db23dfe7deaa6177c2fc1a3efd5b87126dcd0d4f1c1a",
+        "seed_sha256": "6512a8c46beee5ad69e5661e1dca3fd5b0a4035821e9eb734572e68007373dae",
+        "verification_report_sha256": "60d550ba51415859319983b5df213eb91cd53f164dc26eca12bab04e1018e0d4",
+        "comparison": "match",
+        "blocking_occurrences": 4,
+        "checks": [],
+        "output_sha256": {
+          "ledger.jsonl": "954c9e348474322fbe3eb93b302580a66dc432601315b29dff944dd3a1409ca0",
+          "unresolved.jsonl": "45b163d69b3ab33743c7946d476ce50f927b9d544c612d335798e941a7832101"
+        },
+        "cleanup": "confirmed"
+      },
+      {
+        "contract_raw_sha256": "1d86babe2a680bbc82b8635a3849a1d71950dda934c8d9cee91e34c2fbe2fe39",
+        "contract_sha256": "1d86babe2a680bbc82b8635a3849a1d71950dda934c8d9cee91e34c2fbe2fe39",
+        "customers_sha256": "16e34e5aff999e2c57de2aec1231d905d1daa67e08d8deea0a878996aa95a663",
+        "execution": "119b185eacd943c388850073fab7c503",
+        "generation": 1,
+        "job": "424267437ff34643baf0ef6059103433",
+        "manifest_sha256": "b4abea6ec4ab13167736b148bf6c7b9e0ed5e8515ebb7768a0e6554968e1ea35",
+        "pipeline_sha256": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+        "purpose": "canary_quarantine",
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "transactions_sha256": "a64427a22b0038186d5f7a8075a17e5f87469b2d449f8f1b24494fbea237aeb1",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+        "fixture": "canary_correct",
+        "extended": true,
+        "generation_report_sha256": "c49afc02b9d7b7039c755603130774740169e35fe56f35f8cbfea917f9012a7a",
+        "seed_sha256": "bbcab72d5fadd0800a59a39c6567c7b517ead9761eb660fce5f4a8caac5a3ad8",
+        "verification_report_sha256": "e2794272f88870728472370fc3d2074494a0e10eac0433d5bf01e095fbc53b14",
+        "comparison": "match",
+        "blocking_occurrences": 5,
+        "checks": [],
+        "output_sha256": {
+          "ledger.jsonl": "a8630cb716059a82bf41c22bf444611e279347da7dfd092a735c46a3031af2b1",
+          "rollups.jsonl": "eb37fb981e99d2e55d6eb1965647e163245f4571ed7f63b69e6201bad838dc4b",
+          "unresolved.jsonl": "e354f2294d70a095c0e923be8e27da9ca1738dc2ed9df0456a409b50e9b5c4d5"
+        },
+        "cleanup": "confirmed"
+      },
+      {
+        "contract_raw_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "customers_sha256": "6bab272cdc4f2111024d86aef4ea774b79612e4b741974d1445dc1eee15e4bcc",
+        "execution": "55406898e3f0480ebddf4e7e8c008754",
+        "generation": 1,
+        "job": "de68d2f2ab7f4483b88050089f8b4edd",
+        "manifest_sha256": "1f1669f88147d4f33a4fd15048d13fba7b58986ffb2d40965c1cdd53bf27b8fd",
+        "pipeline_sha256": "5f10985fb67b7a8b346ff1a83aba02383341a941483130c7cb3aa6e89eba3929",
+        "purpose": "canary_ownership",
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "transactions_sha256": "fbc7bff8d54aac29a94ee5dd3af26f3f3b525964504a32099f7160b722a73027",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+        "fixture": "wrong_owner",
+        "extended": false,
+        "generation_report_sha256": "4d2aec702f27e33a70711d88903a63962c5081b265d2abb9ae083072074b768a",
+        "seed_sha256": "3db67db96ec43d14e3bb4111bb2075c8065755e568ae4e63472e18f6cc0ddd62",
+        "verification_report_sha256": "ff35a2ae0ebd13297e66e2b192387197a7fb2b62244fc9e4a0cdd32b303fde54",
+        "comparison": "mismatch",
+        "blocking_occurrences": 0,
+        "checks": [
+          "V04",
+          "V05",
+          "V07",
+          "V08",
+          "V09"
+        ],
+        "output_sha256": {
+          "ledger.jsonl": "05c0693b7d2b556bfc5510af197eb8abcbca53b5c3b5569719be3dbcf8c6365c",
+          "unresolved.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanup": "confirmed"
+      }
+    ]
+  },
+  "http_checks": [
+    "actual_tls_scram_session_auth_csrf_readiness",
+    "immutable_upload_download_workspace_isolation_exact_approval",
+    "scoped_enqueue_idempotency_actual_worker_bounded_verifier",
+    "persisted_wrong_owner_witness_failure_page",
+    "q08_filtered_missing_attribute_held",
+    "invalid_input_rejected_without_worker",
+    "session_revocation"
+  ],
+  "jobs": [
+    {
+      "job": "278ced5c-af38-450f-9c85-e3f47c1c9c9c",
+      "state": "NEEDS_REVIEW",
+      "outcome": "mismatch",
+      "intent": {
+        "job": "278ced5caf38450f9c85e3f47c1c9c9c",
+        "purpose": "original",
+        "execution": "40d9486dd8174d6b84e1275763273be8",
+        "generation": 1,
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "contract_sha256": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+        "manifest_sha256": "b111a005c8d7e709f0efee9d64c2da30286f9cef576b2c2e4a621d0838991e45",
+        "pipeline_sha256": "5f10985fb67b7a8b346ff1a83aba02383341a941483130c7cb3aa6e89eba3929",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+        "customers_sha256": "81a7e57e517560c5335c2d6eb1d85449be8d45a1e0bf65fa98174cb0a50d495f",
+        "contract_raw_sha256": "325131faa7d70a344ca9dde8b56e6664f6c7e4d9e1dee71e1c5584a292a3e0bd",
+        "transactions_sha256": "7954242d15026e11ac3fc2694c69aaec33288cadf68de928044c5b00d841404c"
+      },
+      "worker_receipt_sha256": "c9a7280d61ebf72d6f11e2efc474c82fb1afdbdd7a19aaeb27e2a26fdc47f6d9",
+      "cleanup": "confirmed",
+      "blocking_occurrences": 0,
+      "checks": [
+        "V04"
+      ],
+      "ownership_witness_count": 1
+    },
+    {
+      "job": "ee2524f5-a172-4e38-bf86-9361e230b9e8",
+      "state": "NEEDS_REVIEW",
+      "outcome": "held",
+      "intent": {
+        "job": "ee2524f5a1724e38bf869361e230b9e8",
+        "purpose": "original",
+        "execution": "11fb5be4bdbc4157b3c16550d2a3cfd7",
+        "generation": 1,
+        "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+        "contract_sha256": "ea67d8239abaeab1157b085d8a8b37b7c4fc290fc24d95b006897568efc1a8da",
+        "manifest_sha256": "e85982487b68c694e1b82a5d7bbaad5ebd6cedc6b1fff816ac7e9e65d4f721cd",
+        "pipeline_sha256": "bbffc4e330f86cb849e69bed74e7f28b55f6b4f69a4e4d028e72eb7529eca6e7",
+        "verifier_rootfs": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+        "customers_sha256": "44be16954b4d72676321ffbaabd3a0155c154cd02f19611e81bf0871989986c5",
+        "contract_raw_sha256": "52d731ab72972f9a14bbce284b742643b0ca2967009abda9e9884bea371bb221",
+        "transactions_sha256": "7954242d15026e11ac3fc2694c69aaec33288cadf68de928044c5b00d841404c"
+      },
+      "worker_receipt_sha256": "5742888566ee84463b7606b1444ca539fd25d0d2f6a6152562772a90549b1aca",
+      "cleanup": "confirmed",
+      "blocking_occurrences": 2,
+      "checks": [],
+      "ownership_witness_count": 0
+    },
+    {
+      "job": "b0ea2432-5c5a-4089-857e-aad6171043e2",
+      "state": "NEEDS_REVIEW",
+      "outcome": "input_rejected",
+      "intent": null,
+      "worker_receipt_sha256": null,
+      "cleanup": null,
+      "blocking_occurrences": null,
+      "checks": [],
+      "ownership_witness_count": 0
+    }
+  ],
+  "recovery": [
+    {
+      "case": "cancel",
+      "job": "2324171c-2d0d-448a-84d2-8f41009fcf4a",
+      "execution": "8392ec0a-09cc-41b8-ba1d-7ab190939007",
+      "execution_generation": 1,
+      "final_generation": 2,
+      "state": "CANCELLED",
+      "cleanup": "confirmed",
+      "receipt_sha256": "d099a692b2eb6974727f9d844d35df1fceed59447a3e57fc679a3da54cd4078f"
+    },
+    {
+      "case": "dispatcher_death",
+      "job": "411d33c7-6951-4b1e-b8a2-8f744874fd4b",
+      "execution": "91683368-cd91-497c-ad39-8a0723f9bbf2",
+      "execution_generation": 1,
+      "final_generation": 2,
+      "state": "FAILED_INFRA",
+      "cleanup": "confirmed",
+      "receipt_sha256": "b08e85a680f8be91410baed477d044956e599ef17add36a9d6ae2bcaafbf1446"
+    }
+  ],
+  "integrity": {
+    "observed_at": "2026-11-04T04:13:54.639926+00:00",
+    "auth": [
+      {
+        "role": "api",
+        "scram": "passed",
+        "table_owner_schema_denied": true
+      },
+      {
+        "role": "dispatcher",
+        "scram": "passed",
+        "table_owner_schema_denied": true
+      }
+    ],
+    "rowset_sha256": {
+      "workspaces": "b770757c0999375cb7c4f367a19bfb8d18b544577ee2f5fb02e95a7fd236905a",
+      "sessions": "b2a6dd38c10725cf355cc6cb3cfbbd1ddee845010258478c69dfdb98fd3e187a",
+      "assets": "91462f2ebee486a3065226f4cc5e91a7754f2cfd830d18682a74d1c19895ef41",
+      "uploads": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "execution_policy": "41e6c30f5147b0d29da2c645b99f8439521cc08e780d66223ffe5cb13805ef8e",
+      "contract_approvals": "872eca5dd9a3e10bf32e1a14c6f618b0e7a02be4a1dccabe561faf90bb89a5aa",
+      "jobs": "bacc7b5b9cbdfca4ad0b0bed41289fca73fc83d7d37b9f2ee46e6975fd24741c",
+      "job_events": "d3e1c90c39b4bf1271e9d362533c4d3ea6fa60b62f8ba23526ce914d9504392b"
+    },
+    "row_counts": {
+      "workspaces": 7,
+      "sessions": 7,
+      "assets": 32,
+      "uploads": 0,
+      "execution_policy": 1,
+      "contract_approvals": 7,
+      "jobs": 7,
+      "job_events": 38
+    },
+    "restart": "same_rows",
+    "offvm_restore": "same_rows",
+    "backup_sha256": "03ba62d6c4173ca32c0f987cf0520e16463f2de2570649b707247c0ae805ef85",
+    "backup_bytes": 87303,
+    "budget_rows_unchanged": true,
+    "product_admission": "closed",
+    "credit_guard": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-04T04:13:08.165207+00:00",
+      "remaining_credit": "199.13",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "limitation": "Windows-profile DPAPI; database only, not asset/journal backup"
+  },
+  "retained_failures": [
+    "Initial verifier socket directory was0700 due to umask; no execution before traversal repair, original later recorded mismatch at generation5.",
+    "Incomplete date-range probe rejected during exact contract approval; corrected fixture only.",
+    "Integrity helper first used an obsolete table name; stopped before backup/restart and finally restarted services; corrected helper passed."
+  ],
+  "remaining": [
+    "remaining wire/generated-type/error/event contracts",
+    "authenticated event resume and browser intake",
+    "general retention and lifecycle reconciliation",
+    "asset/journal and portable disaster backup",
+    "repair candidate scheduling/activation/batches/PR are later phases",
+    "native/runtime advisory limitations and independent human review gap"
+  ],
+  "provider_calls": 0,
+  "new_cloud_resources": 0,
+  "independent_human_review": "NOT_AVAILABLE"
+}

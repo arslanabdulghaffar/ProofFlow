@@ -45,6 +45,37 @@ class AssetStoreTests(unittest.TestCase):
         with self.assertRaisesRegex(AssetError, "ASSET_DIRECTORY_UNSAFE"):
             put_asset(self.fd, b"x")
 
+    def test_stable_pending_recovers_matching_crash_prefix_only(self):
+        content = b"trusted synthetic retry bytes"
+        digest = hashlib.sha256(content).hexdigest()
+        pending = self.root / (".pending-" + digest)
+        pending.write_bytes(content[:7])
+        pending.chmod(0o600)
+        self.assertEqual(put_asset(self.fd, content), digest)
+        self.assertFalse(pending.exists())
+        self.assertEqual(read_asset(self.fd, digest), content)
+
+    def test_pending_corruption_links_fifo_and_wrong_modes_fail_closed(self):
+        content = b"retry"
+        digest = hashlib.sha256(content).hexdigest()
+        pending = self.root / (".pending-" + digest)
+        target = self.root / "unrelated"
+        target.write_bytes(b"unchanged")
+        for kind in ("corrupt", "symlink", "hardlink", "fifo", "world_readable"):
+            if kind == "symlink":
+                pending.symlink_to(target)
+            elif kind == "hardlink":
+                os.link(target, pending)
+            elif kind == "fifo":
+                os.mkfifo(pending, 0o600)
+            else:
+                pending.write_bytes(b"x" if kind == "corrupt" else b"r")
+                pending.chmod(0o644 if kind == "world_readable" else 0o600)
+            with self.assertRaises(AssetError):
+                put_asset(self.fd, content)
+            self.assertEqual(target.read_bytes(), b"unchanged")
+            pending.unlink()
+
     def test_symlink_fifo_directory_and_hardlink_never_read(self):
         digest = hashlib.sha256(b"x").hexdigest()
         path = self.root / digest

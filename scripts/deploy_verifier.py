@@ -13,14 +13,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from vultr_credit_guard import run as credit_guard  # noqa: E402
 from vultr_phase1 import PRIVATE, ROOT, Admin  # noqa: E402
 
-IMAGE = "1ec6b77378d3ab18dae2ff7529b626bb1c99547867b49a6a47771e9ed4a4a52e"
-ROOTFS = "35e0663e9dd2d89d814174d77d2cd773323eb6dc1848c045e8c91aebb70b0c24"
-LOCAL = "/var/lib/proofflow-verifier-image-v5/rootfs.squashfs"
+IMAGE = "cc7ad06d96c2235c4e4306d8490caf86c4424a22c21971ee1d3838f6af7ecb9d"
+ROOTFS = "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f"
+LOCAL = "/var/lib/proofflow-verifier-image-v6/rootfs.squashfs"
 MODULES = {
     "contracts": ("__init__", "codec", "scalars", "source", "policy"),
     "verifier": ("__init__", "outputs", "lineage", "reference", "compare", "canaries",
-                 "protocol", "entrypoint", "host"),
-    "orchestrator": ("__init__", "worker_client", "verification_run"),
+                 "protocol", "entrypoint", "host", "socket_service"),
+    "orchestrator": ("__init__", "worker_client", "verification_run", "verifier_client"),
 }
 
 
@@ -33,6 +33,7 @@ def main():
     files = {f"{package}/{name}.py": (ROOT / package / (name + ".py")).read_bytes()
              for package, names in MODULES.items() for name in names}
     files["verifier_admin.py"] = (ROOT / "scripts/verifier_admin.py").read_bytes()
+    files["verifier_socket_admin.py"] = (ROOT / "scripts/verifier_socket_admin.py").read_bytes()
     hashes = {name: hashlib.sha256(raw).hexdigest() for name, raw in files.items()}
     config = {"image_sha256": IMAGE, "rootfs_sha256": ROOTFS, "sources": hashes}
     config_raw = json.dumps(config, sort_keys=True).encode()

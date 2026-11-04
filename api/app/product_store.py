@@ -1,0 +1,100 @@
+"""Fixed functions-only product DB adapter; each return follows acknowledged COMMIT."""
+
+import asyncio
+import os
+from dataclasses import dataclass, field
+
+import psycopg
+
+from orchestrator.budget_store import BudgetConnection, BudgetUnavailable
+
+API_OPERATIONS = {
+    "session": ("SELECT * FROM pf_product.session_context(%s)", 1),
+    "asset": ("SELECT * FROM pf_product.get_asset(%s,%s,%s)", 3),
+    "reserve": ("SELECT pf_product.reserve_upload(%s,%s,%s,%s,%s,%s,%s)", 7),
+    "publish": ("SELECT pf_product.complete_upload(%s,%s,%s,%s,%s,%s,%s)", 7),
+    "approve": ("SELECT pf_product.approve_contract(%s,%s,%s,%s,%s)", 5),
+    "revoke_contract": ("SELECT pf_product.revoke_contract(%s,%s,%s,%s)", 4),
+    "enqueue": ("SELECT pf_product.enqueue_original(%s,%s,%s,%s,%s,%s,%s,%s,%s)", 9),
+    "job": ("SELECT pf_product.get_job(%s,%s,%s)", 3),
+    "cancel": ("SELECT pf_product.cancel_job(%s,%s,%s,%s)", 4),
+    "logout": ("SELECT pf_product.revoke_session(%s,%s,%s)", 3),
+}
+DISPATCH_OPERATIONS = {
+    "claim": ("SELECT pf_product.claim_original(%s)", 1),
+    "heartbeat": ("SELECT pf_product.heartbeat_original(%s,%s,%s,%s)", 4),
+    "assets": ("SELECT pf_product.dispatch_assets(%s,%s,%s,%s)", 4),
+    "begin": ("SELECT pf_product.begin_original(%s,%s,%s,%s,%s,%s)", 6),
+    "reject_input": ("SELECT pf_product.reject_original_input(%s,%s,%s,%s)", 4),
+    "collected": ("SELECT pf_product.original_collected(%s,%s,%s,%s,%s,%s)", 6),
+    "finish": ("SELECT pf_product.finish_original(%s,%s,%s,%s,%s)", 5),
+    "fail": ("SELECT pf_product.fail_original(%s,%s,%s,%s,%s)", 5),
+}
+KNOWN_ERRORS = frozenset({
+    "ACCESS_DENIED", "ASSET_QUOTA", "INVALID_ASSET", "ASSET_IDEMPOTENCY_CONFLICT",
+    "UPLOAD_RESERVATION_REQUIRED", "EXACT_CONTRACT_REQUIRED", "CONTRACT_REVOKED",
+    "ADMISSION_CLOSED", "INVALID_JOB", "JOB_IDEMPOTENCY_CONFLICT", "JOB_ASSETS_INVALID",
+    "JOB_CAPACITY", "JOB_NOT_FOUND", "STALE_JOB_LEASE", "JOB_AUTHORITY_REVOKED",
+    "EXECUTION_INTENT_CONFLICT", "COLLECTED_EXECUTION_MISMATCH", "CLEANUP_REQUIRED",
+    "ORIGINAL_REPORT_INVALID", "ORIGINAL_REPORT_BINDING_MISMATCH", "ORIGINAL_SOURCE_HASH_MISMATCH",
+    "ORIGINAL_CONTRACT_HASH_MISMATCH", "ORIGINAL_OUTPUT_BINDING_MISMATCH",
+})
+
+
+class ProductFailure(Exception):
+    """Fixed diagnostic only, never native SQL/DSN/credential text."""
+
+
+@dataclass(frozen=True)
+class ProductConnection:
+    password: str = field(repr=False)
+    role: str = "api"
+    socket_directory: str = "/run/proofflow-budget"
+
+    def parameters(self):
+        if (self.role not in ("api", "dispatcher")
+                or any(k.upper().startswith("PG") for k in os.environ)):
+            raise ProductFailure("PRODUCT_CONFIGURATION_INVALID")
+        try:
+            parameters = BudgetConnection(self.password, self.socket_directory).parameters()
+        except BudgetUnavailable:
+            raise ProductFailure("PRODUCT_CONFIGURATION_INVALID") from None
+        return {**parameters, "dbname": "proofflow_product",
+                "user": "pf_product_" + self.role + "_login"}
+
+
+@dataclass(frozen=True)
+class ProductStore:
+    connection: ProductConnection = field(repr=False)
+
+    async def call(self, operation: str, *values):
+        operations = API_OPERATIONS if self.connection.role == "api" else DISPATCH_OPERATIONS
+        if operation not in operations or len(values) != operations[operation][1]:
+            raise ProductFailure("PRODUCT_OPERATION_INVALID")
+        try:
+            async with asyncio.timeout(8):
+                async with await psycopg.AsyncConnection.connect(
+                    **self.connection.parameters(), autocommit=True, connect_timeout=3,
+                    application_name="proofflow-product-" + self.connection.role,
+                    options="-c default_transaction_isolation=read\\ committed "
+                            "-c synchronous_commit=on "
+                            "-c statement_timeout=5000 -c lock_timeout=2000 "
+                            "-c idle_in_transaction_session_timeout=5000 -c search_path=pg_catalog",
+                ) as connection:
+                    async with connection.transaction():
+                        for name in ("fsync", "full_page_writes"):
+                            cursor = await connection.execute("SHOW " + name)
+                            if await cursor.fetchone() != ("on",):
+                                raise ProductFailure("PRODUCT_DURABILITY_UNAVAILABLE")
+                        cursor = await connection.execute(operations[operation][0], values)
+                        rows = await cursor.fetchmany(2)
+                        if len(rows) > 1:
+                            raise ProductFailure("PRODUCT_RESULT_INVALID")
+                    return rows[0] if rows else None
+        except psycopg.Error as error:
+            code = error.diag.message_primary
+            if code in KNOWN_ERRORS:
+                raise ProductFailure(code) from None
+            raise ProductFailure("PRODUCT_OPERATION_UNCERTAIN") from None
+        except (OSError, TimeoutError):
+            raise ProductFailure("PRODUCT_OPERATION_UNCERTAIN") from None

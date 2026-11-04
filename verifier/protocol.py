@@ -9,7 +9,7 @@ from contracts.policy import parse_contract
 from contracts.source import MAX_CSV_BYTES, parse_sources
 from verifier.canaries import generate
 from verifier.compare import compare_bytes
-from verifier.outputs import MAX_OUTPUT_BYTES
+from verifier.outputs import MAX_OUTPUT_BYTES, decode_outputs
 
 MAX_REQUEST = 29 * 1024 * 1024
 MAX_RESPONSE = 15 * 1024 * 1024
@@ -80,12 +80,31 @@ def process(raw: bytes) -> bytes:
             if sum(map(len, files.values())) > MAX_OUTPUT_BYTES:
                 raise InputError("VERIFIER_OUTPUT_LIMIT")
             compared = compare_bytes(tx, cs, contract_raw, files)
+            witnesses = []
+            try:
+                decoded = decode_outputs(files, customer_attributes=contract.attributes,
+                    currencies=frozenset(dict(contract.exponents)),
+                    include_rollups=contract.rollups)
+            except InputError:
+                pass
+            else:
+                wanted = {r["source_row_id"]: r for r in compared.expected.ledger}
+                wrong_owners = {f.source_row_id for f in compared.findings if f.check_id == "V04"}
+                for row in decoded.ledger:
+                    source = row["source_row_id"]
+                    if source in wrong_owners and source in wanted and len(witnesses) < 3:
+                        expected = wanted[source]
+                        witnesses.append({"check": "V04", "source_row_id": source,
+                            "merchant_id": expected["merchant_id"],
+                            "customer_id": expected["customer_id"],
+                            "expected_owner": expected["canonical_customer_id"],
+                            "actual_owner": row["canonical_customer_id"]})
             result.update(output_hashes=dict(compared.output_hashes),
                           comparison="mismatch" if compared.findings else "match",
                           blocking_occurrences=compared.expected.blocking_occurrences,
                           ledger_count=len(compared.expected.ledger),
                           unresolved_count=len(compared.expected.unresolved),
-                          finding_count=len(compared.findings),
+                          finding_count=len(compared.findings), ownership_witnesses=witnesses,
                           findings=[{"check": f.check_id, "code": f.code, "source": f.source_row_id}
                                     for f in compared.findings[:20]])
         response = {"version": VERSION, "request_sha256": request_hash,

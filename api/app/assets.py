@@ -8,7 +8,6 @@ candidate path, archive extraction, code execution, retention policy or DB commi
 import hashlib
 import os
 import re
-import secrets
 import stat
 import sys
 from contextlib import contextmanager
@@ -116,7 +115,38 @@ def put_asset(directory_fd: int, content: bytes) -> str:
                 raise AssetError("ASSET_CONTENT_CONFLICT")
             os.fsync(root)
             return digest
-        temporary = ".pending-" + secrets.token_hex(16)
+        # Stable per-content staging name: repeated crashes cannot accumulate
+        # unbounded random orphan files behind one reserved upload identity.
+        temporary = ".pending-" + digest
+        recovery = None
+        try:
+            recovery = os.open(temporary, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+                               dir_fd=root)
+        except FileNotFoundError:
+            pass
+        else:
+            try:
+                info = os.fstat(recovery)
+                if (not stat.S_ISREG(info.st_mode) or info.st_uid != os.geteuid()
+                        or info.st_nlink != 1 or info.st_dev != device
+                        or stat.S_IMODE(info.st_mode) not in (0o400, 0o600)
+                        or info.st_size > len(content)):
+                    raise AssetError("ASSET_PENDING_UNSAFE")
+                partial = bytearray()
+                while len(partial) < info.st_size:
+                    chunk = os.read(recovery, min(CHUNK_BYTES, info.st_size - len(partial)))
+                    if not chunk:
+                        raise AssetError("ASSET_PENDING_CHANGED")
+                    partial.extend(chunk)
+                if (content[:info.st_size] != partial
+                        or _identity(info) != _identity(os.fstat(recovery))
+                        or _identity(info) != _identity(os.stat(temporary, dir_fd=root,
+                                                              follow_symlinks=False))):
+                    raise AssetError("ASSET_PENDING_CHANGED")
+                os.unlink(temporary, dir_fd=root)
+                os.fsync(root)
+            finally:
+                os.close(recovery)
         writer = None
         created = False
         try:

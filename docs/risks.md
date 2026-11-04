@@ -4,6 +4,8 @@ Current Phase1 acceptance is documented in phase1-readiness and the acceptance r
 
 ## Current Phase2 component risks
 
+Latest checkpoint supersedes the older undeployed description below: private product DB/SCRAM/HTTP/queue and bounded verifier are deployed. Actual wrong-owner, held-source, invalid-input, cancellation and dispatcher-death probes pass. Database restart and encrypted off-VM database restore preserve rows; asset/journal backup and portable restore remain open. Remaining Phase2 gaps: authenticated event resume/browser intake, remaining wire/generated-type/error schemas, retention/lifecycle. Retained test workspaces approach fixed capacity; do not raise quotas or erase evidence to hide this. Administrator-provisioned fresh sessions may reuse an existing synthetic workspace. No independent human review or public release.
+
 Private local input, lineage, byte-store and identity/registry tests pass; the product database/HTTP path is not deployed. Q08 was resolved by the owner on Nov4; frozen v1.1 semantics are implemented and tested as a component, with full bounded-verifier/product integration still unfinished. Partial V02–V04 success cannot promote a job: money/reason/filter/duplicate/rollup/canary and runtime/cleanup gates remain. Blob writes need quota reservation before staging and registry-aware orphan/retention reconciliation before intake, otherwise DB rejection alone cannot bound physical storage. Session hashing/Origin/CSRF parsing does not replace current PostgreSQL authorization. Fixture trust authentication is local-only; live product SCRAM, browser ownership tests, bounded queue and failure UI remain unfinished. No independent human reviewer or public-release authorization.
 
 ## Current deployment risk update — Nov 4

@@ -2,7 +2,7 @@
 
 ProofFlow is a planned product for repairing supported Python revenue-import pipelines, checking their actual records against human-approved business rules, and using an exact approved version for subsequent batches.
 
-**Phase 1 IN PROGRESS; cloud spending gates remain blocked. Credits are activated.** The official event is live. A trusted local health service and locked Python dependencies now exist; readiness deliberately returns 503. There is no deployed application, real inference, verified repair, benchmark, sandbox or completed product integration. See [Phase 1 readiness](docs/phase1-readiness.md) for the inspected VM quote, setup steps and exact acceptance checklist, and [progress](docs/progress.md) for checks actually performed.
+**Phase 1 DONE; Phase 2 IN PROGRESS. Repository and deployment remain private.** Real Vultr inference and isolated worker execution passed Phase 1. The deployed bounded verifier, protected canaries and authenticated original-run API/queue now have real integration evidence. Wrong customer ownership is rejected, unresolved source data stays held, and cancellation/controller-loss require cleanup before terminal state. Readiness remains503 while product acceptance is unfinished. No autonomous repair, public demo or benchmark result is claimed. See [progress](docs/progress.md) and [resume instructions](docs/next-session.md).
 
 The intended workflow is intake → original execution → independent checks → bounded Vultr-generated repair → fresh sandbox → independent verification → human approval → verified fresh batch. A separate operator approval permits an actual draft GitHub PR. Humans supply inputs and business decisions; they do not manually repair code or advance repair stages.
 
@@ -16,7 +16,7 @@ The intended workflow is intake → original execution → independent checks �
 
 ## Proposed scope
 
-One UTF-8 Python file, small transaction/customer CSVs, a declarative approved contract, and one pinned Python/pandas runtime. Money uses exact integer minor units. Independent checks cover every source occurrence, merchant/customer ownership, values, currencies, timestamps, duplicates, justified exclusions, and declared downstream behavior. The owner approved the narrow duplicate/downstream policy for synthetic demo data only; it is not an implemented capability or approval of real customer policies.
+One UTF-8 Python file, small transaction/customer CSVs, a declarative approved contract, and one pinned Python/pandas runtime. Money uses exact integer minor units. Implemented checks cover every source occurrence, merchant/customer ownership, values, currencies, timestamps, duplicates, justified exclusions, and declared downstream behavior. These rules are approved for synthetic demo data only; real customer policies are not approved.
 
 Next.js/React/TypeScript and FastAPI/Pydantic run on a Vultr control VM with PostgreSQL state/queue. A separate Linux worker uses explicit gVisor `runsc`. Application agent LLM calls use Vultr Serverless Inference. Development tools such as Codex are separate from this runtime provider requirement.
 

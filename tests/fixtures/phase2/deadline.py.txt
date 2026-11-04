@@ -1,0 +1,3 @@
+# Deliberate synthetic timeout/cancellation fixture. Worker execution ONLY.
+while True:
+    pass

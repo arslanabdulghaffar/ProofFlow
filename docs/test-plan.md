@@ -1,5 +1,7 @@
 # Acceptance and verification plan
 
+Current evidence supersedes historical partial counts below: Phase1 accepted; Phase2 has478 Windows passes/55 Linux skips, separately executed10 Linux asset groups,10 actual PostgreSQL queue groups,6 verifier boundary and4 Unix-peer groups, plus6 deployed boundary groups,4 fresh worker canaries,7 private HTTP integration groups and2 actual cancellation/dispatcher-loss cases. Actual SCRAM role denials, restart and encrypted off-VM database restore passed. Source-bound integration receipt retains failures. Unimplemented SSE, guest intake, repair, activation, fresh batches and PR workflows are not covered. Fixture programs ran only on the designated worker; trusted tests ran locally/control. Human review remains unavailable.
+
 Phase 1 local evidence: 30 Windows tests pass (health, image-check validation, bounded logs); 24 Linux collector tests separately pass using trusted static fixtures. These are partial components only. Deployed/core acceptance tests remain **NOT RUN**; no candidate code executes locally. Phase 0 checks remain historical in environment-readiness.md and progress.md. Test cases below specify full acceptance evidence, not completed results. Use trusted test code; every uploaded/generated candidate and adversarial runtime probe executes only on the designated restricted worker.
 
 | ID / phase | Test and required observed outcome | Evidence |

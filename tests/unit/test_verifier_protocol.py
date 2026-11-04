@@ -111,3 +111,21 @@ def test_reject_noncanonical_base64_and_oversize_before_decode():
     for data, limit in (("AB==", 3), ("YQ==\n", 3), ("YWE=", 1), (True, 1)):
         with pytest.raises(InputError):
             decode(data, limit)
+
+
+def test_wrong_owner_report_has_source_derived_bounded_witness():
+    contract = parse_contract(CONTRACT)
+    tx, cs = generate(contract, "de" * 32, "ownership")
+    expected = derive(*parse_sources(tx, cs), contract)
+    rows = [dict(row) for row in expected.ledger]
+    original = rows[0]["canonical_customer_id"]
+    rows[0]["canonical_customer_id"] = "incorrect-owner"
+    files = {"ledger.jsonl": encode(b"".join(canonical_bytes(r) + b"\n" for r in rows)),
+             "unresolved.jsonl": encode(b"".join(canonical_bytes(r) + b"\n"
+                                                 for r in expected.unresolved))}
+    raw = canonical_bytes({"operation": "verify", "contract": encode(CONTRACT),
+                           "transactions": encode(tx), "customers": encode(cs), "outputs": files})
+    report = result(raw)["result"]
+    assert report["comparison"] == "mismatch"
+    assert report["ownership_witnesses"][0]["expected_owner"] == original
+    assert report["ownership_witnesses"][0]["actual_owner"] == "incorrect-owner"

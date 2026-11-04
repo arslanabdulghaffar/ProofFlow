@@ -91,6 +91,11 @@ def main():
             if fixture == "wrong_owner" and "V04" not in {
                     f["check"] for f in report["result"]["findings"]}:
                 raise RuntimeError("OWNERSHIP_CANARY_NOT_DETECTED")
+            if fixture == "wrong_owner":
+                witnesses = report["result"]["ownership_witnesses"]
+                if not witnesses or not any(
+                        w["expected_owner"] != w["actual_owner"] for w in witnesses):
+                    raise RuntimeError("SOURCE_OWNERSHIP_WITNESS_MISSING")
             summary = {**run["intent"], "fixture": fixture, "extended": extended,
                        "generation_report_sha256": result["generation_report_sha256"],
                        "seed_sha256": result["seed_sha256"],
