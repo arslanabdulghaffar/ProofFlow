@@ -1,5 +1,9 @@
 # Progress
 
+## November5 KST — actual App connection and PR preview
+
+Dedicated private App setup was explicitly approved, completed and verified. Scope is one private demo repository; fixed minimal permissions, Actions disabled, hooks absent, dispatcher-only secret. Actual scoped token authentication and deployed read-only base/diff preview passed. Three additional real isolated unchanged-source checks matched with cleanup, then exact synthetic version activation. Zero model calls/new resources; no external write authorized or sent. [Receipt](evidence/phase4-app-installed-2026-11-05.json). Exact draft-PR approval and removal of an unused first generated key are separately pending. Corrected Windows credential-helper ACL persistence and administrator ACL reading after actual failures, without relaxing access. Phase4 remains IN PROGRESS.
+
 ## November5 KST — dedicated GitHub repository ready
 
 Owner login confirmed. Created private ProofFlow-Demo with README/main, disabled Actions, then verified exact private repo identity, no hooks, one-file tree and source repository privacy via real read-only administrator API. [Receipt](evidence/phase4-demo-setup-2026-11-05.json). Private App form is ready with minimal permissions and webhook off; registration/installation/key storage await the single browser persistent-access confirmation. No product PR, inference call, new cloud service or application change. Phase4 remains incomplete.

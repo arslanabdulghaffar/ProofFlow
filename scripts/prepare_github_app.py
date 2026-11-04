@@ -36,7 +36,7 @@ $ErrorActionPreference='Stop'
 $sid=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value
 $root=Join-Path $env:USERPROFILE '.proofflow\credentials'
 foreach($p in @($root,(Join-Path $root 'github-app.json'),(Join-Path $root 'github-app.dpapi'))) {
-  $acl=Get-Acl -LiteralPath $p
+  $acl=[IO.File]::GetAccessControl($p)
   if($acl.GetOwner([Security.Principal.SecurityIdentifier]).Value -ne $sid){throw 'owner'}
   foreach($rule in $acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier])){
     if($rule.IdentityReference.Value -notin @($sid,'S-1-5-18')){throw 'scope'}

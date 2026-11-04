@@ -1,0 +1,114 @@
+{
+  "status": "APP_INSTALLED_REAL_PREVIEW_PASSED_PR_NOT_APPROVED",
+  "observed_at": "2026-11-04T15:52:54.214094+00:00",
+  "setup": {
+    "observed_at": "2026-11-04T15:50:04.628589+00:00",
+    "installer_sha256": "cc2e182837d25e43e8e07a9f8daab3220289a07dbf3a9492d7fe0a492d0b509f",
+    "configuration": {
+      "client_id": "Iv23liOHGBy6UtIO3bKK",
+      "installation_id": 178607272,
+      "repository_id": 1445855571,
+      "owner": "arslanabdulghaffar",
+      "repository": "ProofFlow-Demo",
+      "base": "main",
+      "path": "pipeline.py"
+    },
+    "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+    "result": {
+      "configured": true,
+      "configuration_sha256": "f47cd6397c58d9f9b9fa16f23135bbef65f40935bf96d6c0e74a76c3f81b1746",
+      "repository": "arslanabdulghaffar/ProofFlow-Demo",
+      "product_pr_approved": false,
+      "new_cloud_resources": 0
+    },
+    "app_preflight": "real_scoped_token_private_repo_fixed_tree",
+    "actions_disabled": true,
+    "webhooks_absent": true
+  },
+  "app_id": 5613818,
+  "key_id_in_use": 5183074,
+  "public_key_fingerprint_sha256": "5BYwF799WlswFqLokzfxTQaXJoTHy9MdoLqG5rpLN8E=",
+  "unused_key_id_pending_removal": 5183052,
+  "credential_storage": "Windows user DPAPI and owner/SYSTEM-only ACL outside Git; dispatcher-only Linux secret mount",
+  "fresh_proof": {
+    "repair_id": "ad9e5f6b-46ff-4366-b153-6e0a269d798d",
+    "parent": "3a0b0fe9-ab79-4616-b2e5-b7b3a10012d2",
+    "state": "AWAITING_APPROVAL",
+    "mode": "original",
+    "calls": 0,
+    "reserved_micro": 0,
+    "checks": [
+      {
+        "generation": 1,
+        "attempt": 0,
+        "purpose": "candidate",
+        "comparison": "match",
+        "cleanup_confirmed": true
+      },
+      {
+        "generation": 2,
+        "attempt": 0,
+        "purpose": "canary_ownership",
+        "comparison": "match",
+        "cleanup_confirmed": true
+      },
+      {
+        "generation": 3,
+        "attempt": 0,
+        "purpose": "canary_quarantine",
+        "comparison": "match",
+        "cleanup_confirmed": true
+      }
+    ],
+    "activation": "exact automated synthetic approval; not independent human signoff"
+  },
+  "preview": {
+    "intent_id": "5bcb30d6-05d9-4381-b466-6a2ba948909f",
+    "state": "PREVIEW",
+    "sha256": "4c386c491321018df7ab6abc33a5f40174eff61d77226ecffc1a98e5dc6c0495",
+    "expires_at": "2026-11-04T16:02:50.806942+00:00",
+    "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+    "base_tree_sha": "cfb4989a70eb542de0071162bbd196ed1b54bfd0",
+    "candidate_sha256": "1f73e19f23332f1c4e7bc2731ca7aa878d681fb54d35ddcd9f438ea3ecc1880e",
+    "branch": "proofflow/intent-5bcb30d605d94381b4666a2ba948909f",
+    "path": "pipeline.py",
+    "draft": true,
+    "external_writes": 0,
+    "operator_pr_approval": "PENDING"
+  },
+  "credit": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-04T15:52:34.357458+00:00",
+    "remaining_credit": "197.96",
+    "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+  },
+  "new_cloud_resources": 0,
+  "inference_calls": 0,
+  "product_admission": "closed",
+  "inference_admission": "closed",
+  "limitations": [
+    "Actual product PR/readback/recovery NOT RUN",
+    "Unused first key removal awaits explicit answer",
+    "Initial key download was not captured; second key matched the actual downloaded public fingerprint",
+    "Set-Acl audit-privilege failure and PowerShell module-load failure fixed; actual save/ACL/preflight/install passed",
+    "No independent human review"
+  ],
+  "source_sha256": [
+    {
+      "path": "scripts/Save-GitHubAppCredential.ps1",
+      "sha256": "ce0c89d43f8dc4119695dad8d46e62072772f3cc40b891e227ee6a65f0a5fcbf"
+    },
+    {
+      "path": "scripts/prepare_github_app.py",
+      "sha256": "173865889852699816b6f269e97b2fe1e6e4d8ffb297a546284010302b2618b2"
+    },
+    {
+      "path": "scripts/install_github_app.py",
+      "sha256": "cc2e182837d25e43e8e07a9f8daab3220289a07dbf3a9492d7fe0a492d0b509f"
+    },
+    {
+      "path": "scripts/prepare_phase4_pr_preview.py",
+      "sha256": "1c79164dee1fc56082a19e1ef404a1842c2af29b1f0ae9b7e17163b82888b3c5"
+    }
+  ]
+}

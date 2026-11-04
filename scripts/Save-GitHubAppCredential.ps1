@@ -12,14 +12,17 @@ if (-not $directory.PSIsContainer -or ($directory.Attributes -band [IO.FileAttri
 }
 $ownerSid = [Security.Principal.WindowsIdentity]::GetCurrent().User
 $systemSid = [Security.Principal.SecurityIdentifier]::new('S-1-5-18')
-$acl = [Security.AccessControl.DirectorySecurity]::new()
+# Preserve unrelated descriptor sections and persist only changed owner/DACL sections.
+# The PowerShell Set-Acl provider requested unavailable auditing privileges on this host.
+$acl = Get-Acl -LiteralPath $credentialRoot
 $acl.SetOwner($ownerSid)
 $acl.SetAccessRuleProtection($true, $false)
+foreach ($existingRule in @($acl.Access)) { $acl.RemoveAccessRuleAll($existingRule) }
 foreach ($sid in @($ownerSid, $systemSid)) {
     $acl.AddAccessRule([Security.AccessControl.FileSystemAccessRule]::new(
         $sid, 'FullControl', 'ContainerInherit,ObjectInherit', 'None', 'Allow'))
 }
-Set-Acl -LiteralPath $credentialRoot -AclObject $acl
+$directory.SetAccessControl($acl)
 $destination = Join-Path $credentialRoot 'github-app.dpapi'
 $metadata = Join-Path $credentialRoot 'github-app.json'
 if ((Test-Path -LiteralPath $destination) -or (Test-Path -LiteralPath $metadata)) {
@@ -51,12 +54,13 @@ try {
             $stream.Write($bytes, 0, $bytes.Length)
             $stream.Flush($true)
         } finally { $stream.Dispose() }
-        $fileAcl = [Security.AccessControl.FileSecurity]::new()
+        $fileAcl = Get-Acl -LiteralPath $entry.path
         $fileAcl.SetOwner($ownerSid); $fileAcl.SetAccessRuleProtection($true, $false)
+        foreach ($existingRule in @($fileAcl.Access)) { $fileAcl.RemoveAccessRuleAll($existingRule) }
         foreach ($sid in @($ownerSid, $systemSid)) {
             $fileAcl.AddAccessRule([Security.AccessControl.FileSystemAccessRule]::new($sid, 'FullControl', 'Allow'))
         }
-        Set-Acl -LiteralPath $entry.path -AclObject $fileAcl
+        (Get-Item -LiteralPath $entry.path -Force).SetAccessControl($fileAcl)
     }
     Write-Host 'Saved encrypted App key and non-secret configuration outside Git.'
     Write-Host 'Tell Codex only: GitHub App saved. Do not send key contents.'
