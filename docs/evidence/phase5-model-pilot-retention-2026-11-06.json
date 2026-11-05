@@ -1,0 +1,1043 @@
+{
+  "pilot_revision": "bf4ace502abedd7454198708b786246916d1a57a281e0eff27fb20a4be36c3a6",
+  "pilot_receipt_sha256": "60b66aa23336990d3557ea308e57934087c82588d7c6336ccaba9080e9b0f56e",
+  "report": {
+    "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+    "stage": "development",
+    "evidence_validation": "15_ACTUAL_PROVIDER_RECEIPTS_RECONCILED",
+    "held_out_claim": "NOT_ESTABLISHED_BY_ACCOUNTING",
+    "cost_unit": "micro_USD",
+    "cost_source": "provider_usage_estimate_not_invoice",
+    "arms": {
+      "A": {
+        "planned": 4,
+        "observed": 4,
+        "not_run": 0,
+        "decisions": {
+          "accepted": 3,
+          "held": 1
+        },
+        "outcomes": {
+          "repairable": {
+            "planned": 3,
+            "observed": 3,
+            "successful": 3,
+            "not_run": 0
+          },
+          "ambiguous": {
+            "planned": 1,
+            "observed": 1,
+            "successful": 1,
+            "not_run": 0
+          }
+        },
+        "accepted": 3,
+        "incorrect_accepted": 0,
+        "ungraded_accepted": 0,
+        "incorrect_acceptance_rate": 0.0,
+        "cleanup_failures": 0,
+        "cleanup_unknown": 0,
+        "latency": {
+          "n": 4,
+          "median_ms": 16426.5,
+          "p95_ms": 16970
+        },
+        "calls": 4,
+        "known_input_tokens": 8290,
+        "known_output_tokens": 10303,
+        "reserved_micro_usd": 111412,
+        "known_estimated_micro_usd": 2891,
+        "usage_unknown_runs": 0,
+        "families": {
+          "schema": {
+            "planned": 0,
+            "observed": 0
+          },
+          "units": {
+            "planned": 1,
+            "observed": 1
+          },
+          "joins": {
+            "planned": 1,
+            "observed": 1
+          },
+          "duplicates": {
+            "planned": 0,
+            "observed": 0
+          },
+          "completeness": {
+            "planned": 0,
+            "observed": 0
+          },
+          "downstream": {
+            "planned": 2,
+            "observed": 2
+          }
+        }
+      },
+      "B": {
+        "planned": 4,
+        "observed": 4,
+        "not_run": 0,
+        "decisions": {
+          "accepted": 4
+        },
+        "outcomes": {
+          "repairable": {
+            "planned": 3,
+            "observed": 3,
+            "successful": 3,
+            "not_run": 0
+          },
+          "ambiguous": {
+            "planned": 1,
+            "observed": 1,
+            "successful": 0,
+            "not_run": 0
+          }
+        },
+        "accepted": 4,
+        "incorrect_accepted": 1,
+        "ungraded_accepted": 0,
+        "incorrect_acceptance_rate": 0.25,
+        "cleanup_failures": 0,
+        "cleanup_unknown": 0,
+        "latency": {
+          "n": 4,
+          "median_ms": 16007.5,
+          "p95_ms": 16433
+        },
+        "calls": 5,
+        "known_input_tokens": 9583,
+        "known_output_tokens": 12580,
+        "reserved_micro_usd": 139265,
+        "known_estimated_micro_usd": 3477,
+        "usage_unknown_runs": 0,
+        "families": {
+          "schema": {
+            "planned": 0,
+            "observed": 0
+          },
+          "units": {
+            "planned": 1,
+            "observed": 1
+          },
+          "joins": {
+            "planned": 1,
+            "observed": 1
+          },
+          "duplicates": {
+            "planned": 0,
+            "observed": 0
+          },
+          "completeness": {
+            "planned": 0,
+            "observed": 0
+          },
+          "downstream": {
+            "planned": 2,
+            "observed": 2
+          }
+        }
+      },
+      "C": {
+        "planned": 4,
+        "observed": 4,
+        "not_run": 0,
+        "decisions": {
+          "accepted": 3,
+          "held": 1
+        },
+        "outcomes": {
+          "repairable": {
+            "planned": 3,
+            "observed": 3,
+            "successful": 3,
+            "not_run": 0
+          },
+          "ambiguous": {
+            "planned": 1,
+            "observed": 1,
+            "successful": 1,
+            "not_run": 0
+          }
+        },
+        "accepted": 3,
+        "incorrect_accepted": 0,
+        "ungraded_accepted": 0,
+        "incorrect_acceptance_rate": 0.0,
+        "cleanup_failures": 0,
+        "cleanup_unknown": 0,
+        "latency": {
+          "n": 4,
+          "median_ms": 17708.0,
+          "p95_ms": 27713
+        },
+        "calls": 6,
+        "known_input_tokens": 11550,
+        "known_output_tokens": 19584,
+        "reserved_micro_usd": 167118,
+        "known_estimated_micro_usd": 5075,
+        "usage_unknown_runs": 0,
+        "families": {
+          "schema": {
+            "planned": 0,
+            "observed": 0
+          },
+          "units": {
+            "planned": 1,
+            "observed": 1
+          },
+          "joins": {
+            "planned": 1,
+            "observed": 1
+          },
+          "duplicates": {
+            "planned": 0,
+            "observed": 0
+          },
+          "completeness": {
+            "planned": 0,
+            "observed": 0
+          },
+          "downstream": {
+            "planned": 2,
+            "observed": 2
+          }
+        }
+      },
+      "D": {
+        "planned": 4,
+        "observed": 0,
+        "not_run": 4,
+        "decisions": {},
+        "outcomes": {
+          "repairable": {
+            "planned": 3,
+            "observed": 0,
+            "successful": 0,
+            "not_run": 3
+          },
+          "ambiguous": {
+            "planned": 1,
+            "observed": 0,
+            "successful": 0,
+            "not_run": 1
+          }
+        },
+        "accepted": 0,
+        "incorrect_accepted": 0,
+        "ungraded_accepted": 0,
+        "incorrect_acceptance_rate": null,
+        "cleanup_failures": 0,
+        "cleanup_unknown": 0,
+        "latency": {
+          "n": 0,
+          "median_ms": null,
+          "p95_ms": null
+        },
+        "calls": 0,
+        "known_input_tokens": 0,
+        "known_output_tokens": 0,
+        "reserved_micro_usd": 0,
+        "known_estimated_micro_usd": 0,
+        "usage_unknown_runs": 0,
+        "families": {
+          "schema": {
+            "planned": 0,
+            "observed": 0
+          },
+          "units": {
+            "planned": 1,
+            "observed": 0
+          },
+          "joins": {
+            "planned": 1,
+            "observed": 0
+          },
+          "duplicates": {
+            "planned": 0,
+            "observed": 0
+          },
+          "completeness": {
+            "planned": 0,
+            "observed": 0
+          },
+          "downstream": {
+            "planned": 2,
+            "observed": 0
+          }
+        }
+      }
+    },
+    "scope_notes": [
+      "Development repair-core pilot, not held-out or product end-to-end",
+      "D not run in this pilot; prior positive-control runs are not silently reused",
+      "Accounting manifest assembled after runs; launch manifest/revision fixed before calls",
+      "Three repairable plus one source-ambiguous case; small disclosed canary-derived sample",
+      "Reported usage estimate is not a settled provider invoice; reservations remain held"
+    ]
+  },
+  "records": [
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "bd61d866-d5c6-4edb-ade2-1032acaead8e",
+      "case": "units-repairable",
+      "arm": "A",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 16970,
+      "calls": 1,
+      "input_tokens": 2074,
+      "output_tokens": 2648,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 737,
+      "receipt_sha256": "ca42d6ec34b90f77e167f1c3fd41e737139fba5725099f88f5db41b150b19a28"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "21fffc96-182d-4320-b701-bd42755c03c0",
+      "case": "units-repairable",
+      "arm": "C",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 17932,
+      "calls": 1,
+      "input_tokens": 1885,
+      "output_tokens": 3285,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 846,
+      "receipt_sha256": "acd925ce680e71fba729928cc3ccfbeffd50cd45ac007b2fe9dfedb43bbde9e2"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "060bef43-7bfa-4cec-93d3-27e107ef20dd",
+      "case": "units-repairable",
+      "arm": "B",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 15600,
+      "calls": 1,
+      "input_tokens": 1885,
+      "output_tokens": 2513,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 692,
+      "receipt_sha256": "079aa03954ae67ffea3a07c7c644270968e41caadc9ca0a1f6f4096f84e427b3"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "7d5b70e3-fad4-4ca7-a0ac-fb1a4148d9df",
+      "case": "joins-repairable",
+      "arm": "C",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 16138,
+      "calls": 1,
+      "input_tokens": 1880,
+      "output_tokens": 2812,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 751,
+      "receipt_sha256": "97844ecb3955ab8eb6cdba64d5ea95c1a8572f776cf8fa600586447d1382ec6b"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "1b61ac49-d6ff-402a-9413-8094295840e3",
+      "case": "joins-repairable",
+      "arm": "B",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 16326,
+      "calls": 1,
+      "input_tokens": 1880,
+      "output_tokens": 2807,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 750,
+      "receipt_sha256": "3b44b356174d85c2f48b2a60794f93d9d86e62f00734343c0299ee72ce6689f8"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "9f8002cd-9802-47dc-82a2-a6320b0b917e",
+      "case": "joins-repairable",
+      "arm": "A",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 16638,
+      "calls": 1,
+      "input_tokens": 2300,
+      "output_tokens": 2911,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 813,
+      "receipt_sha256": "c01cf8f93040c9489ac7453ea2787fb4e2bc4e936193f690c10bfff79d7292aa"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "cc2cd152-0759-41df-ad85-a5fc4ac06716",
+      "case": "downstream-repairable",
+      "arm": "A",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 16215,
+      "calls": 1,
+      "input_tokens": 1958,
+      "output_tokens": 3045,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 805,
+      "receipt_sha256": "778fe800e79809ba0112372446a3cd0e6770b300a9050fb9aa7bf1c5d6c4b3c6"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "afa1ecbf-f7ff-431f-a2e7-92de2ec533aa",
+      "case": "downstream-repairable",
+      "arm": "C",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 17484,
+      "calls": 1,
+      "input_tokens": 1932,
+      "output_tokens": 3330,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 860,
+      "receipt_sha256": "ada45a3ccd339b11955395c11c00a8e976a08bfd0c75d85dfb3fd0741e79863c"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "9fad2a0e-62b1-452e-98f9-be15ab67c6f4",
+      "case": "downstream-repairable",
+      "arm": "B",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 15689,
+      "calls": 1,
+      "input_tokens": 1932,
+      "output_tokens": 2279,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 649,
+      "receipt_sha256": "55abc930eb32bacef902f7630c8a7b9081d274646e75e808a0333e912c3da6aa"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "e69882e3-0a8a-48ee-a610-8b7194983158",
+      "case": "downstream-ambiguous",
+      "arm": "B",
+      "repeat": 1,
+      "decision": "accepted",
+      "grade": "incorrect",
+      "cleanup": "confirmed",
+      "latency_ms": 16433,
+      "calls": 2,
+      "input_tokens": 3886,
+      "output_tokens": 4981,
+      "reserved_micro_usd": 55706,
+      "estimated_micro_usd": 1386,
+      "receipt_sha256": "063e6d02c67e7bdd05c80ac15b95cd125033461f9651804f55fc00d15f0482c2"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "4dbc5c49-7dc5-4063-a8fa-1c2ba456f42e",
+      "case": "downstream-ambiguous",
+      "arm": "A",
+      "repeat": 1,
+      "decision": "held",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 8828,
+      "calls": 1,
+      "input_tokens": 1958,
+      "output_tokens": 1699,
+      "reserved_micro_usd": 27853,
+      "estimated_micro_usd": 536,
+      "receipt_sha256": "f4a60e71e0de3e2e7be125845166a6378ed01e5cd91ee157027929047ecc769c"
+    },
+    {
+      "plan_sha256": "b9aa2bf210a81a2ba81fdc947710130fade1d7f1ea474ab4019f43daa5c5cfdb",
+      "run_id": "9dfa909f-d818-4d85-bc76-0f424ce7be56",
+      "case": "downstream-ambiguous",
+      "arm": "C",
+      "repeat": 1,
+      "decision": "held",
+      "grade": "correct",
+      "cleanup": "confirmed",
+      "latency_ms": 27713,
+      "calls": 3,
+      "input_tokens": 5853,
+      "output_tokens": 10157,
+      "reserved_micro_usd": 83559,
+      "estimated_micro_usd": 2618,
+      "receipt_sha256": "f5b59204661af24b8f1930f8b34a078831fd8a8cc9de3ed771a96e9e0c241d31"
+    }
+  ],
+  "accounting_manifest": {
+    "version": "proofflow-evaluation-v1",
+    "stage": "development",
+    "repeats": 1,
+    "cases": [
+      {
+        "id": "units-repairable",
+        "family": "units",
+        "kind": "repairable",
+        "sha256": "f66a16a69eec70f4f160fa320d042082ce212a7a6f5fc91884588502736100a0"
+      },
+      {
+        "id": "joins-repairable",
+        "family": "joins",
+        "kind": "repairable",
+        "sha256": "f125884720e776eae15d5c52201bc826e3a39760f87c2024c660457d05f9fa39"
+      },
+      {
+        "id": "downstream-repairable",
+        "family": "downstream",
+        "kind": "repairable",
+        "sha256": "6eb90467bf7c378f940ff3086b8390cd03324e4987183bf261c6e8f371c93631"
+      },
+      {
+        "id": "downstream-ambiguous",
+        "family": "downstream",
+        "kind": "ambiguous",
+        "sha256": "daef6b933466b0c609a7d97fc29e56b6bc6b6b849049189cf15a9157ea5e46d1"
+      }
+    ],
+    "freeze": {
+      "source": "760690e2c7781b5309a11572af3541d8617e6384fe431a72f1f2a33e26d95b7d",
+      "prompts": "a2cabf3792e6dbc761afcd4bda7ad9ea1d7f48dea94dc812aa2bd083b049ea5a",
+      "runtime": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "grader": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+      "schemas": "0e6306e501c01ffdfe008a182c5a0ef5097ef17c6f3f0094f43b87bbf41324b4",
+      "model_quote": "c1ff61f56de276dc3f1933b00ca7068428dcc4599177375e15b9a1474acbc777"
+    },
+    "jobs": [
+      {
+        "case": "joins-repairable",
+        "arm": "A",
+        "repeat": 1
+      },
+      {
+        "case": "joins-repairable",
+        "arm": "B",
+        "repeat": 1
+      },
+      {
+        "case": "joins-repairable",
+        "arm": "D",
+        "repeat": 1
+      },
+      {
+        "case": "joins-repairable",
+        "arm": "C",
+        "repeat": 1
+      },
+      {
+        "case": "downstream-ambiguous",
+        "arm": "B",
+        "repeat": 1
+      },
+      {
+        "case": "downstream-ambiguous",
+        "arm": "D",
+        "repeat": 1
+      },
+      {
+        "case": "downstream-ambiguous",
+        "arm": "C",
+        "repeat": 1
+      },
+      {
+        "case": "downstream-ambiguous",
+        "arm": "A",
+        "repeat": 1
+      },
+      {
+        "case": "units-repairable",
+        "arm": "A",
+        "repeat": 1
+      },
+      {
+        "case": "units-repairable",
+        "arm": "D",
+        "repeat": 1
+      },
+      {
+        "case": "units-repairable",
+        "arm": "C",
+        "repeat": 1
+      },
+      {
+        "case": "units-repairable",
+        "arm": "B",
+        "repeat": 1
+      },
+      {
+        "case": "downstream-repairable",
+        "arm": "A",
+        "repeat": 1
+      },
+      {
+        "case": "downstream-repairable",
+        "arm": "D",
+        "repeat": 1
+      },
+      {
+        "case": "downstream-repairable",
+        "arm": "C",
+        "repeat": 1
+      },
+      {
+        "case": "downstream-repairable",
+        "arm": "B",
+        "repeat": 1
+      }
+    ],
+    "per_model_job_cap_micro_usd": 100000,
+    "forecast_micro_usd": 1200000,
+    "dispatch_authorized": false
+  },
+  "final_state": {
+    "observed_at": "2026-11-05T15:08:53.595320+00:00",
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-05T15:08:48.576576+00:00",
+      "remaining_credit": "195.38",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "budget_closed": true,
+    "execution_enabled": false,
+    "provider_receipts": [
+      {
+        "id": "afd25096-d5b6-499c-9458-7aac5626b350",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 4687,
+          "prompt_tokens": 1880,
+          "completion_tokens": 2807,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "4404c8d45a375fede1273dc1c53cee01a8477d0d06bd21d6f4ac0f45647da34e",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "e2e12dc2-f41b-4af0-a53d-a4c94e506dc8",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 5211,
+          "prompt_tokens": 2300,
+          "completion_tokens": 2911,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "718201e2fa3c09e392c991b449674cd7f1e32a1312f0c0ba4f29ebcfaab5acaf",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "d91164fa-0fbe-4f46-b585-96be8f6c69b2",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 5003,
+          "prompt_tokens": 1958,
+          "completion_tokens": 3045,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "9e4166c4458db5d187b4559db7f6242f3013e2d19d34a21f542ba8b300de39d5",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "789c94bc-3ecb-446a-98ab-18713f9e1766",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 4722,
+          "prompt_tokens": 2074,
+          "completion_tokens": 2648,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "5cb5170b419a77a039b7d21fa20765c1f5d0d851c39f27d69a2496baebe94c18",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "4edae037-a31a-4b34-aecd-0115fc7ec3a6",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 5170,
+          "prompt_tokens": 1885,
+          "completion_tokens": 3285,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "1e791e355d7b7d8840ed9602696b4b96cd5a142f8648bf6d481a2d59da422918",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "a2fe919d-6f28-475e-8858-3a6c25bc6783",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 4398,
+          "prompt_tokens": 1885,
+          "completion_tokens": 2513,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "c702650730b620b36789ef979d55f6a627e4b1c3f05ebb8f1649f7c9502f15ce",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "2814c577-2acb-4df0-8efb-78cd44b3b6a5",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 4692,
+          "prompt_tokens": 1880,
+          "completion_tokens": 2812,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "6b68468a7cfa272ea8f8c4adf7f815d99c9c0a212d2aefc2a05e2114686e48b8",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "f90da4bc-ac45-4f4a-b604-21844d324bdf",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 5262,
+          "prompt_tokens": 1932,
+          "completion_tokens": 3330,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "d8a84df33183faf5469db273449a6dd5a9bcb4958049f1667adf8857d1f73f6b",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "6ad846fe-0367-4938-82cf-c558f081ea98",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 4211,
+          "prompt_tokens": 1932,
+          "completion_tokens": 2279,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "070c16790314ba1a22e4cf3d89847e161cb5d0dd5a7616cdc99ad2270a6fef47",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "778c7800-1a5e-4d77-8bd9-6bab9c289992",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 4532,
+          "prompt_tokens": 1932,
+          "completion_tokens": 2600,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "c5c23f0dfcee82e363fb479c6eba5993531f2e047c4a23c38e84bddb5eab3f75",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "9be2bfbb-b27d-4527-b445-89fcb75d0988",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 4335,
+          "prompt_tokens": 1954,
+          "completion_tokens": 2381,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "7b99ffcb9dab76fc6276afd9fa80e477a3ae17898b155cb0d2304cc0480948b2",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "b2514365-fbaf-4414-94de-12056041ce1e",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 3657,
+          "prompt_tokens": 1958,
+          "completion_tokens": 1699,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "55185954082b617414699d051263e63d9f3dc961a92fcd24d0f311594717068a",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "3527401f-a94a-4ddd-a942-0def1b82d954",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 4961,
+          "prompt_tokens": 1932,
+          "completion_tokens": 3029,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "6596cf8ef010c00afcf5eda2ee434c5577516dbb86d5218ad46d11cfb3f3527a",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "8599d62f-7037-4aed-a2bc-b0638b90a093",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 7076,
+          "prompt_tokens": 1951,
+          "completion_tokens": 5125,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "8bd19bddc9a6149d9c52b8e588edd9514f677677a2c2cef9261a95d290474997",
+        "reservation_state": "uncertain"
+      },
+      {
+        "id": "30959265-e44e-436a-9b90-d27a628bbb34",
+        "model": "qwen3.8-flash-next",
+        "usage": {
+          "total_tokens": 3973,
+          "prompt_tokens": 1970,
+          "completion_tokens": 2003,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "outcome": "PARSED_RESPONSE",
+        "reserve": 27853,
+        "response_sha256": "8d974254b3e6351d07e018957585d6954c417d90bc4fb4cb86e4ebe008d2b0c8",
+        "reservation_state": "uncertain"
+      }
+    ],
+    "shared_development_allocation": {
+      "manifest_sha256": "bf4ace502abedd7454198708b786246916d1a57a281e0eff27fb20a4be36c3a6",
+      "pilot_reserved_micro": 1200000,
+      "total_reserved_micro": 1311412
+    },
+    "retention": {
+      "expired_workspaces": 0,
+      "completed_deletions": 11,
+      "remaining_workspaces": 1,
+      "asset_absence_and_markers_verified": 11
+    },
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "pr": {
+      "state": "COMPLETE",
+      "writes": 3
+    }
+  },
+  "phase": "5",
+  "status": "IN_PROGRESS",
+  "launched_sources": {
+    "settings.json": "dfda4944b662b886aef94124e0d92f1737d72bce2e38225a2af09d79373c3dba",
+    "pilot_controller.py": "349646573af7b04b94919098dce7fd966bb94922e41a9ce71971ed9677eb9f10",
+    "eval/pilot_budget.py": "ee58e6f10fd9ef862ec27874f4628b771950521f562746128035f7dc77f719f5",
+    "eval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cases/units-repairable/pipeline.py.txt": "f6fb2c9aa8000c5a16e8bd77bfd7844d576c1a62eb9572246e0c6f69d81aa297",
+    "cases/units-repairable/contract.json": "f8c572aba6e7bf1e6a5c575a39787c331bc0be20301a6e5f2d2eb942fee16f3e",
+    "cases/units-repairable/transactions.csv": "f373bf04ca780b1eeffdd52f839d2d13d2b4162d8f57e0b51e8065b1e87e99d1",
+    "cases/units-repairable/customers.csv": "0f844be8b366985386ba2a7bfe6ba61aa6bcbe4b5aec66a27ed8886d747d1e5a",
+    "cases/joins-repairable/pipeline.py.txt": "74acd9ce03b1368fbc58067c7b4e81cfc43b4274cdde4d69093606707ce81393",
+    "cases/joins-repairable/contract.json": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+    "cases/joins-repairable/transactions.csv": "ca97492f267a2d6f652901c8ef8fd4bdf9e00013e300b0cb1aabf1e91db7293a",
+    "cases/joins-repairable/customers.csv": "7b044af7a965afdae437a37aeacce386447837fcaacf3abc5124beb5e755ce76",
+    "cases/downstream-repairable/pipeline.py.txt": "7f1f6582c8738069eda8f7da29fbc9cedee4027a6b7807398b5ba11824925606",
+    "cases/downstream-repairable/contract.json": "1d86babe2a680bbc82b8635a3849a1d71950dda934c8d9cee91e34c2fbe2fe39",
+    "cases/downstream-repairable/transactions.csv": "de75b8345dba09ebf6842bd537d83b3e11d116646cdb6000df66d5aaa6225d19",
+    "cases/downstream-repairable/customers.csv": "232fbbc1f312d9f93f85648496738ce5bd7405dec52d9d2042dcae09e9cb46f5",
+    "cases/downstream-ambiguous/pipeline.py.txt": "7f1f6582c8738069eda8f7da29fbc9cedee4027a6b7807398b5ba11824925606",
+    "cases/downstream-ambiguous/contract.json": "1d86babe2a680bbc82b8635a3849a1d71950dda934c8d9cee91e34c2fbe2fe39",
+    "cases/downstream-ambiguous/transactions.csv": "5e63bb80c6b3862047e1e9da5318c9edecb1404f1fb73410d4df024e83c977ea",
+    "cases/downstream-ambiguous/customers.csv": "747bf853ce7d056ae216b6da28a0bfa9a1b241fdfcf2dc4dd77f8981dc2bd0d8"
+  },
+  "checkpoint_sources": {
+    "db/phase2/015_operator_expiry.sql": "8e0358a847b1b7d90f299e88dc6fbde587d62bf86d94c499a5dda6e8de646c3f",
+    "db/phase2/016_evaluation_allocation.sql": "3c94f1a2a8a0f33018ed3e5770209d07466808c16aeec4f9f6b8607e9981b9d1",
+    "eval/pilot_budget.py": "ee58e6f10fd9ef862ec27874f4628b771950521f562746128035f7dc77f719f5",
+    "eval/pilot_controller.py": "349646573af7b04b94919098dce7fd966bb94922e41a9ce71971ed9677eb9f10",
+    "scripts/run_development_pilot.py": "2a6b1b5c605d8c40fe146515711f27006c9ba621bee76a8304007ba62ffb60be",
+    "scripts/reconcile_development_pilot.py": "4a23d776659afb5ccb06275bb97442d2150db60257d74539435ddd9d5d52d5d5",
+    "scripts/check_operator_retention.py": "88d6d948706c704531ea46dee888d063fd1ef75bee2623cf567258948cf9261b",
+    "scripts/check_evaluation_allocation.py": "91120cd55168e3e459649fdff7beec555b8e5b6751d788fb091f4f62714cc8bd",
+    "scripts/deploy_product_database.py": "c9390393016e07fc87403446f27853d9871c900e794ef7cce0ea736a95a3ed00",
+    "scripts/install_product_database.py": "a0ee99ebd4c33d19ff46f3fd0027eb0d2e592ecacbb3956cf06e0b771cdc9851",
+    "scripts/install_product_retention.py": "993a7f2342da18567eb9fd70d992cc24d9bfb48c56e7098906467dee17d52ada",
+    "orchestrator/retention.py": "613ae160a5986b7e0484adf804c4e5fc6a125ba1c8ea5a4e1118a6d8a17563a5",
+    "tests/security/test_pilot_budget.py": "da10b264ddf826508359f7e38e229c352f6e6d8e994cfc01e3caf25153baccc2",
+    "tests/security/test_pilot_feedback.py": "503a40d8a13712d0daf13b4a1b445f222bb348dcc61f9c3bffaffcfef88ef2d6",
+    "tests/security/test_retention_linux.py": "8549c88e9e062fb43e3872328e134a3a28a53902d57e738d7340379c84831f6a",
+    "tests/security/test_retention_installer.py": "753f3782818c590aa0d7dee86a2ad4fedb36f39cb7af0922d9287f8839a55d5f"
+  },
+  "database_install": {
+    "migrations": {
+      "001_identity_assets.sql": "8cbe9cf7403c0c5b0040ddf48ce4889faee749182e83a7a629c2ad91ffb818e3",
+      "002_upload_reservations.sql": "4c54e548ebfccfe33105980ed796ff195c1d0f340c3abb5e1e864e145e833865",
+      "003_original_queue.sql": "9e2ad2424895e8b4c34db680c3f44f1dd4b7118d390daaf80bea03e572f51401",
+      "004_termination_evidence.sql": "bb1bf2b00ae64850e3ee866b8a83442af4fc57c0bb927cba2acb19621c9be81d",
+      "005_job_event_replay.sql": "94a75b8464b401fd9743f3e46a95fede8ade87c6591871656a212096ff47598b",
+      "006_browser_session.sql": "1d24f62f96429e4170b3df88aeb1caa2a6b3fe389601f4842245d7cd5cf1db70",
+      "007_workspace_retention.sql": "584f5a533960a3803e358d7a831bbbb727ee4a9918d0490c43615ce68e8ca57f",
+      "008_bounded_repair.sql": "7fd06fb9d1fbd05429c994fc0961d1850661a4401ecb39a293511a200fe09d99",
+      "009_repair_retention.sql": "57482415fa885529e6ab219c556db4dbf66a8e31cbce2b49dc973dfe6d325a44",
+      "010_original_proof_bundle.sql": "ec5bb1ae3e93aca7f6a4950d2f3251f665c104d1d5e5d73bb3226a0efb0dd453",
+      "011_versions_batches.sql": "1bc7c3d140e1d36104ecd2c9cfcadc618c21dd03d5e245eaa02904a5c33f1725",
+      "012_version_retention.sql": "e421d009c5bb9bcf140a4465771819e81b2197476e3960b98953ec678b015698",
+      "013_github_outbox.sql": "039faf470851dac735fa722d88a5b125ffcc65a0a9b839e1b74e0ac8f85bd3fb",
+      "014_signed_batches.sql": "74f2cd01dba9dd23a9105d36281289b03c0edadced8b9764aef00e58d911de96",
+      "015_operator_expiry.sql": "8e0358a847b1b7d90f299e88dc6fbde587d62bf86d94c499a5dda6e8de646c3f",
+      "016_evaluation_allocation.sql": "3c94f1a2a8a0f33018ed3e5770209d07466808c16aeec4f9f6b8607e9981b9d1"
+    },
+    "observed_at": "2026-11-05T15:08:02.823502+00:00",
+    "result": {
+      "budget_tables_changed": false,
+      "execution_admission": "not_enabled_here",
+      "migrations": 16,
+      "product_database": "migrated",
+      "scram_roles": 2
+    },
+    "revision": "ec0f41da542b8f3540df709ce4a2a8a53131e82f83899f8de60c2892adf77762"
+  },
+  "retention_install": {
+    "revision": "73b379fd50b8f15c045426b7007a1e1d2f07dfbeef9d38c2ec931cd3aac2e29e",
+    "result": {
+      "timer": "enabled",
+      "byte_uid": 10003,
+      "byte_network": "denied",
+      "raw_guest_expiry_margin_seconds": 300,
+      "metadata_pruning": "not_enabled"
+    },
+    "sources": {
+      "install_product_retention.py": "993a7f2342da18567eb9fd70d992cc24d9bfb48c56e7098906467dee17d52ada",
+      "install_product_services.py": "96bc55e134fd3ddf7e15534667e6cf744bb0c55745d1486e89313f242f62340b",
+      "product_retention_host.py": "591faae5b8d97c8b0500b014aa62f774a225a3082ad075490dd5b260ab048050",
+      "retention.py": "613ae160a5986b7e0484adf804c4e5fc6a125ba1c8ea5a4e1118a6d8a17563a5"
+    },
+    "observed_at": "2026-11-05T14:56:52.300951+00:00",
+    "credit_guard": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-05T14:56:45.488413+00:00",
+      "remaining_credit": "195.5",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    }
+  },
+  "checks": {
+    "linux_full_passed": 742,
+    "linux_subtests_passed": 10,
+    "windows_passed": 649,
+    "windows_linux_only_skipped": 93,
+    "real_sql_operator_expiry": 7,
+    "real_sql_evaluation_allocation": 11,
+    "real_sql_existing_retention_groups": 4,
+    "real_sql_existing_pr_groups": 7,
+    "linux_installer_tests_in_full_suite": 3
+  },
+  "allocation_timing": "Full $1.20 shared SQL allowance recorded after successful pilot; pre-run existing $5 allowance checked while product admission closed, per-job durable/local and global caps enforced before calls. Future driver reserves shared allowance before launch. No call reservation released or settled.",
+  "not_run": [
+    "held-out A/B/C/D comparison",
+    "full-product evaluation",
+    "worker journal raw-log retirement",
+    "metadata tombstone pruning",
+    "deletion-aware backup restore",
+    "independent human review"
+  ]
+}

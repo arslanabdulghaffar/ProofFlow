@@ -18,7 +18,8 @@ def main():
               "008_bounded_repair.sql", "009_repair_retention.sql",
               "010_original_proof_bundle.sql",
               "011_versions_batches.sql", "012_version_retention.sql",
-              "013_github_outbox.sql", "014_signed_batches.sql")}
+              "013_github_outbox.sql", "014_signed_batches.sql", "015_operator_expiry.sql",
+              "016_evaluation_allocation.sql")}
     files = {name: path.read_bytes() for name, path in paths.items()}
     manifest = {"migrations": {
         name: hashlib.sha256(raw).hexdigest() for name, raw in files.items()}}

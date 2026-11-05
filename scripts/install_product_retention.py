@@ -2,11 +2,45 @@
 
 import json
 import os
+import re
+import stat
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from install_product_services import command, directory, write  # noqa: E402
+
+
+def service_update(path, raw):
+    """Only replace a prior exact service whose sole change is its pinned revision."""
+    target = Path(path)
+    if target.exists() or target.is_symlink():
+        info = target.lstat()
+        if (not stat.S_ISREG(info.st_mode) or info.st_uid != 0 or info.st_nlink != 1
+                or stat.S_IMODE(info.st_mode) != 0o644):
+            raise RuntimeError("RETENTION_UNIT_UNSAFE")
+        old = target.read_bytes()
+        if old != raw:
+            pattern = rb"/opt/proofflow-retention/[a-f0-9]{64}/product_retention_host.py"
+            if (len(re.findall(pattern, old)) != 1 or len(re.findall(pattern, raw)) != 1
+                    or re.sub(pattern, b"REVISION", old) != re.sub(pattern, b"REVISION", raw)):
+                raise RuntimeError("RETENTION_UNIT_POLICY_CHANGED")
+            import hashlib
+
+            backup = str(target) + ".previous-" + hashlib.sha256(old).hexdigest()
+            write(backup, old, mode=0o644)
+            command(["/usr/bin/systemctl", "stop", "proofflow-product-retention.timer"])
+            command(["/usr/bin/systemctl", "stop", "proofflow-product-retention.service"])
+            temporary = str(target) + ".next"
+            write(temporary, raw, mode=0o644)
+            os.replace(temporary, target)
+            parent = os.open(target.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+            try:
+                os.fsync(parent)
+            finally:
+                os.close(parent)
+            return
+    write(path, raw, mode=0o644)
 
 
 def main():
@@ -40,7 +74,7 @@ Unit=proofflow-product-retention.service
 [Install]
 WantedBy=timers.target
 """
-    write("/etc/systemd/system/proofflow-product-retention.service", service, mode=0o644)
+    service_update("/etc/systemd/system/proofflow-product-retention.service", service)
     write("/etc/systemd/system/proofflow-product-retention.timer", timer, mode=0o644)
     command(["/usr/bin/systemctl", "daemon-reload"])
     command(["/usr/bin/systemctl", "enable", "--now", "proofflow-product-retention.timer"])

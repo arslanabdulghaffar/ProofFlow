@@ -119,7 +119,9 @@ def retire(plan, assets=ASSETS, jobs=JOBS):
         raise RetentionError("RETENTION_PLAN_INVALID")
     workspace = UUID(plan["workspace"])
     if (str(workspace) != plan["workspace"] or type(plan["jobs"]) is not list
-            or len(plan["jobs"]) > 16 or len(set(plan["jobs"])) != len(plan["jobs"])
+            # Existing database caps are16 originals plus16 repairs globally.
+            # Their union can legitimately contain32 identities in one workspace.
+            or len(plan["jobs"]) > 32 or len(set(plan["jobs"])) != len(plan["jobs"])
             or re.fullmatch(r"[0-9a-f]{64}", plan["manifest_sha256"]) is None):
         raise RetentionError("RETENTION_PLAN_INVALID")
     job_ids = {UUID(j).hex for j in plan["jobs"]}

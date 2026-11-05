@@ -54,6 +54,18 @@ def test_retirement_is_idempotent_and_prevents_restored_reads_and_writes(tree):
         os.close(fd)
 
 
+def test_original_plus_repair_plan_uses_both_existing_database_caps(tree):
+    from orchestrator.retention import RetentionError
+
+    retire, assets, jobs, directory, run, plan = tree
+    plan["jobs"].extend(str(uuid4()) for _ in range(31))
+    assert retire(plan, assets, jobs)["bytes_removed"]
+    assert not directory.exists() and not run.exists()
+    plan["jobs"].append(str(uuid4()))
+    with pytest.raises(RetentionError, match="PLAN_INVALID"):
+        retire(plan, assets, jobs)
+
+
 @pytest.mark.parametrize("kind", ["symlink", "hardlink", "fifo"])
 def test_retirement_refuses_unsafe_nodes_and_preserves_external_targets(tree, kind, tmp_path):
     from orchestrator.retention import RetentionError

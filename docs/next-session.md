@@ -1,5 +1,19 @@
 # Resume ProofFlow
 
+## November6 KST — actual model pilot and operator retirement
+
+Phase0–4 DONE; Phase5 IN PROGRESS. Continue authorized private, credit-only work without continuation questions. No new PR/public release/personal spending. Prior checkpoint862a9b2f093b41c4c1fe2e9b9c3a9737c233741e; this checkpoint is verified Git HEAD/remote, not Phase5 completion.
+
+Twelve real development jobs across A/B/C completed with15 reconciled Vultr calls: all arms3/3 repairable; A/C held1/1 ambiguous; B incorrectly accepted it. A is production repair-core functions, not full API/queue/approval UX. Exposed canary-derived cases and one repeat cannot establish held-out quality or witness-feedback superiority. D NOT RUN; no reuse of prior positive controls. See [pilot report](../eval/development-pilot-2026-11-06.md) and [Evidence](evidence/phase5-model-pilot-retention-2026-11-06.json). Launch source revision bf4ace502abedd7454198708b786246916d1a57a281e0eff27fb20a4be36c3a6; never rerun run_development_pilot.py or evict private journals. Reconcile retained records instead.
+
+Actual provider usage estimate$0.011443, call holds$0.417795 (not settled invoices). Full pilot allowance$1.20 now durably charged against unchanged$5 development envelope; shared reserved$1.311412. Correction added after pilot: launch had precheck plus local/global call caps; migration016 now serializes with production calls and future driver reserves before launch. No refund/cap increase. Private probe lane now has23/100 receipts; final evaluation needs its own reviewed bounded lane, not silent eviction/raising.
+
+Applied015/016 migrations; expired operators now use existing deletion/revocation/cleanup/PR gates. Retention accepts union32 jobs (16 originals+16 repairs), no execution quotas changed. Installed retention revision73b379fd50b8f15c045426b7007a1e1d2f07dfbeef9d38c2ec931cd3aac2e29e. Actual11 completed deletion directories absent with markers,0 expired workspaces,1 live. PR#1 remains COMPLETE/3 writes. Product image e0f518e69f39d3ea855a51793a8f917f8242eb1b192c9391830ddb300e27b27a, worker/verifier unchanged.742 Linux tests+10 subtests including3 installer tests,649 Windows tests/93 Linux-only skips,11 allocation SQL checks,7 expiry checks and prior retention/PR SQL suites pass. Human review gap remains.
+
+Credit$195.38 at final readback; API/dispatcher/retention active; execution and inference admissions closed; guard deadline unchanged2026-11-06T21:05:35.177139Z. Current workspace expires Nov6 13:14:49 KST. Local provider quote was refreshed for pilot only (valid until15:46:32 UTC Nov5); installed product quote is still expired. Do not blindly reinstall changed config or enable inference. Use fresh catalogue/quote and reviewed immutable config update for future calls.
+
+Next: implement worker raw-log expiry with timestamps/redaction while preserving execution IDs, manifest conflicts and generation fences; test crash/replay and coordinate pinned worker/runtime upgrade. Current journal failure_log_preview persists indefinitely; no guest/public readiness claim. Metadata/restore tombstones cannot safely be pruned until deletion-aware backup/restore is implemented. Final genuinely separate cases/prompts/grader need freeze before comparison; no owner action blocks this engineering work. Existing unknown native advisories and independent human oracle/security gaps stay explicit.
+
 ## November5 23:15 KST — Phase5 security deployed; development fixtures validated
 
 Phase0–4 DONE; Phase4 remote checkpoint dc7a03221c9e95f9336808ff582ae42a2379e57e. Phase5 IN PROGRESS. Owner authorizes continuous private credit-only security/evaluation work and commits/pushes without continuation questions. No new PR/public release/personal spending authorization.

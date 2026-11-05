@@ -77,7 +77,8 @@ def main():
              "006_browser_session.sql", "007_workspace_retention.sql",
               "008_bounded_repair.sql", "009_repair_retention.sql", "010_original_proof_bundle.sql",
               "011_versions_batches.sql", "012_version_retention.sql",
-              "013_github_outbox.sql", "014_signed_batches.sql")
+              "013_github_outbox.sql", "014_signed_batches.sql", "015_operator_expiry.sql",
+              "016_evaluation_allocation.sql")
     for name in names:
         raw = (SETUP / name).read_bytes()
         digest = hashlib.sha256(raw).hexdigest()

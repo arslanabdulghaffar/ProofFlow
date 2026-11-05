@@ -1,5 +1,13 @@
 # Progress
 
+## November6 KST — Phase5 model pilot and retention checkpoint
+
+Completed12 real development jobs/15 Vultr calls on existing infrastructure. All three arms repaired3/3 cases; witness and verdict-only arms held the one ambiguous case, while execution-only B incorrectly accepted it. All cleanup confirmed. This is repair-core development evidence, not a held-out/full-product benchmark. D NOT RUN. Usage estimate$0.011443; held reservations$0.417795 remain unreleased. [Evidence](evidence/phase5-model-pilot-retention-2026-11-06.json).
+
+Fixed/deployed expired-operator retirement and32-job original/repair union; actual11 retired asset directories absent with markers,0 expired workspaces,1 live. Added/deployed shared evaluation allocation using production's unchanged$5 cap and lock; full$1.20 pilot allowance recorded conservatively after run, with future driver reserving before launch. Prior per-job/global caps and closed product admission prevented concurrent spend. Shared development reserved$1.311412; no settlement/cap increase.
+
+742 Linux tests+10 subtests including3 root-installer filesystem tests,649 Windows tests/93 Linux-only skips;11 new real SQL budget checks,7 expiry checks and existing retention/PR groups pass. Credit$195.38, closed admissions, unchanged guard deadline, private source/Demo, PR#1 unchanged, no new service. Phase5 remains IN PROGRESS: final held-out comparison, worker raw-log expiry and metadata/backup lifecycle remain. Separate critical review is not independent human approval. Commit/push/remote verification follows; no continuation question.
+
 ## November5 23:15 KST — Phase5 security/evaluation development checkpoint
 
 Fixed/deployed slow-reader capacity exhaustion (30s ordinary/65s event deadline includes busy replies) and apt/libapt3.0.4. Exact image/source/UID/resource/private-network/SCRAM/role/HTTP readback passes. Initial stale predecessor pin refused upgrade without changing services; corrected exact pin and preserved predecessors. No worker/verifier/SQL/contract/approval changes.

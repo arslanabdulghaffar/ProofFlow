@@ -1,5 +1,11 @@
 # Evaluation and spending plan
 
+## Actual development pilot — November6 KST
+
+The declared12-job pilot completed on four disclosed cases with15 real model calls. [Report](development-pilot-2026-11-06.md). This uses production repair-core functions for A; it does not fulfill the full-product A/final A/B/C/D comparison below. B incorrectly accepted the ambiguous case; A/C held it. D NOT RUN, no repeated-case consistency claim, human oracle review absent.
+
+Usage estimate$0.011443 and conservative held$0.417795 are distinct; no settlement. Full pilot allowance$1.20 is reserved in shared$5 development envelope (total$1.311412); future launch reserves before calls. Three calls at quoted worst-case$0.027853 each fit unchanged$0.10/job. A$0.05 cap would admit only one such reservation and is not justified by low mean usage. Final calls require fresh quotes and dedicated bounded durable evaluation storage; the pilot's100-row infrastructure receipt lane is not sufficient for the full planned campaign. Freeze final dataset/arms/grader and budget before any final calls. No new cloud service is required by this checkpoint.
+
 ## Phase5 development checkpoint — November5
 
 Implemented [offline schedule/accounting](report.py) and [12 disclosed development cases](development.py): one repairable and one source-ambiguity/hold case per family. They reuse the known canary shape/positive fixture; they are not final or independent held-out cases. Unknown business-policy clarification cases and manual owner oracle review remain unavailable.
