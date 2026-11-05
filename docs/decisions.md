@@ -1,5 +1,11 @@
 # Decision log
 
+## D68: bounded response completion and disclosed development evaluation (Phase5)
+
+Apply an outer30s ordinary/65s event HTTP deadline across response transmission and overload replies. Cancellation releases request capacity without sending a second response or implying database rollback; scoped idempotency/status reconciliation remains authoritative. Regression uses blocked ASGI sends and actual deployed source/policy readback. Patch only inherited apt/libapt-pkg7.0 to Debian3.0.4 via signed HTTPS repositories with zero download retries; pin/review the resulting image. Other native findings remain risks; no runtime/worker/verifier/SQL/contract/approval changes. A stale exact predecessor pin initially refused deployment safely; reconcile live state before correcting it, preserve prior containers.
+
+Evaluation accounting predeclares balanced cases/arms/artifact identities/forecasts, rejects duplicate or unbound records and preserves failures/missing/unknown grades/costs. It cannot authorize spending or prove receipt authenticity. Twelve disclosed canary-derived development cases and positive controls are validated on the designated worker, never locally executed. The failed JPY unit fixture remains evidence; fractional-USD revision was a development data correction before any model/final run, not a verifier change. Pilot adapters/durable caps/receipt reconciliation and independent final cases are still required. Source ambiguity holds are not a substitute for missing-business-policy clarification coverage. No independent human review exists. [Review](phase5-security-review.md), [actual evidence](evidence/phase5-security-development-2026-11-05.json).
+
 ## D74: existing-PR recovery-only acceptance under the owner's no-new-PR constraint
 
 Do not reset a completed production intent, replay a GitHub create, extend an expired approval or request a duplicate PR merely to exercise a fault. The owner explicitly requests recovery without another PR. Use a separate no-network disposable PostgreSQL fixture with all unchanged product migrations. Initialize missing PR acknowledgement from retained confirmed action data, retaining synthetic fixture workspace/proof/actor and disabled GitHub dispatch authority. This initialization is a declared recovery scenario, never a production state edit or claimed original timeout.

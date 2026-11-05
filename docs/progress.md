@@ -1,5 +1,15 @@
 # Progress
 
+## November5 23:15 KST — Phase5 security/evaluation development checkpoint
+
+Fixed/deployed slow-reader capacity exhaustion (30s ordinary/65s event deadline includes busy replies) and apt/libapt3.0.4. Exact image/source/UID/resource/private-network/SCRAM/role/HTTP readback passes. Initial stale predecessor pin refused upgrade without changing services; corrected exact pin and preserved predecessors. No worker/verifier/SQL/contract/approval changes.
+
+16 fresh worker probes,6 verifier groups and4 protected challenges passed with cleanup.735 Linux tests plus10 subtests pass;649 Windows pass/86 Linux skips. Native scan retains46HIGH/72MEDIUM/62LOW/6UNKNOWN/zeroCRITICAL; Python dependencies have no known audit findings. [Separate critical review](phase5-security-review.md) is not independent human sign-off.
+
+Added evaluation accounting and12 disclosed development cases. Real worker validation rejects12 faulty programs and matches12 positive controls (6 held). Earlier5 executions exposed an ineffective JPY units fixture; preserved and corrected to fractional USD. No model pilot/final comparison or held-out claims. Phase5 IN PROGRESS; comparison/lifecycle work remains. [Source-bound evidence](evidence/phase5-security-development-2026-11-05.json).
+
+Private repo, no new service/PR/model calls; credit$195.50, closed admissions, active services/retention, unchanged guard deadline. Commit/push/remote SHA verification supplies this checkpoint; no continuation question.
+
 ## November5 22:30 KST — Phase4 acceptance passed
 
 Finished the owner-requested recovery test without another PR. Recovery-only disposable SQL scenario plus actual existing PR reads: real GET reply loss, pending database restart, natural180-second lease expiry, generation5→6 takeover, stale-controller/write rejection, exact readback, completed restart/redelivery and cleanup all passed in189.67 seconds. Production receipt snapshot unchanged; zero GitHub writes/new PRs/provider calls/cloud resources. Original POST-create response loss remains NOT_REPRODUCED; synthetic seed and real observations are clearly separated. [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json) closes Phase4's functional recovery obligations using the owner-constrained method, alongside prior live version/batch/signed-event/real-PR evidence. DONE requires this checkpoint's verified push.628 local passes/86 Linux skips;7 mutation-boundary cases/Ruff pass; private repos and$150/$25 promotional-only limits maintained.

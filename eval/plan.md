@@ -1,5 +1,15 @@
 # Evaluation and spending plan
 
+## Phase5 development checkpoint — November5
+
+Implemented [offline schedule/accounting](report.py) and [12 disclosed development cases](development.py): one repairable and one source-ambiguity/hold case per family. They reuse the known canary shape/positive fixture; they are not final or independent held-out cases. Unknown business-policy clarification cases and manual owner oracle review remain unavailable.
+
+Actual worker validation:12 faulty originals rejected and12 positive controls matched, including6 holds; cleanup confirmed. Earlier5 executions exposed an ineffective JPY unit mutation; preserved, then revised to fractional USD without changing the verifier/production policy. **24 fixture-validation runs, zero model calls**, not A/B/C/D repair results. [Evidence](../docs/evidence/phase5-security-development-2026-11-05.json).
+
+`report.manifest` predeclares content/source/prompt/runtime/schema/grader/quote identities, balanced final denominators, interleaved arms and forecasts. `report.summarize` rejects binding/duplicate/type/cap failures and preserves NOT RUN, timeouts, unknown grades/usage and held reservations. Neither dispatches nor opens admission. Receipt reconciliation is still required; hashes cannot prove a measurement occurred. Invented unit records are never benchmark results. No final set is frozen/unsealed and no pilot score exists.
+
+Next: finite A/B/C/D adapters and durable pilot/per-arm reservations, a development pilot with fresh provider rates, then a genuinely separate frozen final set. Product workspace capacity remains8/8; use ordinary retention or a reviewed bounded evaluation lane, never raise quotas/edit statuses. Fixed development journal has29/64 entries including the failed validation; do not rerun blindly or evict evidence to bypass its limit. The targets and spending plan below remain prospective.
+
 TARGET / NOT RUN. The owner authorized **$150 total project spend, at most $25 inference**, using verified eligible hackathon credits only after charges and caps are established. Out-of-pocket exposure or unbounded liability requires approval. Phase 0 incurs no cloud charge. A credit balance is not permission to ignore minimums, tax, expiry, transfer or post-event costs.
 
 ## Reconcile the handoff arithmetic

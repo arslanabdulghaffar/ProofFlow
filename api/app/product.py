@@ -39,6 +39,7 @@ from contracts.policy import parse_contract
 
 LIMITS = {"pipeline": 16384, "contract": 32768, "transactions": 5242880, "customers": 5242880}
 STATIC = Path(__file__).parent / "static"
+RESPONSE_DEADLINE_SECONDS = 30
 
 
 def failure(scope, code, status):
@@ -95,6 +96,16 @@ class CapacityBoundary:
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http":
             return await self.app(scope, receive, send)
+        deadline = 65 if scope.get("path", "").endswith("/events") else RESPONSE_DEADLINE_SECONDS
+        try:
+            # Cover response backpressure, including capacity-rejection replies.
+            async with asyncio.timeout(deadline):
+                return await self.dispatch_http(scope, receive, send)
+        except TimeoutError:
+            # End the connection; do not await another send after the deadline.
+            return None
+
+    async def dispatch_http(self, scope, receive, send):
         scope["request_id"] = str(uuid4())  # Never trust a caller-supplied request ID.
 
         async def protected_send(message):
@@ -131,12 +142,7 @@ class CapacityBoundary:
                     return await failure(scope, "STREAM_BUSY", 429)(
                         scope, receive, protected_send)
                 async with self.event_slots:
-                    try:
-                        async with asyncio.timeout(65):
-                            return await dispatch()
-                    except TimeoutError:
-                        # End this connection, not an invented event or resumed cursor.
-                        return None
+                    return await dispatch()
             return await dispatch()
 
 
