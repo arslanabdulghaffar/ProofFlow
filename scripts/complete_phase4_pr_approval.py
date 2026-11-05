@@ -2,6 +2,7 @@
 
 import argparse
 import asyncio
+import hashlib
 import json
 import re
 import ssl
@@ -120,6 +121,19 @@ def main(approved_digest, inject_reply_loss=False, record_path=None, emit=True):
                     "control", command, stdin=Path(__file__).with_name(
                         "probe_phase4_pr_reply_loss.py").read_bytes(), timeout=105,
                 )
+                # Preserve a bounded, secret-free failure receipt before raising.
+                # Approval may already be durable; normal service restart below
+                # can complete it, so a failure must never suggest a fresh PR.
+                if execution.returncode != 0:
+                    (PRIVATE / "evidence" / ("phase4-pr-fault-" + identity + ".json")).write_text(
+                        json.dumps({"intent": identity, "status": "driver_failed",
+                                    "code": "FAULT_DRIVER_FAILED_RECONCILE_OUTBOX",
+                                    "returncode": execution.returncode,
+                                    "stdout_sha256": hashlib.sha256(execution.stdout).hexdigest(),
+                                    "stderr_sha256": hashlib.sha256(execution.stderr).hexdigest(),
+                                    "response_loss_proven": False}, indent=2),
+                        encoding="utf-8",
+                    )
                 require(execution.returncode == 0, "FAULT_DRIVER_FAILED_RECONCILE_OUTBOX")
                 injected = json.loads(execution.stdout)
                 pending = live.client.get("/v1/pr-intents/" + identity).json()

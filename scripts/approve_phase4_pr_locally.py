@@ -15,7 +15,9 @@ from refresh_phase4_pr_preview import main as prepare
 
 def safe_failure(error):
     safe = {"INTERACTIVE_TERMINAL_REQUIRED_NO_ACTION", "APPROVAL_CANCELLED_NO_WRITE",
-            "PREVIEW_EXPIRED_NO_WRITE", "PREVIEW_VIEWER_UNAVAILABLE_NO_ACTION"}
+            "PREVIEW_EXPIRED_NO_WRITE", "PREVIEW_VIEWER_UNAVAILABLE_NO_ACTION",
+            "FAULT_DRIVER_FAILED_RECONCILE_OUTBOX", "LOST_REPLY_NOT_DURABLE_PENDING",
+            "PR_INCOMPLETE_RECONCILE_SAVED_RESULT", "APPROVAL_NOT_CONFIRMED_RECONCILE"}
     safe.update(f"PREVIEW_STOPPED_{stage.upper()}_{code}"
                 for stage in STAGES
                 for code in SAFE_ERRORS | {"UNCLASSIFIED_PREPARATION_FAILURE"})

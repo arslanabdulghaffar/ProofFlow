@@ -1,0 +1,112 @@
+{
+  "observed_at": "2026-11-05T13:17:11.448536+00:00",
+  "scope": "Real exact-approved private PR acceptance and fault-harness correction; Phase4 incomplete",
+  "actual_receipt": {
+    "observed_at": "2026-11-05T13:13:07.463645+00:00",
+    "intent": "b34e8d47-ab50-4527-a83f-c72feca85c40",
+    "preview_sha256": "99498b65c91b508fd951061ac5166828f02feb6a7a80c82e2e076aab8728c4c4",
+    "external_readback": {
+      "number": 1,
+      "url": "https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1",
+      "head_sha": "23e2948f8377fbf521f3fb09d7732f804c6db51c",
+      "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+      "draft": true,
+      "repository_id": 1445855571
+    },
+    "writes": [
+      {
+        "stage": "branch",
+        "readback": {
+          "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+          "head_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f"
+        },
+        "confirmed_at": "2026-11-05T13:11:14.079749+00:00",
+        "authorized_at": "2026-11-05T13:11:10.94451+00:00",
+        "request_sha256": "f7f57d75f57cd993af87520a1fc97a68b3af74993102857aa2fa50d552a740ad"
+      },
+      {
+        "stage": "commit",
+        "readback": {
+          "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+          "head_sha": "23e2948f8377fbf521f3fb09d7732f804c6db51c"
+        },
+        "confirmed_at": "2026-11-05T13:11:24.872109+00:00",
+        "authorized_at": "2026-11-05T13:11:19.189064+00:00",
+        "request_sha256": "d7b163ae7a13079d4f1697e1008c12e3b4c330b1dbecaa85ddf57b4b4b15dc77"
+      },
+      {
+        "stage": "pr",
+        "readback": {
+          "url": "https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1",
+          "draft": true,
+          "number": 1,
+          "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+          "head_sha": "23e2948f8377fbf521f3fb09d7732f804c6db51c",
+          "repository_id": 1445855571
+        },
+        "confirmed_at": "2026-11-05T13:11:40.031083+00:00",
+        "authorized_at": "2026-11-05T13:11:33.677932+00:00",
+        "request_sha256": "5304546a5981beec7eae127204830178f12daf8286dc4dfb594e328009c93991"
+      }
+    ],
+    "completed_dispatcher_restart": "passed",
+    "same_approval_replay": "already_applied_no_new_write",
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-05T13:12:36.177276+00:00",
+      "remaining_credit": "195.6",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "new_worker_executions": 0,
+    "provider_calls": 0,
+    "new_cloud_resources": 0,
+    "external_response_loss": "NOT_INJECTED; separate SQL/HTTP doubles only",
+    "fault_lease": null,
+    "recovered_lease": null,
+    "temporary_session_logged_out": true
+  },
+  "initial_helper_failure": {
+    "cause": "Fault driver assigns store.call on frozen production ProductStore; raises FrozenInstanceError before the fault driver can dispatch. Existing mutable Store doubles missed this.",
+    "raw_initial_stderr": "NOT_RETAINED; diagnosis reproduced using real immutable ProductStore type",
+    "production_recovery": "finally restarted the normal dispatcher; it completed the already-approved branch, commit and PR once",
+    "no_fault_injection_claim": true
+  },
+  "changes": [
+    "Wrap store/App interfaces instead of mutating dependencies.",
+    "Regression exercises real immutable ProductStore with explicitly fake I/O; no DB/GitHub calls.",
+    "Future failed fault-driver execution retains return code and stdout/stderr digests, never raw diagnostics.",
+    "Expose fixed fault/outbox error codes to the operator instead of the generic status."
+  ],
+  "checks": {
+    "windows_passed": 621,
+    "linux_only_skipped": 86,
+    "targeted_passed": 25,
+    "ruff": "passed",
+    "source_repository_private": true,
+    "actual_demo_private_verified": "dedicated App preflight and exact PR readback",
+    "same_approval_replayed_without_extra_writes": true
+  },
+  "remaining": [
+    "Actual live external-response-loss injection and natural lease-takeover acceptance NOT RUN; fixed driver only tested with explicit I/O doubles.",
+    "No independent human security sign-off.",
+    "Phase4 is not DONE until remaining acceptance and verified completion checkpoint."
+  ],
+  "source_hashes": [
+    {
+      "path": "scripts/probe_phase4_pr_reply_loss.py",
+      "sha256": "61c471441c84143a8d18f3843557928533942214d11922afa23b41afe65c393a"
+    },
+    {
+      "path": "scripts/complete_phase4_pr_approval.py",
+      "sha256": "ea0c19f604bc4c43b59863bafcbd2a4807cd9599e78671f4a9976393870ff00b"
+    },
+    {
+      "path": "scripts/approve_phase4_pr_locally.py",
+      "sha256": "e46aa8a412746dea59d1f4ded9a588500744798772e8ba064a284a1d297413b7"
+    },
+    {
+      "path": "tests/unit/test_pr_reply_loss_probe.py",
+      "sha256": "69cf8cb7bb339685900e2518c978f79cb4a0a089519d95724022f061f7f4ca6d"
+    }
+  ]
+}

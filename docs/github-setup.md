@@ -1,5 +1,9 @@
 # Private product GitHub integration setup
 
+## Current outcome — November5 22:16 KST
+
+The owner completed exact approval; private ProofFlow-Demo [draft PR#1](https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1) is created and independently verified. Do not run the local approval command again for this action. Its error came from the recovery-test helper after approval, not from rejected operator input. Normal dispatcher completed3 writes; restart/readback and same-approval replay passed, actor logged out. The test helper is fixed; live lost-response acceptance remains NOT RUN. [Evidence](evidence/phase4-real-pr-reconciled-2026-11-05.json). The instructions below are historical setup, not a new owner task.
+
 ## Local command correction — November5 14:20 KST
 
 The owner's failed command is reconciled. The first session file inherited Administrators ownership; explicit current-user ownership/protected ACL at creation now passes real encryption/readback. The old workspace subsequently expired. A fresh synthetic workspace passed the original and3 isolated checks, and actual deployed preview preparation passed without approval. The helper uses it automatically; no key/account setup is needed. Run the same command below from any directory. The new workspace expires Nov6 13:14:49 KST; preflight requires41 minutes remaining. No previous approval is reused.

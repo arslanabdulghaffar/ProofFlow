@@ -32,8 +32,18 @@ async def run(store, app, intent, digest):
             raise ProductFailure("PRODUCT_OPERATION_UNCERTAIN")
         return value
 
-    store.call, app.request = scoped_call, lose_reply
-    dispatcher = GitHubDispatcher(store, app)
+    # ProductStore is frozen. Wrap its interface; never monkey-patch the real
+    # store or App. Mutable test doubles previously hid this startup failure.
+    class ScopedStore:
+        call = staticmethod(scoped_call)
+
+    class ReplyLossApp:
+        request = staticmethod(lose_reply)
+
+        def __getattr__(self, name):
+            return getattr(app, name)
+
+    dispatcher = GitHubDispatcher(ScopedStore(), ReplyLossApp())
     async with asyncio.timeout(80):
         for _ in range(60):
             await dispatcher.once()

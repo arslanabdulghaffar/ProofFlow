@@ -1,5 +1,9 @@
 # Progress
 
+## November5 22:16 KST — exact-approved private PR verified
+
+Owner local approval succeeded. The fault harness failed before injection because it mutated frozen ProductStore; normal dispatcher restart then completed the same authorized branch/commit/draft PR once. Verified [private PR#1](https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1) against exact base/head/source/tree/title/body/draft/repo, plus completed restart persistence and idempotent approval replay.3 confirmed writes; actor logged out. No new approval or duplicate PR needed. Fixed harness using wrappers and real immutable-type regression;621 tests pass/86 Linux skips,25 targeted checks/Ruff pass. [Evidence](evidence/phase4-real-pr-reconciled-2026-11-05.json). Actual response-loss/lease recovery remains NOT RUN, so Phase4 remains incomplete. Both repositories private; credit$195.60; no new resources/model/worker work.
+
 ## November5 14:20 KST — repair local approval preparation
 
 Fixed explicit owner/DACL creation for DPAPI sessions after the owner's elevated terminal produced an Administrators-owned file. Added workspace-expiry preflight and safe stage diagnostics. Replaced the expired test workspace through ordinary synthetic intake/worker proof, retaining old records. Actual original match,3 fresh isolated checks/cleanup, zero model calls and deployed preview/session readback passed; test actor logged out and zero PR writes remain. Initial fresh-workspace helper wait bug cancelled its first original; retained cleanup evidence and corrected terminal-state polling before a new API job.620 tests pass/86 Linux skips; Ruff passes. [Evidence](evidence/phase4-local-approval-fix-2026-11-05.json). Phase4 remains incomplete; actual interactive approval/PR/recovery still NOT RUN. Source repo private; credit$196.46, no new services, admissions closed.

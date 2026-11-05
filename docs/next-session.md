@@ -1,5 +1,15 @@
 # Resume ProofFlow
 
+## November5 22:16 KST — real private PR completed; recovery-probe defect reconciled
+
+Owner correctly entered exact local approval for intent b34e8d47-ab50-4527-a83f-c72feca85c40, digest99498b65c91b508fd951061ac5166828f02feb6a7a80c82e2e076aab8728c4c4. API persisted approval at13:11:03 UTC before13:19:44 expiry. The helper then failed because the fault probe tried assigning store.call on frozen ProductStore. Mutable doubles missed this. finally restarted the normal dispatcher; it completed exactly3 writes at13:11:40 UTC. No additional owner approval or PR retry is needed for this action.
+
+Actual independent App preflight/commit/tree/source/draft/repository readback verifies private ProofFlow-Demo PR#1, https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1 . Head23e2948f8377fbf521f3fb09d7732f804c6db51c, base de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f. Completed dispatcher restart preserved receipts; replay of the same exact approval returned already_applied with no extra writes. Temporary actor logged out. Private phase4-pr-result-b34e8d47-ab50-4527-a83f-c72feca85c40.json is the completed-action receipt; do not rerun the interactive helper or completion using the now-logged-out actor. The earlier bare-APPROVE attempt003a79cc remains unapproved.
+
+Fixed fault driver with interface wrappers, preserving immutable production objects. Added regression using real frozen ProductStore and explicitly fake I/O. Future fault failures retain safe returncode/digest evidence and fixed error codes.621 Windows tests pass/86 Linux skips,25 targeted checks and Ruff pass. No deployed image/SQL/policy changes. [Evidence](evidence/phase4-real-pr-reconciled-2026-11-05.json).
+
+The real lost-response injection/natural lease-takeover test did NOT run, and cannot be retroactively claimed from completed PR readback. Phase4 remains acceptance-incomplete on that fault-test gap; do not create another external PR, rebind the old approval, or ask the owner to rerun merely to make the test pass. Continue independent validation and preserve the successful PR. No merge/CI/publication/new cloud resources/provider calls/worker runs. Credit$195.60, both admissions remain closed, guard deadline unchanged2026-11-06T21:05:35.177139Z. No independent human security sign-off.
+
 ## November5 14:20 KST — local preview failure fixed and deployed preparation verified
 
 Owner ran Approve-Phase4PR.ps1 twice. First failed because the elevated-created encrypted session had Administrators ownership; the reader correctly requires the current user. Second failed because the old operator workspace expired at12:07 KST. Neither created an intent or external write. Preserve both private interactive records and the old session; do not reuse approvals. save_session now creates ciphertext with explicit current-user owner and protected user/SYSTEM DACL, retaining CreateNew and strict readback. Actual DPAPI/ACL roundtrip and overwrite refusal passed from System32. Fixed safe stage diagnostics and a41-minute workspace lifetime preflight precede session creation.

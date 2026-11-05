@@ -1,5 +1,11 @@
 # Decision log
 
+## D73: reconcile accepted approval before any retry; wrap immutable fault dependencies
+
+A local harness failure is not proof that the external action failed. Inspect the exact durable intent and dedicated App readback before creating any replacement. This attempt already completed its3 authorized writes after production restart; preserve that PR and never reuse its approval for another intent. Complete exact readback/restart/idempotent replay using the original still-valid actor, then logout.
+
+Fault injection must wrap the ProductStore/App interfaces rather than assigning methods on a frozen production object. Regression must use that real immutable type with explicitly fake I/O; a mutable mock is insufficient. Preserve returncode and diagnostic digests on future driver failures; never log native stderr or secret objects. No direct status/lease edits, production policy/dependency changes or human-signoff claims. Actual failed-injection gap remains explicit; ordinary completed PR readback does not prove lost-response recovery. [Evidence](evidence/phase4-real-pr-reconciled-2026-11-05.json).
+
 ## D72: explicit Windows session ownership and fresh expired-workspace replacement
 
 Encrypted session creation must set current-user ownership and protected user/SYSTEM DACL at CreateNew, including elevated terminals. Do not accept Administrators ownership in the secret reader or overwrite existing sessions. Retain fixed stdin-only DPAPI, no plaintext argv/logs, fixed name validation and independent decrypt/ACL readback. Preparation checks at least41 minutes of valid operator workspace life before a40-minute session; fixed stage/error allowlists report failure without native exception text. Expired workspaces/approvals remain unchanged.

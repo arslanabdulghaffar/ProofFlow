@@ -1,5 +1,7 @@
 # Requirements traceability
 
+R30/T17 now has a real exact-approved private draft PR with exact commit/tree/source/destination/draft readback, completed dispatcher restart and same-approval replay without duplicate writes. The attempted live response-loss harness failed before injection; T15/T17 live uncertain-write recovery remains unproven.621 local tests/86 Linux skips; real immutable-store regression fixes the harness without promoting the composite phase to DONE. [Evidence](evidence/phase4-real-pr-reconciled-2026-11-05.json).
+
 R30/T17 local preparation correction: actual Windows DPAPI/ACL and no-overwrite checks, fresh original+3 protected worker checks, real deployed preview and logout403 now pass.620 local tests/86 Linux skips; cancelled initial helper run preserved and wait regression added. No PR approval/write/recovery acceptance is claimed. [Evidence](evidence/phase4-local-approval-fix-2026-11-05.json).
 
 R30/T17 operator handoff: direct local full-digest confirmation avoids chat-processing delay while preserving exact expiry/authority. Three late chat intents have no external writes.617 local tests/86 Linux skips and real read-only reconciliation support the prepared helper; real PR creation/response-loss/readback remains NOT RUN. [Current receipt](evidence/phase4-local-approval-ready-2026-11-05.json). No Phase4 completion claim.
