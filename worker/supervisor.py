@@ -62,6 +62,7 @@ class Supervisor:
             if not self._recovered:
                 raise SupervisorError("RECOVERY_REQUIRED")
             self.staging.prune_results(set(self.journal.unfinished()))
+            self.journal.prune_failure_previews()
 
     def pause_admission(self) -> None:
         with self._guard:
@@ -129,6 +130,7 @@ class Supervisor:
                 self.journal.finish(identifier, receipt, cleaned=False)
                 raise SupervisorError("RECOVERY_QUARANTINED") from None
         self.staging.prune_results(set(self.journal.unfinished()))
+        self.journal.prune_failure_previews()
         self._recovered = True
 
     def execute(self, request: ExecutionRequest, *, expected_runtime: str | None = None) -> dict:

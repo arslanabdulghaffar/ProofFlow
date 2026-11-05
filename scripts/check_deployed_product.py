@@ -16,7 +16,7 @@ from vultr_phase1 import PRIVATE, ROOT, Admin  # noqa: E402
 from api.app.auth import SessionSecrets, csrf_digest, session_digest  # noqa: E402
 from contracts.policy import parse_contract  # noqa: E402
 
-RUNTIME = "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188"
+RUNTIME = "c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78"
 VERIFIER = "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f"
 
 
@@ -56,6 +56,7 @@ def main():
     with path.open("x", encoding="utf-8") as file:
         json.dump(intent, file, sort_keys=True)
     admin = Admin()
+    opened = False
     try:
         if credit_guard(admin, datetime.now(UTC)).get("credit_guard") != "within_early_cutoff":
             raise RuntimeError("CREDIT_GUARD_NOT_ADMITTING")
@@ -76,6 +77,8 @@ def main():
             current = json.loads(policy)
             if current["runtime_sha256"] != RUNTIME or current["verifier_sha256"] != VERIFIER:
                 raise RuntimeError("EXISTING_EXECUTION_POLICY_CHANGED")
+            if current["enabled"]:
+                raise RuntimeError("PRODUCT_PROBE_REQUIRES_CLOSED_ADMISSION")
         sql = "BEGIN; SET ROLE pf_product_provisioner;\n"
         if not policy or not current["enabled"]:
             sql += f"SELECT pf_product.configure_execution('{RUNTIME}','{VERIFIER}',true);\n"
@@ -84,6 +87,7 @@ def main():
                     "clock_timestamp()+interval '23 hours');\n"
                     f"SELECT pf_product.create_session('{wid}','{session_digest(creds.token)}',"
                     f"'{csrf_digest(creds.csrf)}',clock_timestamp()+interval '2 hours');\n")
+        opened = True  # Unknown COMMIT delivery still requires closing in finally.
         host(psql, (sql + "COMMIT;\n").encode())
         script = (ROOT / "scripts/probe_product_http.py").read_text(encoding="utf-8")
         raw = host("docker exec -i proofflow-product-api python -c " + shlex.quote(script),
@@ -103,7 +107,13 @@ def main():
         print(json.dumps({"groups": len(result["checks"]), "jobs": len(result["jobs"]),
                           "provider_calls": 0}))
     finally:
-        admin.close()
+        try:
+            if opened:
+                host(psql, ("SET ROLE pf_product_provisioner; "
+                    f"SELECT pf_product.configure_execution('{RUNTIME}','{VERIFIER}',false);")
+                    .encode())
+        finally:
+            admin.close()
 
 
 if __name__ == "__main__":

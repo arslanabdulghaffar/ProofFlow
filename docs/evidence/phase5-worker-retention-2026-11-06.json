@@ -1,0 +1,393 @@
+{
+  "phase": 5,
+  "status": "IN_PROGRESS",
+  "previous_checkpoint": "67920adc671b0084078fa71e1b17a929ed66dba2",
+  "source_hashes": {
+    "worker/journal.py": "c3255589c0323157520760759a4c5a30805b068cdc5e1f719cb76f8079a74ece",
+    "worker/supervisor.py": "7a27b7bf55fa051f5687f6e9b14755e07e66b2815c7f0724f2729e621b4e360e",
+    "scripts/check_worker_preview_retention.py": "4269feb67851d20ff6baea4cdd834cee86e1882d6e857d9d7b5dc1137a895acf",
+    "scripts/deploy_worker_retention.py": "1986cafb3e4c6877fd2f55cb2834b5a6fe984239f275853479f304eebe770958",
+    "scripts/install_worker_retention_update.py": "3ccc3aa679276fdfc8f05b3b48a28a66728080905ede5acf11f46ba32db283ee",
+    "scripts/check_deployed_product.py": "0376f4873b6ede8b68b50a6333578958bea0dc22d2fb81e2b6f3e5d21b440331",
+    "scripts/deploy_product_services.py": "d075a57ee95dd840b04da3ba99799d091527203f5268a125ff8b3db50de00363",
+    "scripts/install_product_services.py": "1a0bd67f813245d9eecf7f40f95736da89bd33683c47196012d6a661f8626c46",
+    "scripts/check_product_image.py": "d9f08c99a35209428549322051104e07613f330c096cfa5d90235e57bc7da2ac",
+    "tests/security/test_worker_preview_retention.py": "def1743774a00a6274301f0cad173f0c50f35de151c999f1c10625ca222ca362"
+  },
+  "worker_update": {
+    "started_at": "2026-11-05T15:28:27.723514+00:00",
+    "previous_commit": "67920adc671b0084078fa71e1b17a929ed66dba2",
+    "old_sources": {
+      "__init__.py": "0930f74db3b1c2bf464f225b6349c1f2a35c411e2504fb4a850b5f464bb6b9dc",
+      "collector.py": "0e396d6f4c1e63b8b34f6c090445ecbe0cd6c056fcd4a2b27c1390c285023e38",
+      "entrypoint.py": "988f37e4c510afae1611bf8cfdf925c52f96ca1bc033ebe2ad53e186a8c282eb",
+      "host.py": "13b768a57637debbb4fd77a0be8a2725d2399c039c526a5e752daa5c5c030652",
+      "journal.py": "fec480a5de2860093637afeca5752d75964414d4d868b5f529fffed981b4d0c0",
+      "launcher.py": "f7bbe39731b914f56aa33fe083a6450c073df9f74db7cfeb9720872139d1b6dc",
+      "log_capture.py": "b9507c79aafd4adab77b47b430ac594a2faa10cd13287653a1d6eb84a4c0d2c8",
+      "metrics.py": "1c3a9565b362d0a16f56a44b24074650ebcdda253c0a08a9202a8ccab9c6107c",
+      "protocol.py": "7aaf319f4baa1cc821fc15aeaad4a0bff865730636412dd988d0f7aa87cc0e5a",
+      "rootfs.py": "5283c965736359afd4d53a5387fd6057e0755743bc7d65e95dbd560157fd9b75",
+      "runtime.py": "efd94d6c628bcf4f8833901c3948bc67a9e230aa7f5740aca012efac3acefc6f",
+      "runtime_bundle.py": "b65b8d526f0b94c2e352aac5d17bb5ff91068424446627dd3ffc9a342e0194a9",
+      "service.py": "0e7ba2316d5bab505006e98ed70f436a68302215fcdc146c2582c6f07cf5368b",
+      "staging.py": "4b84e4c6e238ba3a3b97e08294b69f721f04316d1dba9e299c665fcf25e4a3a2",
+      "start_gate.py": "9ea60b791822935da6b25d7ed79a91c80844ccb451bc3f64bb55445581e95e3b",
+      "supervisor.py": "268d66e05f8de07302b6e0f20fb5f0ee4cc0acefd65c2e69be84bcef6f71f86c",
+      "wire.py": "8e9bafd7fba1c0ad92aa8fe153c15ac39a16e7eae3574e968ede740eb03bee9b"
+    },
+    "new_sources": {
+      "journal.py": "c3255589c0323157520760759a4c5a30805b068cdc5e1f719cb76f8079a74ece",
+      "supervisor.py": "7a27b7bf55fa051f5687f6e9b14755e07e66b2815c7f0724f2729e621b4e360e"
+    },
+    "completed": true,
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-05T15:28:29.546449+00:00",
+      "remaining_credit": "195.38",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "old_policy": {
+      "singleton": true,
+      "epoch": 36,
+      "runtime_sha256": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+      "verifier_sha256": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+      "enabled": false,
+      "verification_epoch": 1
+    },
+    "old_runtime": "04725fb06c6b3f8005c744ba78c1b2f632033d2309783a5198e8c453174a7188",
+    "new_runtime": "c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78",
+    "preflight": {
+      "preflight": "passed"
+    },
+    "dispatcher_stopped": true,
+    "install": {
+      "revision": "a29e9f14d3032000cb5e5e52b3fa8414b0a356a9e7a58298887777271d576828",
+      "changed_files": 2,
+      "previous_sources_preserved": true,
+      "journal_copied": false
+    },
+    "identity": {
+      "identity": "matched_independent_install_pins",
+      "unauthorized_client_and_server_pin": "rejected"
+    },
+    "new_policy": {
+      "singleton": true,
+      "epoch": 37,
+      "runtime_sha256": "c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78",
+      "verifier_sha256": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+      "enabled": false,
+      "verification_epoch": 2
+    },
+    "finished_at": "2026-11-05T15:28:57.305058+00:00"
+  },
+  "preview_probe": {
+    "execution": "d7f0888640d547a5bf0cca1bbcea4214",
+    "job": "6c4955272fa34b3e98ffeacc6c4fbbc8",
+    "started_at": "2026-11-05T15:30:52.614783+00:00",
+    "completed": true,
+    "preview_sha256": "8941acc181f620140bb4bda145d18321dd0407ea22aa5614898abfae2aa79798",
+    "receipt_sha256": "4ee5c62d2e126b42a7eb107903eed9730fa988c85cd31a1caae7454e2d9c952d",
+    "manifest": "f318f0346311ed58e45a0e02f6afd63c6ef5221b40aafde6e8224c35ec3eefef",
+    "cleanup": "confirmed",
+    "created_at": "2026-11-05T15:30:59.310890+00:00",
+    "runtime_sha256": "c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78",
+    "controller_sha256": "7995e17f75d423957b42b7280fa254d947dd1eda143864a497f90b25dc67d49e",
+    "readback": {
+      "retired": true,
+      "cleanup": "confirmed",
+      "exact_replay": true,
+      "changed_source_rejected": true
+    },
+    "physical": {
+      "raw_marker_absent_database_and_wal": true,
+      "expired_previews": 0,
+      "execution_records_retained": 207
+    },
+    "finished_at": "2026-11-05T15:41:20.022125+00:00",
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-05T15:41:13.574705+00:00",
+      "remaining_credit": "195.38",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "later_readback_passed": true
+  },
+  "security": {
+    "run": "6117e6f68a2b4dfcbb9039e98dedb6cd",
+    "started_at": "2026-11-05T15:37:35.217939+00:00",
+    "image": "4ec2fbe368ff48894f07076812d33398b5d92d683736ceb3084dd66b8bf88bcb",
+    "provider_calls": 0,
+    "new_cloud_resources": 0,
+    "probes": [
+      {
+        "probe": "filesystem",
+        "passed": true,
+        "execution": "14bfa660c4f94f959908914d376f7dc7",
+        "receipt_sha256": "53b84357fef0bcc149e48343b6ce3d1826a6a7418b732bc6c8f57e6fa8f7b2d2",
+        "seconds": 1.375,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "network",
+        "passed": true,
+        "execution": "eddda54fe24d4e1d9c3864101695d7ab",
+        "receipt_sha256": "e394f85250f9319696774db73b2c7cccafd3427dffccb149e873fdbabf3b8f5e",
+        "seconds": 1.484,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "cpu",
+        "passed": true,
+        "execution": "d1716d650cf6409e8d09378f1e48586b",
+        "receipt_sha256": "6dd8d433682114968bddb9feb764f2c831ea28eedbf3ab49887fde96add7496d",
+        "seconds": 4.672,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "storage",
+        "passed": true,
+        "execution": "4c8b35b54c694e55ad3bfcbbc9a01065",
+        "receipt_sha256": "291ad9b365e5916999ae4e8b45e5b92d9256dbe6e4b50b2e399781fc9126ef48",
+        "seconds": 2.25,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "inodes",
+        "passed": true,
+        "execution": "8edec29ae94b48a68119eea88ad410df",
+        "receipt_sha256": "97c5f21787ac825fa20bb97bd5a4fdad4772aaf33c68b0e1cfa7d6ecec781afc",
+        "seconds": 2.484,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "logs",
+        "passed": true,
+        "execution": "204af00f8f9e4054b4c3556fed6e167d",
+        "receipt_sha256": "362a03a5218e77d86266bf57b2d898bdff7492c814ed1012aed82e2bb23055e4",
+        "seconds": 1.86,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "symlink",
+        "passed": true,
+        "execution": "f51e2e0d71994800a108dc9b419b342d",
+        "receipt_sha256": "f32ea9151a84ee0597af9a0fde395168c52a00da4c05406a398f79bedcd005bc",
+        "seconds": 1.39,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "fifo",
+        "passed": true,
+        "execution": "b1cac76b9e974d1fa98bf6cc70d77574",
+        "receipt_sha256": "baaaffe03b2926a71349337b356a9e4758a015a7ff2ea9ae9ee1dc979727b9c7",
+        "seconds": 1.391,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "hardlink",
+        "passed": true,
+        "execution": "0a7d5bc5b15f41f1966af6eb04bf4f22",
+        "receipt_sha256": "27325a87368c8e32081159e41735269bcda867e86b85ebad5be7ef484d7dcfb0",
+        "seconds": 1.609,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "extra",
+        "passed": true,
+        "execution": "77bf46a0d4104f6e8d645940a2851876",
+        "receipt_sha256": "5b8a22d4342f03f7a47dbb2e135eef6ce6b916700fa7b2190656465034896206",
+        "seconds": 1.297,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "output_bytes",
+        "passed": true,
+        "execution": "da3637d0ab9143ceafe8c980ce7e3149",
+        "receipt_sha256": "eba9c97137e8eda0e970cda81bfec130e0e520cd3910389f8f08342e0420d7ee",
+        "seconds": 1.266,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "output_lines",
+        "passed": true,
+        "execution": "2dc3729ff82d4cd0aefb84c303067100",
+        "receipt_sha256": "abec760b644da070941549e2a7f948d1601ca0f80908235831d7d91b27b95a3c",
+        "seconds": 1.296,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "memory",
+        "passed": true,
+        "execution": "5370c566e92442d9b03f532021dfbf3d",
+        "receipt_sha256": "6c0b5e9d0d26c26e7c4126299a24f93415ddf0007f687ac7517cb26736278526",
+        "seconds": 4.875,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "timeout",
+        "passed": true,
+        "execution": "69ef2d8edf304239b4fcef8a8a82f439",
+        "receipt_sha256": "1ebdae6fd3c610b7c94fab07b31f00c440e58c1d8d1c1e7cdb3be321765da85a",
+        "seconds": 21.204,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "descendants",
+        "passed": true,
+        "execution": "3e1441ea380049b6b6ed7e645196c2fb",
+        "receipt_sha256": "5257c3ffe2e65c3f5de475e6969c30a5084b59f9f037a99d980dfb9b8aa171ce",
+        "seconds": 21.39,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "benign",
+        "passed": true,
+        "execution": "37d43e9a4891442badb9aa64751f4543",
+        "receipt_sha256": "261a5ba9bd8771b24a9fe1ea0d658e787cb44bccbefb37cff5bde734b160e561",
+        "seconds": 3.766,
+        "cleanup": "confirmed"
+      }
+    ],
+    "network_positive_controls": "NOT_RERUN; prior Phase1 evidence retained",
+    "independent_human_review": "NOT_AVAILABLE",
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-05T15:37:37.201375+00:00",
+      "remaining_credit": "195.38",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "api_auth": {
+      "role": "api",
+      "scram": "passed",
+      "table_owner_schema_denied": true
+    },
+    "dispatcher_auth": {
+      "role": "dispatcher",
+      "scram": "passed",
+      "table_owner_schema_denied": true
+    },
+    "http_statuses": {
+      "/health/live": 200,
+      "/health/ready": 503,
+      "/v1/session": 403
+    },
+    "probe_source_sha256": "32505dcfcdee32599c43b24f84ce8758ab4da5ddaed1c1da41313e0582c3771c",
+    "worker_identity": {
+      "identity": "matched_independent_install_pins",
+      "unauthorized_client_and_server_pin": "rejected"
+    },
+    "existing_pr_unchanged": true,
+    "passed": true,
+    "finished_at": "2026-11-05T15:39:01.412728+00:00"
+  },
+  "final": {
+    "observed_at": "2026-11-05T15:42:50.020004+00:00",
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-05T15:42:46.614090+00:00",
+      "remaining_credit": "195.38",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    },
+    "policy": {
+      "singleton": true,
+      "epoch": 39,
+      "runtime_sha256": "c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78",
+      "verifier_sha256": "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f",
+      "enabled": false,
+      "verification_epoch": 2
+    },
+    "inference_blocked": true,
+    "active_versions": 0,
+    "pr": {
+      "state": "COMPLETE",
+      "writes": 3
+    },
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "retention": {
+      "workspaces": 3,
+      "expired_workspaces": 0,
+      "completed_deletions": 11
+    }
+  },
+  "product_install": {
+    "observed_at": "2026-11-05T15:34:46.695068+00:00",
+    "revision": "f9469b44bb072848e950a9cb890f1f5ae97c495a9d6c22d69a9f3d214ff89282",
+    "sources": {
+      "install_product_services.py": "1a0bd67f813245d9eecf7f40f95736da89bd33683c47196012d6a661f8626c46",
+      "settings.json": "0f902b264b4db5acee627f809e4bf4aab16cbaba80800aa7e581dff768a09809"
+    },
+    "result": {
+      "api_network": "none",
+      "api_transport": "private_unix_tls",
+      "dispatcher_targets": "fixed_vultr_worker_and_local_database_verifier",
+      "github_credentials_mounted": "dispatcher_only_optional",
+      "image": "4ec2fbe368ff48894f07076812d33398b5d92d683736ceb3084dd66b8bf88bcb",
+      "inference_credentials_mounted": "dispatcher_only",
+      "new_cloud_resources": 0
+    }
+  },
+  "http": {
+    "observed_at": "2026-11-05T15:35:49.945521+00:00",
+    "checks": [
+      "actual_tls_scram_session_auth_csrf_readiness",
+      "immutable_upload_download_workspace_isolation_exact_approval",
+      "scoped_enqueue_idempotency_actual_worker_bounded_verifier",
+      "persisted_wrong_owner_witness_failure_page",
+      "q08_filtered_missing_attribute_held",
+      "invalid_input_rejected_without_worker",
+      "session_revocation"
+    ],
+    "jobs": [
+      {
+        "id": "d35d4780-1cf5-40f6-915a-e82490b61413",
+        "state": "NEEDS_REVIEW",
+        "outcome": "mismatch"
+      },
+      {
+        "id": "331b784b-b2c7-4567-8eb8-fec0aa5403d7",
+        "state": "NEEDS_REVIEW",
+        "outcome": "held"
+      },
+      {
+        "id": "707d9742-f220-4ff4-a28c-7e6332c631fa",
+        "state": "NEEDS_REVIEW",
+        "outcome": "input_rejected"
+      }
+    ],
+    "private_receipt_sha256": "6bf556df969935b2c294057a00eae048053f86b2f62c079efc95a3da0db73c99",
+    "provider_calls": 0
+  },
+  "tests": {
+    "linux_passed": 745,
+    "linux_subtests_passed": 10,
+    "windows_passed": 649,
+    "windows_linux_only_skips": 96,
+    "trusted_image_exact_source_files": 72
+  },
+  "scope": [
+    "Only raw failure previews retired; execution/fence/restore tombstones preserved",
+    "Natural expiry and post-restart readback used actual worker; no timestamp edits",
+    "SQLITE secure_delete + WAL truncation is not forensic provider snapshot/SSD erasure",
+    "Controller image reuses unchanged cached native/dependency layers",
+    "No new inference calls, cloud services or external writes after pilot checkpoint"
+  ],
+  "preserved_failures": [
+    "Initial worker preflight refused exact config equality before service changes: dispatcher has an extra declared verifier pin; exact expected shapes reconciled",
+    "network=none trusted build had no matching apt cache; ordinary build reused existing hash-pinned dependency layers without upgrades",
+    "First immediate RPC after observed systemd restart returned WORKER_DELIVERY_UNKNOWN; exact socket cause is hidden by transport sanitization. Startup readiness race is an inference, not proven root cause. Added bounded authenticated identity readiness; later exact-status/replay and physical readback passed",
+    "Initial restart diagnostic SHA256 b6908ec844124dd6ca8db9029f64ba94ff1c8246594e75c87acd493a08b3cd26; no claim that the first restart RPC succeeded"
+  ],
+  "limitations": [
+    "Final held-out A/B/C/D comparison NOT RUN",
+    "Metadata and restore tombstone lifecycle incomplete; deletion-aware backups remain gated",
+    "No independent human security/oracle sign-off",
+    "Old active version invalidated normally by runtime change; a fresh proof/approval is required before future activation",
+    "Provider quote remains expired and inference closed; refreshed rates/config required before paid dispatch",
+    "Preview record controller hash reflects final reconciler; initial helper launch hash not separately retained; guest source manifest and worker receipts remain bound"
+  ]
+}

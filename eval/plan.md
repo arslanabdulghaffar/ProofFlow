@@ -1,5 +1,7 @@
 # Evaluation and spending plan
 
+The worker retention follow-up changes the runtime identity to c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78 and product image to4ec2fbe368ff48894f07076812d33398b5d92d683736ceb3084dd66b8bf88bcb. Pilot results retain their original runtime provenance. Freeze the current exact runtime with the final set; do not silently relabel prior runs. No additional model calls were made for this retention update.
+
 ## Actual development pilot — November6 KST
 
 The declared12-job pilot completed on four disclosed cases with15 real model calls. [Report](development-pilot-2026-11-06.md). This uses production repair-core functions for A; it does not fulfill the full-product A/final A/B/C/D comparison below. B incorrectly accepted the ambiguous case; A/C held it. D NOT RUN, no repeated-case consistency claim, human oracle review absent.

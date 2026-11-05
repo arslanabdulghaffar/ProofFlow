@@ -1,5 +1,13 @@
 # Progress
 
+## November6 KST — worker preview retirement deployed and checked
+
+After verified67920adc pilot checkpoint, fixed the remaining indefinite raw failure-preview storage. Indexed300-second deadlines, one-time legacy grace, secure_delete/WAL truncation and bounded maintenance preserve all execution/fence/cleanup/quarantine records. Local real-reader checkpoint failure/recovery tests pass; deployed natural expiry and physical database/WAL absence pass, exact replay stays idempotent and changed source is rejected. A later readback after actual worker restart passed; the first immediate RPC was delivery-unknown and is preserved, not counted successful.
+
+Coordinated worker/control/dispatcher pins and new product image4ec2fbe368ff48894f07076812d33398b5d92d683736ceb3084dd66b8bf88bcb. Normal semantic-epoch advance clears active versions; old approval is not rebound.16 fresh worker gates and7 HTTP/queue groups/3 cases pass;745 Linux+10 subtests,649 Windows/96 Linux skips,72 exact image files. Dependency versions unchanged. [Evidence](evidence/phase5-worker-retention-2026-11-06.json).
+
+Credit$195.38, both admissions closed, existing PR unchanged, no model calls/new resources beyond the earlier pilot. Phase5 remains IN PROGRESS: final comparison and metadata/deletion-aware backup lifecycle remain. Human security/oracle review is still absent. Update/commit/push/remote verification preserves this progress without a continuation question.
+
 ## November6 KST — Phase5 model pilot and retention checkpoint
 
 Completed12 real development jobs/15 Vultr calls on existing infrastructure. All three arms repaired3/3 cases; witness and verdict-only arms held the one ambiguous case, while execution-only B incorrectly accepted it. All cleanup confirmed. This is repair-core development evidence, not a held-out/full-product benchmark. D NOT RUN. Usage estimate$0.011443; held reservations$0.417795 remain unreleased. [Evidence](evidence/phase5-model-pilot-retention-2026-11-06.json).

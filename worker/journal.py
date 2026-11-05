@@ -5,7 +5,8 @@ import json
 import os
 import sqlite3
 import stat
-from contextlib import contextmanager
+import time
+from contextlib import closing, contextmanager
 from pathlib import Path
 from uuid import UUID
 
@@ -33,14 +34,21 @@ class Journal:
             fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
             os.close(fd)
         with self._db() as db:
-            db.executescript("""
-                CREATE TABLE IF NOT EXISTS executions (
+            db.execute("""CREATE TABLE IF NOT EXISTS executions (
                     id TEXT PRIMARY KEY, job TEXT NOT NULL, generation INTEGER NOT NULL,
                     manifest TEXT NOT NULL, state TEXT NOT NULL, cancel INTEGER NOT NULL DEFAULT 0,
-                    receipt TEXT, UNIQUE(job,generation));
-                CREATE TABLE IF NOT EXISTS fences (
-                    job TEXT PRIMARY KEY, generation INTEGER NOT NULL);
-            """)
+                    receipt TEXT, preview_expires_at REAL, UNIQUE(job,generation))""")
+            db.execute("CREATE TABLE IF NOT EXISTS fences "
+                       "(job TEXT PRIMARY KEY, generation INTEGER NOT NULL)")
+            columns = {row[1] for row in db.execute("PRAGMA table_info(executions)")}
+            if "preview_expires_at" not in columns:
+                db.execute("ALTER TABLE executions ADD COLUMN preview_expires_at REAL")
+                # Legacy receipts have no trustworthy finish time. Start one bounded
+                # grace period at migration; reopening must never extend this deadline.
+                db.execute("UPDATE executions SET preview_expires_at=? "
+                           "WHERE receipt LIKE '%\"failure_log_preview\"%'", (time.time() + 300,))
+            db.execute("CREATE INDEX IF NOT EXISTS execution_preview_expiry "
+                       "ON executions(preview_expires_at) WHERE preview_expires_at IS NOT NULL")
 
     @contextmanager
     def _db(self):
@@ -48,6 +56,7 @@ class Journal:
         try:
             db.execute("PRAGMA journal_mode=WAL")
             db.execute("PRAGMA synchronous=FULL")
+            db.execute("PRAGMA secure_delete=ON")
             db.execute("BEGIN IMMEDIATE")
             yield db
             if db.in_transaction:
@@ -138,10 +147,37 @@ class Journal:
                                    (identifier.hex,)).fetchone()
             if cancelled and cancelled[0] and cleaned:
                 receipt["outcome"] = "cancelled"
-            if db.execute("UPDATE executions SET state=?,receipt=? WHERE id=? AND state!='CLEANED'",
+            expiry = time.time() + 300 if "failure_log_preview" in receipt else None
+            if db.execute("UPDATE executions SET state=?,receipt=?,preview_expires_at=? "
+                          "WHERE id=? AND state!='CLEANED'",
                           ("CLEANED" if cleaned else "QUARANTINED",
-                           json.dumps(receipt, sort_keys=True), identifier.hex)).rowcount != 1:
+                           json.dumps(receipt, sort_keys=True), expiry,
+                           identifier.hex)).rowcount != 1:
                 raise SupervisorError("INVALID_EXECUTION_TRANSITION")
+
+    def prune_failure_previews(self) -> int:
+        """Retire raw log bytes only; keep identity, conflict and fencing tombstones."""
+        with self._db() as db:
+            rows = db.execute("SELECT id,receipt FROM executions "
+                              "WHERE preview_expires_at<=? ORDER BY preview_expires_at LIMIT 32",
+                              (time.time(),)).fetchall()
+            for identifier, raw in rows:
+                receipt = json.loads(raw)
+                if "failure_log_preview" in receipt:
+                    preview = receipt.pop("failure_log_preview")
+                    receipt["failure_log_preview_sha256"] = hashlib.sha256(
+                        json.dumps(preview, sort_keys=True).encode()).hexdigest()
+                    receipt["failure_log_preview_retired"] = True
+                db.execute("UPDATE executions SET receipt=?,preview_expires_at=NULL WHERE id=?",
+                           (json.dumps(receipt, sort_keys=True), identifier))
+        # A commit alone leaves prior raw bytes in WAL frames. Always retry the
+        # checkpoint, including after a crash between redaction and truncation.
+        # Failure pauses supervisor admission via its normal maintenance gate.
+        with closing(sqlite3.connect(self.path, timeout=3, isolation_level=None)) as db:
+            checkpoint = db.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()
+            if checkpoint[0] != 0:
+                raise SupervisorError("WORKER_PREVIEW_CHECKPOINT_BUSY")
+        return len(rows)
 
     def unfinished(self) -> list[UUID]:
         with self._db() as db:

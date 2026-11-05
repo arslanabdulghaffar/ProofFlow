@@ -1,5 +1,6 @@
 """Deploy private fixed services on the existing control VM after credit checks."""
 
+import argparse
 import hashlib
 import io
 import json
@@ -13,8 +14,16 @@ from vultr_phase1 import PRIVATE, ROOT, Admin
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--retain-installed-provider", action="store_true",
+                        help="Use the last install receipt's unchanged provider settings")
+    args = parser.parse_args()
     deployment = json.loads((PRIVATE / "evidence/verifier-deployment.json").read_bytes())
-    provider = json.loads((PRIVATE / "repair-provider.json").read_bytes())
+    if args.retain_installed_provider:
+        installed = json.loads((PRIVATE / "evidence/product-service-install.json").read_bytes())
+        provider = installed["verifier"]["repair_provider"]
+    else:
+        provider = json.loads((PRIVATE / "repair-provider.json").read_bytes())
     quote_expired = datetime.fromisoformat(provider["quote"]["valid_until"]) <= datetime.now(UTC)
     settings = {"verifier_deployment": deployment["deployment"], "repair_provider": provider}
     files = {"settings.json": json.dumps(settings, sort_keys=True).encode(),
