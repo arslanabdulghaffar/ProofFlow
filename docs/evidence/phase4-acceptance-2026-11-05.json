@@ -1,0 +1,261 @@
+{
+  "phase": 4,
+  "status": "ACCEPTANCE_PASSED",
+  "observed_at": "2026-11-05T13:32:01.648441+00:00",
+  "checkpoint_condition": "Phase DONE only after the commit containing this receipt is pushed and remote SHA verified; final checkpoint report supplies SHA.",
+  "owner_constraint": "Finish remaining recovery test without another PR; private repository and credit-only limits.",
+  "acceptance_method": "Recovery-only drill under the no-new-PR constraint. Original create-response-loss injection is NOT_REPRODUCED. Explicitly seeded missing-ack state in disposable SQL; actual existing PR reads, dropped real GET reply, native lease expiry, restart, fencing and no repeated write.",
+  "recovery_receipt": {
+    "observed_at": "2026-11-05T13:28:56.884184+00:00",
+    "intent": "b34e8d47-ab50-4527-a83f-c72feca85c40",
+    "scenario": "isolated_pending_ack_fixture_real_sql_and_real_readonly_github",
+    "original_create_response_loss": "NOT_REPRODUCED",
+    "recovery": {
+      "pending_generation": 5,
+      "recovered_generation": 6,
+      "elapsed_seconds": 189.67,
+      "result": {
+        "url": "https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1",
+        "draft": true,
+        "number": 1,
+        "base_sha": "de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f",
+        "head_sha": "23e2948f8377fbf521f3fb09d7732f804c6db51c",
+        "repository_id": 1445855571
+      },
+      "write_intents": 3,
+      "lost_real_get_reply": true,
+      "pending_and_complete_restart": "passed",
+      "stale_controller_and_new_write_rejected": true,
+      "completed_redelivery_noop": true,
+      "store_operations": [
+        "pr_claim",
+        "pr_readback"
+      ]
+    },
+    "fixture_cleanup": "confirmed",
+    "production_snapshot_unchanged": true,
+    "github_calls": [
+      {
+        "method": "GET",
+        "path": "/app/installations/178607272"
+      },
+      {
+        "method": "POST",
+        "path": "/app/installations/178607272/access_tokens"
+      },
+      {
+        "method": "GET",
+        "path": "/installation/repositories?per_page=100"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/ref/heads/main"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/commits/de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/trees/cfb4989a70eb542de0071162bbd196ed1b54bfd0?recursive=1"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/ref/heads/proofflow/intent-b34e8d47ab504527a83fc72feca85c40"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/commits/23e2948f8377fbf521f3fb09d7732f804c6db51c"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/trees/14ab24d082246be9e0ba2bc7856b1125a6e9ec25?recursive=1"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/compare/de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f...23e2948f8377fbf521f3fb09d7732f804c6db51c"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/contents/pipeline.py?ref=23e2948f8377fbf521f3fb09d7732f804c6db51c"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/pulls?state=all&head=arslanabdulghaffar%3Aproofflow%2Fintent-b34e8d47ab504527a83fc72feca85c40&base=main&per_page=100"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/ref/heads/main"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/commits/de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/trees/cfb4989a70eb542de0071162bbd196ed1b54bfd0?recursive=1"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/ref/heads/proofflow/intent-b34e8d47ab504527a83fc72feca85c40"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/commits/23e2948f8377fbf521f3fb09d7732f804c6db51c"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/git/trees/14ab24d082246be9e0ba2bc7856b1125a6e9ec25?recursive=1"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/compare/de9fe95ec1513b4245e5b3c6962cd36a7fb2ce1f...23e2948f8377fbf521f3fb09d7732f804c6db51c"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/contents/pipeline.py?ref=23e2948f8377fbf521f3fb09d7732f804c6db51c"
+      },
+      {
+        "method": "GET",
+        "path": "/repos/arslanabdulghaffar/ProofFlow-Demo/pulls?state=all&head=arslanabdulghaffar%3Aproofflow%2Fintent-b34e8d47ab504527a83fc72feca85c40&base=main&per_page=100"
+      }
+    ],
+    "github_mutations": 0,
+    "token_permissions": "contents/read,pull_requests/read,metadata/read",
+    "new_prs": 0,
+    "new_cloud_resources": 0,
+    "provider_calls": 0,
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-05T13:25:28.698384+00:00",
+      "remaining_credit": "195.6",
+      "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+    }
+  },
+  "phase4_evidence": [
+    {
+      "obligations": "T13 exact version approval/revocation; T14 fresh immutable batches",
+      "path": "docs/evidence/phase4-versions-batches-2026-11-04.json"
+    },
+    {
+      "obligations": "Real browser activation/batches; signed event idempotency/revocation/controller restart",
+      "path": "docs/evidence/phase4-integrations-2026-11-04.json"
+    },
+    {
+      "obligations": "Exact GitHub tree/mode/readback hardening; real SQL pending/fencing and explicit HTTP doubles",
+      "path": "docs/evidence/phase4-readback-hardening-2026-11-05.json"
+    },
+    {
+      "obligations": "Real owner-approved private draft PR; exact independent readback; completed dispatcher restart and approval replay",
+      "path": "docs/evidence/phase4-real-pr-reconciled-2026-11-05.json"
+    }
+  ],
+  "checks": {
+    "windows_tests_passed": 628,
+    "linux_only_skipped": 86,
+    "new_no_write_boundary_tests": 7,
+    "ruff": "passed",
+    "real_disposable_sql_recovery": "passed",
+    "fixture_container_and_volume_cleanup": "confirmed",
+    "source_repository_private": "verified",
+    "demo_repository_private": "verified by read-only installation token and repository readback"
+  },
+  "review": "Separate Codex critical pass: fixture initialization never touches production, no candidate execution, read-only token plus pre-network mutation denial, only fixed claim/readback/defer store operations, no lease shortening, unchanged SQL/controller/adapter, exact head/receipt equality and production snapshot unchanged. Not independent human approval.",
+  "limitations": [
+    "Lost original POST /pulls response was not injected or retroactively recreated.",
+    "Missing-ack seed and upstream proof are explicitly synthetic in a disposable local database; real SQL recovery/read-only GitHub observations are actual.",
+    "Drill uses a functions-only psql bridge, not the production Python database connection; prior deployed database/authentication evidence remains separate.",
+    "No independent human reviewer; evaluation/security expansion, retention/backups, MIT clearance and public release remain Phase5/6 gates."
+  ],
+  "production_image": "886e5044e05ce84b78c2fc10ae19019d577338b66e7808475d0020a4fb452bab",
+  "new_dependencies": 0,
+  "production_code_or_sql_changes": false,
+  "source_hashes": [
+    {
+      "path": "scripts/check_existing_pr_recovery.py",
+      "sha256": "fb2733d378f81081ffcdc3d5ddd4feb275f9a167b35436a19387906d21f4e852"
+    },
+    {
+      "path": "scripts/github_recovery_fixture.py",
+      "sha256": "adfd7d58167b2690409ccdb66014795b2e182322c30cafe6223cd038c8cc649b"
+    },
+    {
+      "path": "tests/unit/test_existing_pr_recovery.py",
+      "sha256": "c819db681c66c4681a52500bea6f7c5dda0ebb390061e23e43158c13ed0f1146"
+    },
+    {
+      "path": "orchestrator/github_dispatcher.py",
+      "sha256": "24272b92e2cde5c5d709e6362dce6dde945ba8e5371d31ccc4da21abf0587bf0"
+    },
+    {
+      "path": "integrations/github_app.py",
+      "sha256": "8b032e7d58276e6ac5d3bb7bb453372a4e94a2d14ba490729f6d66e002633ae6"
+    }
+  ],
+  "migrations": [
+    {
+      "path": "db/phase2/001_identity_assets.sql",
+      "sha256": "8cbe9cf7403c0c5b0040ddf48ce4889faee749182e83a7a629c2ad91ffb818e3"
+    },
+    {
+      "path": "db/phase2/002_upload_reservations.sql",
+      "sha256": "4c54e548ebfccfe33105980ed796ff195c1d0f340c3abb5e1e864e145e833865"
+    },
+    {
+      "path": "db/phase2/003_original_queue.sql",
+      "sha256": "9e2ad2424895e8b4c34db680c3f44f1dd4b7118d390daaf80bea03e572f51401"
+    },
+    {
+      "path": "db/phase2/004_termination_evidence.sql",
+      "sha256": "bb1bf2b00ae64850e3ee866b8a83442af4fc57c0bb927cba2acb19621c9be81d"
+    },
+    {
+      "path": "db/phase2/005_job_event_replay.sql",
+      "sha256": "94a75b8464b401fd9743f3e46a95fede8ade87c6591871656a212096ff47598b"
+    },
+    {
+      "path": "db/phase2/006_browser_session.sql",
+      "sha256": "1d24f62f96429e4170b3df88aeb1caa2a6b3fe389601f4842245d7cd5cf1db70"
+    },
+    {
+      "path": "db/phase2/007_workspace_retention.sql",
+      "sha256": "584f5a533960a3803e358d7a831bbbb727ee4a9918d0490c43615ce68e8ca57f"
+    },
+    {
+      "path": "db/phase2/008_bounded_repair.sql",
+      "sha256": "7fd06fb9d1fbd05429c994fc0961d1850661a4401ecb39a293511a200fe09d99"
+    },
+    {
+      "path": "db/phase2/009_repair_retention.sql",
+      "sha256": "57482415fa885529e6ab219c556db4dbf66a8e31cbce2b49dc973dfe6d325a44"
+    },
+    {
+      "path": "db/phase2/010_original_proof_bundle.sql",
+      "sha256": "ec5bb1ae3e93aca7f6a4950d2f3251f665c104d1d5e5d73bb3226a0efb0dd453"
+    },
+    {
+      "path": "db/phase2/011_versions_batches.sql",
+      "sha256": "1bc7c3d140e1d36104ecd2c9cfcadc618c21dd03d5e245eaa02904a5c33f1725"
+    },
+    {
+      "path": "db/phase2/012_version_retention.sql",
+      "sha256": "e421d009c5bb9bcf140a4465771819e81b2197476e3960b98953ec678b015698"
+    },
+    {
+      "path": "db/phase2/013_github_outbox.sql",
+      "sha256": "039faf470851dac735fa722d88a5b125ffcc65a0a9b839e1b74e0ac8f85bd3fb"
+    },
+    {
+      "path": "db/phase2/014_signed_batches.sql",
+      "sha256": "74f2cd01dba9dd23a9105d36281289b03c0edadced8b9764aef00e58d911de96"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Acceptance and verification plan
 
-Latest22:16 KST: real PR acceptance and partial recovery evidence now supersede the older read-only-only receipt below.621 Windows passes/86 Linux skips; fixed fault harness has a real immutable-type regression. Live lost-response injection remains unproven and blocks full Phase4 acceptance. [Evidence](evidence/phase4-real-pr-reconciled-2026-11-05.json).
+Latest22:30 KST: Phase4 acceptance passes under the owner's no-new-PR constraint. Explicit pending-ack seed in a disposable DB; actual unchanged SQL/controller/adapter, real existing-PR GET reply loss, natural180-second lease expiry, higher-generation takeover, stale/write rejection, pending/completed restart, no-op redelivery and cleanup.628 Windows passes/86 Linux skips;7 mutation-denial cases. Original POST-create response loss remains NOT_REPRODUCED; this is recovery-only evidence combined with the separate real PR creation/readback. [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json).
 
 ## Phase4 acceptance audit — November5
 
@@ -8,9 +8,9 @@ Latest22:16 KST: real PR acceptance and partial recovery evidence now supersede 
 | --- | --- |
 | T13 exact versions/revocation | Real SQL hash/actor/CAS/revocation checks and deployed synthetic activation/revocation; prior [version/batch](evidence/phase4-versions-batches-2026-11-04.json) and [browser](evidence/phase4-integrations-2026-11-04.json) receipts |
 | T14 immutable fresh batches | Deployed clean/held batches and queued revocation; real SQL activation versus existing batch binding; prior receipts above |
-| T15 controller/fencing/recovery | Prior deployed worker/controller cleanup evidence; new all-stage controller fault doubles and real disposable SQL pending takeover/fencing; no live GitHub response-loss injection claimed |
+| T15 controller/fencing/recovery | Prior deployed worker/controller cleanup evidence; new all-stage controller fault doubles and real disposable SQL pending takeover/fencing; recovery-only drill adds actual existing-PR GET reply loss, native lease expiry and restart against explicit disposable pending state; no production rewinding |
 | T16 signed delivery/idempotency | Prior deployed exact duplicate returns same batch; changed body/bad signature/revoked connection denied, with real SQL/HTTP signature cases |
-| T17 external action | Actual App setup/scoped authentication/read-only preview/base/tree passed; new tree/shape rejection tests and deployed static probes pass. Actual exact-approved private PR#1 creation/readback, completed restart and idempotent approval replay pass. Deliberate lost-response/lease recovery NOT RUN: harness failed before injection |
+| T17 external action | Actual App setup/scoped authentication/read-only preview/base/tree passed; new tree/shape rejection tests and deployed static probes pass. Actual exact-approved private PR#1 creation/readback, completed restart and idempotent approval replay pass. Recovery-only drill against existing PR passes; original POST-create response loss NOT_REPRODUCED |
 
 [Current receipt](evidence/phase4-readback-hardening-2026-11-05.json):607 Windows passes/86 Linux-only skips, seven actual disposable PostgreSQL groups, four Chromium groups with mocked HTTP. Actual upgraded dispatcher uses installed App credentials only for GETs and scoped token issuance. No PR/branch/commit write or new preview. Product readiness remains503. Evaluation/lifecycle/portable backups retain Phase5/6 scope. No independent human sign-off.
 

@@ -1,5 +1,9 @@
 # Private product GitHub integration setup
 
+## Recovery complete without another PR — November5 22:30 KST
+
+No further owner action or approval command is needed for Phase4. PR#1 remains unchanged. The recovery-only drill used real read-only GitHub access plus disposable SQL state; lost GET response, natural lease/fencing/restart/readback and cleanup passed. Production receipts unchanged, no repository mutation/new PR. Original create-response timeout was not reproduced; the fixture is clearly labeled. [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json).
+
 ## Current outcome — November5 22:16 KST
 
 The owner completed exact approval; private ProofFlow-Demo [draft PR#1](https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1) is created and independently verified. Do not run the local approval command again for this action. Its error came from the recovery-test helper after approval, not from rejected operator input. Normal dispatcher completed3 writes; restart/readback and same-approval replay passed, actor logged out. The test helper is fixed; live lost-response acceptance remains NOT RUN. [Evidence](evidence/phase4-real-pr-reconciled-2026-11-05.json). The instructions below are historical setup, not a new owner task.

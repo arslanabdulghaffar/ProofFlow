@@ -1,5 +1,13 @@
 # Decision log
 
+## D74: existing-PR recovery-only acceptance under the owner's no-new-PR constraint
+
+Do not reset a completed production intent, replay a GitHub create, extend an expired approval or request a duplicate PR merely to exercise a fault. The owner explicitly requests recovery without another PR. Use a separate no-network disposable PostgreSQL fixture with all unchanged product migrations. Initialize missing PR acknowledgement from retained confirmed action data, retaining synthetic fixture workspace/proof/actor and disabled GitHub dispatch authority. This initialization is a declared recovery scenario, never a production state edit or claimed original timeout.
+
+Use the exact production controller/adapter source (hash compared with installed image) on the administrator computer, with a fixed functions-only psql bridge into the fixture. Candidate source is data only. Mint a repository-restricted read-only token; pre-network reject every mutation except exactly scoped read-only token issuance. Store adapter allows only claim/readback/defer. Lose one real PR-list GET reply before verification/DB acknowledgment. Restart the fixture database; require pending persistence and initial takeover denial, then wait for unchanged180-second lease naturally. Require higher generation, stale-controller/new-write rejection, exact existing PR readback, unchanged3 write-intent hashes, completed restart/no-op redelivery, cleanup and identical production snapshot before/after.
+
+This changes the test method to respect the owner's constraint, not approval, isolation, verification, idempotency or fencing requirements. Original POST-create response loss is NOT_REPRODUCED and must never be claimed. Real initial PR creation is separately evidenced; this drill proves recovery of a missing-ack state against the existing real PR. No new dependencies/services, production credentials in fixture, candidate execution, SQL changes or independent human review. [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json).
+
 ## D73: reconcile accepted approval before any retry; wrap immutable fault dependencies
 
 A local harness failure is not proof that the external action failed. Inspect the exact durable intent and dedicated App readback before creating any replacement. This attempt already completed its3 authorized writes after production restart; preserve that PR and never reuse its approval for another intent. Complete exact readback/restart/idempotent replay using the original still-valid actor, then logout.

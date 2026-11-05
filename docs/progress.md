@@ -1,5 +1,9 @@
 # Progress
 
+## November5 22:30 KST — Phase4 acceptance passed
+
+Finished the owner-requested recovery test without another PR. Recovery-only disposable SQL scenario plus actual existing PR reads: real GET reply loss, pending database restart, natural180-second lease expiry, generation5→6 takeover, stale-controller/write rejection, exact readback, completed restart/redelivery and cleanup all passed in189.67 seconds. Production receipt snapshot unchanged; zero GitHub writes/new PRs/provider calls/cloud resources. Original POST-create response loss remains NOT_REPRODUCED; synthetic seed and real observations are clearly separated. [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json) closes Phase4's functional recovery obligations using the owner-constrained method, alongside prior live version/batch/signed-event/real-PR evidence. DONE requires this checkpoint's verified push.628 local passes/86 Linux skips;7 mutation-boundary cases/Ruff pass; private repos and$150/$25 promotional-only limits maintained.
+
 ## November5 22:16 KST — exact-approved private PR verified
 
 Owner local approval succeeded. The fault harness failed before injection because it mutated frozen ProductStore; normal dispatcher restart then completed the same authorized branch/commit/draft PR once. Verified [private PR#1](https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1) against exact base/head/source/tree/title/body/draft/repo, plus completed restart persistence and idempotent approval replay.3 confirmed writes; actor logged out. No new approval or duplicate PR needed. Fixed harness using wrappers and real immutable-type regression;621 tests pass/86 Linux skips,25 targeted checks/Ruff pass. [Evidence](evidence/phase4-real-pr-reconciled-2026-11-05.json). Actual response-loss/lease recovery remains NOT RUN, so Phase4 remains incomplete. Both repositories private; credit$195.60; no new resources/model/worker work.
