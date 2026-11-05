@@ -1,5 +1,9 @@
 # Progress
 
+## November5 14:20 KST — repair local approval preparation
+
+Fixed explicit owner/DACL creation for DPAPI sessions after the owner's elevated terminal produced an Administrators-owned file. Added workspace-expiry preflight and safe stage diagnostics. Replaced the expired test workspace through ordinary synthetic intake/worker proof, retaining old records. Actual original match,3 fresh isolated checks/cleanup, zero model calls and deployed preview/session readback passed; test actor logged out and zero PR writes remain. Initial fresh-workspace helper wait bug cancelled its first original; retained cleanup evidence and corrected terminal-state polling before a new API job.620 tests pass/86 Linux skips; Ruff passes. [Evidence](evidence/phase4-local-approval-fix-2026-11-05.json). Phase4 remains incomplete; actual interactive approval/PR/recovery still NOT RUN. Source repo private; credit$196.46, no new services, admissions closed.
+
 ## November5 08:46 KST — remove chat timing from the approval handoff
 
 A third exact preview was approved but processed after expiry; actual API/SQL/GitHub reconciliation confirms no approval/write/branch/PR. Services are active, no fault container remains, and credit is$197.10. Prepared a human-operated local preview/Notepad/full-digest confirmation command so the owner can submit within the same validity window without another chat round trip. Unique records/sessions preserve history; terminal/expiry/authority checks fail closed. No actual local approval has been performed. [Receipt](evidence/phase4-local-approval-ready-2026-11-05.json).

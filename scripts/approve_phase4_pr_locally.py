@@ -9,7 +9,18 @@ from uuid import uuid4
 
 from complete_phase4_pr_approval import main as complete
 from product_live_session import PRIVATE, require
+from refresh_phase4_pr_preview import SAFE_ERRORS, STAGES
 from refresh_phase4_pr_preview import main as prepare
+
+
+def safe_failure(error):
+    safe = {"INTERACTIVE_TERMINAL_REQUIRED_NO_ACTION", "APPROVAL_CANCELLED_NO_WRITE",
+            "PREVIEW_EXPIRED_NO_WRITE", "PREVIEW_VIEWER_UNAVAILABLE_NO_ACTION"}
+    safe.update(f"PREVIEW_STOPPED_{stage.upper()}_{code}"
+                for stage in STAGES
+                for code in SAFE_ERRORS | {"UNCLASSIFIED_PREPARATION_FAILURE"})
+    return (str(error) if str(error) in safe
+            else "LOCAL_APPROVAL_STOPPED_RECONCILE_SAVED_EVIDENCE")
 
 
 def confirm_exact(record, read_answer, clock):
@@ -56,8 +67,4 @@ if __name__ == "__main__":
     try:
         main()
     except (Exception, KeyboardInterrupt) as error:
-        safe = {"INTERACTIVE_TERMINAL_REQUIRED_NO_ACTION", "APPROVAL_CANCELLED_NO_WRITE",
-                "PREVIEW_EXPIRED_NO_WRITE", "PREVIEW_VIEWER_UNAVAILABLE_NO_ACTION"}
-        code = (str(error) if str(error) in safe
-                else "LOCAL_APPROVAL_STOPPED_RECONCILE_SAVED_EVIDENCE")
-        raise SystemExit(code) from None
+        raise SystemExit(safe_failure(error)) from None

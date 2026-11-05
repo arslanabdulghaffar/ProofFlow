@@ -20,14 +20,45 @@ def save_session(secret, name="phase4-pr-session.dpapi"):
         or re.fullmatch(r"phase4-pr-[a-f0-9]{32}\.dpapi", name) is not None,
         "PRIVATE_SESSION_NAME_INVALID",
     )
-    # Fixed stdin-only DPAPI conversion; neither plaintext nor native errors are printed.
-    script = (
-        "$ErrorActionPreference='Stop';"
-        "$value=[Console]::In.ReadToEnd();"
-        "$secret=ConvertTo-SecureString -String $value -AsPlainText -Force;"
-        "try {[Console]::Write((ConvertFrom-SecureString -SecureString $secret))}"
-        "finally {$secret.Dispose();$value=$null}"
-    )
+    # Explicit owner/DACL at creation also works in an elevated terminal, where
+    # the default owner would be Administrators. Never relax the readback check.
+    script = r"""
+$ErrorActionPreference='Stop'
+$root=Join-Path $env:USERPROFILE '.proofflow\deployment'
+$sid=[Security.Principal.WindowsIdentity]::GetCurrent().User
+foreach($path in @((Split-Path -Parent $root),$root)) {
+  $item=Get-Item -LiteralPath $path -Force
+  if(-not $item.PSIsContainer -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)){
+    throw 'path'
+  }
+  if($path -ne $root){continue}
+  $parentAcl=[IO.Directory]::GetAccessControl($path)
+  if($parentAcl.GetOwner([Security.Principal.SecurityIdentifier]).Value -ne $sid.Value){
+    throw 'owner'
+  }
+  foreach($rule in $parentAcl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier])){
+    if($rule.IdentityReference.Value -notin @($sid.Value,'S-1-5-18')){throw 'scope'}
+  }
+}
+$acl=[Security.AccessControl.FileSecurity]::new()
+$acl.SetOwner($sid)
+$acl.SetAccessRuleProtection($true,$false)
+foreach($principal in @($sid,[Security.Principal.SecurityIdentifier]::new('S-1-5-18'))){
+  $acl.AddAccessRule([Security.AccessControl.FileSystemAccessRule]::new(
+    $principal,'FullControl','Allow'))
+}
+$value=[Console]::In.ReadToEnd()
+$secret=ConvertTo-SecureString -String $value -AsPlainText -Force
+try {
+  $bytes=[Text.Encoding]::UTF8.GetBytes((ConvertFrom-SecureString -SecureString $secret))
+  $target=Join-Path $root $env:PROOFFLOW_SESSION_FILE
+  $stream=[IO.FileStream]::new($target,[IO.FileMode]::CreateNew,
+    [Security.AccessControl.FileSystemRights]::Write,[IO.FileShare]::None,
+    4096,[IO.FileOptions]::None,$acl)
+  try {$stream.Write($bytes,0,$bytes.Length);$stream.Flush($true)}
+  finally {$stream.Dispose()}
+} finally {$secret.Dispose();$value=$null}
+"""
     result = subprocess.run(  # noqa: S603 - fixed encryption helper, secrets only on stdin
         [
             "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
@@ -38,14 +69,12 @@ def save_session(secret, name="phase4-pr-session.dpapi"):
         input=json.dumps({"token": secret.token, "csrf": secret.csrf}).encode(),
         capture_output=True,
         timeout=20,
-        env={k: v for k, v in os.environ.items() if k.upper() != "PSMODULEPATH"},
+        env={
+            **{k: v for k, v in os.environ.items() if k.upper() != "PSMODULEPATH"},
+            "PROOFFLOW_SESSION_FILE": name,
+        },
     )
-    require(result.returncode == 0 and len(result.stdout) > 100, "SESSION_ENCRYPTION_FAILED")
-    target = PRIVATE / name
-    with target.open("xb") as output:
-        output.write(result.stdout)
-        output.flush()
-        os.fsync(output.fileno())
+    require(result.returncode == 0 and result.stdout == b"", "PRIVATE_SESSION_SAVE_FAILED")
 
 
 def main():

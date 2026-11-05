@@ -1,5 +1,6 @@
 """Prepare one fresh exact preview of an existing eligible version; never approve it."""
 
+import hashlib
 import json
 import time
 from datetime import UTC, datetime, timedelta, timezone
@@ -10,6 +11,27 @@ from prepare_phase4_pr_preview import save_session
 from product_live_session import PRIVATE, LiveSession, require
 
 RECORD = PRIVATE / "evidence/phase4-pr-refresh-20261105-0740.json"
+SOURCE = PRIVATE / "evidence/phase4-pr-workspace-20261105.json"
+STAGES = {"connect", "preflight", "session", "save_session", "read_session",
+          "request_preview", "read_preview", "render_preview"}
+SAFE_ERRORS = {
+    "MANAGEMENT_PREFLIGHT_FAILED", "ADMINISTRATOR_OPERATION_IN_PROGRESS",
+    "PRIVATE_HOST_OPERATION_FAILED", "PRIVATE_TUNNEL_UNAVAILABLE",
+    "CREDIT_GUARD_NOT_ADMITTING", "ADMISSION_MUST_START_CLOSED", "REPAIR_NOT_IDLE",
+    "WORKSPACE_EXPIRED_OR_UNAVAILABLE", "PRIVATE_SESSION_SAVE_FAILED",
+    "PRIVATE_SESSION_UNAVAILABLE", "PRIVATE_SESSION_READBACK_FAILED",
+    "FRESH_PREVIEW_NOT_ACCEPTED", "FRESH_PREVIEW_UNAVAILABLE", "FRESH_PREVIEW_NOT_READY",
+    "INFERENCE_MUST_REMAIN_BLOCKED", "REVIEW_EXISTING_EXTERNAL_WRITES",
+}
+
+
+def require_workspace(live, workspace):
+    # Check before creating credentials or an intent; expiry is never extended.
+    require(live.sql(
+        "SELECT COALESCE(bool_and(kind='operator' AND revoked_at IS NULL AND "  # noqa: S608 - UUID only
+        "expires_at>clock_timestamp()+interval '41 minutes'),false) "
+        f"FROM pf_product.workspaces WHERE id='{UUID(workspace)}';"
+    ) == b"t", "WORKSPACE_EXPIRED_OR_UNAVAILABLE")
 
 
 def render_preview(record):
@@ -44,19 +66,22 @@ def render_preview(record):
     return str(destination)
 
 
-def main(record_path=None, emit=True):
-    record_path = RECORD if record_path is None else record_path
-    require(record_path.parent == PRIVATE / "evidence", "PRIVATE_RECORD_PATH_REQUIRED")
-    require(not record_path.exists(), "RECONCILE_EXISTING_REFRESH_RECORD")
-    prior = json.loads((PRIVATE / "evidence/phase4-pr-preview-intent.json").read_bytes())
+def _prepare(record_path, emit):
+    source = SOURCE if SOURCE.exists() else PRIVATE / "evidence/phase4-pr-preview-intent.json"
+    prior = json.loads(source.read_bytes())
+    expected_source = (prior["candidate_sha256"] if source == SOURCE else hashlib.sha256(
+        prior["pr"]["preview"]["candidate_source"].encode()).hexdigest())
+    if source == SOURCE:
+        require(prior.get("status") == "ready", "FRESH_WORKSPACE_NOT_READY")
     identity = uuid4()
     record = {
         "workspace": str(UUID(prior["workspace"])),
         "version": str(UUID(prior["version"])),
-        "previous_intent": str(UUID(prior["pr_intent"])),
+        "source_record": source.name,
         "pr_intent": str(identity),
         "session_file": "phase4-pr-" + identity.hex + ".dpapi",
         "external_approval": False,
+        "preparation_stage": "connect",
     }
     with record_path.open("x", encoding="utf-8") as output:
         json.dump(record, output)
@@ -64,7 +89,12 @@ def main(record_path=None, emit=True):
     def save():
         record_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
 
+    def stage(value):
+        record["preparation_stage"] = value
+        save()
+
     with LiveSession() as live:
+        stage("preflight")
         require(
             live.sql("SELECT bool_and(blocked) FROM pf_budget.accounts;", "proofflow_budget")
             == b"t",
@@ -74,18 +104,24 @@ def main(record_path=None, emit=True):
             live.sql("SELECT count(*) FROM pf_product.pr_writes;") == b"0",
             "REVIEW_EXISTING_EXTERNAL_WRITES",
         )
+        require_workspace(live, record["workspace"])
+        stage("session")
         client = live.login(record["workspace"])
+        stage("save_session")
         save_session(live.secret, record["session_file"])
+        stage("read_session")
         saved = existing_session(record["session_file"])
         require(
             saved == {"token": live.secret.token, "csrf": live.secret.csrf},
             "PRIVATE_SESSION_READBACK_FAILED",
         )
+        stage("request_preview")
         response = client.post(
             "/v1/versions/" + record["version"] + "/pr-preview",
             json={"intent_id": record["pr_intent"]},
         )
         require(response.status_code == 202, "FRESH_PREVIEW_NOT_ACCEPTED")
+        stage("read_preview")
         for _ in range(60):
             response = client.get("/v1/pr-intents/" + record["pr_intent"])
             require(response.status_code == 200, "FRESH_PREVIEW_UNAVAILABLE")
@@ -101,12 +137,15 @@ def main(record_path=None, emit=True):
             "FRESH_PREVIEW_NOT_READY",
         )
         require(
-            status["preview"]["candidate_source"] == prior["pr"]["preview"]["candidate_source"],
+            hashlib.sha256(status["preview"]["candidate_source"].encode()).hexdigest()
+            == expected_source,
             "EXISTING_CANDIDATE_CHANGED",
         )
         record["observed_at"] = datetime.now(UTC).isoformat()
         record["credit"] = live.credit
+        stage("render_preview")
         record["review_artifact"] = render_preview(record)
+        record["preparation_stage"] = "ready"
         save()
         summary = {
             "intent": record["pr_intent"], "preview_sha256": status["preview_sha256"],
@@ -118,6 +157,26 @@ def main(record_path=None, emit=True):
         if emit:
             print(json.dumps(summary))
         return record
+
+
+def main(record_path=None, emit=True):
+    record_path = RECORD if record_path is None else record_path
+    require(record_path.parent == PRIVATE / "evidence", "PRIVATE_RECORD_PATH_REQUIRED")
+    require(not record_path.exists(), "RECONCILE_EXISTING_REFRESH_RECORD")
+    try:
+        return _prepare(record_path, emit)
+    except Exception as error:
+        # Native errors may contain secrets. Persist only fixed stage/error codes.
+        stage, code = "connect", "UNCLASSIFIED_PREPARATION_FAILURE"
+        if str(error) in SAFE_ERRORS:
+            code = str(error)
+        if record_path.exists():
+            record = json.loads(record_path.read_bytes())
+            stage = record.get("preparation_stage", "connect")
+            stage = stage if stage in STAGES else "connect"
+            record["preparation_failure"] = code
+            record_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+        raise RuntimeError(f"PREVIEW_STOPPED_{stage.upper()}_{code}") from None
 
 
 if __name__ == "__main__":

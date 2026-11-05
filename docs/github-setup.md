@@ -1,5 +1,11 @@
 # Private product GitHub integration setup
 
+## Local command correction — November5 14:20 KST
+
+The owner's failed command is reconciled. The first session file inherited Administrators ownership; explicit current-user ownership/protected ACL at creation now passes real encryption/readback. The old workspace subsequently expired. A fresh synthetic workspace passed the original and3 isolated checks, and actual deployed preview preparation passed without approval. The helper uses it automatically; no key/account setup is needed. Run the same command below from any directory. The new workspace expires Nov6 13:14:49 KST; preflight requires41 minutes remaining. No previous approval is reused.
+
+If preparation stops again, retain its fixed stage/code and return it for reconciliation. Do not repeat blindly. The validation preview was logged out; the command generates your own new exact preview. Owner interactive confirmation and actual PR response-loss/recovery remain NOT RUN. See [fix evidence](evidence/phase4-local-approval-fix-2026-11-05.json).
+
 ## Immediate local approval — avoids the chat round trip
 
 Account/App setup is complete. The latest chat approval was processed at Nov5 08:41 KST, after its07:50 expiry; actual reconciliation confirms no PR/branch/write. Do not generate another short-lived chat request automatically. The owner can review and approve directly in one local terminal while the same preview remains valid:

@@ -1,5 +1,7 @@
 # Requirements traceability
 
+R30/T17 local preparation correction: actual Windows DPAPI/ACL and no-overwrite checks, fresh original+3 protected worker checks, real deployed preview and logout403 now pass.620 local tests/86 Linux skips; cancelled initial helper run preserved and wait regression added. No PR approval/write/recovery acceptance is claimed. [Evidence](evidence/phase4-local-approval-fix-2026-11-05.json).
+
 R30/T17 operator handoff: direct local full-digest confirmation avoids chat-processing delay while preserving exact expiry/authority. Three late chat intents have no external writes.617 local tests/86 Linux skips and real read-only reconciliation support the prepared helper; real PR creation/response-loss/readback remains NOT RUN. [Current receipt](evidence/phase4-local-approval-ready-2026-11-05.json). No Phase4 completion claim.
 
 R30/T17 hardening: deployed adapter checks complete resulting-tree identity/modes and malformed PR shapes. Actual dispatcher App/private-base/tree reads pass without a PR action. Seven real SQL groups and all-stage controller doubles cover single dispatch, takeover/fencing and uncertain readback; these do not replace actual PR write/readback/live recovery. T13–T16 prior non-PR evidence remains valid; no composite row or Phase4 completion is promoted. [Current receipt](evidence/phase4-readback-hardening-2026-11-05.json).

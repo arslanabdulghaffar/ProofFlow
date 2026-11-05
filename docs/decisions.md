@@ -1,5 +1,11 @@
 # Decision log
 
+## D72: explicit Windows session ownership and fresh expired-workspace replacement
+
+Encrypted session creation must set current-user ownership and protected user/SYSTEM DACL at CreateNew, including elevated terminals. Do not accept Administrators ownership in the secret reader or overwrite existing sessions. Retain fixed stdin-only DPAPI, no plaintext argv/logs, fixed name validation and independent decrypt/ACL readback. Preparation checks at least41 minutes of valid operator workspace life before a40-minute session; fixed stage/error allowlists report failure without native exception text. Expired workspaces/approvals remain unchanged.
+
+A new synthetic workspace may repeat normal API intake, exact synthetic contract/version activation and fresh isolated proof using retained identical source bytes, with inference blocked. This is automated fixture activation, never the human PR approval. Original queue waiting recognizes terminal states explicitly; unknown/running states cannot trigger false success. A cancelled attempt requires durable confirmed cleanup before a separately initiated new job; no status edits. Actual preview check logs out its actor and never submits approval. No deployed dependency/policy/SQL change or independent human review. [Evidence](evidence/phase4-local-approval-fix-2026-11-05.json).
+
 ## D71: human approval in one local session, with unchanged product rules
 
 Repeated chat round trips exceeded the existing ten-minute preview lifetime. Do not weaken that policy or silently carry the answer onto another intent. Provide Approve-Phase4PR.ps1/approve_phase4_pr_locally.py: require interactive stdin before any preparation, generate a unique retained record/session, display exact inert preview text in fixed Notepad, require the full displayed digest and check expiry again after input. Blank/broad confirmation is not approval. Codex must not automate that human confirmation. No credentials in chat/argv or new account setup. Optional helper record paths stay in the private evidence directory; prior artifacts remain preserved.

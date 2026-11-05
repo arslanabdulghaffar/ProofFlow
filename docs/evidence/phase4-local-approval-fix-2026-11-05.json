@@ -1,0 +1,91 @@
+{
+  "observed_at": "2026-11-05T05:20:03.920381+00:00",
+  "scope": "Phase4 local approval preparation correction; not phase acceptance",
+  "root_causes": [
+    "First owner attempt created DPAPI file owned by Administrators; strict owner readback correctly refused it.",
+    "Second attempt used an operator workspace expired at 2026-11-05T03:07:11.145014Z."
+  ],
+  "fixes": [
+    "Explicit current-user ownership and protected user/SYSTEM DACL at CreateNew file creation; no ACL relaxation.",
+    "Read-only workspace lifetime preflight before session creation, plus fixed-code stage diagnostics.",
+    "Fresh synthetic workspace/proof; expired records and approvals preserved."
+  ],
+  "actual_checks": {
+    "dpapi_roundtrip_from_system32": true,
+    "existing_session_overwrite_refused": true,
+    "fresh_original": "match",
+    "fresh_isolated_checks": 3,
+    "all_cleanup_confirmed": true,
+    "model_calls": 0,
+    "new_cloud_resources": 0,
+    "preview_and_session_readback": {
+      "observed_at": "2026-11-05T05:18:11.429864+00:00",
+      "preview_preparation": "passed_actual_deployed_path",
+      "session_encryption_readback": "passed",
+      "intent": "990763e4-d1f0-4c17-bd82-d3bb223ff28b",
+      "external_writes": 0,
+      "approval_submitted": false,
+      "test_actor_logged_out": true,
+      "credit": {
+        "credit_guard": "within_early_cutoff",
+        "checked_at": "2026-11-05T05:18:06.505139+00:00",
+        "remaining_credit": "196.46",
+        "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+      },
+      "product_admission": false,
+      "inference_blocked": true
+    },
+    "cancelled_probe_preserved": {
+      "id": "7bee7925-3691-497c-a40d-01e3046a0c2a",
+      "result": {
+        "id": "7bee7925-3691-497c-a40d-01e3046a0c2a",
+        "state": "CANCELLED",
+        "report": null,
+        "outcome": "cancelled",
+        "sequence": 5,
+        "created_at": "2026-11-05T05:14:51.487538+00:00",
+        "cancel_requested": true
+      },
+      "cleanup_confirmed_by_database": true
+    },
+    "repo_private_verified": true
+  },
+  "workspace": "c6839d4c-3484-4946-9268-1f206b48f9cf",
+  "version": "726b8a92-8ad2-46e2-83a7-4ef0e193eadd",
+  "workspace_expires_at": "2026-11-06 04:14:49.186441+00",
+  "local_tests": {
+    "passed": 620,
+    "skipped": 86,
+    "skip_reason": "Linux-only cases unavailable in Windows suite; no deployed product code/SQL changed",
+    "ruff": "passed"
+  },
+  "review": "Separate Codex critical review of ownership creation, existing-file preservation, secret-free diagnostics, expiry preflight, source identity and no PR approval path; not independent human sign-off.",
+  "limitations": [
+    "User interactive confirmation and actual PR response-loss/readback remain NOT RUN.",
+    "Fresh-workspace harness initially stopped at BASELINE_RUNNING, closed admission and cancelled the job. Fixed terminal-state wait; confirmed cancellation cleanup and retained it before one explicitly requested new API job.",
+    "Owner elevated-terminal rerun has not yet been observed; actual native DPAPI/ACL tests used this administrator tool session.",
+    "Eight-workspace capacity now occupied; no quota raise, deletion or expiry extension performed."
+  ],
+  "source_hashes": [
+    {
+      "path": "scripts/prepare_phase4_pr_preview.py",
+      "sha256": "c45d160ed4cf2a14489181e6228d9c8f46fd104cd42ab0542d2e7f1f867814b9"
+    },
+    {
+      "path": "scripts/refresh_phase4_pr_preview.py",
+      "sha256": "bae3755718950c763d2983004457d9ce8104aa2d2fdd4daec7aa21e7bce3356a"
+    },
+    {
+      "path": "scripts/approve_phase4_pr_locally.py",
+      "sha256": "506a0873c5a7730a1a89b53ddbb81524cf8fb8527657fab70116ad223f05b9b1"
+    },
+    {
+      "path": "scripts/prepare_phase4_pr_workspace.py",
+      "sha256": "7609a97abfa9f4002718421578c9802b96e216a26e569cabef5939763d68ec99"
+    },
+    {
+      "path": "tests/unit/test_local_pr_confirmation.py",
+      "sha256": "cf929cde6fd2a341b512d0a0263a94d035855b8624ce0ad3b29e7f2ed66a4f4b"
+    }
+  ]
+}
