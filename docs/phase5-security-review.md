@@ -1,5 +1,71 @@
 # Phase 5 security review — November 5
 
+## Vault race/crash and native surface critical pass — November 7
+
+Additional reviewed finding: TemporaryDirectory cleanup cannot run after SIGKILL, so
+the prior materializer could leave decrypted files on ordinary temporary storage.
+The new local runner uses the already pinned product image, a strict trusted-source
+cache inventory mounted read-only,private64MiB noexec/nosuid/nodev tmpfs,networknone,
+UID10003,512MiB RAM with observed memory.swap.max=0,16 processes,no capabilities,
+read-only root and core dumps disabled. Container-owned timeout kills at20 seconds;
+the outer driver never retries and reconciles/removes only its generated container.
+No candidate byte is imported or executed; no management/provider/App secret mounted.
+Actual one-asset recovery passed; deliberate trusted post-materialization sleep died
+with137 at20.422s and the container disappeared without Python finally. Mount type,
+size and cgroup values are checked before decryption. Five boundary tests cover limits,
+unknown cleanup/no retry and unexpected-module/symlink cache rejection. This is a local
+synthetic test, not a rerun of the completed live recovery or production promotion.
+Two pre-launch harness issues (module search path and Windows-to-WSL path spelling)
+failed before a recovery container or decrypted asset; corrected before acceptance.
+[Docker tmpfs lifecycle](https://docs.docker.com/engine/storage/tmpfs/) supports the
+mount-removal design, but host paging/snapshots and administrator compromise still
+prevent a forensic-erasure claim. Existing cloud product/worker images stay unchanged.
+
+Review found uncoordinated save/expiry could observe a partial key and interrupt later
+cleanup. All operations now share a nonblocking OS lock; writes are flushed/private
+and atomically published. Partial unpublished files and unusable orphan keys are
+removed only while holding the lock and after ACL/type/link/size checks. A damaged
+authenticated record blocks new backups but does not defer other valid expirations.
+Observed wall time is persisted before authority; rollback cannot reopen an already
+observed-expired key. Recovery also rechecks expiry after IO. A missing/corrupt floor
+with retained keys fails closed; restoring an old floor together with keys is forbidden.
+
+Thirteen policy/fault tests use explicit ACL/DPAPI/lock doubles. Actual Windows probes
+separately passed crypto/ACL/natural8-second expiry,competing-process denial,terminated
+holder lock release and interrupted ciphertext cleanup. The first ancestor check
+correctly rejected a non-current owner; readback showed the expected Administrators
+owner and only current-user/SYSTEM/Administrators rules at .proofflow. Documented
+trusted-admin allowance applies only to that ancestor, not secret directory/files;
+no ACL was widened. First death-probe harness incorrectly relied on partial stdout
+before Windows communicate reached EOF; preserved failure, corrected collection and
+passed the same lock behavior. No backup/job/provider replay or new cloud resource.
+
+Fresh Trivy0.76.1 DB updated2026-11-06T18:59:52Z:49 HIGH,75 MEDIUM,62 LOW,zero CRITICAL
+pairs in exact product image0ecb6e9d. All186 pairs already existed; six UNKNOWN ratings
+resolved and one zlib MEDIUM became HIGH. No HIGH fixed versions listed by this scan.
+Actual inventory hashes four product native objects and three worker objects. SQLite
+versions3.46.1/3.45.1 have FTS5/session support, so those features are not assumed absent.
+Read-only actual worker schema has executions/fences/authority_clock, no virtual table;
+source search finds no application FTS/changeset/load-extension/native gzip-write path.
+Trusted fixed SQL plus root-owned journal is the relevant boundary, not a blanket
+claim that old SQLite is safe. Candidate processes remain separately contained.
+
+Debian lists Trixie vulnerable and fixes in unstable for the reviewed
+[FTS secure-delete](https://security-tracker.debian.org/tracker/CVE-2026-119374),
+[changeset](https://security-tracker.debian.org/tracker/CVE-2026-119379) and
+[gzip-write](https://security-tracker.debian.org/tracker/CVE-2026-85091) issues.
+Ubuntu Noble still [needs evaluation](https://ubuntu.com/security/CVE-2026-119374)
+for the FTS issue and [session issue](https://ubuntu.com/security/CVE-2026-119379).
+The [related zlib advisory](https://security-tracker.debian.org/tracker/CVE-2026-76844)
+also concerns gz* write-error handling. Do not suppress findings based on a string
+search or install unrelated unstable packages to make scanner counts disappear.
+Remaining full native/runtime reachability and human review gaps stay explicit.
+Windows lock behavior follows [Microsoft byte-range locking](https://learn.microsoft.com/en-us/windows/win32/fileio/locking-and-unlocking-byte-ranges-in-files).
+
+Separate Codex critical review, not independent human sign-off. Product image, worker
+runtime, verifier, SQL, epochs and frozen final comparison remain unchanged. No actual
+exploit payload or candidate ran on control/development hosts. [Evidence](evidence/phase5-vault-native-review-2026-11-07.json).
+
 ## Time-bound authority and encrypted recovery critical pass — November 7
 
 Separate Codex review, not human sign-off. Worker IDs now carry RFC9562 issue time;

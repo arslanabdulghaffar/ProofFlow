@@ -1,5 +1,28 @@
 # Progress
 
+## November 7 KST — vault crash/race fixes and refreshed native review
+
+Also fixed decrypted temporary-file survival after a killed recovery process. The
+bounded local data-only runner uses private tmpfs and a container-owned20-second
+timeout. Actual inert recovery and forced termination/removal pass; no candidate code
+executes locally, no original live job/restore was replayed. Five final driver-boundary
+Linux tests/four Windows tests pass after the full suites, including two new cases.
+
+Fixed overlapping/partial backup operations with exclusive OS locking, flushed atomic
+publication, interrupted-save cleanup, persistent clock floor and post-read expiry
+checks. A damaged key no longer delays unrelated authenticated expiry. Thirteen fixture
+tests plus actual Windows concurrent-process/process-death/interrupted-save and natural
+key-expiry checks pass. Two diagnostic/harness failures are preserved; no key/ACL widening.
+
+Fresh exact-product scan has49 HIGH/75 MEDIUM/62 LOW/zero CRITICAL pairs;186 pairs are
+unchanged, severity ratings changed. Official advisory review and actual product/worker
+mapped-library hashes and read-only journal schema inspection narrow the inspected
+paths without suppressing any finding. Broader native/runtime review remains open.
+986 Linux tests+10 subtests;813 Windows/173 skips. Product runtime and frozen comparison
+unchanged. Credit$192.17,caps/funded deadline unchanged; no inference/new resource.
+[Evidence](evidence/phase5-vault-native-review-2026-11-07.json). Phase5 IN PROGRESS;
+Phase6 recovery/rehearsal/media/publication deliverables remain distinct.
+
 ## November 7 KST — encrypted assets recovered; replay/deletion expiry deployed
 
 Actual off-VM AES-GCM DB+asset recovery passed: normal deletion excluded one synthetic

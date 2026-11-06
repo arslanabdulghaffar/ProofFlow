@@ -1,8 +1,18 @@
 # Release and operations plan
 
-Current status supersedes the historical all-NOT-RUN paragraph below: Phases1–2 have actual private deployed runtime/provider/original-workflow and recovery evidence. [Phase2 acceptance](evidence/phase2-acceptance-2026-11-04.json). Public release is still unauthorized. Consistent portable DB+artifact backups, rolling snapshot expiry and tombstone-safe full restore remain Phase6/T22; old product backup helper refuses guest/deletion state. Metadata/worker-history retention and public multi-tenant hardening remain Phase5. None of those gates is passed by Phase2 completion.
+Current status: Phase0–4 DONE;Phase5 security/evaluation IN PROGRESS. Actual private
+runtime/provider/repair/approval/fresh-batch/PR evidence and the final comparison exist.
+Encrypted off-VM DB+asset recovery into inert quarantine passed, including current
+deletion exclusion and cleanup; vault crash/clock checks also pass. [Recovery](evidence/phase5-encrypted-recovery-2026-11-07.json),
+[hardening](evidence/phase5-vault-native-review-2026-11-07.json). These are not portable
+disaster recovery, scheduled consistent backups or production promotion. The older
+backup helper retains its guest/deletion gate. Broader security review remains open.
 
-All deployment, backup, restore, clean-browser and runtime gates are NOT RUN. Public release/submission and repository visibility changes require later explicit owner authorization. MIT ownership clearance and independent human review gap remain recorded; do not invent either. Finish concrete artifacts/tests before requesting any required consequential approval.
+Final-release clean-browser rehearsal, public endpoint/package/video and publication
+are NOT RUN. Public release/submission and repository visibility changes require
+explicit owner authorization. MIT ownership and independent human review gaps remain;
+finish concrete artifacts/tests before requesting consequential approval. Existing
+deployment/tests are not reset to NOT RUN merely because release work is unfinished.
 
 Provision in order after Phase 1 gate: eligible account/credit and bounded charges → actual region/VM quote (2vCPU/4GiB control, 4vCPU/8GiB worker are sizing assumptions) → private network/mTLS and allowlisted SSH → supported OS/security updates/time sync/key-only named admins → private DB/artifact volumes/roles → pinned Docker/runsc and probes → secret files/services → HTTPS/secure cookies → actual provider → real smoke. No public database/Docker API; worker RPC restricted to control. API status may remain available when admission is disabled by unhealthy verifier/worker/runtime/storage/inference configuration.
 

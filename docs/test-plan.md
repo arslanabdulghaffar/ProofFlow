@@ -1,6 +1,22 @@
 # Acceptance and verification plan
 
-Latest full local suites: **970 Linux tests plus 10 subtests**, **797 Windows tests / 173 Linux-only skips**. Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These tests do not substitute for missing portable disaster/production recovery or public-release acceptance.
+Latest full local suites: **986 Linux tests plus 10 subtests**, **813 Windows tests / 173 Linux-only skips**. Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These tests do not substitute for missing portable disaster/production recovery or public-release acceptance.
+
+Vault recovery follow-up:13 explicit policy-double cases exercise clock rollback,
+post-read expiry,missing/corrupt clock,cipher tampering,partial publication/retirement,
+bad-record isolation,hardlinked pending files and capacity. Actual Windows checks
+separately cover DPAPI/private ACL/AES/natural expiry and process exclusion/death/
+interrupted-save cleanup. Native review uses a network-denied pinned local product
+image and read-only designated-worker schema/library inventory, not exploit execution.
+[Evidence](evidence/phase5-vault-native-review-2026-11-07.json).
+
+Actual local recovery container: inert authenticated asset roundtrip,pre-decryption
+tmpfs/cgroup checks,deliberate hang after materialization,independent20s timeout,
+exit137 and removed container without Python finally. No ordinary host asset directory
+or candidate execution. Five final Linux driver-boundary/four Windows tests pass;
+unexpected module/symlink cases were added after the full suites above. Completed live
+recovery jobs are not replayed. Source cache contains only five trusted files; keys
+and backup/current-authority bytes travel only on stdin.
 
 Current T22: six SQLite authority-expiry tests cover replay after pruning, clock rollback,
 fresh execution versus expired job, legacy migration, quarantine and busy WAL retry;

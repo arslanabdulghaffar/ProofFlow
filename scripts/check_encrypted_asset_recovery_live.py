@@ -9,13 +9,13 @@ import base64
 import hashlib
 import json
 import re
-import subprocess
 import sys
 import time
 from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
 from asset_backup_vault import recover, retire, save
+from asset_recovery_container import run as run_asset_recovery
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from product_live_session import LiveSession, require
 from recovery_clock import wait_for_observation
@@ -298,29 +298,11 @@ def main():
                     "RESTORED_AUTHORITY_PRESENT",
                 )
             current = current_authority(live)
-            recovered_result = subprocess.run(  # noqa: S603 - fixed data-only Linux materializer
-                [
-                    "C:/Windows/System32/wsl.exe",
-                    "-d",
-                    "Ubuntu-24.04",
-                    "--",
-                    "/root/.proofflow-phase5-venv/bin/python",
-                    "-m",
-                    "scripts.restore_asset_fixture",
-                ],
-                input=json.dumps(
-                    {
-                        "envelope": base64.b64encode(recovered).decode(),
-                        "key": base64.b64encode(restored_key).decode(),
-                        "current": current,
-                    }
-                ).encode(),
-                capture_output=True,
-                timeout=30,
-                creationflags=subprocess.CREATE_NO_WINDOW,
-            )
-            require(recovered_result.returncode == 0, "OFFVM_ASSET_MATERIALIZATION_FAILED")
-            receipt = json.loads(recovered_result.stdout)
+            receipt = run_asset_recovery(json.dumps({
+                "envelope": base64.b64encode(recovered).decode(),
+                "key": base64.b64encode(restored_key).decode(),
+                "current": current,
+            }).encode())
             require(
                 len(receipt["assets"]) == 4
                 and all(a["workspace"] == primary for a in receipt["assets"]),

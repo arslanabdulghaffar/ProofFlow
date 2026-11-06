@@ -1,5 +1,23 @@
 # Risks and owner decisions
 
+Current vault/native follow-up: backup races/partial writes, clock rollback and slow-IO
+expiry now have fixes plus13 fixture and actual Windows process/crypto checks. Private
+clock floor must not be rolled back with backups. Current-user profile/live deletion
+authority loss still prevents recovery; no portable production restore claim. An
+unknown damaged key is preserved for reconciliation while other valid expiry proceeds.
+Timer/desktop outage and forensic-erasure limitations remain.
+
+Decrypted recovery temp-file survival on process death is fixed for the new runner:
+private bounded container tmpfs,observed zero cgroup swap and20s independent timeout.
+Actual termination without finally removes the container; no production promotion.
+This does not protect against host paging,administrator copies or machine snapshots.
+
+Current exact-product scan:49 HIGH/75 MEDIUM/62 LOW/zero CRITICAL pairs, all186 already
+present with updated severity ratings. SQLite FTS/session features exist; inspected
+actual journal has no virtual tables and no untrusted SQL/database import path. No
+advisory waived; full native/runtime review remains incomplete. This does not imply
+zero known critical findings across every host/runtime component. [Evidence](evidence/phase5-vault-native-review-2026-11-07.json).
+
 November7 encrypted-recovery follow-up supersedes the earlier unresolved ID/fence TTL
 within the deployed scope. Fresh UUIDv7 admission plus persistent clock floors permits
 bounded seven-day cleaned execution/fence/completed-deletion expiry; unsafe raw roots

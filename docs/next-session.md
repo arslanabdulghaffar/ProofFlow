@@ -1,5 +1,72 @@
 # Resume ProofFlow
 
+## Current checkpoint — November 7 KST: vault recovery faults and native review
+
+Phase0–4 DONE; Phase5 IN PROGRESS. Base **599f13a254553206cf93bc51a1296ab512680bc8**;
+this checkpoint is verified Git HEAD/remote. Continue private credit-only work without
+continuation questions. [Evidence](evidence/phase5-vault-native-review-2026-11-07.json).
+No new PR, public release, submission, payment method or personal spending.
+
+Additional recovery finding fixed: a killed Python materializer could leave decrypted
+temporary disk files. The fixed runner now uses the unchanged pinned product image
+locally with a source-only read-only mount,private64MiB tmpfs,network denied,UID10003,
+512MiB RAM/no cgroup swap/16 processes/no capabilities and container-owned20s timeout.
+Actual normal inert recovery and deliberate post-materialization hang passed; exit137
+at20.422s removed the container/tmpfs without Python finally. Observed cgroup limits
+match. No candidate code executes here; restored bytes stay inert. Host paging/crash
+dumps/admin compromise are outside a forensic-erasure guarantee. The completed live
+recovery helpers now call this runner but must NOT be replayed. The new actual check
+uses one local synthetic asset, not a second live DB+four-asset restore. Five final
+driver-boundary Linux tests/four Windows tests pass, including two added after the
+last full suite; the one Windows skip requires Linux symlinks.
+
+Fixed a recovery gap in the Windows backup vault: save/recover/retire/expiry now share
+an OS byte-range lock; complete private files are flushed and atomically published.
+After a crash, partial unpublished files and keys without ciphertext retire safely.
+An authenticated bad key remains for reconciliation while unrelated valid expirations
+continue. New saves fail if reconciliation is needed. A private persistent clock floor
+prevents observed-expired keys reopening after clock rollback; missing/corrupt floor
+with retained backups denies recovery. Recheck expiry after slow crypto/file reads.
+Do not delete or restore asset-backup-clock.json or the persistent vault lock file.
+Do not roll back the clock together with old keys. Current-user DPAPI remains required.
+
+Actual Windows checks passed: private ACL/DPAPI/AES roundtrip,natural8-second expiry,
+competing-process denial,process-death lock release,and interrupted ciphertext cleanup.
+Thirteen fixture fault tests pass; ACL/DPAPI/locking are explicitly doubled in those
+unit tests, separately real in the Windows probes. Initial new ancestor check rejected
+the existing Administrators-owned .proofflow parent; its actual ACL permits only the
+current user,SYSTEM,Administrators. The parent check now accepts that trusted admin
+boundary; deployment directory/key files still require current-user ownership and
+current-user/SYSTEM-only ACLs. No ACL was widened or owner changed. The first lock-death
+harness expected partial communicate output on Windows; its failed receipt is preserved.
+Corrected EOF collection passed without changing the vault's lock behavior.
+
+Fresh exact-product scan: **49 HIGH,75 MEDIUM,62 LOW,0 CRITICAL** package/advisory
+pairs. Same186 pairs as before; severity updates explain the increased HIGH count.
+No fixed version is listed for the HIGH findings in this Trixie scan. Official Debian
+and Ubuntu review plus actual mapped-library hashes/schema inspection add evidence,
+not a waiver. Product SQLite3.46.1/worker3.45.1 compile FTS5 and session extensions;
+actual worker journal has only executions,fences,authority_clock and no virtual table.
+No application changeset/FTS/native gzwrite path was found. Public/production security
+clearance is NOT claimed; broader runtime/host/native review remains open.
+
+986 Linux tests+10 subtests;813 Windows/173 Linux-only skips; Ruff/hygiene/secret checks
+accompany this checkpoint. Product/worker/verifier images,schema,epoch5,approval policy
+and final comparison are unchanged. Prior16 deployed security probes remain historical
+evidence for those exact pins; they were not unnecessarily rerun. Watcher passed with
+zero retained backup keys. Fresh credit$192.17; caps$150/$25 and funded review deadline
+**Nov8 23:27 KST / 2026-11-08T14:27:11.770445Z** unchanged. No provider call/new resource.
+
+Next Phase5: finish the remaining authorization/prompt-injection/incident-response
+coverage audit and broader native/runtime advisory triage, fixing concrete findings.
+Natural seven-day expiry has not elapsed; controlled-clock tests supply present
+expiry evidence, not a seven-day observation. Scheduled consistent capture,portable
+keys,disaster-current deletion authority,production recovery and clean-browser/demo
+package remain Phase6 work; do not relabel them completed. Independent human review,
+MIT ownership and publication/submission decisions remain open. The project plan is
+unchanged: measured trust boundaries first,then a clear real demo and honest baseline
+comparison. No claim of guaranteed winning/customer ROI or AI superiority.
+
 ## Current checkpoint — November 7 KST: encrypted assets and authority expiry
 
 Phase0–4 DONE; Phase5 IN PROGRESS. Continue authorized private, credit-only work;

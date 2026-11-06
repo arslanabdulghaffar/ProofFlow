@@ -1,5 +1,13 @@
 # Requirements traceability
 
+R36-04/R37-02/R37-06/T21–T22 current follow-up: exact-product fresh scan and mapped
+native-library/journal-schema readback; findings retained without waivers. Backup
+publication/expiry/recovery now have exclusive locking,atomic writes,persistent time,
+interrupted-save and post-read-expiry checks. Thirteen explicit policy-double tests
+and separate actual Windows crypto/process tests pass. [Evidence](evidence/phase5-vault-native-review-2026-11-07.json).
+This strengthens private recovery; portable disaster/production recovery and composite
+Phase5/6 acceptance remain open. No historical benchmark regrading or new PR.
+
 Current R34/R35/R37/T22 evidence: deployed time-bound admission and persistent clock
 floors permit bounded expiry of cleaned replay/fence/completed-deletion records;
 unfinished records remain. Runtime-bound idle-root marker expiry is enabled. Actual

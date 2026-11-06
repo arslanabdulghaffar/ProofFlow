@@ -3,11 +3,11 @@
 import base64
 import hashlib
 import json
-import subprocess
 from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
 from asset_backup_vault import recover, retire
+from asset_recovery_container import run as run_asset_recovery
 from check_encrypted_asset_recovery_live import clone_sql, current_authority
 from product_live_session import LiveSession, require
 from vultr_phase1 import PRIVATE
@@ -86,28 +86,11 @@ def main():
                     "RESTORED_AUTHORITY_PRESENT",
                 )
             current = current_authority(live)
-            result = subprocess.run(  # noqa: S603 - trusted data-only restore, bytes via stdin
-                [
-                    "C:/Windows/System32/wsl.exe",
-                    "-d",
-                    "Ubuntu-24.04",
-                    "--",
-                    "/root/.proofflow-phase5-venv/bin/python",
-                    "-m",
-                    "scripts.restore_asset_fixture",
-                ],
-                input=json.dumps(
-                    {
-                        "envelope": base64.b64encode(envelope).decode(),
-                        "key": base64.b64encode(key).decode(),
-                        "current": current,
-                    }
-                ).encode(),
-                capture_output=True,
-                timeout=30,
-            )
-            require(result.returncode == 0, "OFFVM_ASSET_MATERIALIZATION_FAILED")
-            receipt = json.loads(result.stdout)
+            receipt = run_asset_recovery(json.dumps({
+                "envelope": base64.b64encode(envelope).decode(),
+                "key": base64.b64encode(key).decode(),
+                "current": current,
+            }).encode())
             require(
                 len(receipt["assets"]) == 4
                 and all(a["workspace"] == primary for a in receipt["assets"]),

@@ -1,5 +1,41 @@
 # Decision log
 
+## D86: serialize backup authority and retain native findings honestly
+
+Decrypted recovery assets now live only in private container tmpfs, not ordinary host
+temporary directories. Use the existing pinned image with trusted source-only read-only
+mount,closed network,nonroot/no capabilities,no cgroup swap,fixed memory/process limits
+and an independent20-second container-owned timeout. Never import candidate data.
+Actual forced termination after materialization proves cleanup without Python finally.
+Completed live helpers use this runner on future authorized work but are not replayed.
+No new dependency/cloud resource or deployment privilege; local Docker was already in
+use for trusted tests. Host paging/snapshots are outside the erasure claim.
+
+Every vault operation takes the same nonblocking Windows byte-range lock, released
+by the OS after process death. Write new private ACL files with CreateNew/Flush(true),
+then atomically rename; no key is recoverable from a partially written file. Under
+that lock, remove interrupted unpublished files/orphan keys and ciphertext; never
+guess a corrupt key's expiry. Continue other authenticated expiry and return a fixed
+reconciliation failure. Keep a private atomic clock floor before authorization and
+check expiry again after crypto/file IO. Missing/corrupt floor with backups fails
+closed. This is not rollback-resistant against a trusted administrator restoring the
+entire private directory; that operation remains unsupported.
+
+The existing .proofflow ancestor is Administrators-owned. Allow current user/SYSTEM/
+Administrators only at that ancestor, rejecting reparse points; retain stricter
+current-user-owned/current-user+SYSTEM-only deployment and key files. No actual ACL
+or ownership change. This matches the documented trusted administrator boundary.
+Actual process-death testing collects stdout after termination on Windows; the initial
+harness failure is preserved separately. No candidate/native exploit was executed.
+
+The refreshed scanner rates the same186 package/advisory pairs differently;49 HIGH
+does not mean three newly introduced packages. Preserve findings, actual library hashes
+and official Trixie/Noble status; unavailable stable fixes are not permission to silently
+mix unstable distribution packages. FTS/session support exists, but the inspected
+journal has no virtual tables and application code accepts no SQL/database/changeset
+input. Scoped evidence is not vulnerability clearance or independent human approval.
+[Evidence](evidence/phase5-vault-native-review-2026-11-07.json).
+
 ## D85: expire authority only after identity becomes permanently inadmissible
 
 Unknown worker IDs must carry a fresh RFC9562 timestamp; unknown legacy UUID4 IDs fail

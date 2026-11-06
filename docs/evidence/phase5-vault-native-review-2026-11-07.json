@@ -1,0 +1,608 @@
+{
+  "observed_at": "2026-11-06T21:48:17.451525+00:00",
+  "phase": "5 IN PROGRESS",
+  "checkpoint_base": "599f13a254553206cf93bc51a1296ab512680bc8",
+  "scope": "vault interruption/clock and plaintext tmpfs recovery fixes; scoped native review",
+  "source_hashes": [
+    {
+      "path": "scripts/asset_backup_vault.py",
+      "sha256": "0629c0a975cc8351fc3852f0a1a608641b9ff46a7bc4b055794cbc3634dcb506"
+    },
+    {
+      "path": "scripts/asset_recovery_container.py",
+      "sha256": "3455812f8832489b393e5e0ba3f9f07fe10e80022d6d487008bdc8ca0a19b757"
+    },
+    {
+      "path": "scripts/check_asset_recovery_container.py",
+      "sha256": "5148ded8527198217ca900f7bb197e355ca0be089563bf0e3f462b6e5351dfb9"
+    },
+    {
+      "path": "scripts/check_asset_vault_recovery.py",
+      "sha256": "4935582b1663373869a767c60a232a2d9593e2e8219f3d571c5e7398e490af7e"
+    },
+    {
+      "path": "scripts/check_encrypted_asset_recovery_live.py",
+      "sha256": "33d4920fcb35e262e8de3092eefead2f9a6a5abb808351aa67408097f101bdff"
+    },
+    {
+      "path": "scripts/check_native_surface.py",
+      "sha256": "478b6a4a98acaa4d9daca7ead7f33ad9f9672b21716fd7013f2bc0c42031562b"
+    },
+    {
+      "path": "scripts/restore_asset_fixture.py",
+      "sha256": "a63600ad9b34942246dd371fb8a1593f95f35a1bd05e103a5d3485730e43857f"
+    },
+    {
+      "path": "scripts/resume_encrypted_asset_restore.py",
+      "sha256": "343fdd556f92d36b499e240ae9dddcbcfe75adaa60b4ef9f43b7d13dac5a69df"
+    },
+    {
+      "path": "tests/security/test_asset_vault_recovery.py",
+      "sha256": "c74dcfb6ef46bf29a1ea526b24b8da6176cb7463de7d4f572e890bdbf4bc5c62"
+    },
+    {
+      "path": "tests/security/test_recovery_container_boundary.py",
+      "sha256": "9e02c9b2edd55cafb5061ab259fa8b5411a5ac557442b010b1104cf4b7231e6d"
+    }
+  ],
+  "product_image": "0ecb6e9d6d4183c40306b5e93af7e8b03de5e0bf2fd9eaaa5eb4a8a5c6abfdb3",
+  "worker_runtime": "fd9a1e227c437066fe9bb63f14deae0567cfbb7d70a5c9e23284c2fbbb09ac17",
+  "deployment_changed": false,
+  "final_comparison_rerun": false,
+  "checks": {
+    "linux_full": {
+      "passed": 986,
+      "subtests_passed": 10
+    },
+    "windows_full": {
+      "passed": 813,
+      "linux_only_skipped": 173
+    },
+    "final_driver_boundary": {
+      "linux_passed": 5,
+      "windows_passed": 4,
+      "windows_skipped": 1,
+      "additional_tests_after_full_suite": 2
+    },
+    "vault_policy_tests": 13,
+    "vault_real_windows": {
+      "checks": [
+        "concurrent_process_expiry_denied",
+        "terminated_holder_releases_os_lock",
+        "partial_cipher_and_unusable_key_removed"
+      ],
+      "cloud_calls": 0,
+      "completed": true,
+      "finished_at": "2026-11-06T21:34:19.836105+00:00",
+      "scope": "actual_windows_vault_inert_fixture",
+      "started_at": "2026-11-06T21:34:11.184425+00:00"
+    },
+    "vault_final_roundtrip": {
+      "cloud_calls": 0,
+      "expired_recovery": "denied",
+      "fixture_ciphertext_sha256": "9b40e3ac7aeb90bb36e59a3df97db9df81805e5f53e640fc67176f7665aee0fb",
+      "key_and_ciphertext_removed": true,
+      "natural_expiry_seconds": 8,
+      "portable_key_recovery": "NOT_IMPLEMENTED",
+      "roundtrip": "passed",
+      "scope": "actual_windows_private_acl_dpapi_inert_fixture"
+    },
+    "recovery_tmpfs": {
+      "cloud_calls": 0,
+      "completed": true,
+      "fault_cleanup_finally_ran": false,
+      "fault_container_removed": true,
+      "fault_exit": 137,
+      "observed_at": "2026-11-06T21:45:24.605793+00:00",
+      "plaintext_storage": "private_bounded_tmpfs_no_disk_bind",
+      "production_restore": false,
+      "scope": "actual_local_pinned_container_inert_synthetic_bytes",
+      "source_hash": "f12c265902a854948ed84ec483b05aa636ed5b565c6a975ccbed8101cedffbaa",
+      "timeout_seconds": 20.422
+    },
+    "recovery_normal": {
+      "asset_count": 1,
+      "plaintext_storage": "container_tmpfs",
+      "container_cleanup": "confirmed",
+      "observed_cgroup_limits": {
+        "memory.max": "536870912",
+        "memory.swap.max": "0",
+        "pids.max": "16"
+      }
+    },
+    "ruff": "PASS",
+    "watcher": {
+      "asset_backup_expiry": "checked",
+      "key_records_checked": 0
+    },
+    "documentation_hygiene": "PASS;276 entries/59 pages",
+    "staged_secret_scan": "PASS;zero findings",
+    "source_hashes": "PASS;10 staged source files",
+    "private_repository": "VERIFIED;main"
+  },
+  "native_scan": {
+    "scanner": "Trivy0.76.1",
+    "database": {
+      "Version": 2,
+      "NextUpdate": "2026-11-07T18:59:52.855177045Z",
+      "UpdatedAt": "2026-11-06T18:59:52.855177206Z",
+      "DownloadedAt": "2026-11-06T21:29:24.198857769Z"
+    },
+    "scan_sha256": "e4e570b470f533a3b31c4cedf1aba7fe4bf95b4fd51b14a3bf5b22eb34c022b1",
+    "counts": {
+      "LOW": 62,
+      "HIGH": 49,
+      "MEDIUM": 75
+    },
+    "critical_count": 0,
+    "pairs": 186,
+    "added_pairs": 0,
+    "removed_pairs": 0,
+    "severity_changes": [
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119371",
+        "before": "UNKNOWN",
+        "after": "MEDIUM"
+      },
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119372",
+        "before": "UNKNOWN",
+        "after": "MEDIUM"
+      },
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119374",
+        "before": "UNKNOWN",
+        "after": "HIGH"
+      },
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119375",
+        "before": "UNKNOWN",
+        "after": "MEDIUM"
+      },
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119376",
+        "before": "UNKNOWN",
+        "after": "MEDIUM"
+      },
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119379",
+        "before": "UNKNOWN",
+        "after": "HIGH"
+      },
+      {
+        "package": "zlib1g",
+        "advisory": "CVE-2026-85091",
+        "before": "MEDIUM",
+        "after": "HIGH"
+      }
+    ],
+    "high_findings": [
+      {
+        "package": "bsdutils",
+        "advisory": "CVE-2026-76642",
+        "installed": "1:2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "bsdutils",
+        "advisory": "CVE-2026-78408",
+        "installed": "1:2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "bsdutils",
+        "advisory": "CVE-2026-78409",
+        "installed": "1:2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "bsdutils",
+        "advisory": "CVE-2026-78410",
+        "installed": "1:2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libacl1",
+        "advisory": "CVE-2026-54369",
+        "installed": "2.3.2-2+b1",
+        "fixed": null
+      },
+      {
+        "package": "libblkid1",
+        "advisory": "CVE-2026-76642",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libblkid1",
+        "advisory": "CVE-2026-78408",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libblkid1",
+        "advisory": "CVE-2026-78409",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libblkid1",
+        "advisory": "CVE-2026-78410",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "liblastlog2-2",
+        "advisory": "CVE-2026-76642",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "liblastlog2-2",
+        "advisory": "CVE-2026-78408",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "liblastlog2-2",
+        "advisory": "CVE-2026-78409",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "liblastlog2-2",
+        "advisory": "CVE-2026-78410",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libmount1",
+        "advisory": "CVE-2026-76642",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libmount1",
+        "advisory": "CVE-2026-78408",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libmount1",
+        "advisory": "CVE-2026-78409",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libmount1",
+        "advisory": "CVE-2026-78410",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libncursesw6",
+        "advisory": "CVE-2025-69720",
+        "installed": "6.5+20250216-2",
+        "fixed": null
+      },
+      {
+        "package": "libsmartcols1",
+        "advisory": "CVE-2026-76642",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libsmartcols1",
+        "advisory": "CVE-2026-78408",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libsmartcols1",
+        "advisory": "CVE-2026-78409",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libsmartcols1",
+        "advisory": "CVE-2026-78410",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119373",
+        "installed": "3.46.1-7+deb13u2",
+        "fixed": null
+      },
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119374",
+        "installed": "3.46.1-7+deb13u2",
+        "fixed": null
+      },
+      {
+        "package": "libsqlite3-0",
+        "advisory": "CVE-2026-119379",
+        "installed": "3.46.1-7+deb13u2",
+        "fixed": null
+      },
+      {
+        "package": "libsystemd0",
+        "advisory": "CVE-2026-16742",
+        "installed": "257.13-1~deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libtinfo6",
+        "advisory": "CVE-2025-69720",
+        "installed": "6.5+20250216-2",
+        "fixed": null
+      },
+      {
+        "package": "libudev1",
+        "advisory": "CVE-2026-16742",
+        "installed": "257.13-1~deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libuuid1",
+        "advisory": "CVE-2026-76642",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libuuid1",
+        "advisory": "CVE-2026-78408",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libuuid1",
+        "advisory": "CVE-2026-78409",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "libuuid1",
+        "advisory": "CVE-2026-78410",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "login",
+        "advisory": "CVE-2026-76642",
+        "installed": "1:4.16.0-2+really2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "login",
+        "advisory": "CVE-2026-78408",
+        "installed": "1:4.16.0-2+really2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "login",
+        "advisory": "CVE-2026-78409",
+        "installed": "1:4.16.0-2+really2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "login",
+        "advisory": "CVE-2026-78410",
+        "installed": "1:4.16.0-2+really2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "mount",
+        "advisory": "CVE-2026-76642",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "mount",
+        "advisory": "CVE-2026-78408",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "mount",
+        "advisory": "CVE-2026-78409",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "mount",
+        "advisory": "CVE-2026-78410",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "ncurses-base",
+        "advisory": "CVE-2025-69720",
+        "installed": "6.5+20250216-2",
+        "fixed": null
+      },
+      {
+        "package": "ncurses-bin",
+        "advisory": "CVE-2025-69720",
+        "installed": "6.5+20250216-2",
+        "fixed": null
+      },
+      {
+        "package": "perl-base",
+        "advisory": "CVE-2026-9538",
+        "installed": "5.40.1-6+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "util-linux",
+        "advisory": "CVE-2026-76642",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "util-linux",
+        "advisory": "CVE-2026-78408",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "util-linux",
+        "advisory": "CVE-2026-78409",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "util-linux",
+        "advisory": "CVE-2026-78410",
+        "installed": "2.41.5-0+deb13u1",
+        "fixed": null
+      },
+      {
+        "package": "zlib1g",
+        "advisory": "CVE-2026-76844",
+        "installed": "1:1.3.dfsg+really1.3.1-1+b1",
+        "fixed": null
+      },
+      {
+        "package": "zlib1g",
+        "advisory": "CVE-2026-85091",
+        "installed": "1:1.3.dfsg+really1.3.1-1+b1",
+        "fixed": null
+      }
+    ],
+    "clearance": false
+  },
+  "native_actual_inventory": {
+    "image": "0ecb6e9d6d4183c40306b5e93af7e8b03de5e0bf2fd9eaaa5eb4a8a5c6abfdb3",
+    "new_resources": 0,
+    "observed_at": "2026-11-06T21:36:04.020334+00:00",
+    "probe_sha256": "ed711760ae9cfe09b0f56ba7e81bfca9b41073b041bbdb8ca2e5081075ecfdee",
+    "product": {
+      "libraries": [
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6",
+          "sha256": "317d80bf5d592f98a71e14d2330591d6a339f631f37c5977835af748a1f26715"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libz.so.1.3.1",
+          "sha256": "85590dd58edf5445e18bc7193e5ebc01ac5841f1ae187e97705a662e90c6421e"
+        },
+        {
+          "path": "/usr/local/lib/python3.12/lib-dynload/_sqlite3.cpython-312-x86_64-linux-gnu.so",
+          "sha256": "91b141970b89aabda66c1518c86deb0d71bd332f32bedd01067bb4e757ce95d0"
+        },
+        {
+          "path": "/usr/local/lib/python3.12/lib-dynload/zlib.cpython-312-x86_64-linux-gnu.so",
+          "sha256": "93e46df50e17712a32a4ec2d548f5122df0ac2b634175e2d065669544ee625e8"
+        }
+      ],
+      "python": "3.12.16",
+      "sqlite": "3.46.1",
+      "sqlite_fts5_compiled": true,
+      "sqlite_session_compiled": true,
+      "zlib_compile": "1.3.1",
+      "zlib_runtime": "1.3.1"
+    },
+    "provider_calls": 0,
+    "runtime": "fd9a1e227c437066fe9bb63f14deae0567cfbb7d70a5c9e23284c2fbbb09ac17",
+    "vulnerability_clearance": false,
+    "worker": {
+      "libraries": [
+        {
+          "path": "/usr/lib/python3.12/lib-dynload/_sqlite3.cpython-312-x86_64-linux-gnu.so",
+          "sha256": "ecf54958b24c533f5c8dc67ca82cdce236aeb322864140bfe93eb8a69b729f4d"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6",
+          "sha256": "85265a9d4afca6f4b325ceb078b669c754fb881abed4cafe91ccebe9d625d975"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libz.so.1.3",
+          "sha256": "f61677c7bdb7c2aa2a243ea781bfd16afcb361cede7b4ef76127a9d8eb9a5242"
+        }
+      ],
+      "python": "3.12.3",
+      "sqlite": "3.45.1",
+      "sqlite_fts5_compiled": true,
+      "sqlite_session_compiled": true,
+      "worker_journal_schema_sha256": "6b364b47af5e75a9efd8f9aecd20f8fd9a3f07606e9109fa15a666174bbb5cdf",
+      "worker_journal_tables": [
+        "authority_clock",
+        "executions",
+        "fences"
+      ],
+      "worker_journal_virtual_tables": [],
+      "zlib_compile": "1.3",
+      "zlib_runtime": "1.3"
+    }
+  },
+  "preserved_failures": [
+    "New ancestor ACL check initially rejected Administrators-owned parent; read-only ACL evidence identified trusted parent boundary, no ACL changed",
+    "Initial lock-death test relied on Windows partial communicate output; failure receipt preserved, corrected EOF collection passed",
+    "New tmpfs harness module import and WSL backslash conversion failed before container launch/decryption; corrected trusted paths"
+  ],
+  "private_receipt_hashes": [
+    {
+      "name": "phase5-native-surface.json",
+      "sha256": "e7aa156e2e8dec39705bb36d6992683d9b64bef046427e331f62daf193c3da3a"
+    },
+    {
+      "name": "phase5-vault-recovery-initial.json",
+      "sha256": "819df20f832080276ba6d902e8caccb589f16ce5d55fcc751e0a15555b6f237c"
+    },
+    {
+      "name": "phase5-vault-recovery-check.json",
+      "sha256": "1823adfcab36d5709f4ddb84f37bcb52289b97667d79f9b6f5680daa043380c7"
+    },
+    {
+      "name": "phase5-vault-final-roundtrip.json",
+      "sha256": "f3993daa20fce3e2502ba2d07e5bfe195caa31535ba4f8f1fced9032fd40ea0c"
+    },
+    {
+      "name": "phase5-recovery-tmpfs.json",
+      "sha256": "e6d17801b37c5bc42a18a15c3670dbfce564850307e25a55fa86a168e4078d71"
+    }
+  ],
+  "credit": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-06T21:47:33.461531+00:00",
+    "remaining_credit": "192.17",
+    "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+  },
+  "caps": {
+    "project_usd": 150,
+    "inference_usd": 25,
+    "project_reserved_usd": 145
+  },
+  "provider_calls": 0,
+  "new_cloud_resources": 0,
+  "new_pr": false,
+  "public_release": false,
+  "review": "Separate Codex critical review; not independent human approval",
+  "limitations": [
+    "Same Windows DPAPI profile required; current authenticated deletion authority still required",
+    "Do not restore vault clock with old keys or worker journal/clock backups",
+    "No scheduled consistent backup capture, portable disaster key recovery or production promotion",
+    "No forensic erasure guarantee for host paging/snapshots/admin copies",
+    "Native product scan is not all-host/runtime security clearance; no advisories waived",
+    "Natural seven-day expiry has not elapsed; controlled-clock tests are explicitly fixtures",
+    "Final release clean-browser/demo/media/package and publication/license decisions remain"
+  ],
+  "official_sources": [
+    "https://security-tracker.debian.org/tracker/CVE-2026-119374",
+    "https://security-tracker.debian.org/tracker/CVE-2026-119379",
+    "https://security-tracker.debian.org/tracker/CVE-2026-85091",
+    "https://ubuntu.com/security/CVE-2026-119374",
+    "https://ubuntu.com/security/CVE-2026-119379",
+    "https://docs.docker.com/engine/storage/tmpfs/",
+    "https://learn.microsoft.com/en-us/windows/win32/fileio/locking-and-unlocking-byte-ranges-in-files"
+  ]
+}
