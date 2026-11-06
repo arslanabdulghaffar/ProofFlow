@@ -12,15 +12,18 @@ import subprocess
 import sys
 import tarfile
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from uuid import uuid4
 
-from comparison_api import retire, run, save
-from install_product_services import IMAGE
-from product_live_session import LiveSession, require
-from vultr_phase1 import PRIVATE, ROOT
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from eval.comparison_cases import cases, check_oracle
-from eval.report import digest, manifest
+from comparison_api import retire, run, save  # noqa: E402
+from install_product_services import IMAGE  # noqa: E402
+from product_live_session import LiveSession, require  # noqa: E402
+from vultr_phase1 import PRIVATE, ROOT  # noqa: E402
+
+from eval.comparison_cases import cases, check_oracle  # noqa: E402
+from eval.report import digest, manifest  # noqa: E402
 
 RUNTIME = "c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78"
 VERIFIER = "0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b"

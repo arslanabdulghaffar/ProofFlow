@@ -2,6 +2,8 @@
 
 import importlib
 import json
+import subprocess
+import sys
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from types import SimpleNamespace
@@ -162,3 +164,17 @@ def test_deterministic_container_has_no_provider_or_database_credentials(tmp_pat
     assert "--read-only" in argv and "--cap-drop=ALL" in argv
     assert "--memory=512m" in argv and "--pids-limit=64" in argv
     assert not any("docker.sock" in arg or "github" in arg for arg in argv)
+
+
+def test_actual_script_entrypoint_rejects_arguments_before_account_access(tmp_path):
+    script = Path(__file__).resolve().parents[2] / "scripts/run_comparison.py"
+    reply = subprocess.run(  # noqa: S603 - actual fixed entrypoint, rejected before account access
+        [sys.executable, str(script), "--not-authorized"],
+        cwd=tmp_path,
+        capture_output=True,
+        timeout=20,
+        check=False,
+    )
+    assert reply.returncode != 0
+    assert b"COMPARISON_ARGUMENTS_FORBIDDEN" in reply.stderr
+    assert b"ModuleNotFoundError" not in reply.stderr
