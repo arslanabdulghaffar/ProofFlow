@@ -10,6 +10,7 @@ from contracts.source import MAX_CSV_BYTES, parse_sources
 from verifier.canaries import generate
 from verifier.compare import compare_bytes
 from verifier.outputs import MAX_OUTPUT_BYTES, decode_outputs
+from verifier.reference import derive
 
 MAX_REQUEST = 29 * 1024 * 1024
 MAX_RESPONSE = 15 * 1024 * 1024
@@ -45,7 +46,7 @@ def process(raw: bytes) -> bytes:
         fields = {"operation", "contract"}
         if op == "canary":
             fields |= {"seed", "case"}
-        elif op in ("prepare", "verify"):
+        elif op in ("prepare", "verify", "source"):
             fields |= {"transactions", "customers"}
             if op == "verify":
                 fields.add("outputs")
@@ -62,7 +63,13 @@ def process(raw: bytes) -> bytes:
             cs = decode(request["customers"], MAX_CSV_BYTES)
         result = {"operation": op, "contract_sha256": contract.sha256,
                   "transactions_sha256": sha(tx), "customers_sha256": sha(cs)}
-        if op in ("prepare", "canary"):
+        if op == "source":
+            parsed = parse_sources(tx, cs, aliases=dict(contract.aliases),
+                                   customer_attributes=contract.attributes)
+            expected = derive(*parsed, contract)
+            # A source diagnosis is never an output comparison or candidate proof.
+            result["blocking_occurrences"] = expected.blocking_occurrences
+        elif op in ("prepare", "canary"):
             parsed_tx, parsed_cs = parse_sources(tx, cs, aliases=dict(contract.aliases),
                                                customer_attributes=contract.attributes)
             result.update(transactions_jsonl=encode(parsed_tx.worker_jsonl()),

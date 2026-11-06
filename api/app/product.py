@@ -336,7 +336,8 @@ def create_product_app(store, assets, *, origin: str, journals=None):
     @app.get("/v1/jobs/{job_id}/summary", response_model=JobSummary)
     async def summary(job_id: str, request: Request):
         value = await job(job_id, request)
-        semantic = (value.get("report") or {}).get("semantic") or {}
+        evidence = value.get("report") or {}
+        semantic = evidence.get("semantic") or evidence.get("source") or {}
         report = semantic.get("report", {}).get("result", {})
         return {"wire_version": "proofflow-browser-v1", "job_id": job_id,
             "state": value["state"], "outcome": value["outcome"], "created_at": value["created_at"],
@@ -484,9 +485,13 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         if stored is None or stored[0] is None:
             raise HttpFailure(404, "JOB_NOT_FOUND")
         value = stored[0]
-        report = (value.get("report") or {}).get("semantic", {}).get("report", {}).get("result", {})
+        evidence = value.get("report") or {}
+        checked = evidence.get("semantic") or evidence.get("source") or {}
+        report = checked.get("report", {}).get("result", {})
         meanings = {"match": "The original output matched this input. Activation is not approved.",
                     "mismatch": "The original output violates the approved contract.",
+                    "execution_failed": "The pipeline failed to produce usable output. "
+                        "Source data was checked; output is not verified.",
                     "held": "Source data has unresolved problems. This batch is held.",
                     "input_rejected": "The source data could not be prepared under this contract.",
                     "infrastructure_failed": "The run failed. No verified result was published.",

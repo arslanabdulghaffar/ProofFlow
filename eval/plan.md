@@ -1,5 +1,12 @@
 # Evaluation and spending plan
 
+## Full-product crash repair preparation — November6 KST
+
+New source-only diagnosis closes a gap the earlier repair-core pilot did not test. One actual API/queue crash repair passed with1 real model call and3 fresh isolated proofs; it is development acceptance, not a final result. Held$0.027853, usage estimate$0.0009993; development total reserved$1.339265. New product image200257609d3fa99f53829ab1cb9493e77a646f08afd2090abb947120d0388131 and verifier rootfs0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b, worker unchanged. [Evidence](../docs/evidence/phase5-source-repair-2026-11-06.json).
+
+[Draft comparison cases](comparison_cases.py) provide24 new synthetic inputs:18 repairable/6 ambiguous, including explicit unknown-unit rejection. They do not call the canary generator but reuse fault families and a positive template; disclose this coupling. Oracles are authored arithmetic checked against deterministic reference, not independent human review. No seed/manifest is frozen, no final execution/model outcomes exist. The full-product A path is now viable; dedicated bounded B/C receipts, normal fixture retirement and prospective freeze remain before dispatch. Do not relabel the pilot as final, claim repeated consistency, or change expected results to accommodate failures.
+
+
 The worker retention follow-up changes the runtime identity to c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78 and product image to4ec2fbe368ff48894f07076812d33398b5d92d683736ceb3084dd66b8bf88bcb. Pilot results retain their original runtime provenance. Freeze the current exact runtime with the final set; do not silently relabel prior runs. No additional model calls were made for this retention update.
 
 ## Actual development pilot — November6 KST

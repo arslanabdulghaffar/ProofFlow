@@ -1,0 +1,154 @@
+{
+  "phase": 5,
+  "status": "IN_PROGRESS",
+  "scope": "real original code-failure repair and source-only diagnosis; not final evaluation",
+  "recorded_at": "2026-11-06T12:42:01.968723+00:00",
+  "base_checkpoint": "6b59d0ef59a123ebaa62c67d298fa3e4fc1561b4",
+  "image": "200257609d3fa99f53829ab1cb9493e77a646f08afd2090abb947120d0388131",
+  "runtime_sha256": "c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78",
+  "verifier_rootfs": "0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b",
+  "migrations": 18,
+  "cases": [
+    {
+      "name": "code_failure",
+      "outcome": "execution_failed",
+      "accepted": true
+    },
+    {
+      "name": "missing_outputs",
+      "outcome": "infrastructure_failed",
+      "accepted": false
+    },
+    {
+      "name": "missing_outputs",
+      "outcome": "execution_failed",
+      "accepted": true,
+      "followup": true
+    },
+    {
+      "name": "invalid_source",
+      "outcome": "held",
+      "accepted": true,
+      "followup": true
+    }
+  ],
+  "initial_failure": "Missing outputs with successful process and stopped-unit exit-kind0 failed closed; retained. Additive018 requires observed exact host startup limits. No prior verdict rewritten.",
+  "repair": {
+    "completed": true,
+    "state": "AWAITING_APPROVAL",
+    "outcome": "candidate_passed",
+    "model_calls": 1,
+    "execution_purposes": [
+      "candidate",
+      "canary_ownership",
+      "canary_quarantine"
+    ],
+    "cleanup_confirmed": true,
+    "activated": false,
+    "new_prs": 0,
+    "reserved_micro_usd": 27853,
+    "usage_estimate_usd": "0.0009993",
+    "usage_source": "actual provider response tokens at official fresh quote; not settled billing",
+    "provider_receipts": [
+      {
+        "request_id": "c8337581-d010-4a55-8f95-23b190c47ae0",
+        "request_sha256": "ee68f4adcf9a99875d2bbc6e99f1dbf78d66321cc119215aaf4ebd8ad8be55b4",
+        "response_sha256": "9528b04e9ff6394b7f5b62a52c2c35a46ca2cd3e73b473199d7f0817ccfbb4fb",
+        "outcome": "PARSED_RESPONSE",
+        "reserved_micro": 27853,
+        "http_status": 200,
+        "elapsed_ms": 10235,
+        "usage": {
+          "total_tokens": 5501,
+          "prompt_tokens": 1009,
+          "completion_tokens": 4492,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        }
+      }
+    ]
+  },
+  "checks": {
+    "linux_tests": 788,
+    "linux_subtests": 10,
+    "windows_tests": 664,
+    "windows_linux_only_skips": 124,
+    "original_failure_sql_groups": 6,
+    "original_queue_sql_groups": 11,
+    "repair_queue_sql_groups": 5,
+    "deployed_verifier_boundary_groups": 6,
+    "deployed_http_groups": 7,
+    "deployed_http_cases": 3,
+    "image_source_files": 72
+  },
+  "spending": {
+    "remaining_credit": "193.13",
+    "development_reserved_micro_usd": 1339265,
+    "project_cap_usd": 150,
+    "inference_cap_usd": 25,
+    "new_cloud_resources": 0,
+    "admissions_closed": true,
+    "review_due_at": "2026-11-06T21:05:35.177139+00:00"
+  },
+  "services": {
+    "proofflow-product-api.service": "active",
+    "proofflow-product-dispatcher.service": "active",
+    "proofflow-product-retention.timer": "active"
+  },
+  "product_pr_rows": 0,
+  "pr_note": "Expired operator workspace has been retired by normal retention. Historical completed PR evidence remains. This work performed no GitHub product write.",
+  "private_receipt_hashes": {
+    "phase5-original-failure-live.json": "75a4f613e8755c4de3685b9e64ec64b5a7bd3245ff2785ad92b5c5c82497e10e",
+    "phase5-original-failure-live-followup.json": "29dbb5aca9a3909e61daed389fb478a8b08469d3b09743374b78909941f38869",
+    "phase5-code-failure-repair.json": "334018944a82cc568b4d6a36de4acc3330321a78144105ea70934afb51a4f24e",
+    "phase5-source-repair-readback.json": "c9b5308e7262a91f4dd8abd1745ac8cf03d511688941c2749bf332e764315e25",
+    "verifier-boundary-latest.json": "26ed38fd15a0db8ce4db94455ca712cd95d005be29d2deb8597e297cbdf14730",
+    "product-http-latest.json": "534a93f51009d0a7e1c55c49daecfc2901a1f5e49c0010e3928175b51a03619a",
+    "phase5-source-verifier-update.json": "30357eb48fe210637376075b041016d6b3924723e53333d5622b62acfcb8931e"
+  },
+  "sources": {
+    "api/app/product.py": "3d707e9c946b259e80baa24665a2211c584d411be1f170d2f05f5283bd42283b",
+    "api/app/product_store.py": "14a59e93feae42b85d2f091eebeb08c73d10b94edf94c8b94870b2f660adcfae",
+    "api/app/static/index.html": "0c1f5a30807aa9ac735a4ace1db1adbd4345eb8f2260008bee32a55469d8aec2",
+    "api/app/static/intake.js": "398fc61b6b142c9eedfffa95185f3e6b2ffb94960fa53c26abfb7a3e9b1b46d5",
+    "api/app/wire.py": "7c33fc2e639eee3b7a5c48b0de0d3692e403c7b55a18e2cf18194c16def02792",
+    "contracts/browser-v1.d.ts": "43eae42577c79026d987dc9e51b7a5ac796d3dc8d421ee3a5d4262692f707151",
+    "orchestrator/product_dispatcher.py": "f01b78a4529285c38632fc16d8ae69cfdcf71674e3d24b63b97f112ae3ee2dba",
+    "orchestrator/repair_dispatcher.py": "313629f41ebef33c4ab4a745632cf204884ad0e96c19f645b738e03a678ed861",
+    "orchestrator/verification_run.py": "76b63e52a40797491da059f5b620e676b1b5658fbab4eda7c8cfdb6c6559b8eb",
+    "scripts/check_deployed_product.py": "77c746f9af87b7bbc2dbf8c0b11e59c8353def4c197dacc64b6cfa635cb0c500",
+    "scripts/check_product_image.py": "535c91ac13abeeaaa7aaef1c9f57e6e1d8bbccb6ce3e793a051eedd2746db792",
+    "scripts/deploy_product_database.py": "c3ccf7e10ba11fbec7220d15d702e251b209c922f77b058dc26ddb0e60930fdf",
+    "scripts/deploy_verifier.py": "707d27f561118983f5f82b1e4348a9a491f2e6328694949e17b61e883c82bff8",
+    "scripts/install_product_database.py": "218e470f93c25edfb5b5f0c0c9c95621f03b22addcac0288bf3da5cf1582277a",
+    "scripts/install_product_services.py": "8e2999e430682100270d8318965c933cb8281f895fe4bc445e4c3d7861b1037e",
+    "scripts/run_verifier_probes.py": "22ef87c53872d5f4c93cf4aa57d02f6ee9f8e06d98d7db56912a6d0659928119",
+    "tests/unit/test_product_http.py": "49ea516b878ed8218dd713c0584ec46e1eba7d0d2250eae2c7c4378f9726f33a",
+    "tests/unit/test_verifier_protocol.py": "9ce2f9b99adad6c628fcdf214b63b2ad6e7c7379ce01ab87a54a8ff597bae08f",
+    "verifier/protocol.py": "d9b994443972a95009f82e248541218b362629d7c9f298573819157c25215a62",
+    "db/phase2/017_original_execution_failure.sql": "075fab6ef79288157fb14f517197c7da59e1526d9dbd3b33ce1e95d5b9a0212b",
+    "db/phase2/018_original_success_without_outputs.sql": "51ba8f0de7179a877baf9c00f345633d49b6b131c1b97a106ee0544a502c6b33",
+    "eval/comparison_cases.py": "e019a7f44bd2f97fe1edff4472198de1baf8a5be9576ffcf44bbee819e0254dc",
+    "scripts/activate_verifier_update.py": "e701e2ff5b12f372ce542a31a7eeaabb96dfbd40e76497385a6b09cc805143ef",
+    "scripts/check_code_failure_repair_live.py": "4cd0426bedcd7bca38f395345df1005c2dbea39ec49a177e3f832863113d69c8",
+    "scripts/check_original_failure.py": "782ccce6fbdc01a5a57325804783cd16eb972b7074e196a484083cdafcc03923",
+    "scripts/check_original_failure_live.py": "2ef16956d18378f1656fe2302e1a46180289a02aa4d7351783d16f09af8baa66",
+    "scripts/install_provider_quote.py": "dc16c299c664ce4d6c98a833d2fafd154270f9d23360ea9473e6ef06e4cd3a6e",
+    "scripts/install_verifier_update.py": "0af0e045219e497eb5bbf16a272dd2f771c425e4f03ca0e011f1626599f13540",
+    "scripts/refresh_product_quote.py": "2e17a8c1e7217919eedea767f8116f47c39deebd4b14125e978d3a82d6ffa821",
+    "tests/security/test_original_failure.py": "bf3f2faf3dd8e63f76131fe137a781cd57ef5f7cba627f7ad15b97ab67fbb162",
+    "tests/security/test_verifier_update.py": "0828bcfe1f08851be9d27509231bfe9e065baabce4b1df837467b3f9c863f6fb",
+    "tests/unit/test_comparison_cases.py": "a6afa709bc87d9e32bf052bc7cf59544d6f446e00a5a675b79962089618855b0",
+    "tests/unit/test_provider_quote_refresh.py": "c8ac936a5f0a0f1acbd4dd7f646b006add1ae068d47df1df5caa62a6ba559716"
+  },
+  "limitations": [
+    "Final A/B/C/D comparison not frozen or run; draft24-case generator reuses disclosed fault families/template.",
+    "No independent human security or oracle review.",
+    "Metadata/restore tombstone lifecycle and native advisories remain open.",
+    "Public release, MIT ownership clearance and submission are not authorized."
+  ]
+}

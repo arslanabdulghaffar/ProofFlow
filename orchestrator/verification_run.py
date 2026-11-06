@@ -5,6 +5,8 @@ queue dispatcher must authorize/fence each invocation. It never executes code.
 """
 
 import fcntl
+import hashlib
+import json
 import os
 import secrets
 import stat
@@ -17,7 +19,45 @@ from verifier.host import run
 from verifier.protocol import MAX_REQUEST, decode, encode, sha
 from worker.host import sync_directory, synced_write
 from worker.journal import private_directory
-from worker.protocol import ExecutionRequest, SupervisorError
+from worker.protocol import ExecutionRequest, SupervisorError, runtime_identity_digest
+
+
+def retained_receipt(receipt):
+    """Do not extend the worker's brief failure preview lifetime into product history."""
+    value = dict(receipt)
+    if "failure_log_preview" in value:
+        preview = value.pop("failure_log_preview")
+        value["failure_log_preview_sha256"] = hashlib.sha256(
+            json.dumps(preview, sort_keys=True).encode()).hexdigest()
+        value["failure_log_preview_retired"] = True
+    return value
+
+
+def repairable_failure(worker, intent):
+    """Only bound normal exits; no timeout/OOM/cancel/unknown infrastructure recovery."""
+    code = worker.get("runtime_client_exit_code")
+    observed = worker.get("resource_observation") or {}
+    return (
+        worker.get("cleanup") == "confirmed"
+        and worker.get("execution") == intent["execution"]
+        and worker.get("job") == intent["job"]
+        and type(worker.get("generation")) is int
+        and worker["generation"] == intent["generation"]
+        and worker.get("manifest") == intent["manifest_sha256"]
+        and runtime_identity_digest(worker.get("runtime", {})) == intent["runtime_sha256"]
+        and worker.get("outcome") in ("exited", "output_rejected")
+        and observed.get("source") == "host_cgroup_v2"
+        and type(observed.get("samples")) is int and observed["samples"] > 0
+        and observed.get("limits") == {"cpu_cores": 1, "memory_bytes": 805306368,
+                                       "swap_bytes": 0, "host_tasks": 128}
+        and type(code) is int and 0 <= code <= 125
+        and worker.get("runtime_exit_code") == str(code)
+        and ((code > 0 and worker.get("unit_result") == "exit-code"
+              and worker.get("runtime_exit_kind") == "1")
+             or (code == 0 and worker.get("unit_result") == "success"
+                 and worker.get("runtime_exit_kind") in ("0", "1")
+                 and worker.get("outcome") == "output_rejected"))
+    )
 
 
 class VerificationRun:
@@ -107,7 +147,7 @@ class VerificationRun:
         sync_directory(self.journal)
         if self.before_dispatch is not None:
             self.before_dispatch(request, intent)
-        worker = self.client.create(request)
+        worker = retained_receipt(self.client.create(request))
         synced_write(directory / "worker.json", canonical_bytes(worker, max_bytes=65536))
         sync_directory(directory)
         good = (worker.get("collected") is True and worker.get("cleanup") == "confirmed"
@@ -115,6 +155,9 @@ class VerificationRun:
                 and worker.get("runtime_client_exit_code") == 0
                 and worker.get("unit_result") == "success")
         result = {"intent": intent, "worker": worker, "semantic": None}
+        if not good and purpose == "original" and repairable_failure(worker, intent):
+            result["source"] = self.bounded({"operation": "source", "contract": encode(contract),
+                "transactions": encode(transactions), "customers": encode(customers)})
         if good:
             captures = directory / "captures"
             captures.mkdir(mode=0o700)

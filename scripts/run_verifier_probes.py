@@ -18,6 +18,8 @@ from verifier.protocol import encode  # noqa: E402
 
 
 def main():
+    if sys.argv[1:] not in ([], ["--boundary-only"]):
+        raise RuntimeError("UNEXPECTED_VERIFIER_PROBE_MODE")
     deployment = json.loads((PRIVATE / "evidence/verifier-deployment.json").read_bytes())
     identifier = deployment["deployment"]
     if re.fullmatch(r"[0-9a-f]{64}", identifier) is None:
@@ -54,6 +56,12 @@ def main():
         boundary = json.loads(host(command))
         print(json.dumps({"deployed_boundary_groups": boundary["passed"],
                           "cleanup_confirmed": boundary["cleanup_confirmed"]}), flush=True)
+        if sys.argv[1:] == ["--boundary-only"]:
+            (PRIVATE / "evidence/verifier-boundary-latest.json").write_text(json.dumps({
+                "observed_at": datetime.now(UTC).isoformat(), "deployment": identifier,
+                "rootfs_sha256": deployment["rootfs_sha256"], "sources": source_hashes,
+                "boundary": boundary, "candidate_executions": 0}), encoding="utf-8")
+            return
         cases = [("canary_correct", "ownership", False), ("canary_correct", "quarantine", False),
                  ("canary_correct", "quarantine", True), ("wrong_owner", "ownership", False)]
         summaries = []

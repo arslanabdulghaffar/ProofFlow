@@ -17,7 +17,7 @@ from api.app.auth import SessionSecrets, csrf_digest, session_digest  # noqa: E4
 from contracts.policy import parse_contract  # noqa: E402
 
 RUNTIME = "c826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78"
-VERIFIER = "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f"
+VERIFIER = "0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b"
 
 
 def main():

@@ -1,5 +1,8 @@
 # Acceptance and verification plan
 
+Latest Phase5 follow-up:788 Linux+10 subtests,664 Windows/124 Linux skips;6 source-failure SQL groups,11 original queue groups,5 repair groups;72 exact image files;6 deployed verifier boundary groups and7 HTTP groups/3 cases. Actual code crash + successful missing-output diagnosis and invalid-source hold pass; first missing-output failure remains recorded. One real API repair/one Vultr call/three fresh proofs passes without activation. Final A/B/C/D and lifecycle review remain incomplete. [Evidence](evidence/phase5-source-repair-2026-11-06.json).
+
+
 Latest22:30 KST: Phase4 acceptance passes under the owner's no-new-PR constraint. Explicit pending-ack seed in a disposable DB; actual unchanged SQL/controller/adapter, real existing-PR GET reply loss, natural180-second lease expiry, higher-generation takeover, stale/write rejection, pending/completed restart, no-op redelivery and cleanup.628 Windows passes/86 Linux skips;7 mutation-denial cases. Original POST-create response loss remains NOT_REPRODUCED; this is recovery-only evidence combined with the separate real PR creation/readback. [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json).
 
 ## Phase4 acceptance audit — November5

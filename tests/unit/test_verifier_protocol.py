@@ -28,6 +28,19 @@ def result(raw):
     return response
 
 
+@pytest.mark.parametrize("case,blocked", [("ownership", 0), ("quarantine", 4)])
+def test_source_diagnosis_cannot_claim_output_proof(case, blocked):
+    tx, cs = generate(parse_contract(CONTRACT), "ab" * 32, case)
+    request = {"operation": "source", "contract": encode(CONTRACT),
+               "transactions": encode(tx), "customers": encode(cs)}
+    report = result(canonical_bytes(request))["result"]
+    assert report == {"operation": "source", "contract_sha256": parse_contract(CONTRACT).sha256,
+                      "transactions_sha256": sha(tx), "customers_sha256": sha(cs),
+                      "blocking_occurrences": blocked}
+    for field in ("outputs", "pipeline", "runtime", "expected"):
+        assert result(canonical_bytes({**request, field: {}}))["status"] == "rejected"
+
+
 def test_canary_fresh_reproducible_composite_and_duplicate():
     first = result(request())["result"]
     assert result(request())["result"] == first

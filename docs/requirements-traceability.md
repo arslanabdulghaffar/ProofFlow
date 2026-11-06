@@ -1,5 +1,8 @@
 # Requirements traceability
 
+Phase5 source-failure follow-up: original crash/missing outputs can reach bounded repair only after exact trusted source diagnosis; held source data cannot. Real API crash repair uses1 Vultr call and3 fresh isolated proofs, no activation/PR. R34/R35 new controller failure-preview copies are redacted immediately. R42/R43 gain a draft24-case generator with arithmetic oracles; final freeze/comparison remains incomplete. [Evidence](evidence/phase5-source-repair-2026-11-06.json); no composite phase promotion.
+
+
 Phase5 worker lifecycle follow-up: R34/R35/R38 raw failure-preview expiry now has local deadline/migration/real-WAL-reader tests plus actual deployed natural expiry, database/WAL byte absence and post-restart readback. ID/manifest/fence/quarantine semantics remain. R36/T07–T08 has16 fresh probes after coordinated runtime update;7 real HTTP groups verify new queue/worker path. Restore tombstone/metadata lifecycle and final R42/R43 held-out evaluation remain incomplete. [Evidence](evidence/phase5-worker-retention-2026-11-06.json); no composite Phase5 DONE claim.
 
 Phase5 follow-up: R42/R43 now have12 real development A/B/C jobs and15 reconciled provider receipts with independent worker/verifier grading. A is repair-core only, D NOT RUN, final held-out comparison remains deferred. R34/R35/R38 lifecycle evidence adds automatic expired-operator retirement,32-job union and11 verified byte-removal markers; raw worker failure-log/metadata/tombstone lifecycle remains incomplete. Shared$5 development allocation is concurrency/replay/privilege-tested in real PostgreSQL. [Evidence](evidence/phase5-model-pilot-retention-2026-11-06.json); no composite phase or release acceptance promotion.

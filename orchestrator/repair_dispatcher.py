@@ -18,7 +18,7 @@ from orchestrator.repair_proposal import (
     RepairRejected,
     build_prompt,
 )
-from orchestrator.verification_run import VerificationRun
+from orchestrator.verification_run import VerificationRun, retained_receipt
 from orchestrator.verifier_client import VerifierClient
 from orchestrator.vultr_probe import ProbeDispatchError
 from verifier.protocol import decode
@@ -89,7 +89,9 @@ class RepairDispatcher:
                 values[asset["kind"]] = raw
             if set(values) != {"pipeline", "transactions", "customers", "contract"}:
                 raise ProductFailure("PRODUCT_ASSET_MANIFEST_INVALID")
-            feedback = parent["report"]["semantic"]["report"]["result"]
+            feedback = ({"code": "ORIGINAL_EXECUTION_FAILED", "output_verified": False}
+                        if parent.get("outcome") == "execution_failed"
+                        else parent["report"]["semantic"]["report"]["result"])
             history = []
             generation = 0
             loop = asyncio.get_running_loop()
@@ -293,7 +295,7 @@ class RepairDispatcher:
                     },
                 )
                 if status.get("state") == "CLEANED":
-                    receipt = status.get("receipt", {})
+                    receipt = retained_receipt(status.get("receipt", {}))
                     if (
                         runtime_identity_digest(receipt.get("runtime", {}))
                         != self.worker.runtime_digest

@@ -7,7 +7,7 @@ from uuid import UUID, uuid4
 from psycopg.types.json import Jsonb
 
 from api.app.product_store import ProductFailure
-from orchestrator.verification_run import VerificationRun
+from orchestrator.verification_run import VerificationRun, retained_receipt
 from orchestrator.verifier_client import VerifierClient
 from worker.protocol import SupervisorError, runtime_identity_digest
 
@@ -101,7 +101,10 @@ class ProductDispatcher:
                 # No stale write. Next leased controller fences/reconciles the stored execution.
                 return True
             if result["semantic"] is None:
-                await self.store.call("fail", *binding, Jsonb(result["worker"]))
+                if result.get("source", {}).get("report", {}).get("status") == "processed":
+                    await self.store.call("review_failure", *binding, Jsonb(result))
+                else:
+                    await self.store.call("fail", *binding, Jsonb(result["worker"]))
             elif result["semantic"]["report"]["status"] != "processed":
                 await self.store.call("fail", *binding, Jsonb(result["worker"]))
             else:
@@ -128,7 +131,7 @@ class ProductDispatcher:
                     raise SupervisorError("RECONCILIATION_RECEIPT_INVALID")
                 if runtime_identity_digest(receipt.get("runtime", {})) != job["runtime_sha256"]:
                     raise SupervisorError("RECONCILIATION_RECEIPT_INVALID")
-                await self.store.call("fail", *binding, Jsonb(receipt))
+                await self.store.call("fail", *binding, Jsonb(retained_receipt(receipt)))
                 return
             await asyncio.sleep(1)
         raise SupervisorError("RECONCILIATION_CLEANUP_UNCERTAIN")

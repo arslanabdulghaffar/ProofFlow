@@ -6,7 +6,7 @@ const kinds = ["pipeline", "transactions", "customers", "contract"];
 const limits = {pipeline:16384, transactions:5242880, customers:5242880, contract:32768};
 const terminal = new Set(["NEEDS_REVIEW", "FAILED_INFRA", "CANCELLED"]);
 const names = {QUEUED:"Queued", BASELINE_RUNNING:"Running original", BASELINE_VERIFYING:"Verifying output", RECONCILING:"Reconciling execution", NEEDS_REVIEW:"Needs review", FAILED_INFRA:"Execution failed", CANCELLED:"Cancelled"};
-const explanations = {match:"The original matched these inputs. No version has been activated.", mismatch:"The original output violates your approved contract. Inspect the differences below.", held:"Source data has unresolved problems. The batch remains held.", input_rejected:"These inputs could not be prepared under the contract. No pipeline executed.", infrastructure_failed:"The run failed. No verified result was published.", cancelled:"Cancellation and cleanup are recorded."};
+const explanations = {execution_failed:"The pipeline failed to produce usable output. Source data was checked; output is not verified.",match:"The original matched these inputs. No version has been activated.", mismatch:"The original output violates your approved contract. Inspect the differences below.", held:"Source data has unresolved problems. The batch remains held.", input_rejected:"These inputs could not be prepared under the contract. No pipeline executed.", infrastructure_failed:"The run failed. No verified result was published.", cancelled:"Cancellation and cleanup are recorded."};
 let session, assets = {}, uploadIds = {}, approved = false, requestBody = null, job = null, stream = null, lastEvent = 0n;
 function lockFiles(locked) { for(const kind of kinds) $(kind).disabled=locked; }
 function holdPending(locked) { lockFiles(locked); $("files").querySelector("button").disabled=locked; if(locked)$("approve").disabled=true; }
@@ -59,7 +59,7 @@ async function refreshJob(){if(!job)return;const value=await api("/v1/jobs/"+job
   $("job").hidden=false;$("job-id").textContent="Job "+job;$("state").textContent=names[value.state];$("run-status").textContent="Recorded state, updated from the server. Refreshing never resubmits a job.";$("blocked").textContent=value.blocking_occurrences??"—";$("finding-count").textContent=value.finding_count??"—";$("outcome").textContent=explanations[value.outcome]||"Waiting for execution and independent comparison.";$("cancel").disabled=terminal.has(value.state);$("evidence-link").href="/jobs/"+job;
   $("witnesses").replaceChildren();for(const witness of value.ownership_witnesses){const row=document.createElement("tr");for(const key of ["merchant_id","customer_id","expected_owner","actual_owner"]){const cell=document.createElement("td");cell.textContent=witness[key];row.append(cell);}$("witnesses").append(row);}
   $("findings").replaceChildren();for(const finding of value.findings){const li=document.createElement("li");li.textContent=finding.check+" · "+finding.code;$("findings").append(li);}
-  $("repair-start").disabled=!(["mismatch","match"].includes(value.outcome)&&value.blocking_occurrences===0);
+  $("repair-start").disabled=!(["mismatch","match","execution_failed"].includes(value.outcome)&&value.blocking_occurrences===0);
   if(terminal.has(value.state)){stream?.close();stream=null;}return value;
 }
 function watch(){stream?.close();if(!job||$("cancel").disabled)return;stream=new EventSource("/v1/jobs/"+job+"/events");

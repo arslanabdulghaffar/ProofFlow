@@ -1,5 +1,16 @@
 # Progress
 
+## November6 KST — real API code-failure repair passed
+
+Phase0–4 DONE; Phase5 IN PROGRESS. Continued from6b59d0ef without an owner prompt. Full-product evaluation preparation found original crashes could not enter repair. Added source-only diagnosis and truthful execution_failed status, while source ambiguity remains held and outputs are never declared verified. Additive017/018 migrations, bounded source operation, UI/types and controller receipt redaction are deployed. Original crash passed; initial missing-output probe failed closed on successful stopped-unit exit-kind0. Preserve it. New018 also requires positive host cgroup observations/exact limits; fresh missing-output and invalid-source checks pass. No contract/verifier comparison/canary expectation or candidate limit changed.
+
+Actual retained crash then passed through the real API/queue/Vultr/worker path:1 model call,3 fresh executions (candidate/ownership/quarantine), all cleanup confirmed, awaiting exact activation approval. No activation or PR. Held reservation$0.027853; provider usage estimate$0.0009993, not settled billing. Shared development reservation$1.339265. [Evidence](evidence/phase5-source-repair-2026-11-06.json).
+
+Current product image200257609d3fa99f53829ab1cb9493e77a646f08afd2090abb947120d0388131, verifier rootfs0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b, worker unchangedc826cf6662bcb4495cb744e34b9944044ade193fd870ca5a7bef140d3150dd78.18 migrations installed,72 exact image files. New verifier epoch3 invalidates prior activations normally; do not rebind approvals.788 Linux tests+10 subtests;664 Windows/124 Linux skips;6 new SQL failure groups,11 original queue groups,5 repair groups,6 actual bounded-verifier groups and7 deployed HTTP groups/3 cases pass. Separate Codex review is not independent human approval.
+
+Credit$193.13 at12:42 UTC Nov6; job/inference admissions closed, API/dispatcher/product-retention timer active, guard review deadline unchanged2026-11-06T21:05:35.177139Z. The original owner workspace has expired and normal retention removed its product PR rows; historical PR#1 acceptance remains valid evidence, no GitHub deletion/write occurred in this work. The first service readback queried the wrong retention timer name; corrected named readback is active. No new cloud service/dependency or personal payment.
+
+
 ## November6 KST — worker preview retirement deployed and checked
 
 After verified67920adc pilot checkpoint, fixed the remaining indefinite raw failure-preview storage. Indexed300-second deadlines, one-time legacy grace, secure_delete/WAL truncation and bounded maintenance preserve all execution/fence/cleanup/quarantine records. Local real-reader checkpoint failure/recovery tests pass; deployed natural expiry and physical database/WAL absence pass, exact replay stays idempotent and changed source is rejected. A later readback after actual worker restart passed; the first immediate RPC was delivery-unknown and is preserved, not counted successful.

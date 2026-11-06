@@ -466,3 +466,24 @@ def test_browser_summary_keeps_large_sequence_exact_and_strips_internal_receipts
             assert "private_internal" not in response.text
             assert response.json()["finding_count"] == 1
     asyncio.run(check())
+
+
+def test_failed_original_summary_and_html_do_not_claim_a_verified_output():
+    async def check():
+        db, _, client = fixture()
+        db.job_result = {'state': 'NEEDS_REVIEW', 'outcome': 'execution_failed',
+            'created_at': '2026-11-04T00:00:00Z', 'sequence': 4,
+            'report': {'semantic': None, 'worker': {'private': 'internal'},
+                       'source': {'report': {'result': {'blocking_occurrences': 0}}}}}
+        async with client:
+            job = str(uuid4())
+            response = await client.get('/v1/jobs/' + job + '/summary')
+            assert response.status_code == 200
+            assert response.json()['blocking_occurrences'] == 0
+            assert response.json()['finding_count'] is None
+            assert response.json()['findings'] == []
+            assert 'internal' not in response.text
+            response = await client.get('/jobs/' + job)
+            assert response.status_code == 200
+            assert 'output is not verified' in response.text
+    asyncio.run(check())

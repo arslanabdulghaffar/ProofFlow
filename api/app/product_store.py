@@ -41,6 +41,7 @@ API_OPERATIONS = {
     "logout": ("SELECT pf_product.revoke_session(%s,%s,%s)", 3),
 }
 DISPATCH_OPERATIONS = {
+    "review_failure": ("SELECT pf_product.review_original_failure(%s,%s,%s,%s,%s)", 5),
     "pr_claim": ("SELECT pf_product.claim_pr(%s)", 1),
     "pr_preview_record": ("SELECT pf_product.record_pr_preview(%s,%s,%s,%s,%s)", 5),
     "pr_begin": ("SELECT pf_product.begin_pr_write(%s,%s,%s,%s,%s)", 5),

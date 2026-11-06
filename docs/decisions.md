@@ -1,5 +1,12 @@
 # Decision log
 
+## D78: distinguish code failure from infrastructure failure without inventing verification
+
+A full-product evaluation must test the actual intake/queue path. A confirmed original code failure may request bounded repair only after independent source diagnosis finds zero blocking occurrences. Add a separate source operation and execution_failed outcome; semantic remains null until outputs actually exist and pass comparison. New017 migration preserves all previously applied bytes and admission/lease/revocation/idempotency/cap checks. Successful candidate plus fresh protected checks still precedes exact activation; no batch completion or PR authorization follows from a crash. Source ambiguity remains held. Retire raw failure previews before new controller history/reconciliation copies, keeping digest and authority evidence.
+
+Draft24-case comparison generator is separate from canary generation but reuses disclosed fault families and positive template: prospective synthetic evidence, not independently authored held-out data. Do not freeze/run it until this product gap passes deployed acceptance. No final evaluation result exists. Development pilot remains labeled repair-core-only. Separate critical review is recorded in phase5-security-review.md; no human reviewer is confirmed.
+
+
 ## D77: retire raw worker previews without forgetting execution authority
 
 Store an indexed nullable preview deadline in the durable worker journal. Existing rows lack a finish time, so grant a single300-second migration grace; future failure previews get the same TTL from finish. Replace only raw preview bytes with digest/retired marker. Keep IDs, job generations, manifests, fences, states, cancellation, cleanup and quarantine. Enable SQLite secure_delete and require WAL truncation; a busy checkpoint pauses admission, and recovery always retries truncation even if redaction already committed. Process at most32 expired rows per pass. Do not claim forensic snapshot/SSD erasure or a strict expiry SLA under outages/backlog.

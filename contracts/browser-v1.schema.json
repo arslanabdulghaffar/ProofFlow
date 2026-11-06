@@ -599,7 +599,8 @@
                 "held",
                 "input_rejected",
                 "infrastructure_failed",
-                "cancelled"
+                "cancelled",
+                "execution_failed"
               ],
               "type": "string"
             },

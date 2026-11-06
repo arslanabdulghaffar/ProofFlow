@@ -18,7 +18,8 @@ State = Literal[
     "CANCELLED",
 ]
 Outcome = Literal[
-    "match", "mismatch", "held", "input_rejected", "infrastructure_failed", "cancelled"
+    "match", "mismatch", "held", "input_rejected", "infrastructure_failed", "cancelled",
+    "execution_failed"
 ]
 
 

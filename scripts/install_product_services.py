@@ -7,8 +7,8 @@ import stat
 import subprocess
 from pathlib import Path
 
-IMAGE = "4ec2fbe368ff48894f07076812d33398b5d92d683736ceb3084dd66b8bf88bcb"
-PREVIOUS = "e0f518e69f39d3ea855a51793a8f917f8242eb1b192c9391830ddb300e27b27a"
+IMAGE = "200257609d3fa99f53829ab1cb9493e77a646f08afd2090abb947120d0388131"
+PREVIOUS = "57110562a70593f6bf6bb9ea55c28d9d53efe5463a550e107084ed2b2eaea262"
 DOCKER = ["/usr/bin/docker", "--host=unix:///var/run/docker.sock"]
 
 
@@ -59,6 +59,41 @@ def write(path, raw, uid=0, mode=0o400):
         os.close(parent)
 
 
+def verifier_unit(verifier):
+    return f"""[Unit]
+Description=ProofFlow fixed verifier socket helper
+Requires=proofflow-verifier-helper.socket
+After=proofflow-verifier-helper.socket
+[Service]
+ExecStart=/usr/bin/python3 -I -B {verifier}/verifier_socket_admin.py
+User=root
+Group=root
+UMask=0077
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+ProtectSystem=strict
+ProtectHome=yes
+PrivateNetwork=yes
+PrivateDevices=yes
+RestrictAddressFamilies=AF_UNIX
+RestrictNamespaces=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ReadWritePaths=/var/lib/proofflow-verifier
+MemoryMax=384M
+MemorySwapMax=0
+CPUQuota=100%
+TasksMax=16
+LimitNOFILE=64
+LimitCORE=0
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=3
+""".encode()
+
+
 def main():
     if os.geteuid() != 0:
         raise RuntimeError("ADMINISTRATOR_REQUIRED")
@@ -94,38 +129,7 @@ def main():
     for name in ("ca.pem", "controller.pem", "controller.key"):
         write(private_worker / name,
               (Path("/opt/proofflow-control/tls") / name).read_bytes(), 10003)
-    helper = f"""[Unit]
-Description=ProofFlow fixed verifier socket helper
-Requires=proofflow-verifier-helper.socket
-After=proofflow-verifier-helper.socket
-[Service]
-ExecStart=/usr/bin/python3 -I -B {verifier}/verifier_socket_admin.py
-User=root
-Group=root
-UMask=0077
-NoNewPrivileges=yes
-CapabilityBoundingSet=
-AmbientCapabilities=
-ProtectSystem=strict
-ProtectHome=yes
-PrivateNetwork=yes
-PrivateDevices=yes
-RestrictAddressFamilies=AF_UNIX
-RestrictNamespaces=yes
-ProtectKernelTunables=yes
-ProtectKernelModules=yes
-ProtectControlGroups=yes
-ReadWritePaths=/var/lib/proofflow-verifier
-MemoryMax=384M
-MemorySwapMax=0
-CPUQuota=100%
-TasksMax=16
-LimitNOFILE=64
-LimitCORE=0
-Restart=on-failure
-RestartSec=3
-TimeoutStopSec=3
-""".encode()
+    helper = verifier_unit(verifier)
     socket = b"""[Unit]
 Description=ProofFlow private verifier dispatcher socket
 [Socket]

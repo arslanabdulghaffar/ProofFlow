@@ -13,9 +13,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from vultr_credit_guard import run as credit_guard  # noqa: E402
 from vultr_phase1 import PRIVATE, ROOT, Admin  # noqa: E402
 
-IMAGE = "cc7ad06d96c2235c4e4306d8490caf86c4424a22c21971ee1d3838f6af7ecb9d"
-ROOTFS = "82ea34b7184e893907626f38a62f558d2fd48890a86caae2c860eec4c4c7a37f"
-LOCAL = "/var/lib/proofflow-verifier-image-v6/rootfs.squashfs"
+IMAGE = "294a27ed5f8f2a6d35d473bf81b910c85cc2ed87c28bcd585717613cee0e471c"
+ROOTFS = "0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b"
+LOCAL = "/var/lib/proofflow-verifier-image-v7/rootfs.squashfs"
 MODULES = {
     "contracts": ("__init__", "codec", "scalars", "source", "policy"),
     "verifier": ("__init__", "outputs", "lineage", "reference", "compare", "canaries",
