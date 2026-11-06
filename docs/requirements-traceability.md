@@ -1,5 +1,8 @@
 # Requirements traceability
 
+R42/R43 adapter follow-up: local B/C/D controller and actual-API A adapter have31 new orchestration/proof tests (45 including journal), preserve baseline acceptance before grading, enforce exact proof/source bindings and label intake rejection/unknown usage. Campaign launcher/freeze/scored execution remain NOT RUN; no phase promotion. A fixture retirement is tested with doubles only in this checkpoint.
+
+
 R43 accounting follow-up: dedicated B/C comparison journal has14 local Linux security tests and fixed job/call/money/storage caps; final dispatch/adapter/freeze still NOT RUN. R34/R35 fixture cleanup verified4 normal retirements and physical markers without altering quotas.
 
 

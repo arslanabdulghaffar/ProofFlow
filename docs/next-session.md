@@ -1,5 +1,14 @@
 # Resume ProofFlow
 
+## November6 KST — comparison adapters tested, campaign still pending
+
+After verified bd6829cbbdd61ccb58cc3f917b03d0ab94852ed3, added eval/comparison_controller.py for B/C/D and scripts/comparison_api.py for actual full-product A. Forty-five focused Linux checks pass (16 controller,15 API/proof,14 journal);15 API/proof checks also pass on Windows. These are labeled doubles/local files, not final model results. No new paid call, resource, product image, SQL or policy change. Phase5 remains IN PROGRESS.
+
+B durably records authenticated collected zero-exit acceptance via VerificationRun.after_capture before semantic grading. A grader failure/timeout cannot erase that decision; grade stays unknown and critical infrastructure faults stop the campaign. C strips witness rows and retains production prompts/limits/fresh checks; D executes its fixed inert rebuild only on the designated worker. A uses actual upload/exact synthetic contract approval/original/repair/export APIs, reads durable provider/execution rows, independently binds exported candidate/source/runtime plus three fresh proofs, and only retires its own completed synthetic workspace after saving evidence. No activation/PR. Unknown-unit intake rejection is distinct from model clarification. Existing run/retirement IDs are never retried.
+
+Next: finish finite campaign launcher, prospective24-case/96-run freeze, quote-refresh policy and independent cutoff/reconciliation, then execute. No frozen seed/plan or scored call exists yet. Preserve equal3-call/$0.10 caps, B/C dedicated journal$4.80, A$2.40 forecast plus existing per-call product$5 allocation, combined$7.20 inside final$12/global$25. Do not double-reserve A forecast in repair_allocation. Verify current credit/quote and actual closed/idle services before launch; historical quote below has expired. Guard deadline remains2026-11-06T21:05:35.177139Z; it has not been extended. Current image/runtime pins and last observed credit remain as below, not refreshed by these local tests. Metadata/deletion-aware restore and human review gaps remain.
+
+
 ## November6 KST — bounded comparison journal and fixture retirement
 
 After verified609bb0fecaf65270a07ada662d050662683f057a, added eval/comparison_journal.py with14 passing local Linux security tests:48 fixed B/C jobs,3 calls/$0.10 each,144 calls/$4.80 total, bounded private fd/lock/files, durable immutable requests/responses and no retry after uncertainty. Still requires unchanged global budget reserve/claim. This is not deployed/invoked; final comparison remains NOT RUN and no set is frozen. No new model call, resource, dependency or product image change since609bb0f. Separate critical review in phase5-security-review.md is not human sign-off.

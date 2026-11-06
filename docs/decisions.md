@@ -1,5 +1,10 @@
 # Decision log
 
+## D80: evaluate actual API workflow and preserve baseline decisions before grading
+
+Use actual product intake/contract/original/repair/export for arm A, without exact-version activation or external actions. Capture raw private API/provider/execution evidence before ordinary synthetic workspace retirement. For B, authenticate/bind collected worker bytes and persist zero-exit acceptance in the existing after_capture hook before deterministic grading; failed/late grading remains unknown rather than retroactively removing an unsafe acceptance. C uses verdict-only feedback and fresh protected checks; D uses the fixed rebuild only on the worker. All arms preserve failed/missing/unknown observations. The A administrative/API overhead differs from C repair-core orchestration and must be disclosed in latency comparisons; this is not a pure end-to-end witness ablation. No final campaign/freeze yet and no human oracle/security review claim.
+
+
 ## D79: separate final B/C receipts from infrastructure probes
 
 Use a finite private filesystem journal bound to the frozen manifest:48 B/C jobs,3 calls/$0.10 each,144 calls/$4.80 maximum, exact immutable payload/quote/response records, fsynced exclusive creation and descriptor-pinned locking. Global reserve/claim remains mandatory. Existing/unknown requests cannot send again. Do not increase or evict infrastructure probe receipts. A retains actual product API/queue storage; final combined72 model-job forecast remains$7.20. Final controllers/freeze/dispatch are not yet implemented; no paid result is implied. Fourteen local Linux tests and a separate Codex critical pass are not independent human approval.

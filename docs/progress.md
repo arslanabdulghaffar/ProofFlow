@@ -1,5 +1,10 @@
 # Progress
 
+## November6 KST — comparison adapters WIP
+
+Added B/C/D bounded orchestration and a full-product API A adapter after verified bd6829c. Forty-five local Linux checks pass:16 controller,15 API/proof,14 durable journal. B acceptance is persisted before grading and survives grading failure as unknown; fresh proof/source/runtime bindings reject tampering. A preserves exact IDs/evidence before writes, never activates/creates a PR, and retires only completed synthetic workspaces through normal deletion. No deployment/model call/final freeze or score in this checkpoint. Phase5 remains IN PROGRESS; finite campaign launch/reconciliation and lifecycle work remain. Separate Codex review is not human approval.
+
+
 ## November6 KST — final comparison infrastructure WIP
 
 Verified609bb0f checkpoint and continued. Added a dedicated bounded B/C receipt journal with14 passing Linux security tests, preserving the unchanged global spending ledger/transport and100-row probe limit. No final freeze, launch, model call or deployed image change. Four new synthetic workspaces retired normally;4 SQL completions/byte-absence/restore markers verified,2 preexisting workspaces remain. Phase5 remains IN PROGRESS; final controllers/campaign and metadata/restore lifecycle still require work. See the separate review; no independent human sign-off.

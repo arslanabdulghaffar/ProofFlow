@@ -1,5 +1,16 @@
 # Phase 5 security review — November 5
 
+## Comparison adapter critical pass — November6 KST
+
+Reviewed the new controllers separately after implementation; this is Codex review, not independent human sign-off. Candidate bytes stay inert on development/control hosts and execute only through the fixed authenticated worker. Existing product/worker/verifier limits, approval logic, provider transport and global ledger are unchanged. B/C planned calls use the dedicated finite journal; A uses actual product rows. No new dependency or deployed privilege.
+
+Review found baseline acceptance could be overwritten by a later protected grading timeout/exception. Fixed by recording B acceptance through the existing after_capture callback before semantic grading, bound to execution/job/generation/source/manifest/runtime/cleanup and a successful collected exit. The immutable acceptance receipt survives later grading failure. Such failures retain unknown grades and stop on critical infrastructure uncertainty. C cannot become accepted until its independent candidate and fresh ownership/quarantine checks pass. Witness rows/seeds are excluded from B/C prompt feedback. D makes no provider call and never executes its template locally.
+
+A saves all generated request/asset/workspace identifiers before its first write, refuses existing run folders and never retries an uncertain request. It uses real API endpoints, not state edits; exact synthetic contract approval is not version activation. UNKNOWN_UNIT is labeled intake rejection. Provider usage is parsed from retained bytes with known rates; unknown delivery/usage never becomes zero cost. Final candidate proof checks bind source/contract/runtime/verifier and distinct execution IDs. Completed fixture retirement uses exact workspace deletion after durable evidence, SQL completion and physical asset/marker readback; uncertain infrastructure preserves its workspace for reconciliation. No external action API is invoked.
+
+Forty-five focused Linux checks pass (16 controller,15 API/proof,14 journal), plus15 API/proof checks on Windows. All I/O in adapter tests is explicitly doubled; journal tests use real local files/locks. Initial controller tests failed because the synthetic database password did not satisfy the real credential-format check; corrected only the test fixture, not credential validation. Review also corrected serialized quote input_rate/output_rate names and the production deadline_exceeded outcome before dispatch. No final model run or deployed acceptance is implied. Campaign freeze/launcher/cutoffs/receipt reconciliation remain required; no source tuning after final observations. Shared fault-family/template coupling and missing human oracle review must remain disclosed.
+
+
 ## Finite final-comparison receipt lane — November6 KST
 
 New eval/comparison_journal.py is local tested infrastructure, not a launched campaign. It admits exactly48 manifest-declared B/C jobs (24 each), at most3 calls/$0.10 per job,144 calls and$4.80 aggregate. It does not replace global PostgreSQL reservation/claim, increase the100-row infrastructure probe capacity or grant activation. A will use the real product API and its own durable call rows; combined final forecast remains$7.20 inside the$12 final envelope and$25 global cap. Final allocation/dispatch/freeze are still NOT RUN.

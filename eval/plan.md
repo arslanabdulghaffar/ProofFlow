@@ -1,5 +1,8 @@
 # Evaluation and spending plan
 
+Current adapter follow-up: comparison_controller.py implements B/C/D and scripts/comparison_api.py implements actual product API A with31 new local tests. B acceptance is durable before grading; failures retain unknown grades. A's full API/administrative overhead differs from C's repair-core path and must be disclosed; latency is not a pure witness ablation. No scored run/freeze/launcher is complete yet. Existing journal limits and final$7.20 forecast are unchanged. Current product policy/source/runtime and human-review limitations remain.
+
+
 Current local comparison lane: [comparison_journal.py](comparison_journal.py) has14 Linux security tests for48 fixed B/C jobs/144 calls/$4.80, immutable durable receipts and global-budget composition. A continues to use actual product storage; no final adapter, freeze or dispatch is complete. Four temporary source-failure/HTTP fixture workspaces have been retired normally;2 preexisting workspaces remain, freeing capacity without changing quotas. No additional paid calls after the one-call crash acceptance.
 
 
