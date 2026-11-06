@@ -1,5 +1,8 @@
 # Evaluation and spending plan
 
+Current local comparison lane: [comparison_journal.py](comparison_journal.py) has14 Linux security tests for48 fixed B/C jobs/144 calls/$4.80, immutable durable receipts and global-budget composition. A continues to use actual product storage; no final adapter, freeze or dispatch is complete. Four temporary source-failure/HTTP fixture workspaces have been retired normally;2 preexisting workspaces remain, freeing capacity without changing quotas. No additional paid calls after the one-call crash acceptance.
+
+
 ## Full-product crash repair preparation — November6 KST
 
 New source-only diagnosis closes a gap the earlier repair-core pilot did not test. One actual API/queue crash repair passed with1 real model call and3 fresh isolated proofs; it is development acceptance, not a final result. Held$0.027853, usage estimate$0.0009993; development total reserved$1.339265. New product image200257609d3fa99f53829ab1cb9493e77a646f08afd2090abb947120d0388131 and verifier rootfs0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b, worker unchanged. [Evidence](../docs/evidence/phase5-source-repair-2026-11-06.json).

@@ -1,5 +1,10 @@
 # Decision log
 
+## D79: separate final B/C receipts from infrastructure probes
+
+Use a finite private filesystem journal bound to the frozen manifest:48 B/C jobs,3 calls/$0.10 each,144 calls/$4.80 maximum, exact immutable payload/quote/response records, fsynced exclusive creation and descriptor-pinned locking. Global reserve/claim remains mandatory. Existing/unknown requests cannot send again. Do not increase or evict infrastructure probe receipts. A retains actual product API/queue storage; final combined72 model-job forecast remains$7.20. Final controllers/freeze/dispatch are not yet implemented; no paid result is implied. Fourteen local Linux tests and a separate Codex critical pass are not independent human approval.
+
+
 ## D78: distinguish code failure from infrastructure failure without inventing verification
 
 A full-product evaluation must test the actual intake/queue path. A confirmed original code failure may request bounded repair only after independent source diagnosis finds zero blocking occurrences. Add a separate source operation and execution_failed outcome; semantic remains null until outputs actually exist and pass comparison. New017 migration preserves all previously applied bytes and admission/lease/revocation/idempotency/cap checks. Successful candidate plus fresh protected checks still precedes exact activation; no batch completion or PR authorization follows from a crash. Source ambiguity remains held. Retire raw failure previews before new controller history/reconciliation copies, keeping digest and authority evidence.

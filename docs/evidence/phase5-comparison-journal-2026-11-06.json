@@ -1,0 +1,20 @@
+{
+  "scope": "local comparison receipt infrastructure; no final campaign",
+  "base_checkpoint": "609bb0fecaf65270a07ada662d050662683f057a",
+  "linux_targeted_tests": 14,
+  "model_calls": 0,
+  "deployed_changes": false,
+  "fixture_retirement": {
+    "requested": 4,
+    "completed": 4,
+    "physical_directories_absent": 4,
+    "restore_markers": 4,
+    "remaining_workspaces": 2,
+    "private_receipt_sha256": "6eb049450a57fa1afb3ad56d1024996b8f48d939272af6a05b00fb5f1a478959"
+  },
+  "sources": {
+    "eval/comparison_journal.py": "00866d3959128ef7b20e9f52b8deb6966405cd457adcb003a5e389f51ba221e6",
+    "tests/security/test_comparison_journal.py": "3a0f3d05f8f4ba3ad0b07d41bb6619d8b093bd8c2670e53efbb454cd61c45b66"
+  },
+  "human_independent_review": false
+}

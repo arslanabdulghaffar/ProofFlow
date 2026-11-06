@@ -1,5 +1,10 @@
 # Progress
 
+## November6 KST — final comparison infrastructure WIP
+
+Verified609bb0f checkpoint and continued. Added a dedicated bounded B/C receipt journal with14 passing Linux security tests, preserving the unchanged global spending ledger/transport and100-row probe limit. No final freeze, launch, model call or deployed image change. Four new synthetic workspaces retired normally;4 SQL completions/byte-absence/restore markers verified,2 preexisting workspaces remain. Phase5 remains IN PROGRESS; final controllers/campaign and metadata/restore lifecycle still require work. See the separate review; no independent human sign-off.
+
+
 ## November6 KST — real API code-failure repair passed
 
 Phase0–4 DONE; Phase5 IN PROGRESS. Continued from6b59d0ef without an owner prompt. Full-product evaluation preparation found original crashes could not enter repair. Added source-only diagnosis and truthful execution_failed status, while source ambiguity remains held and outputs are never declared verified. Additive017/018 migrations, bounded source operation, UI/types and controller receipt redaction are deployed. Original crash passed; initial missing-output probe failed closed on successful stopped-unit exit-kind0. Preserve it. New018 also requires positive host cgroup observations/exact limits; fresh missing-output and invalid-source checks pass. No contract/verifier comparison/canary expectation or candidate limit changed.

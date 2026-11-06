@@ -1,5 +1,8 @@
 # Requirements traceability
 
+R43 accounting follow-up: dedicated B/C comparison journal has14 local Linux security tests and fixed job/call/money/storage caps; final dispatch/adapter/freeze still NOT RUN. R34/R35 fixture cleanup verified4 normal retirements and physical markers without altering quotas.
+
+
 Phase5 source-failure follow-up: original crash/missing outputs can reach bounded repair only after exact trusted source diagnosis; held source data cannot. Real API crash repair uses1 Vultr call and3 fresh isolated proofs, no activation/PR. R34/R35 new controller failure-preview copies are redacted immediately. R42/R43 gain a draft24-case generator with arithmetic oracles; final freeze/comparison remains incomplete. [Evidence](evidence/phase5-source-repair-2026-11-06.json); no composite phase promotion.
 
 
