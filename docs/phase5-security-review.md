@@ -1,5 +1,13 @@
 # Phase 5 security review — November 5
 
+## Funded-window renewal review (prepared, not yet applied)
+
+The owner authorizes ongoing use of already reserved promotional credits. The new administrator-only review helper can extend an unexpired review window by at most 48 hours after fresh account credit (at least $150 remaining), exact $24/$48 plans and owned resources, closed/idle services, unchanged $150/$25/$2 account limits and preserved full $120 non-inference reservations. It keeps the full $72 monthly compute allocation, $145 total allocation, existing inference reservations and November 23 final cutoff. It cannot reopen an expired/latched stop, create resources, add payment methods, settle/refund calls or change product status. Provider tax coverage and a hard non-overage guarantee remain unknown.
+
+The helper persists its intent before a conditional administrator-only funding-expiry update. The old guard deadline stays stricter if a write is interrupted; no automatic replay is allowed. Readback must confirm unchanged account fields/reservations and closed admission before advancing the local guard deadline. Twenty-one offline quote/credit/cap/expiry/latch/ledger and interrupted-write tests pass, including lost SQL reply, changed reservations, failed account readback and replay denial. Actual provider readback/application remains pending until the final campaign is idle. This is a separate Codex critical review, not independent human approval.
+
+Official billing documentation rechecked November 6: server billing is hourly with a one-hour minimum and 672-hour monthly cap for non-GPU servers; stopped resources continue to bill. [Vultr server billing](https://docs.vultr.com/support/platform/billing/how-am-i-billed-for-my-servers). No low hourly estimate releases the conservative monthly reservation.
+
 ## Offline collection and candidate provenance review
 
 Further critical review added exact dispatch-set/closure and normal A-workspace retirement checks before scoring; a completion counter alone is insufficient. Six positive/tampered lifecycle tests pass. Together the receipt/collection tests now total 32. The collector changes no live acceptance logic or spending policy and does not run candidate source.

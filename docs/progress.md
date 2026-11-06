@@ -1,5 +1,11 @@
 # Progress
 
+## November 6 KST — portable comparison artifact and funded review prepared
+
+Added an allowlisted synthetic report export and offline dataset/oracle/denominator/metric recheck. Seven tampering tests pass; candidate source remains inert data and protected canaries, provider responses and account identities stay outside the artifact. Final export awaits actual receipt reconciliation. A reviewed administrator helper can renew the unexpired existing hosting window by at most 48 hours after fresh credit/quotes/identity and unchanged reservations, without raising caps or opening admission. Twenty-one offline funding tests pass, including interrupted SQL updates and replay denial. Actual renewal is NOT RUN at this checkpoint.
+
+Full suites before the four final interrupted-write tests: 913 Linux plus 10 subtests; 757 Windows with 156 Linux-only skips. The campaign is still running; frozen sources, product runtime and scoring remain unchanged. Phase 5 remains IN PROGRESS.
+
 ## November 6 KST — offline evidence audit prepared during final comparison
 
 The real 96-job comparison is progressing beyond its preserved interrupted prefix. Added bounded read-only receipt collection and offline request/quote/global-ledger reconciliation, exact candidate provenance, unchanged source/runtime classification, three fresh accepted proofs, baseline acceptance before grading, and complete dispatch/closure/product-retirement checks. No new provider calls, execution, refund, activation or external write is performed by this audit. Actual final collection and scoring remain pending; failed runs are retained.
