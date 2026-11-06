@@ -9,7 +9,12 @@ from uuid import UUID
 from eval.report import digest
 from orchestrator.probe_plan import VULTR_CHAT_URL
 from orchestrator.probe_response import parse_probe_response
-from orchestrator.repair_proposal import COMPLETION_TOKENS, PROMPT_TOKEN_RESERVE
+from orchestrator.repair_proposal import (
+    COMPLETION_TOKENS,
+    PROMPT_TOKEN_RESERVE,
+    RepairRejected,
+    parse_proposal,
+)
 
 
 def require(value):
@@ -64,6 +69,8 @@ def call(intent, response, reservation, *, account_id):
         "confirmed_http": False,
         "claimed": False,
         "response_sha256": None,
+        "proposal_kind": None,
+        "candidate_sha256": None,
     }
     if reservation is not None:
         require(
@@ -96,6 +103,11 @@ def call(intent, response, reservation, *, account_id):
     require(response["http_status"] == 200 and result["claimed"])
     parsed = parse_probe_response(body, model=quoted["model"], completion_bound=COMPLETION_TOKENS)
     result.update(confirmed_http=True, response_sha256=parsed.response_sha256)
+    try:
+        proposal = parse_proposal(parsed.content_json)
+        result.update(proposal_kind=proposal.kind, candidate_sha256=proposal.sha256)
+    except RepairRejected:
+        pass  # Invalid proposals still count as real calls, never as valid candidates.
     if parsed.usage is None or parsed.usage.prompt_tokens > PROMPT_TOKEN_RESERVE:
         return result
     usage = parsed.usage

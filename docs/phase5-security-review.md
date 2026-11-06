@@ -1,5 +1,13 @@
 # Phase 5 security review — November 5
 
+## Offline collection and candidate provenance review
+
+Further critical review added exact dispatch-set/closure and normal A-workspace retirement checks before scoring; a completion counter alone is insufficient. Six positive/tampered lifecycle tests pass. Together the receipt/collection tests now total 32. The collector changes no live acceptance logic or spending policy and does not run candidate source.
+
+The pending final collector reads only completed private campaign state, bounded regular-file tar members and actual budget reservations. It never extracts paths, imports candidate code, calls inference, edits status or settles funds. Receipt audit binds job/execution/purpose/source/data/runtime/verifier and three fresh successful checks; B's immutable acceptance receipt remains distinct from final grade. Exported accepted source must hash to an actual parsed provider proposal, or D's frozen template. B/C prompt receipts must retain code-only feedback. Missing/orphan/reused requests, changed bytes, ledger account/purpose/amount/expiry/claim or response digest stop reporting. Unknown usage remains unknown; conservative reservations are not invoices.
+
+Eleven archive/proof tests reject links, traversal, absolute/duplicate names, changed source/data/scope/summary and missing checks. Fifteen request/usage/provenance tests include inert non-Python candidate text to demonstrate data-only hashing. Focused26 pass. Full suite before the additional provenance test passed882 Linux+10 subtests and726 Windows/156 Linux-only skips. Actual final collection is still NOT RUN while the campaign proceeds. No changed scoring rules or source tuning; the collector verifies existing grades or stops on disagreement. Separate Codex review, not human approval.
+
 ## Between-job transport and accounting review
 
 After nine dispatches, SSH timed out at machine-identity preflight before the tenth dispatch intent. Another management preflight failed; fresh authenticated account/full idle/image/service readback later passed. No inferred network/root cause or automatic paid retry. All9 closure receipts exist. Read-only recovery requires a contiguous exact dispatch prefix, every result identity/cleanup and A retirement; only the earlier expressly reconciled cancelled fourth run is exempted from ordinary critical-result rejection. Missing/unclosed/holey/critical/retirement state fails closed. A per-prefix immutable recovery receipt precedes continuation of only undispatched IDs. Six local tests use synthetic files, no cloud calls.

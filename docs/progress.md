@@ -1,5 +1,11 @@
 # Progress
 
+## November 6 KST — offline evidence audit prepared during final comparison
+
+The real 96-job comparison is progressing beyond its preserved interrupted prefix. Added bounded read-only receipt collection and offline request/quote/global-ledger reconciliation, exact candidate provenance, unchanged source/runtime classification, three fresh accepted proofs, baseline acceptance before grading, and complete dispatch/closure/product-retirement checks. No new provider calls, execution, refund, activation or external write is performed by this audit. Actual final collection and scoring remain pending; failed runs are retained.
+
+Full local suites passed: 883 Linux tests plus 10 subtests; 727 Windows tests with 156 Linux-only skips. Six additional lifecycle-audit cases pass in the focused 32-test receipt/collection set. Separate Codex critical review is recorded; no independent human sign-off. Source/runtime/grader/cases used by the ongoing campaign are unchanged. Phase 5 remains incomplete pending actual final evidence and metadata/restore lifecycle work.
+
 ## November6 KST — nine dispatches preserved; transport recovery prepared
 
 After polling amendment, two real full-API A cases pass with one call each. Eight completed accepted/correct runs plus the interrupted A are preserved;9 closures verified. A read-only SSH preflight timeout and subsequent management preflight failure stopped before job10. Fresh account and full closed/idle/image/service checks passed, credit$193.02. New no-replay suffix recovery has6 tests; offline receipt reconciliation has14 tampering/unknown-usage tests. Remaining87 jobs and final actual receipt audit/report are pending; do not infer full repair quality from this prefix.

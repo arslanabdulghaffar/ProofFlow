@@ -127,3 +127,27 @@ def test_missing_usage_does_not_become_zero():
     checked = call(intent, response, reservation, account_id=account)
     assert checked["confirmed_http"] and checked["input_tokens"] is None
     assert checked["estimated_micro_usd"] is None
+
+
+def test_candidate_provenance_hash_is_data_only():
+    intent, response, reservation, account = fixture()
+    source = "deliberately inert non-Python source text"
+    body = json.loads(base64.b64decode(response["response_base64"]))
+    body["choices"][0]["message"]["content"] = json.dumps(
+        {
+            "kind": "propose_patch",
+            "diagnosis": "synthetic",
+            "changed_file": "pipeline.py",
+            "candidate_source": source,
+            "expected_effect": "synthetic",
+            "uncertainties": [],
+        }
+    )
+    raw = json.dumps(body).encode()
+    response.update(
+        response_base64=base64.b64encode(raw).decode(),
+        response_sha256=hashlib.sha256(raw).hexdigest(),
+    )
+    checked = call(intent, response, reservation, account_id=account)
+    assert checked["proposal_kind"] == "propose_patch"
+    assert checked["candidate_sha256"] == hashlib.sha256(source.encode()).hexdigest()

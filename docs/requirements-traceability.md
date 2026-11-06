@@ -1,5 +1,7 @@
 # Requirements traceability
 
+R42/R43 receipt-audit follow-up: offline collection binds actual provider proposals, candidate hashes, isolated execution/verifier proofs and global spending reservations, preserving failures and unknown usage. The ongoing 96-job campaign is not yet scored. R34/R35 audit also requires every dispatch closure and normal API fixture retirement. Thirty-two focused receipt/collection tests pass; no final-evaluation or composite phase status is promoted from these fixtures.
+
 R43 finite launcher follow-up:53 focused local comparison checks now cover bounded B/C/D, full API A, durable receipts, cutoff/closure failures and uncertain replay. Prospective freeze/actual campaign/receipt reconciliation remain NOT RUN at this entry. No source/verifier/security/phase acceptance status is promoted from launcher doubles.
 
 

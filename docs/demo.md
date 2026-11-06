@@ -1,8 +1,10 @@
 # Demonstration and public explanation
 
-Demo plan; implementation has started with the local trusted health foundation. No video, public app, customer result or benchmark exists. Goal: a useful working workflow early enough for people to try/share after public-release authorization. Early submission does not guarantee ranking, votes or judging advantage.
+The private deployed workflow now has real Vultr repair, isolated execution, independent record checks, exact-version approval, fresh batches and one actual private draft PR. [Phase3 evidence](evidence/phase3-acceptance-2026-11-04.json), [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json). The development pilot is measured but explicitly exposed/repair-core-only; the prospective24-case final comparison is in progress and must be reconciled before quoting its scores. No public app, video, customer validation or measured financial return exists. Publication remains unauthorized. Early submission does not establish a ranking advantage.
 
-Current description: “ProofFlow is being built to repair supported revenue-import pipelines and expose the evidence behind each decision. A successful process can still assign revenue to the wrong merchant. We plan to check every record against approved rules before a repaired version can process the next batch.”
+Current evidence-supported description: “ProofFlow repairs supported revenue-import code and checks the actual records against approved rules. A successful process can still assign revenue to the wrong merchant. ProofFlow shows that mismatch, tests the proposed repair in isolation, and requires approval of the exact version before it processes another batch.” This describes the demonstrated private synthetic workflow, not a publicly available or production-certified service.
+
+Lead with the business error: an import can preserve the grand total while assigning a transaction to the wrong merchant or customer. Show the actual expected/observed owner witness, then the repaired bytes and independent fresh checks. Use the existing private PR readback as the external-action example; never create another PR merely for the recording. Keep contract approval, verified candidate, active version and completed fresh batch visibly distinct.
 
 ## Four-minute storyboard (timing target)
 
@@ -29,9 +31,11 @@ The [event page](https://lablab.ai/ai-hackathons/vultr-hackathon) confirms the f
 
 | Criterion | Planned evidence | Claim boundary |
 | --- | --- | --- |
-| Technology | Real Vultr request, isolated execution, checked bytes and cleanup receipt | No replay shown as live; local health is not infrastructure acceptance |
+| Technology | Existing actual Vultr request, isolated execution, checked bytes and cleanup receipts; a new release rehearsal only after its gates | No replay shown as live; bind the recording to its source/runtime and actual request |
 | Presentation | Silent wrong-owner result, understandable witness, repair, exact approval, fresh batch and containment moment | Four-minute target; verify final form limits |
 | Business value | Merchant import failure and repeatable checked batch | No invented customers, savings or traction |
 | Originality | Protected contract/verifier, per-occurrence accounting and exact-version approval | Differentiate implemented behavior and measured baselines; no unsupported first/unique claim |
 
 Public repo/demo/video/slides and setup/architecture remain release deliverables. Keep private until authorized. Optional Vultr Community showcasing does not replace required lablab submission.
+
+Final comparison reporting must retain the interrupted A run and disclose the polling-only harness amendment, source/template coupling, one repeat and absent human oracle review. Show D's actual results even if its fixed rebuild performs best. Explain the narrow supported contract and the value of controlled acceptance; do not turn a synthetic comparison into claims about arbitrary code, customer savings or statistically established superiority. Use known provider token cost estimates separately from conservative held reservations and the provider's eventual bill.
