@@ -1,5 +1,12 @@
 # Phase 5 security review — November 5
 
+## Between-job transport and accounting review
+
+After nine dispatches, SSH timed out at machine-identity preflight before the tenth dispatch intent. Another management preflight failed; fresh authenticated account/full idle/image/service readback later passed. No inferred network/root cause or automatic paid retry. All9 closure receipts exist. Read-only recovery requires a contiguous exact dispatch prefix, every result identity/cleanup and A retirement; only the earlier expressly reconciled cancelled fourth run is exempted from ordinary critical-result rejection. Missing/unclosed/holey/critical/retirement state fails closed. A per-prefix immutable recovery receipt precedes continuation of only undispatched IDs. Six local tests use synthetic files, no cloud calls.
+
+Offline receipt parser recomputes payload/quote/envelope hashes and conservative cost, validates the exact ledger request/account/purpose/amount/expiry/claim, then parses actual response bytes. A prepared record is not automatically confirmed HTTP. Unknown delivery/usage remains unknown; local held funds and global reservations are separate, with no settlement or refund. SQL bytea translation never executes model content. Fourteen synthetic tampering/unknown-usage tests pass. Actual final receipt collection/reconciliation is still required, and no full score follows from these tests. Separate Codex review, no independent human approval.
+
+
 ## Actual polling defect and bounded continuation review
 
 Actual first three B/D/C runs passed; A exposed a harness state-machine omission hidden by immediate-terminal doubles. The saved original was BASELINE_RUNNING with no outcome/report. Gate closure cancelled it; independent SQL readback confirms CANCELLED/cleanup confirmed, no repair call. Preserve all original evidence and the interrupted denominator. Polling now enumerates known active states including BASELINE_RUNNING/BASELINE_VERIFYING and known terminal states; unknown states fail closed. Two transition/unknown-state tests supplement the original adapter checks.

@@ -1,5 +1,12 @@
 # Resume ProofFlow
 
+## November6 KST — between-job transport recovered after nine dispatches
+
+Polling amendment checkpoint7b115d3245eaf5ed60b00295a70b983d33b9124e ran five more scheduled jobs, including real API A units-1 and joins-2 accepted/correct with one call each. Prefix now9 dispatches/9 closed receipts:8 completed accepted/correct and the preserved interrupted A. Next preflight SSH timed out before a tenth dispatch; another management preflight failed without opening admission. Fresh authenticated account read and full host/idle/image/service preflight subsequently pass, credit$193.02. Root cause is unestablished; private diagnostics/readback retained.
+
+New scripts/resume_comparison.py verifies the unchanged amendment source hashes, exact contiguous dispatched prefix, every closure/result/cleanup and A retirement, plus the one explicitly reconciled interrupted record. It saves a single-use recovery receipt per prefix and starts only the undispatched suffix; no case/call retry or policy change. Six local recovery tests pass. New offline eval/comparison_receipts.py has14 synthetic tampering/usage tests; it recomputes request/quote/payload identities against actual ledger rows and distinguishes prepared requests, confirmed HTTP, unknown usage and conservative held funds. It does not grade source, call a provider or settle billing. Final collection/report and remaining87 jobs are pending at this entry. Existing freeze/amendment remain untouched.
+
+
 ## November6 KST — frozen campaign interrupted; polling-only amendment
 
 Campaign final-comparison-v1 froze96 jobs under source13d33003d202e0afeefbd9d311b612b3ee7adb6be54466fe0f1332a33c181555 at source checkpoint5911f2dffe0dc35ec817d527aa7764b5b4bfdadb. First completeness-1 jobs B/D/C accepted with independent correct grades and2/0/1 prepared calls respectively. Fourth A stopped because comparison_api.wait mistook BASELINE_RUNNING for terminal; no A model call. Finally closed admission/budget. Read-only reconciliation confirms actual original CANCELLED and worker cleanup confirmed; credit$193.02. Original failed/interrupted record remains unchanged. This is a harness defect, not evidence of a candidate/product failure.

@@ -1,5 +1,10 @@
 # Progress
 
+## November6 KST — nine dispatches preserved; transport recovery prepared
+
+After polling amendment, two real full-API A cases pass with one call each. Eight completed accepted/correct runs plus the interrupted A are preserved;9 closures verified. A read-only SSH preflight timeout and subsequent management preflight failure stopped before job10. Fresh account and full closed/idle/image/service checks passed, credit$193.02. New no-replay suffix recovery has6 tests; offline receipt reconciliation has14 tampering/unknown-usage tests. Remaining87 jobs and final actual receipt audit/report are pending; do not infer full repair quality from this prefix.
+
+
 ## November6 KST — actual comparison started, interrupted prefix preserved
 
 Frozen96-job comparison ran completeness-1 B/D/C successfully (2/0/1 prepared model calls, accepted/correct). A polling harness omitted BASELINE_RUNNING/BASELINE_VERIFYING and stopped before repair; closure cancelled its original normally, confirmed worker cleanup. All four records preserved; no repeated run. Fixed polling and prepared a single-use, exact-prefix continuation with unchanged cases/prompts/runtime/grader/caps and explicit source-amendment disclosure. Seven amendment tests and two polling tests added;31 Windows API/launcher/amendment checks pass. Remaining92 jobs and final reconciliation still pending; no full score or Phase5 completion claim.
