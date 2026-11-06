@@ -1,5 +1,43 @@
 # Resume ProofFlow
 
+## Current checkpoint — November 7 KST: cancelled HTTP work remains bounded
+
+Phase0–4 DONE; Phase5 IN PROGRESS. Base371e4abb91955a59a5f60d09921bc951c2fd6b03;
+this checkpoint is verified HEAD/remote after push. [Evidence](evidence/phase5-http-cancellation-2026-11-07.json).
+Private and credit-only; no continuation question needed.
+
+Fixed a concrete API resource bypass: cancellation/deadline released a semaphore while
+its background ZIP/filesystem thread continued. Executor futures now own admission
+until actual completion: at most4 asset IO operations and1 bundle builder per API
+process. Cancelled callers cannot disclose results or publish the registry; reserved
+uploads remain uncertain for normal reconciliation. Fixed diagnostics drain orphan
+errors; SSE handles IO capacity refusal. Stuck IO intentionally keeps its slot until
+completion/process restart; this is not a claim that Python can kill running threads.
+
+Deployed product image **e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358**,
+72 source files exact. Worker/verifier/schema/epoch5 unchanged; admission and inference
+closed.995 Linux tests+10 subtests;821 Windows/174 Linux-only skips. Seven new real
+executor/ASGI-double cases cover cancellation,deadline,orphan failure,late upload and
+revocation. Actual deployed six-group auth/inert-byte smoke passes with normal cleanup.
+No candidate/model/PR call. Initial helper lifetime/status assertion mistakes remain
+recorded; both failed fixtures were reconciled before the successful new run.
+
+Updated-image inert tmpfs recovery passes; forced kill137 at20.437s removes container
+without finally. Live readback:532 cleaned executions,311 fences,no missing deadlines,
+zero workspaces/restore clones,all3 services active. Fresh credit$192.06; review cutoff
+Nov8 23:27 KST unchanged; no new resources or personal charges. Native dependencies
+reuse exact first9 prior image layers; previous49 HIGH/75 MEDIUM/62 LOW/0 CRITICAL
+scan remains scoped evidence, not a new scan or advisory waiver.
+
+Next: finish broader runtime/host advisory reachability and incident-rebuild review;
+use the coverage map in phase5-security-review.md to avoid rerunning completed work.
+Phase6 portable recovery/scheduled backup/clean-browser/demo work stays separate.
+Do NOT replay completed live encrypted restore, funded renewal, frozen comparison or
+product PR. No pending owner input blocks independent engineering. Human security/
+oracle review,MIT ownership and public release remain explicit gaps.
+
+The following entry is historical; its image/test counts are superseded above.
+
 ## Current checkpoint — November 7 KST: vault recovery faults and native review
 
 Phase0–4 DONE; Phase5 IN PROGRESS. Base **599f13a254553206cf93bc51a1296ab512680bc8**;

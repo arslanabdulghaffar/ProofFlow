@@ -1,0 +1,158 @@
+{
+  "observed_at": "2026-11-06T22:32:32.081855+00:00",
+  "phase": "5 IN PROGRESS",
+  "checkpoint_base": "371e4abb91955a59a5f60d09921bc951c2fd6b03",
+  "finding": "HTTP cancellation released capacity while executor work was still running",
+  "fix": "Executor future owns capacity until real completion; shield only future, not HTTP waiter",
+  "limits": {
+    "asset_io_threads_per_app": 4,
+    "bundle_threads_per_app": 1,
+    "http_deadline_seconds": 30,
+    "sse_deadline_seconds": 65
+  },
+  "source_hashes": [
+    {
+      "path": "api/app/product.py",
+      "sha256": "a9f0cc7ce4aae0672995e9425d19501e4cb4904da71449a33b937795671a1e1d"
+    },
+    {
+      "path": "api/app/version_routes.py",
+      "sha256": "9a04d54df49832ce1d9c32a42c4d6079f314a89fb54e5faac49700cd29b31282"
+    },
+    {
+      "path": "scripts/check_product_image.py",
+      "sha256": "1d02700448122dbf9144334e4b324d1bd27859c36755711a222890bf0150f99c"
+    },
+    {
+      "path": "scripts/install_product_services.py",
+      "sha256": "facf8c46ee80ce313e77feb19f8a6af2e8f0fa2bb56926faf55662559aae6990"
+    },
+    {
+      "path": "scripts/product_live_session.py",
+      "sha256": "b73e419d2630cdd3abae227cc21c7e679ee80e60a65bb6df80eef19897782004"
+    },
+    {
+      "path": "scripts/check_phase5_http_security.py",
+      "sha256": "4591b2b638aee4305df9e185c43333d785e34539284bd417c2461d98c6e064a8"
+    },
+    {
+      "path": "tests/security/test_http_cancelled_work.py",
+      "sha256": "b21f4b3950ee3c10e60f8baa1ca662cd42c9ecda0688c54b6ac63e013cc73e22"
+    }
+  ],
+  "regression_before_fix": {
+    "failed": 3,
+    "passed": 1,
+    "scope": "Real local executor threads and labeled ASGI/store doubles, inert bytes only"
+  },
+  "checks": {
+    "linux": {
+      "passed": 995,
+      "subtests_passed": 10
+    },
+    "windows": {
+      "passed": 821,
+      "skipped_linux_only": 174
+    },
+    "new_executor_cases": 7,
+    "ruff": "PASS",
+    "image_source_inventory": 72
+  },
+  "deployed": {
+    "api_network": "none",
+    "api_transport": "private_unix_tls",
+    "dispatcher_targets": "fixed_vultr_worker_and_local_database_verifier",
+    "github_credentials_mounted": "dispatcher_only_optional",
+    "image": "e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358",
+    "inference_credentials_mounted": "dispatcher_only",
+    "new_cloud_resources": 0,
+    "http_checks": [
+      "csrf_denied_before_registry",
+      "hostile_text_inert_exact_attachment",
+      "revoked_session_download_denied",
+      "known_foreign_asset_download_denied",
+      "known_foreign_asset_approval_denied",
+      "no_jobs_repairs_provider_calls_or_pr_intents_added"
+    ],
+    "http_completed": true,
+    "http_cleanup": true
+  },
+  "preserved_harness_failures": [
+    "Initial network=none build missed cached apt layer; no change deployed. Normal build reused all dependency layers.",
+    "Initial HTTP fixture requested 40-minute session in 20-minute workspace; DB correctly denied.",
+    "First cleanup asserted 202 after actual deletion returned 200; reconciled revocation before retry, no duplicate creation."
+  ],
+  "private_failure_receipt": "phase5-http-security-98448e726b18450eac19f678deca70f4.json",
+  "failed_fixture_reconciliation": {
+    "failed_receipt": "phase5-http-security-98448e726b18450eac19f678deca70f4.json",
+    "cause": "session_lifetime_exceeds_fixture_workspace",
+    "normal_deletion_cleanup": true,
+    "workspaces_remaining": 0,
+    "product_admission": "closed",
+    "provider_calls": 0
+  },
+  "recovery": {
+    "completed": true,
+    "image": "e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358",
+    "mode": "INERT_DATA_ONLY_NO_PROMOTION",
+    "observed_cgroup_limits": {
+      "memory.max": "536870912",
+      "memory.swap.max": "0",
+      "pids.max": "16"
+    },
+    "timeout_seconds": 20.437,
+    "fault_exit": 137,
+    "fault_container_removed": true,
+    "fault_cleanup_finally_ran": false,
+    "production_restore": false
+  },
+  "lifecycle": {
+    "counts": {
+      "CLEANED": 532
+    },
+    "fences": 311,
+    "missing_deadlines": 0,
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "workspaces_remaining": 0,
+    "restore_clones_remaining": 0,
+    "product_admission": "closed",
+    "inference_admission": "closed",
+    "natural_seven_day_expiry": "NOT_YET_ELAPSED"
+  },
+  "credit": {
+    "checked_at": "2026-11-06T22:30:37.987172+00:00",
+    "credit_guard": "within_early_cutoff",
+    "remaining_credit": "192.06",
+    "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+  },
+  "provider_calls": 0,
+  "new_resources": 0,
+  "native_scan": {
+    "scope": "Prior exact scan inherited through identical first nine OS/dependency layers",
+    "high": 49,
+    "medium": 75,
+    "low": 62,
+    "critical": 0,
+    "new_scan_run": false,
+    "waivers": 0
+  },
+  "critical_review": [
+    "Cancellation cannot cancel the underlying executor future; callback, not route finally, releases capacity.",
+    "Orphan exceptions are consumed without raw data logging; executor submission failure releases its unused slot.",
+    "Upload reservation remains when waiter dies; no late registry publication. Download/export authority is rechecked.",
+    "SSE closes with fixed diagnostic if IO admission is unavailable; no invented event IDs.",
+    "No SQL/verifier/provider prompt/candidate runtime/contract/approval policy changes; final benchmark not rerun.",
+    "Limits are process-local for current single API process; stuck IO stays denied until completion or supervised restart.",
+    "Separate Codex review only; no independent human sign-off."
+  ],
+  "remaining": [
+    "Broader native/runtime/host advisory reachability and incident rebuild drill",
+    "Portable disaster-current deletion authority, scheduled consistent backups, production restore (Phase6)",
+    "Clean-browser release/package/publication and ownership decisions (Phase6)",
+    "Independent human security/oracle review unavailable"
+  ]
+}

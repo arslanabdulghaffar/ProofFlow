@@ -1,5 +1,11 @@
 # Release and operations plan
 
+Latest private image is e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358;
+72 source matches and deployed auth/inert-upload smoke pass after cancelled-work
+capacity hardening. Worker/verifier/schema/epoch5 unchanged. Product/inference remain
+closed and readiness remains503 until release acceptance. No publication authorized.
+[Checkpoint evidence](evidence/phase5-http-cancellation-2026-11-07.json).
+
 Current status: Phase0–4 DONE;Phase5 security/evaluation IN PROGRESS. Actual private
 runtime/provider/repair/approval/fresh-batch/PR evidence and the final comparison exist.
 Encrypted off-VM DB+asset recovery into inert quarantine passed, including current

@@ -1,6 +1,5 @@
 """Exact approval and fresh-batch HTTP composition; no candidate execution."""
 
-import asyncio
 import hashlib
 
 from fastapi import Request
@@ -22,7 +21,7 @@ from contracts.codec import parse_object
 from worker.protocol import authority_id
 
 
-def install_version_routes(app, store, assets, authorize):
+def install_version_routes(app, store, assets, authorize, run_io):
     from api.app.product import HttpFailure, body, identifier
 
     async def parsed(request, model):
@@ -50,7 +49,7 @@ def install_version_routes(app, store, assets, authorize):
         # Same deterministic asset ID on uncertain retries. No source upload or
         # filename supplied by the caller can substitute the verified candidate.
         await store.call("reserve", workspace, token, csrf, version, "pipeline", digest, len(raw))
-        if await asyncio.to_thread(assets.put, workspace, raw) != digest:
+        if await run_io(assets.put, workspace, raw) != digest:
             raise ProductFailure("VERSION_ASSET_MISMATCH")
         await store.call("publish", workspace, token, csrf, version, "pipeline", digest, len(raw))
         return (await store.call("version_prepare", workspace, token, csrf, version, version))[0]

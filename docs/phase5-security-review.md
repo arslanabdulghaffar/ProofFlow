@@ -1,5 +1,37 @@
 # Phase 5 security review — November 5
 
+## Cancellation and coverage audit — November 7
+
+Confirmed/fixed: route finally released bundle admission when cancellation ended its
+to_thread waiter, despite real ZIP work continuing. General asset IO had the same
+request-slot lifetime problem. The executor future now retains admission across caller
+cancellation and drains orphan exceptions; all asset calls,including version preparation
+and SSE authority checks,use4 slots; bundle construction uses1. No new unbounded queue
+is admitted. Seven actual-thread/ASGI-double tests pass. Fresh post-read SQL checks
+still deny revoked results; cancelled upload retains reservation without registry commit.
+Stuck kernel IO cannot be killed by Python and retains capacity until process restart.
+Limits are per process; multiple API replicas require a reviewed aggregate policy.
+
+Separate critical pass reviewed acquire/submit/cancel/completion ordering,exception
+consumption,late filesystem writes vs registry commit,shared IO limits and SSE refusal.
+No candidate is executed locally.995 Linux+10 subtests and821 Windows/174 skips pass.
+Actual deployment/source inventory and six private HTTP groups pass;20.437s tmpfs
+kill/cleanup also passes on the new image. Initial trusted-harness mistakes preserved.
+[Evidence](evidence/phase5-http-cancellation-2026-11-07.json).
+
+| Boundary reviewed | Evidence and precise limit |
+| --- | --- |
+| Prompt/source authority | probe_response rejects tool/function calls,wrong role/model,duplicate fields; repair_proposal allows only pipeline.py or clarification. Existing parser tests pass; these are deterministic doubles,not a claim that the model ignores every injection. |
+| Hidden canaries | repair_evidence returns only PROTECTED_CHECK_FAILED for protected mismatches; repair_dispatcher tests keep canary bytes/owner out of later prompts and use new execution IDs. No protected data sent in new model calls. |
+| Claimed PASS and activation | Collected output/source/runtime/verifier digests bind classification; tested tampered proof and exit-zero-only rejection. Exact version/PR approval routes and SQL remain separate. No new external write. |
+| Auth/disclosure | Fresh deployed CSRF,revoked session,known foreign asset read/approval and inert hostile attachment checks pass. Existing SQL/HTTP/SSE/approval tests retained; not a new blanket multi-tenant penetration test. |
+| Incident pause/recovery | Existing product/inference admission remains closed,normal deletion revokes then cleans,532 executions CLEANED,311 fences and0 missing deadlines. Previous live restart/recovery receipts remain. Full host-compromise/isolation/rebuild exercise NOT RUN. |
+| Native/runtime | Same first9 OS/dependency image layers; prior49 HIGH/75 MEDIUM/62 LOW/0 CRITICAL scan inherited,not rerun/waived. Full host/runtime companion-binary reachability review remains open. |
+
+Independent human security/oracle review is still unavailable. Scheduled consistent
+capture,portable keys,disaster-current deletion authority and production promotion
+remain Phase6; data-only quarantine tests do not claim those properties.
+
 ## Vault race/crash and native surface critical pass — November 7
 
 Additional reviewed finding: TemporaryDirectory cleanup cannot run after SIGKILL, so

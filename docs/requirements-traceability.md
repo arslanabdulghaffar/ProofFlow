@@ -1,5 +1,12 @@
 # Requirements traceability
 
+T09/T10/T18 and HTTP capacity follow-up: fixed cancellation releasing limits before
+executor completion. Seven real-thread/ASGI-double cases plus actual private deployed
+CSRF,revoked/foreign access and inert-byte checks pass; no inference or external write.
+Updated-image data-only tmpfs recovery/kill cleanup and live lifecycle readback pass.
+[Evidence](evidence/phase5-http-cancellation-2026-11-07.json). Broader incident/host/runtime
+review and Phase6 recovery/release remain open; no human sign-off or benchmark rerun.
+
 R36-04/R37-02/R37-06/T21–T22 current follow-up: exact-product fresh scan and mapped
 native-library/journal-schema readback; findings retained without waivers. Backup
 publication/expiry/recovery now have exclusive locking,atomic writes,persistent time,

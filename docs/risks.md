@@ -1,5 +1,13 @@
 # Risks and owner decisions
 
+Current cancelled-work finding fixed/deployed: timed-out HTTP waiters no longer
+release admission while filesystem/ZIP threads continue. Actual limits are4 asset IO
+operations plus1 bundle per API process. Stuck IO can deny capacity until process
+restart; no unsafe thread-kill guarantee. Multi-replica aggregate admission is not
+implemented. Existing post-read revocation and uncertain upload reservations remain.
+Host/runtime advisory and full incident-rebuild review remain open; Phase5 is incomplete.
+[Evidence](evidence/phase5-http-cancellation-2026-11-07.json).
+
 Current vault/native follow-up: backup races/partial writes, clock rollback and slow-IO
 expiry now have fixes plus13 fixture and actual Windows process/crypto checks. Private
 clock floor must not be rolled back with backups. Current-user profile/live deletion

@@ -1,5 +1,25 @@
 # Progress
 
+## November 7 KST — cancelled-work capacity fixed and deployed
+
+Found and reproduced a semaphore lifetime gap: timed-out/disconnected HTTP requests
+left executor work running but reopened admission. Fixed all API asset IO and bundle
+builds to hold their bounded slots until the real thread finishes. Original regression
+had3 failures/1 pass; final7 new cases pass, including actual HTTP deadline cancellation,
+orphan errors,late upload without registry publication and revocation before disclosure.
+Full995 Linux+10 subtests and821 Windows/174 Linux-only skips pass.
+
+Deployed image e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358 with72
+source matches, unchanged dependencies/worker/verifier/schema/approval semantics.
+Actual private HTTP CSRF,hostile inert attachment,revoked/foreign download and foreign
+approval checks pass; normal deletion left zero workspaces. Initial fixture session
+lifetime and cleanup-status assertions were corrected with failures preserved.
+No jobs,provider calls,new resources or PR intents added. Updated-image data-only
+recovery and independent20s kill/cleanup pass; live lifecycle healthy/closed. Fresh
+credit$192.06 and Nov8 23:27 KST review remain within unchanged credit-only caps.
+[Evidence](evidence/phase5-http-cancellation-2026-11-07.json). Phase5 remains IN PROGRESS;
+broader host/runtime advisory and incident-rebuild coverage are not claimed complete.
+
 ## November 7 KST — vault crash/race fixes and refreshed native review
 
 Also fixed decrypted temporary-file survival after a killed recovery process. The

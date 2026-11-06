@@ -114,13 +114,14 @@ class LiveSession:
             statement.encode(),
         )
 
-    def login(self, workspace):
+    def login(self, workspace, *, minutes=40):
+        require(type(minutes) is int and 1 <= minutes <= 40, "SESSION_DURATION_INVALID")
         self.workspace, self.secret = str(UUID(str(workspace))), SessionSecrets.create()
         self.sql(
             "SET ROLE pf_product_provisioner; "
             f"SELECT pf_product.create_session('{self.workspace}',"
             f"'{session_digest(self.secret.token)}',"
-            f"'{csrf_digest(self.secret.csrf)}',clock_timestamp()+interval '40 minutes');"
+            f"'{csrf_digest(self.secret.csrf)}',clock_timestamp()+interval '{minutes} minutes');"
         )
         if self.client:
             self.client.close()

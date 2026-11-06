@@ -1,5 +1,22 @@
 # Decision log
 
+## D87: capacity belongs to real executor work, not its HTTP waiter
+
+Background filesystem/ZIP work is not stopped by cancelling an asyncio waiter.
+Shield the executor future and retain it until completion; release the process-local
+4-slot asset IO /1-slot bundle budget only from its completion callback. Discard
+orphan results/errors and preserve response deadlines,post-read authorization and
+uncertain upload reservations. A blocked thread keeps its slot; supervised restart
+is the recovery boundary, not an unsafe retry or forced thread termination.
+
+Seven real-thread/local ASGI-double cases plus actual deployed auth/inert-byte smoke
+support the change. The trusted smoke helper now permits explicitly shorter1–40min
+sessions; actual workspace lifetime remains enforced by SQL. Its initial40min/20min
+failure and incorrect202 cleanup assertion are preserved/reconciled, not relabeled
+success. No permission,dependency,schema,verifier,contract,provider or budget expansion.
+Separate critical review is Codex/automated evidence, not independent human approval.
+[Receipt](evidence/phase5-http-cancellation-2026-11-07.json).
+
 ## D86: serialize backup authority and retain native findings honestly
 
 Decrypted recovery assets now live only in private container tmpfs, not ordinary host

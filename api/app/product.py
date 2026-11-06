@@ -6,6 +6,7 @@ import hashlib
 import re
 import time
 from datetime import UTC, datetime
+from functools import partial
 from html import escape
 from pathlib import Path
 from uuid import UUID, uuid4
@@ -54,6 +55,43 @@ def failure(scope, code, status):
 class HttpFailure(Exception):
     def __init__(self, status, code):
         self.status, self.code = status, code
+
+
+class BlockingWork:
+    """Bound actual executor work, even when its HTTP waiter times out/disconnects.
+
+    Cancelling a coroutine cannot stop a running filesystem/ZIP thread. Release
+    admission only on executor completion, discard orphan results/errors, and
+    keep the future alive. No cancelled request can publish or return its result.
+    """
+
+    def __init__(self, capacity, code):
+        self.slots = asyncio.Semaphore(capacity)
+        self.code = code
+        self.pending = set()
+
+    async def run(self, operation, *args):
+        try:
+            await asyncio.wait_for(self.slots.acquire(), 0.01)
+        except TimeoutError:
+            raise HttpFailure(429, self.code) from None
+        try:
+            # Unlike a Task wrapping to_thread, this future is not cancelled by
+            # asyncio's shutdown task sweep while its real thread is still alive.
+            future = asyncio.get_running_loop().run_in_executor(None, partial(operation, *args))
+        except BaseException:
+            self.slots.release()
+            raise
+        self.pending.add(future)
+
+        def completed(done):
+            self.pending.discard(done)
+            self.slots.release()
+            if not done.cancelled():
+                done.exception()  # Consume failures after an HTTP waiter has gone.
+
+        future.add_done_callback(completed)
+        return await asyncio.shield(future)
 
 
 def identifier(value):
@@ -148,7 +186,8 @@ class CapacityBoundary:
 
 
 def create_product_app(store, assets, *, origin: str, journals=None):
-    bundle_slot = asyncio.Semaphore(1)
+    blocking = BlockingWork(4, "ASSET_IO_CAPACITY")
+    bundles = BlockingWork(1, "EXPORT_CAPACITY")
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
     app.add_middleware(CapacityBoundary)
 
@@ -213,7 +252,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
                     (b"x-proofflow-csrf", value.csrf_token.encode())]
         token, csrf = request_digests(headers, expected_origin=origin, writing=True)
         workspace, kind, expiry = await store.call("browser_session", token, csrf)
-        await asyncio.to_thread(assets.assert_live, workspace)
+        await blocking.run(assets.assert_live, workspace)
         age = max(1, min(43200, int((expiry - datetime.now(UTC)).total_seconds())))
         response = JSONResponse(SessionResponse(workspace_id=str(workspace), kind=kind,
                                                 expires_at=expiry.isoformat()).model_dump())
@@ -229,7 +268,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         row = await store.call("session", session)
         if row is None or len(row) != 3 or type(row[0]) is not UUID:
             raise ProductFailure("PRODUCT_RESULT_INVALID")
-        await asyncio.to_thread(assets.assert_live, row[0])
+        await blocking.run(assets.assert_live, row[0])
         return row[0], session, csrf
 
     async def json_body(request, fields):
@@ -270,7 +309,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         # A COMMIT failure cannot authorize filesystem writes. A publication or
         # finalization failure preserves the reservation, never silently frees it.
         await store.call("reserve", workspace, token, csrf, asset, kind, digest, len(raw))
-        actual_digest = await asyncio.to_thread(assets.put, workspace, raw)
+        actual_digest = await blocking.run(assets.put, workspace, raw)
         if actual_digest != digest:
             raise ProductFailure("ASSET_BYTES_CHANGED")
         await store.call("publish", workspace, token, csrf, asset, kind, digest, len(raw))
@@ -284,7 +323,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         if row is None:
             raise HttpFailure(404, "ASSET_NOT_FOUND")
         kind, digest, size = row
-        raw = await asyncio.to_thread(assets.read, workspace, digest)
+        raw = await blocking.run(assets.read, workspace, digest)
         if len(raw) != size or hashlib.sha256(raw).hexdigest() != digest:
             raise ProductFailure("ASSET_BYTES_CHANGED")
         # Fresh authorization after the potentially slow read and before disclosure.
@@ -386,7 +425,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         raw = value["candidate_source"].encode("utf-8")
         if not 1 <= len(raw) <= 16384:
             raise ProductFailure("REPAIR_EXPORT_INVALID")
-        original = await asyncio.to_thread(assets.read, workspace, value["original_sha256"])
+        original = await blocking.run(assets.read, workspace, value["original_sha256"])
         if await store.call("repair_export", workspace, token, identity) != row:
             raise ProductFailure("REPAIR_AUTHORITY_CHANGED")
         diff = "".join(difflib.unified_diff(original.decode("utf-8").splitlines(keepends=True),
@@ -404,22 +443,15 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         identity = identifier(repair_id)
         if journals is None:
             raise HttpFailure(503, "REPAIR_ARTIFACT_UNAVAILABLE")
-        try:
-            await asyncio.wait_for(bundle_slot.acquire(), 0.01)
-        except TimeoutError:
-            raise HttpFailure(429, "EXPORT_CAPACITY") from None
-        try:
-            row = await store.call("repair_bundle", workspace, token, identity)
-            if row is None or row[0] is None:
-                raise HttpFailure(404, "JOB_NOT_FOUND")
-            raw = await asyncio.to_thread(build_bundle, row[0], workspace, assets, journals)
-            if await store.call("repair_bundle", workspace, token, identity) != row:
-                raise ProductFailure("REPAIR_AUTHORITY_CHANGED")
-            return Response(raw, media_type="application/zip", headers={
-                "Content-Disposition": 'attachment; filename="proofflow-evidence.zip"',
-                "X-ProofFlow-SHA256": hashlib.sha256(raw).hexdigest()})
-        finally:
-            bundle_slot.release()
+        row = await store.call("repair_bundle", workspace, token, identity)
+        if row is None or row[0] is None:
+            raise HttpFailure(404, "JOB_NOT_FOUND")
+        raw = await bundles.run(build_bundle, row[0], workspace, assets, journals)
+        if await store.call("repair_bundle", workspace, token, identity) != row:
+            raise ProductFailure("REPAIR_AUTHORITY_CHANGED")
+        return Response(raw, media_type="application/zip", headers={
+            "Content-Disposition": 'attachment; filename="proofflow-evidence.zip"',
+            "X-ProofFlow-SHA256": hashlib.sha256(raw).hexdigest()})
 
     @app.get("/v1/jobs/{job_id}/events")
     async def events(job_id: str, request: Request):
@@ -456,7 +488,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
                     rows = (await store.call("events", workspace, token, job, cursor))[0]
                     for event in rows:
                         await store.call("session", token)  # Recheck after each possibly slow send.
-                        await asyncio.to_thread(assets.assert_live, workspace)
+                        await blocking.run(assets.assert_live, workspace)
                         event = JobEvent.model_validate(event).model_dump()
                         sequence = int(event["sequence"])
                         if sequence != cursor + 1:
@@ -472,7 +504,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
                     if await request.is_disconnected():
                         return
                     await asyncio.sleep(1)
-            except (ProductFailure, ValidationError):
+            except (ProductFailure, ValidationError, HttpFailure):
                 # No event ID: reconnect can only resume from the last real event.
                 yield (b'event: stream_closed\ndata: '
                        b'{"code":"STREAM_AUTHORITY_OR_STORE_UNAVAILABLE"}\n\n')
@@ -547,7 +579,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
     from api.app.batch_events import install_batch_event_routes
     from api.app.github_routes import install_github_routes
     from api.app.version_routes import install_version_routes
-    install_version_routes(app, store, assets, authorize)
+    install_version_routes(app, store, assets, authorize, blocking.run)
     install_github_routes(app, store, authorize)
     install_batch_event_routes(app, store, authorize)
     return app
