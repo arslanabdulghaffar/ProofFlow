@@ -1,5 +1,14 @@
 # Phase 5 security review — November 5
 
+## Finite launcher critical pass — November6 KST
+
+The launcher freezes all finite case/arm IDs and source/prompt/runtime/schema/grader/quote-policy hashes before dispatch. Source changes stop further jobs; existing local or remote campaign state requires reconciliation. Quote refresh is predeclared, same account/model/rates, official catalogue, closed/idle queues, then normal exact service install. Every job rechecks observed credit, funded review window, current installed quote/image and idle queues/services. Maximum96 runs includes72 model jobs at3 calls/$0.10 each; combined$7.20, B/C book$4.80 and A$2.40 forecast. A's actual maximum3*$0.027853 per case fits the unchanged shared product$5 allocation; no double allocation of its forecast. Global$25 reservations remain mandatory, unknown costs are not released. No cap/guard-deadline increase.
+
+Trusted controller containers use the fixed product image, read-only filesystem, nonroot UID, no capabilities/new privileges,512MiB/1CPU/64PIDs/nofile128. Only their own private journal is writable; no Docker socket, App or management credential. D has no provider/database secret mount. Candidate programs still execute only on the worker. One independent12-minute timer closes inference per job, and B/C/D have an8-minute container stop; ordinary finally closes admission/inference and cancels a timer only after closure. Unknown controller failures retain the stop timer and private diagnostics. API critical faults preserve fixture/evidence rather than deleting or launching the next case.
+
+Six administration-double tests verify normal closure, API exception/critical state, unknown controller delivery/critical state, no replay and restricted D mounts. Two additional controller tests prevent a matching original from becoming a claimed AI repair success. Focused comparison suite53 Linux checks;21 Windows API/launcher checks. These are not live timers/campaign outcomes. Freeze/launch and receipt reconciliation remain gates before reporting scored results. Separate Codex review, not independent human approval.
+
+
 ## Comparison adapter critical pass — November6 KST
 
 Reviewed the new controllers separately after implementation; this is Codex review, not independent human sign-off. Candidate bytes stay inert on development/control hosts and execute only through the fixed authenticated worker. Existing product/worker/verifier limits, approval logic, provider transport and global ledger are unchanged. B/C planned calls use the dedicated finite journal; A uses actual product rows. No new dependency or deployed privilege.

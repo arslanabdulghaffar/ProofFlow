@@ -1,5 +1,12 @@
 # Resume ProofFlow
 
+## November6 KST — finite campaign launcher ready for live preflight
+
+Verified adapter checkpoint ffb91c94fed9b67d3bd0790ccf6d1fa79d62c4bb. Added scripts/run_comparison.py and eval/comparison_setup.py:96 exact jobs over24 cases, prospective source/prompt/runtime/schema/grader/quote-policy freeze, one-time private journal/archive, closed/idle/image/credit/disk checks, same-account/rate quote refresh, per-job12-minute inference cutoff and8-minute controller stop. A uses real API; B/C fixed provider plus dedicated$4.80 book; D has no provider/database credentials. A forecast$2.40 also fits existing product allocation; total$7.20 never borrows judging reserve. Source changes/existing campaign state/critical infrastructure faults stop the campaign. Finally closes both admissions; timer persists if closure is uncertain. No new resource/dependency/privilege/cap.
+
+Launcher has6 fault/control tests using fake administration, controller now18 tests including ineffective-original rejection, API15 and journal14:53 focused Linux checks pass. Windows21 API/launcher checks pass. Separate critical review added; no human sign-off. Live preflight/quote refresh is next; no final seed/freeze/dispatch exists at this entry. Run only after committed clean sources and current quote/credit verification. The launcher refuses any existing private evidence/final-comparison-v1 or remote /var/lib/proofflow-comparison-v1; reconcile, never rename/delete to evade this. Capture/normalize/reconcile results afterward before any score claim. Continue authorized work; no owner input required.
+
+
 ## November6 KST — comparison adapters tested, campaign still pending
 
 After verified bd6829cbbdd61ccb58cc3f917b03d0ab94852ed3, added eval/comparison_controller.py for B/C/D and scripts/comparison_api.py for actual full-product A. Forty-five focused Linux checks pass (16 controller,15 API/proof,14 journal);15 API/proof checks also pass on Windows. These are labeled doubles/local files, not final model results. No new paid call, resource, product image, SQL or policy change. Phase5 remains IN PROGRESS.

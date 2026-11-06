@@ -1,5 +1,8 @@
 # Evaluation and spending plan
 
+Finite launcher is now implemented/tested but not launched at this entry. run_comparison.py freezes24 cases/96 job IDs and equal3-call/$0.10 ceilings before paid calls; it requires clean committed sources, current credit, fixed image/runtime and closed/idle services. Quote-policy hash allows official same-account/model/rate refresh before a job when less than10 minutes remain; every actual quote is retained. It never treats an expired initial quote as authority for later calls. Controller/inference watchdogs and no uncertain replay are mandatory. Model-free D omits provider/database secrets. Working originals are marked ineffective faults, not repair successes. Actual receipt reconciliation still precedes final reporting.
+
+
 Current adapter follow-up: comparison_controller.py implements B/C/D and scripts/comparison_api.py implements actual product API A with31 new local tests. B acceptance is durable before grading; failures retain unknown grades. A's full API/administrative overhead differs from C's repair-core path and must be disclosed; latency is not a pure witness ablation. No scored run/freeze/launcher is complete yet. Existing journal limits and final$7.20 forecast are unchanged. Current product policy/source/runtime and human-review limitations remain.
 
 

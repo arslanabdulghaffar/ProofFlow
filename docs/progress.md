@@ -1,5 +1,10 @@
 # Progress
 
+## November6 KST — finite campaign launch controls
+
+After verified ffb91c9, added the finite96-job launcher with prospective hashes/quote policy, exact IDs, existing global/per-job caps, isolated trusted controller mounts, independent cutoff timers and fail-closed cleanup. Six launch fault tests plus two ineffective-original tests raise the focused comparison set to53 passing Linux checks;21 API/launcher checks pass on Windows. Final campaign not launched at this entry; no score or Phase5 completion claim. Proceed with live preflight after clean committed source.
+
+
 ## November6 KST — comparison adapters WIP
 
 Added B/C/D bounded orchestration and a full-product API A adapter after verified bd6829c. Forty-five local Linux checks pass:16 controller,15 API/proof,14 durable journal. B acceptance is persisted before grading and survives grading failure as unknown; fresh proof/source/runtime bindings reject tampering. A preserves exact IDs/evidence before writes, never activates/creates a PR, and retires only completed synthetic workspaces through normal deletion. No deployment/model call/final freeze or score in this checkpoint. Phase5 remains IN PROGRESS; finite campaign launch/reconciliation and lifecycle work remain. Separate Codex review is not human approval.

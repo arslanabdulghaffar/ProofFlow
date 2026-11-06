@@ -263,6 +263,9 @@ async def run(job, settings, root):
         if job["arm"] == "C" and source["report"]["result"]["blocking_occurrences"] > 0:
             result.update(decision="held", grade="correct")
             return result
+        if original == "match":
+            result.update(ineffective_fault=True, decision="failed", grade="unknown")
+            return result  # A working original cannot be counted as an AI repair success.
         if checked.get("semantic") and checked["semantic"]["report"]["status"] == "processed":
             feedback = {**checked["semantic"]["report"]["result"], "code": "CONTRACT_MISMATCH"}
         else:

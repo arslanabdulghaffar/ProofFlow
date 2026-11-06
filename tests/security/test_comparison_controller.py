@@ -301,3 +301,11 @@ def test_worker_identity_cannot_grant_baseline_acceptance(tmp_path, monkeypatch)
     result = asyncio.run(module.run(job, settings, root))
     assert result["decision"] == "failed" and result["critical"] and not calls
     assert not (root / job["run_id"] / "baseline-acceptance.json").exists()
+
+
+@pytest.mark.parametrize("arm", ["B", "C"])
+def test_ineffective_fault_cannot_be_reported_as_model_repair(tmp_path, monkeypatch, arm):
+    module, job, settings, root, calls, executed = setup(tmp_path, monkeypatch, arm, ["match"])
+    result = asyncio.run(module.run(job, settings, root))
+    assert result["ineffective_fault"] and result["decision"] == "failed"
+    assert result["grade"] == "unknown" and not calls and executed == ["original"]
