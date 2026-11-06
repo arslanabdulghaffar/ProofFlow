@@ -49,6 +49,7 @@ if trace.exists():
         require(priority in {"P0", "P1", "INFO"}, f"Missing priority: {rid}")
         require(status in {"IMPLEMENTED_DOC", "IMPLEMENTED_PHASE1", "IMPLEMENTED_PHASE2",
                            "IMPLEMENTED_PHASE3", "PARTIAL_PHASE2", "PARTIAL_PHASE3",
+                           "IMPLEMENTED_PHASE5", "PARTIAL_PHASE5",
                            "BLOCKED_OWNER", "DEFERRED_P1",
                            "DEFERRED_CONDITIONAL"} |
                 {f"DEFERRED_PHASE{i}" for i in range(1, 7)}, f"Bad status: {rid}")

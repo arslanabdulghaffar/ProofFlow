@@ -1,0 +1,70 @@
+{
+  "scope": "actual private synthetic 96-job comparison and existing-resource funded review",
+  "phase5_status": "IN_PROGRESS_METADATA_LIFECYCLE_REMAINS",
+  "completed_at": "2026-11-06T14:26:18.361735+00:00",
+  "artifact": "eval/final-comparison-2026-11-06.json",
+  "artifact_sha256": "eb46c5c01e19d299597a5c22488aa6a3f4c8f8f1e9d354438ed350d31a6f67a1",
+  "plan_sha256": "7339b9245dc39c0180859a9d3bfd06405dbf014ba9e7cec31ff3ab4ba72e906b",
+  "jobs": 96,
+  "confirmed_http_calls": 79,
+  "estimated_micro_usd": 60841,
+  "reserved_micro_usd": 2200387,
+  "request_usage_unknown_runs": 0,
+  "actual_collection": {
+    "admission": false,
+    "inference": false,
+    "remote_bytes": 8325120,
+    "remote_sha256": "75ae1c98f66f4674209ba82af5ee1e534a504e4ede93c0475ac317edfbd5321c"
+  },
+  "auditor_source_sha256": {
+    "scripts/collect_comparison.py": "80ea3d27254b59365e448241463d4a56248d6ba238cc53cc82d3dc491a823415",
+    "eval/comparison_receipts.py": "a856e2771960e9216059decd4fb291cabaa7834946b6fe865fae979403e9836a",
+    "eval/comparison_artifact.py": "334fc691c1965467bc52fcba18d3aab804b498683d4d36e03404221623fc1f46",
+    "scripts/export_comparison_report.py": "bcef460765aa15b8224ceac0952f2a444d38e7d6005054898fa70d92af59d427",
+    "scripts/review_credit_window.py": "bc77c8a5f689e1311220777a3950fe6ecbe46ef1e9fcd3b135894602cbbed581"
+  },
+  "funded_review": {
+    "admission": false,
+    "inference": false,
+    "inference_cap_usd": 25,
+    "monthly_compute_quote_usd": 72,
+    "new_resources": 0,
+    "prior_review_due_at": "2026-11-06T21:05:35.177139+00:00",
+    "project_cap_usd": 150,
+    "provider_hard_stop": false,
+    "remaining_credit": "192.92",
+    "reservation_sha256": "7264f8d0fab18f3832dc20d6b65de778c06dde4aa3bd856f526340a4d32d2b8d",
+    "reserved_total_usd": 145,
+    "review_due_at": "2026-11-08T14:27:11.770445+00:00",
+    "reviewed_at": "2026-11-06T14:27:11.770445+00:00",
+    "tax_coverage_verified": false
+  },
+  "new_cloud_services": 0,
+  "new_product_prs": 0,
+  "version_activations": 0,
+  "all_api_fixture_retirements": 24,
+  "limitations": [
+    "one repeat",
+    "shared source template and fault families",
+    "no independent human oracle/security review",
+    "polling-only source amendment; interrupted A retained",
+    "A API latency differs from C core",
+    "native advisory and metadata/restore lifecycle gaps",
+    "no public-release or submission approval"
+  ],
+  "local_validation": {
+    "linux_tests_passed": 921,
+    "linux_subtests_passed": 10,
+    "windows_tests_passed": 765,
+    "windows_linux_only_skips": 156,
+    "ruff": "PASS",
+    "portable_artifact_recheck": "PASS",
+    "documentation_hygiene": "PASS",
+    "independent_human_signoff": false
+  },
+  "artifact_format_review": {
+    "previous_sha256": "a704a9f2823f4014b2996cb885df756b5d3cf417cb3b09bbfab49d3c124c50e3",
+    "change": "source map uses explicit path/sha256 entries; case bytes, metrics, records and actual source digests unchanged",
+    "reason": "two generic-api-key matches were verified source hashes, one current and one original frozen Git blob; no scanner rule suppressed"
+  }
+}

@@ -176,6 +176,31 @@ def lifecycle(root, jobs):
             )
 
 
+def audit_original(folder, result, case, settings):
+    if result.get("intake_rejection") == "UNKNOWN_UNIT":
+        rejected = json.loads((folder / "contract-approval.json").read_bytes())
+        require(rejected["status"] == 422
+                and rejected["body"]["error"]["code"] == "UNKNOWN_UNIT"
+                and check_oracle(case).get("contract_rejected"),
+                "COMPARISON_INTAKE_REJECTION_UNSUPPORTED")
+        return {"intake": "UNKNOWN_UNIT"}
+    raw = (folder / "original.json").read_bytes()
+    original = json.loads(raw)
+    receipt = original["report"]
+    intent = receipt["intent"]
+    require(original["state"] == "NEEDS_REVIEW"
+            and UUID(original["id"]).hex == intent["job"], "COMPARISON_ORIGINAL_IDENTITY")
+    files = case["files"]
+    bind_sources(intent, source=files["pipeline.py.txt"], contract=files["contract.json"],
+                 transactions=files["transactions.csv"], customers=files["customers.csv"],
+                 runtime=settings["runtime_sha256"], verifier=settings["verifier_sha256"],
+                 purpose="original")
+    verdict, _ = classify(receipt, intent, settings["runtime_sha256"], settings["verifier_sha256"])
+    require(result["decision"] != "accepted" or verdict != "match",
+            "COMPARISON_ACCEPTED_INEFFECTIVE_FAULT")
+    return {"original_sha256": hashlib.sha256(raw).hexdigest(), "verdict": verdict}
+
+
 def main():
     root = PRIVATE / "evidence/final-comparison-v1"
     completed = json.loads((root / "completed.json").read_bytes())
@@ -264,6 +289,7 @@ def audit(root, freeze, frozen, settings, archive, rows):
         raw = path.read_bytes()
         result = json.loads(raw)
         case, checked_calls, bindings, proofs = lookup[job["case"]], [], [], []
+        original_proof = None
         corrected_cleanup = None
         if job["arm"] == "A":
             folder = path.parent
@@ -276,7 +302,9 @@ def audit(root, freeze, frozen, settings, archive, rows):
                     "COMPARISON_INTERRUPTION_UNRECONCILED",
                 )
                 corrected_cleanup = "confirmed"
-            elif result["decision"] == "accepted":
+            else:
+                original_proof = audit_original(folder, result, case, settings)
+            if index != 3 and result["decision"] == "accepted":
                 executions = json.loads((folder / "repair-executions.json").read_bytes())
                 export = json.loads((folder / "export.json").read_bytes())
                 require(
@@ -285,7 +313,7 @@ def audit(root, freeze, frozen, settings, archive, rows):
                     "COMPARISON_API_GRADE_CHANGED",
                 )
                 proofs = [e["execution_id"] for e in executions]
-            elif result["grade"] == "correct":
+            elif index != 3 and result["grade"] == "correct":
                 oracle = check_oracle(case)
                 require(
                     oracle.get("blocking_occurrences", 0) > 0 or oracle.get("contract_rejected"),
@@ -337,6 +365,7 @@ def audit(root, freeze, frozen, settings, archive, rows):
                 "result_sha256": hashlib.sha256(raw).hexdigest(),
                 "calls": checked_calls,
                 "proofs": proofs,
+                "original": original_proof,
             }
         )
         normalized.append(

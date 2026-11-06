@@ -1,5 +1,9 @@
 # Evaluation and spending plan
 
+Final one-repeat comparison is now complete and reconciled: 24 cases × four approaches = 96 jobs, 79 actual model responses. [Measured report](final-comparison-2026-11-06.md) and [portable synthetic artifact](final-comparison-2026-11-06.json) supersede historical NOT RUN entries below. A/C both 15/18 repairs, D 18/18; B accepted 9/23 incorrect outcomes. Retain shared-template/human-review/one-repeat/amended-harness limitations; no A/C quality advantage is established. Usage estimate $0.060841, reservations $2.200387, no settlement or invoice claim. Phase 5 lifecycle work remains incomplete.
+
+Fresh existing-resource funded review passed at November 6 14:27 UTC: credit $192.92; next deadline November 8 14:27 UTC / 23:27 KST. The unchanged full $72 compute/$25 inference/$145 project allocation, $150 cap, conservative held calls and November 23 final cutoff remain. No additional service or personal payment. Admission remains closed. This 48-hour renewal is inside the recorded build window; no post-event hosting/payment-method assumption is authorized by it.
+
 Actual final-comparison-v1 began under source5911f2d: three completeness-1 B/D/C runs accepted/correct with2/0/1 prepared calls. A was interrupted before any model call by a polling state omission; actual cancellation/cleanup is reconciled. Preserve all four records. A prospective transport-only amendment corrects polling and continues only92 undispatched jobs. Cases/order/prompts/model/runtime/grader/caps stay frozen; source amendment and A harness interruption must be explicit in final denominators/provenance. No full score exists yet, and no completed case is rerun.
 
 

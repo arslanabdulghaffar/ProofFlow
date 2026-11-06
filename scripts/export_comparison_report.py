@@ -47,8 +47,13 @@ def main():
         "records": json.loads((root / "normalized-records.json").read_bytes()),
         "report": report,
         "provenance": {
-            "original_sources": freeze["sources"],
-            "amended_sources": amendment["sources"],
+            "original_sources": [
+                {"path": name, "sha256": value} for name, value in sorted(freeze["sources"].items())
+            ],
+            "amended_sources": [
+                {"path": name, "sha256": value}
+                for name, value in sorted(amendment["sources"].items())
+            ],
             "private_remote_receipts_sha256": collection["remote_sha256"],
             "private_receipt_audit_sha256": hashlib.sha256(
                 (root / "receipt-audit.json").read_bytes()

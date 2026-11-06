@@ -1,5 +1,11 @@
 # Progress
 
+## November 6 KST — final comparison audited; funded hosting review passed
+
+All 96 predeclared jobs completed with no paid replay. Actual receipt audit reconciled 79 provider responses, candidate provenance, original failures, fresh protected checks, global reservations, all closures and 24 normal API retirements. [Report](../eval/final-comparison-2026-11-06.md): A 15/18 repairs, 6/6 holds/clarification, 0/15 incorrect acceptance; B 14/18, 1/6, 9/23; C 15/18, 6/6, 0/15; deterministic D 18/18, 6/6, 0/18. Preserve the interrupted A, five exhausted model runs, polling-only amendment, shared template and absent human oracle review. No A/C quality-superiority claim. Usage estimate $0.060841; $2.200387 held, no settlement.
+
+Fresh account/plan/identity/idle/ledger review extended only the existing funded window to November 8 23:27 KST. Verified remaining credit $192.92, full $145 allocation and $150/$25 caps unchanged, no new services or personal payment. SQL/local expiry and a subsequent actual guard readback agree. Admissions are closed. [Evidence](evidence/phase5-final-comparison-2026-11-06.json). Phase 5 remains IN PROGRESS: metadata/fence/tombstone lifecycle, restore coupling and documented native/human review gaps remain; release and publication are not authorized.
+
 ## November 6 KST — portable comparison artifact and funded review prepared
 
 Added an allowlisted synthetic report export and offline dataset/oracle/denominator/metric recheck. Seven tampering tests pass; candidate source remains inert data and protected canaries, provider responses and account identities stay outside the artifact. Final export awaits actual receipt reconciliation. A reviewed administrator helper can renew the unexpired existing hosting window by at most 48 hours after fresh credit/quotes/identity and unchanged reservations, without raising caps or opening admission. Twenty-one offline funding tests pass, including interrupted SQL updates and replay denial. Actual renewal is NOT RUN at this checkpoint.

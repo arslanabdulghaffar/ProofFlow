@@ -1,5 +1,13 @@
 # Decision log
 
+## D83: renew only the funded existing-resource window
+
+Standing credit-use/development authorization covers a fresh review of existing resources. Actual $192.92 credit, exact $24/$48 plans/owned resources, closed/idle services, unchanged $120 non-inference ledger reservations and $150/$25/$2 caps passed. The full $145 project allocation remains reserved; expiry alone advanced to November 8 23:27 KST after durable intent and conditional SQL/readback, then local guard readback. No new resource, payment method, cap increase, refund, status edit or reopened stop. The fixed November 23 final cutoff remains. Provider hard-stop/tax unknowns and conflicting post-event hosting guidance remain explicit. [Evidence](evidence/phase5-final-comparison-2026-11-06.json).
+
+## D82: report actual finite outcomes, including the strongest deterministic baseline
+
+The 96-job/79-response audit is complete. A/C both repaired 15/18; B accepted nine incorrect outcomes; D's fixed contract rebuild repaired 18/18. This supports measured acceptance-control behavior, not AI or witness superiority. Retain every failed run and disclosed polling amendment. Shared template/fault families, one repeat, absent human oracle review and unequal A/C orchestration prevent broader claims. Export allowlisted synthetic cases/records/metrics only; raw provider/protected evidence remains private. Future tuning is post-evaluation development and cannot overwrite this report. [Final report](../eval/final-comparison-2026-11-06.md).
+
 ## D81: preserve interrupted final run and disclose a transport-only amendment
 
 The first A comparison poll returned BASELINE_RUNNING; the harness incorrectly treated any state outside QUEUED/RUNNING/RECONCILING as terminal. Its safety closure cancelled the original before repair. Actual readback confirms cleanup and no model call. Preserve that interrupted result in the denominator; do not rerun completed B/D/C or replace A's record. Correct only state polling, then prospectively bind a source amendment and continue the92 undispatched jobs with unchanged cases/order/model/prompts/runtime/grader/limits. This is disclosed transport maintenance after three observations, not unchanged-source or independently held-out evidence. Source/candidate tuning or outcome edits remain forbidden. Scoped continuation verifies exact prefix, closure and actual cancelled-workspace identity before normal retirement. No activation/PR/spend-cap change.

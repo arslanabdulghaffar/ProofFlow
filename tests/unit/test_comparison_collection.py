@@ -183,3 +183,29 @@ def test_all_dispatches_closed_and_api_retired(tmp_path, monkeypatch, fault):
             audit.lifecycle(tmp_path, [job])
     else:
         audit.lifecycle(tmp_path, [job])
+
+
+@pytest.mark.parametrize("fault", [None, "wrong_job", "changed_source", "already_correct"])
+def test_api_original_binds_actual_failure_not_just_repair_label(tmp_path, monkeypatch, fault):
+    audit, job, result, files, case = fixture(monkeypatch)
+    base = job["run_id"] + "/executions/" + result["executions"][0]["execution"] + "/"
+    receipt = json.loads(files[base + "result.json"])
+    receipt["intent"]["purpose"] = "original"
+    if fault != "already_correct":
+        receipt["worker"]["runtime_client_exit_code"] = 1
+    case["files"]["pipeline.py.txt"] = files[base + "pipeline.py.txt"]
+    original = {"id": job["run_id"], "state": "NEEDS_REVIEW", "report": receipt}
+    if fault == "wrong_job":
+        original["id"] = str(uuid4())
+    if fault == "changed_source":
+        case["files"]["pipeline.py.txt"] = b"changed inert source"
+    (tmp_path / "original.json").write_text(json.dumps(original))
+    settings = {"runtime_sha256": audit.RUNTIME, "verifier_sha256": audit.VERIFIER}
+    from orchestrator.repair_proposal import RepairRejected
+
+    if fault:
+        with pytest.raises((RuntimeError, RepairRejected)):
+            audit.audit_original(tmp_path, result, case, settings)
+    else:
+        checked = audit.audit_original(tmp_path, result, case, settings)
+        assert checked["verdict"] == "execution_failed"

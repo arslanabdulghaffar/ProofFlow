@@ -1,5 +1,9 @@
 # Rules and implementation timing
 
+Rechecked November 6, 2026 UTC during Phase 5: the official [dashboard](https://lablab.build/ai-hackathons/vultr-hackathon/live) still labels the event live/submissions open. Its text-rendered countdown is all zeros, so that rendering does not verify an absolute closing time. The [event page](https://lablab.build/ai-hackathons/vultr-hackathon) continues to list November 3–8, Challenge 1's Vultr inference/VM/sandbox requirements, a public demo/repository, recorded video and a containment moment. It describes submissions as original and MIT-compliant. Keep the previously recorded deadline/internal buffer pending actual authenticated-form verification; ownership/publication permission remains open.
+
+The current event page says to add a payment method to continue deployments afterward. That differs from the owner's relayed judging-period guidance and the observed December 4 credit expiry; do not silently resolve the difference or add a payment method. Current work and the proposed 48-hour funded review stay inside the recorded build window. Post-event hosting still requires actual account/service conditions within credit-only authorization, not an assumption based on an unused balance.
+
 Rechecked **2026-11-04 KST**. Event-specific instructions and the actual submission form outrank general tutorials. The official [live dashboard](https://lablab.ai/ai-hackathons/vultr-hackathon/live) explicitly shows **Live / Submissions open**. Trusted clock observed Nov 3 16:33:54 UTC / Nov 4 01:33:54 KST. The owner requested Phase 1: implementation timing is satisfied and the Oct 24 wait is superseded. No early implementation permission was assumed or used.
 
 | Source | Current finding / consequence |

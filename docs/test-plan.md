@@ -1,5 +1,9 @@
 # Acceptance and verification plan
 
+Latest full local suites: **921 Linux tests plus 10 subtests**, **765 Windows tests / 156 Linux-only skips**. Final artifact recheck, Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These local tests supplement the actual comparison receipts; they do not substitute for missing metadata/restore or public-release acceptance.
+
+T20 final comparison: 96/96 actual jobs, 79 reconciled responses, no unaccounted cleanup; all failures, calls, costs and denominators preserved. Original/candidate/source/runtime/verifier/ledger/proposal/retirement audit passed; the portable artifact recomputes all case hashes/oracles/metrics offline. [Measured report](../eval/final-comparison-2026-11-06.md), [evidence](evidence/phase5-final-comparison-2026-11-06.json). One repeat/shared template/no human oracle review and A/C orchestration differences are explicit limitations. Funding review has 21 offline fault cases plus actual quote/credit/SQL/guard readback, without a cap increase. T22 metadata/restore lifecycle remains incomplete.
+
 Latest Phase5 follow-up:788 Linux+10 subtests,664 Windows/124 Linux skips;6 source-failure SQL groups,11 original queue groups,5 repair groups;72 exact image files;6 deployed verifier boundary groups and7 HTTP groups/3 cases. Actual code crash + successful missing-output diagnosis and invalid-source hold pass; first missing-output failure remains recorded. One real API repair/one Vultr call/three fresh proofs passes without activation. Final A/B/C/D and lifecycle review remain incomplete. [Evidence](evidence/phase5-source-repair-2026-11-06.json).
 
 
