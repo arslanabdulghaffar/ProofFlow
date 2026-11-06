@@ -289,3 +289,27 @@ def test_no_repair_after_held_intake_or_critical_infrastructure(tmp_path, condit
         with pytest.raises(RuntimeError):
             module.retire(live, result, tmp_path)
         assert "/v1/workspace/delete" not in posts
+
+
+def test_original_poll_waits_for_actual_terminal_state(monkeypatch):
+    states = iter(
+        ["QUEUED", "BASELINE_RUNNING", "BASELINE_VERIFYING", "RECONCILING", "NEEDS_REVIEW"]
+    )
+    seen = []
+
+    def get(path):
+        state = next(states)
+        seen.append(state)
+        return SimpleNamespace(status_code=200, json=lambda: {"state": state})
+
+    monkeypatch.setattr(module.time, "sleep", lambda _: None)
+    assert module.wait(SimpleNamespace(get=get), "/inert", 120)["state"] == "NEEDS_REVIEW"
+    assert len(seen) == 5
+
+
+def test_unknown_state_fails_closed():
+    client = SimpleNamespace(
+        get=lambda _: SimpleNamespace(status_code=200, json=lambda: {"state": "UNEXPECTED"})
+    )
+    with pytest.raises(RuntimeError, match="STATE_UNRECOGNIZED"):
+        module.wait(client, "/inert", 120)

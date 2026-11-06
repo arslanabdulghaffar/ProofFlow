@@ -1,5 +1,10 @@
 # Progress
 
+## November6 KST — actual comparison started, interrupted prefix preserved
+
+Frozen96-job comparison ran completeness-1 B/D/C successfully (2/0/1 prepared model calls, accepted/correct). A polling harness omitted BASELINE_RUNNING/BASELINE_VERIFYING and stopped before repair; closure cancelled its original normally, confirmed worker cleanup. All four records preserved; no repeated run. Fixed polling and prepared a single-use, exact-prefix continuation with unchanged cases/prompts/runtime/grader/caps and explicit source-amendment disclosure. Seven amendment tests and two polling tests added;31 Windows API/launcher/amendment checks pass. Remaining92 jobs and final reconciliation still pending; no full score or Phase5 completion claim.
+
+
 ## November6 KST — finite campaign launch controls
 
 After verified ffb91c9, added the finite96-job launcher with prospective hashes/quote policy, exact IDs, existing global/per-job caps, isolated trusted controller mounts, independent cutoff timers and fail-closed cleanup. Six launch fault tests plus two ineffective-original tests raise the focused comparison set to53 passing Linux checks;21 API/launcher checks pass on Windows. Final campaign not launched at this entry; no score or Phase5 completion claim. Proceed with live preflight after clean committed source.

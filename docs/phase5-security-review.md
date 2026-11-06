@@ -1,5 +1,12 @@
 # Phase 5 security review — November 5
 
+## Actual polling defect and bounded continuation review
+
+Actual first three B/D/C runs passed; A exposed a harness state-machine omission hidden by immediate-terminal doubles. The saved original was BASELINE_RUNNING with no outcome/report. Gate closure cancelled it; independent SQL readback confirms CANCELLED/cleanup confirmed, no repair call. Preserve all original evidence and the interrupted denominator. Polling now enumerates known active states including BASELINE_RUNNING/BASELINE_VERIFYING and known terminal states; unknown states fail closed. Two transition/unknown-state tests supplement the original adapter checks.
+
+Reviewed a single-use continuation, not a blind retry. It accepts only this frozen source identity and exactly four dispatch/closure records, three confirmed results, and the saved cancelled/cleaned A receipt. Frozen tar is read as bounded regular bytes, never extracted/executed; filenames/hash inventory must match. Exactly two reviewed harness files may differ; all case/prompts/model/runtime/grader/limits remain. An immutable amendment records new source hashes and the92 still-undispatched IDs before any further write. It separately retires only the exact reconciled fixture via normal API/retention and begins at index4. No result rewrite or model rerun. Seven local validation/tar tests pass;31 Windows API/launcher/amendment tests pass. The modified source provenance and interrupted A must be disclosed in reporting. Codex critical review is not human sign-off.
+
+
 ## Finite launcher critical pass — November6 KST
 
 Actual CLI entrypoint initially failed its repository import before creating any campaign or making a model request. Pytest's root path had hidden the packaging defect. Added explicit fixed repository-root import path and a real subprocess argument-rejection test, with no account access. No frozen cases or scored observations existed, so the correction precedes final freeze. Quote refresh/install separately succeeded with unchanged image/rates and no new resource/completion call.

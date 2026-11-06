@@ -1,5 +1,12 @@
 # Resume ProofFlow
 
+## November6 KST — frozen campaign interrupted; polling-only amendment
+
+Campaign final-comparison-v1 froze96 jobs under source13d33003d202e0afeefbd9d311b612b3ee7adb6be54466fe0f1332a33c181555 at source checkpoint5911f2dffe0dc35ec817d527aa7764b5b4bfdadb. First completeness-1 jobs B/D/C accepted with independent correct grades and2/0/1 prepared calls respectively. Fourth A stopped because comparison_api.wait mistook BASELINE_RUNNING for terminal; no A model call. Finally closed admission/budget. Read-only reconciliation confirms actual original CANCELLED and worker cleanup confirmed; credit$193.02. Original failed/interrupted record remains unchanged. This is a harness defect, not evidence of a candidate/product failure.
+
+Fixed only explicit polling active/terminal states and extracted the launcher dispatch loop. New continue_comparison.py permits only this exact four-dispatch prefix, closed receipts and reconciled cancellation; validates untouched frozen archive/IDs and exactly those two source-file changes, records a prospective polling-amendment manifest, retires the completed interrupted synthetic workspace normally, then starts at index4. No rerun of B/D/C/A, no source/prompt/model/runtime/contract/grader/limit tuning. The comparison must disclose this transport-only source amendment and A interruption; do not call it an unchanged-source campaign. Seven amendment tests plus two polling tests pass;31 Windows API/launcher/amendment checks. Resume helper itself is single-use and stops if its amendment record exists. Reconcile any subsequent uncertainty before another action; never delete evidence to restart. Actual remaining92 runs and final receipt reconciliation are pending at this entry.
+
+
 ## November6 KST — finite campaign launcher ready for live preflight
 
 First actual launcher invocation stopped at import before any campaign root/freeze/provider dispatch: script execution lacked repository root on sys.path, which pytest had supplied. Corrected fixed root import initialization and added an actual subprocess entrypoint test (argument rejected before account access). This is a pre-freeze packaging fix, not tuning on final results. Official quote refreshed13:23:23 UTC, expires14:23:23; credit$193.02, unchanged product image installed, dispatcher restarted. No completion call or new cloud resource from that refresh.

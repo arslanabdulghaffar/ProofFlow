@@ -37,8 +37,13 @@ def wait(client, path, seconds):
         response = client.get(path)
         require(response.status_code == 200, "COMPARISON_STATUS_UNAVAILABLE")
         value = response.json()
-        if value["state"] not in ("QUEUED", "RUNNING", "RECONCILING"):
+        if value["state"] in ("NEEDS_REVIEW", "AWAITING_APPROVAL", "FAILED_INFRA", "CANCELLED"):
             return value
+        require(
+            value["state"]
+            in ("QUEUED", "RUNNING", "BASELINE_RUNNING", "BASELINE_VERIFYING", "RECONCILING"),
+            "COMPARISON_STATE_UNRECOGNIZED",
+        )
         require(time.monotonic() < deadline, "COMPARISON_STATUS_UNCERTAIN")
         time.sleep(1)
 

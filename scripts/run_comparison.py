@@ -310,8 +310,11 @@ def main():
             live.host(shlex.join(container(target, state))) == b"COMPARISON_BOOK_INITIALIZED",
             "COMPARISON_BOOK_SETUP_UNCERTAIN",
         )
-    lookup = {c["id"]: c for c in dataset}
-    for index, job in enumerate(jobs):
+    dispatch(root, jobs, {c["id"]: c for c in dataset}, target, state, settings, hashes)
+
+
+def dispatch(root, jobs, lookup, target, state, settings, hashes, *, start=0):
+    for index, job in enumerate(jobs[start:], start):
         require(
             all(
                 hashlib.sha256((ROOT / n).read_bytes()).hexdigest() == v for n, v in hashes.items()

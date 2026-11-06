@@ -1,5 +1,10 @@
 # Decision log
 
+## D81: preserve interrupted final run and disclose a transport-only amendment
+
+The first A comparison poll returned BASELINE_RUNNING; the harness incorrectly treated any state outside QUEUED/RUNNING/RECONCILING as terminal. Its safety closure cancelled the original before repair. Actual readback confirms cleanup and no model call. Preserve that interrupted result in the denominator; do not rerun completed B/D/C or replace A's record. Correct only state polling, then prospectively bind a source amendment and continue the92 undispatched jobs with unchanged cases/order/model/prompts/runtime/grader/limits. This is disclosed transport maintenance after three observations, not unchanged-source or independently held-out evidence. Source/candidate tuning or outcome edits remain forbidden. Scoped continuation verifies exact prefix, closure and actual cancelled-workspace identity before normal retirement. No activation/PR/spend-cap change.
+
+
 ## D80: evaluate actual API workflow and preserve baseline decisions before grading
 
 Use actual product intake/contract/original/repair/export for arm A, without exact-version activation or external actions. Capture raw private API/provider/execution evidence before ordinary synthetic workspace retirement. For B, authenticate/bind collected worker bytes and persist zero-exit acceptance in the existing after_capture hook before deterministic grading; failed/late grading remains unknown rather than retroactively removing an unsafe acceptance. C uses verdict-only feedback and fresh protected checks; D uses the fixed rebuild only on the worker. All arms preserve failed/missing/unknown observations. The A administrative/API overhead differs from C repair-core orchestration and must be disclosed in latency comparisons; this is not a pure end-to-end witness ablation. No final campaign/freeze yet and no human oracle/security review claim.

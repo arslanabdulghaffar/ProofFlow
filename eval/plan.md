@@ -1,5 +1,8 @@
 # Evaluation and spending plan
 
+Actual final-comparison-v1 began under source5911f2d: three completeness-1 B/D/C runs accepted/correct with2/0/1 prepared calls. A was interrupted before any model call by a polling state omission; actual cancellation/cleanup is reconciled. Preserve all four records. A prospective transport-only amendment corrects polling and continues only92 undispatched jobs. Cases/order/prompts/model/runtime/grader/caps stay frozen; source amendment and A harness interruption must be explicit in final denominators/provenance. No full score exists yet, and no completed case is rerun.
+
+
 Finite launcher is now implemented/tested but not launched at this entry. run_comparison.py freezes24 cases/96 job IDs and equal3-call/$0.10 ceilings before paid calls; it requires clean committed sources, current credit, fixed image/runtime and closed/idle services. Quote-policy hash allows official same-account/model/rate refresh before a job when less than10 minutes remain; every actual quote is retained. It never treats an expired initial quote as authority for later calls. Controller/inference watchdogs and no uncertain replay are mandatory. Model-free D omits provider/database secrets. Working originals are marked ineffective faults, not repair successes. Actual receipt reconciliation still precedes final reporting.
 
 
