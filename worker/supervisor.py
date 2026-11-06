@@ -64,6 +64,7 @@ class Supervisor:
             self.staging.prune_results(set(self.journal.unfinished()))
             self.journal.prune_failure_previews()
             self.journal.prune_receipts()
+            self.journal.prune_authority()
 
     def pause_admission(self) -> None:
         with self._guard:
@@ -133,6 +134,7 @@ class Supervisor:
         self.staging.prune_results(set(self.journal.unfinished()))
         self.journal.prune_failure_previews()
         self.journal.prune_receipts()
+        self.journal.prune_authority()
         self._recovered = True
 
     def execute(self, request: ExecutionRequest, *, expected_runtime: str | None = None) -> dict:

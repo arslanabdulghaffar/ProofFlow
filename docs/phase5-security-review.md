@@ -1,5 +1,67 @@
 # Phase 5 security review — November 5
 
+## Time-bound authority and encrypted recovery critical pass — November 7
+
+Separate Codex review, not human sign-off. Worker IDs now carry RFC9562 issue time;
+unknown execution/job IDs must be UUIDv7 within24 hours and at most5 seconds ahead.
+Known IDs still reconcile exactly. Known legacy jobs can finish within their retained
+fence lifetime, but unknown legacy IDs cannot regain authority after expiry. SQLite
+persists a monotonically increasing clock floor before retiring cleaned records after
+seven days; unfinished/quarantined records and their fences are retained. Each sweep
+is bounded32 rows;4096-row histories fail closed instead of evicting authority. Clock
+rollback, changed/new execution IDs for expired jobs, legacy replay and WAL-reader
+failure are covered by real SQLite tests. Source runtime changes require a new epoch.
+
+New additive019 migration requires fresh UUIDv7 workspace IDs, stores a clock floor
+and expires only completed deletion rows with no workspace after seven days. Encoded
+UUIDv7 issue time must also be old; unknown legacy IDs are forever uncreatable.
+Pruning defaults OFF and must be explicitly bound to the reviewed current closed
+runtime. A different runtime disables the ready predicate.020 changes signed-batch
+job generation only, preserving idempotency and all approval/contract semantics.
+Filesystem markers expire only after both mtime/ctime are seven days old, the encoded
+ID is old, both roots are locked and contain no raw trees, and the coordinator has
+verified the runtime-bound expiry gate. Any remaining raw tree defers marker expiry.
+No raw restore or rollback of the worker journal/clock or deletion roots is supported.
+
+Encrypted recovery uses the existing pinned cryptography AES-256-GCM implementation,
+new random key per snapshot, random96-bit nonce and fixed version-bound associated
+data. Authentication precedes parsing. A bounded envelope binds DB bytes, registry,
+asset hashes, scope and creation times. Recovery rejects expired snapshots (24 hours),
+raw exposure beyond48 hours, corrupt/wrong-key envelopes and stale current authority.
+Recovered asset bytes use the descriptor-based private store: asset files are0400
+and never executed. The target must be a new empty0700 quarantine; there is no
+promotion or credential/session/approval restoration. Current-user DPAPI protects
+separate keys with explicit owner/SYSTEM-only ACLs. Bounded expiry removes keys first;
+recovery rejects expired keys even before the scheduled sweep. Current Windows profile
+loss blocks recovery; portable key recovery and forensic erasure are not claimed.
+
+Official references checked: [UUIDv7 timestamp layout](https://www.rfc-editor.org/rfc/rfc9562.html#name-uuid-version-7),
+[PostgreSQL18 UUID functions](https://www.postgresql.org/docs/18/functions-uuid.html),
+[cryptography authenticated encryption](https://cryptography.io/en/latest/hazmat/primitives/aead/).
+These changes strengthen lifecycle rules, not candidate grading; frozen final
+evaluation results remain bound to their original sources/runtime and are not rerun.
+Actual preflight/deployment/regressions passed:20 migrations,epoch5,72 exact product
+files,16 worker security probes and532 cleaned records/311 fences with expiry deadlines.
+Runtime-bound pruning is enabled; retention timer/API/dispatcher are healthy and both
+admissions closed. No natural seven-day expiry yet, no live clock/status edits.
+
+Actual Windows ACL/DPAPI/AES roundtrip and natural8-second expiry passed. Initial ACL
+probe failed because Get-Acl module loading was unavailable; fixed .NET ACL reads
+preserve all owner/scope/reparse checks, then the expired fixture was reconciled.
+Live encrypted backup/recovery saved a real quiesced DB+five synthetic assets off-VM;
+normal deletion excluded one workspace and four assets recovered byte-for-byte with
+all authority stripped. Clone,temporary bytes,both fixtures,key and ciphertext removed.
+Initial DB clock lead and subsequent clone-connection allowlist failures are preserved;
+bounded clock wait and a generated-clone-only helper resumed the exact existing bytes
+without replay. The broad LiveSession database restriction remains unchanged.
+
+Final critical pass found billing-check failure could skip backup expiry in the shared
+watcher; now both run and either failure returns nonzero, with separate status files.
+Actual watcher/readback passed. Desktop/timer outage can still delay physical expiry.
+Current deletion authority is live, not independently disaster-available; no automatic
+promotion, scheduled consistent snapshots or profile-independent recovery is claimed.
+No new dependency, privilege or model call. [Evidence](evidence/phase5-encrypted-recovery-2026-11-07.json).
+
 ## Metadata and isolated restore critical pass — November 7 KST
 
 Separate Codex review, not independent human approval. Cleaned worker receipt details

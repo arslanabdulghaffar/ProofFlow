@@ -5,18 +5,17 @@ import os
 import sqlite3
 import sys
 from dataclasses import replace
-from uuid import uuid4
 
 import pytest
 
 from worker.journal import Journal
-from worker.protocol import ExecutionRequest, SupervisorError
+from worker.protocol import ExecutionRequest, SupervisorError, authority_id
 
 pytestmark = pytest.mark.skipif(sys.platform != "linux", reason="Linux worker ownership")
 
 
 def request():
-    return ExecutionRequest(uuid4(), uuid4(), 1, b"# inert", b"", b"", b"{}")
+    return ExecutionRequest(authority_id(), authority_id(), 1, b"# inert", b"", b"", b"{}")
 
 
 def test_expiry_removes_bytes_preserves_replay_conflict_and_fence(tmp_path, monkeypatch):
@@ -45,7 +44,7 @@ def test_expiry_removes_bytes_preserves_replay_conflict_and_fence(tmp_path, monk
         reopened.admit(replace(item, pipeline=b"changed"), "a" * 64)
     reopened.fence(item.job_id, 2)
     with pytest.raises(SupervisorError, match="STALE_EXECUTION_GENERATION"):
-        reopened.admit(replace(item, execution_id=uuid4()), "a" * 64)
+        reopened.admit(replace(item, execution_id=authority_id()), "a" * 64)
 
 
 def test_legacy_migration_gets_one_grace_period_and_keeps_quarantine(tmp_path, monkeypatch):

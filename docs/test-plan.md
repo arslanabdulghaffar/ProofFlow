@@ -1,6 +1,21 @@
 # Acceptance and verification plan
 
-Latest full local suites: **940 Linux tests plus 10 subtests**, **779 Windows tests / 161 Linux-only skips**. Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These tests do not substitute for missing full metadata/restore or public-release acceptance.
+Latest full local suites: **970 Linux tests plus 10 subtests**, **797 Windows tests / 173 Linux-only skips**. Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These tests do not substitute for missing portable disaster/production recovery or public-release acceptance.
+
+Current T22: six SQLite authority-expiry tests cover replay after pruning, clock rollback,
+fresh execution versus expired job, legacy migration, quarantine and busy WAL retry;
+five Linux marker tests cover idle-only expiry and unsafe files. Fifteen asset-envelope/
+materialization tests cover authentication, hashes, limits, age, current deletion
+authority and inert files. Four clock-wait tests preserve future-time rejection.
+Real local PostgreSQL restore and deletion-expiry checks each pass seven groups. Real
+signed-delivery SQL races also verify fresh UUIDv7 batch IDs after migration020.
+Actual Windows private ACL/DPAPI/AES roundtrip and natural8-second key expiry pass.
+Actual live quiesced encrypted DB+five-asset snapshot recovered four authorized assets
+while excluding a normally deleted workspace, with second authority read and cleanup.
+Read-only live lifecycle check verifies sources,deadlines,clock floor,healthy timers,
+closed admissions and zero remaining workspaces/clones. Sixteen fresh deployed security
+probes pass. Natural seven-day expiry remains NOT RUN; no live clocks were changed.
+[Evidence](evidence/phase5-encrypted-recovery-2026-11-07.json).
 
 T22 follow-up: `test_worker_receipt_retention.py` covers real SQLite byte retirement,
 replay/conflict/generation denial, quarantine/recovery deadline, one legacy grace,
@@ -10,7 +25,7 @@ and target rejection. `python -m scripts.check_deletion_safe_restore` performs a
 local pg_dump/restore in a disposable networkless fixture, completed/pending deletion,
 pre-sanitization login denial, production-target/schema rejection, authority stripping
 and second-live-read deletion detection. Cleanup is verified. It contains synthetic
-metadata only; portable encryption, asset backup and production recovery are NOT RUN.
+metadata/assets only; production promotion and portable key recovery are NOT RUN.
 
 T20 final comparison: 96/96 actual jobs, 79 reconciled responses, no unaccounted cleanup; all failures, calls, costs and denominators preserved. Original/candidate/source/runtime/verifier/ledger/proposal/retirement audit passed; the portable artifact recomputes all case hashes/oracles/metrics offline. [Measured report](../eval/final-comparison-2026-11-06.md), [evidence](evidence/phase5-final-comparison-2026-11-06.json). One repeat/shared template/no human oracle review and A/C orchestration differences are explicit limitations. Funding review has 21 offline fault cases plus actual quote/credit/SQL/guard readback, without a cap increase. T22 metadata/restore lifecycle remains incomplete.
 

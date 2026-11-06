@@ -11,7 +11,6 @@ import os
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
-from uuid import uuid4
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from vultr_credit_guard import run as credit_guard  # noqa: E402
@@ -20,7 +19,7 @@ from vultr_phase1 import PRIVATE, ROOT, Admin  # noqa: E402
 from contracts.policy import parse_contract  # noqa: E402
 from contracts.source import parse_sources  # noqa: E402
 from verifier.compare import compare_bytes  # noqa: E402
-from worker.protocol import ExecutionRequest  # noqa: E402
+from worker.protocol import ExecutionRequest, authority_id  # noqa: E402
 
 
 def main():
@@ -61,7 +60,8 @@ def main():
             tx, cs = parse_sources(transactions, customers, aliases=dict(contract.aliases),
                                    customer_attributes=contract.attributes)
             pipeline = (ROOT / "tests/fixtures/phase2" / (name + ".py.txt")).read_bytes()
-            request = ExecutionRequest(uuid4(), uuid4(), 1, pipeline, tx.worker_jsonl(),
+            request = ExecutionRequest(authority_id(), authority_id(), 1,
+                                       pipeline, tx.worker_jsonl(),
                                        cs.worker_jsonl(), contract.canonical)
             message = {"name": name, "execution": request.execution_id.hex,
                        "job": request.job_id.hex, "manifest": request.manifest_hash()}

@@ -4,18 +4,17 @@ import json
 import sqlite3
 import sys
 from dataclasses import replace
-from uuid import uuid4
 
 import pytest
 
 from worker.journal import RECEIPT_TTL, Journal
-from worker.protocol import ExecutionRequest, SupervisorError
+from worker.protocol import ExecutionRequest, SupervisorError, authority_id
 
 pytestmark = pytest.mark.skipif(sys.platform != "linux", reason="Linux journal ownership")
 
 
 def item():
-    return ExecutionRequest(uuid4(), uuid4(), 1, b"# inert", b"", b"", b"{}")
+    return ExecutionRequest(authority_id(), authority_id(), 1, b"# inert", b"", b"", b"{}")
 
 
 def test_retirement_erases_details_and_never_reopens_identity(tmp_path, monkeypatch):
@@ -38,11 +37,11 @@ def test_retirement_erases_details_and_never_reopens_identity(tmp_path, monkeypa
     assert not journal.admit(request, "a" * 64)
     with pytest.raises(SupervisorError, match="EXECUTION_CONFLICT"):
         journal.admit(replace(request, pipeline=b"changed"), "a" * 64)
-    with pytest.raises(SupervisorError, match="EXECUTION_GENERATION_REUSED"):
-        journal.admit(replace(request, execution_id=uuid4()), "a" * 64)
+    with pytest.raises(SupervisorError, match="JOB_AUTHORITY_EXPIRED"):
+        journal.admit(replace(request, execution_id=authority_id()), "a" * 64)
     journal.fence(request.job_id, 2)
     with pytest.raises(SupervisorError, match="STALE_EXECUTION_GENERATION"):
-        journal.admit(replace(request, execution_id=uuid4()), "a" * 64)
+        journal.admit(replace(request, execution_id=authority_id()), "a" * 64)
     assert journal.prune_receipts() == 0
 
 

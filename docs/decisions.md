@@ -1,5 +1,33 @@
 # Decision log
 
+## D85: expire authority only after identity becomes permanently inadmissible
+
+Unknown worker IDs must carry a fresh RFC9562 timestamp; unknown legacy UUID4 IDs fail
+closed. Keep known executions for exact reconciliation and unfinished/quarantined work
+indefinitely; retire only cleaned records and unused fences after seven days. Persist
+a clock floor before pruning, retain one nonrenewable legacy grace, checkpoint SQLite
+WAL and reject capacity overflow instead of evicting authority. Workspace creation
+similarly requires fresh UUIDv7; completed deletion records can expire without permitting
+old IDs to reappear. Migration019 binds expiry to the reviewed runtime, and020 changes
+only signed-batch job identity generation. No contract/verifier/approval relaxation.
+Do not restore old journals/clock floors or raw roots as a way to resume a service.
+
+Use the already pinned cryptography AES-256-GCM for bounded DB+asset envelopes, a new
+key per snapshot, separate current-user DPAPI key storage and private ACLs. Snapshot
+lifetime<=24h; raw exposure<=48h; keys expire before ciphertext is removed. Recovery
+requires fresh authenticated current authority twice and an isolated clone stripped
+of all runtime authority; assets remain inert0400 files. A missing current allowlist
+means no restore, even when an old backup contains a workspace. This is not automatic
+production promotion or portable key recovery. The Windows watcher runs local key
+expiry even if billing lookup fails; outages can delay physical deletion.
+
+Actual off-VM recovery and normal fixture retirement passed after two disclosed
+harness failures: bounded wait for observed DB clock lead, then a narrowly scoped
+generated-clone connection helper preserving the general SQL allowlist. Existing
+backup/job bytes were reused, not rerun. Separate critical review is Codex review,
+not independent human approval. No new dependency/service/permission or model call.
+[Evidence](evidence/phase5-encrypted-recovery-2026-11-07.json).
+
 ## D84: expire receipt details; restore only into inert data quarantine
 
 Seven-day worker receipt expiry does not delete execution IDs, manifests or fences:

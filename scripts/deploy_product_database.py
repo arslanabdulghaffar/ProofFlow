@@ -20,7 +20,8 @@ def main():
               "011_versions_batches.sql", "012_version_retention.sql",
               "013_github_outbox.sql", "014_signed_batches.sql", "015_operator_expiry.sql",
               "016_evaluation_allocation.sql", "017_original_execution_failure.sql",
-              "018_original_success_without_outputs.sql")}
+              "018_original_success_without_outputs.sql",
+              "019_expiring_workspace_identity.sql", "020_time_bound_batch_ids.sql")}
     files = {name: path.read_bytes() for name, path in paths.items()}
     manifest = {"migrations": {
         name: hashlib.sha256(raw).hexdigest() for name, raw in files.items()}}

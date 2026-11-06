@@ -1,5 +1,21 @@
 # Risks and owner decisions
 
+November7 encrypted-recovery follow-up supersedes the earlier unresolved ID/fence TTL
+within the deployed scope. Fresh UUIDv7 admission plus persistent clock floors permits
+bounded seven-day cleaned execution/fence/completed-deletion expiry; unsafe raw roots
+defer marker pruning. Quarantined records and capacity fail closed. Natural seven-day
+wall time has not elapsed; controlled-clock tests are not that observation.
+
+Encrypted DB+asset recovery actually passed off-VM with current Windows DPAPI keys,
+fresh live deletion authority and inert quarantine. It cannot recover after loss of
+that Windows profile or the authoritative live inventory, promote a production DB,
+restore approvals/spend/queues or promise forensic erasure. Scheduled snapshot capture
+and disaster-available deletion authority remain Phase6 work. Timer/desktop outages
+can delay physical expiry; clock rollback must not be used to restore authority.
+Known native advisories, absent independent human review and license/public-release
+gaps remain. Fresh credit$192.17; deadlineNov8 23:27 KST/caps unchanged. No owner input
+blocks the next independent engineering. [Evidence](evidence/phase5-encrypted-recovery-2026-11-07.json).
+
 November7 retention follow-up: detailed cleaned receipts now expire after seven days,
 but execution IDs/manifests/fences and deletion tombstones remain to prevent replay.
 Their eventual pruning/capacity remains unresolved. Legacy records get one seven-day

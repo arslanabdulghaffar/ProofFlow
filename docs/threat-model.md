@@ -1,5 +1,15 @@
 # Threat model and controls
 
+Current lifecycle control (D85): expiry cannot revive unknown old/legacy worker or
+workspace IDs. Persist clock floors; keep unfinished/quarantined work; prune only
+bounded eligible rows and safe markers on idle locked roots. Runtime identity binds
+the deletion-expiry gate. No worker journal/clock/raw-root rollback is supported.
+Encrypted recovery authenticates bounded bytes before parsing and requires current
+live deletion authority before and after isolated recovery. No sessions, approvals,
+jobs, PR intents, budget allocations or production promotion survive. Actual four-asset
+off-VM recovery and deletion exclusion passed; portable disaster recovery, natural
+seven-day expiry and forensic erasure are not claimed. [Critical review](phase5-security-review.md).
+
 Phase5 regression: ordinary response backpressure now has a30s outer deadline (event streams65s), including capacity-rejection sends. This releases slots; it neither rolls back committed operations nor forcibly kills synchronous thread work. Existing SQL/input/process bounds and idempotent reconciliation remain required. Apt/libapt3.0.4 patched; native advisory risks persist. Fresh deployed16 worker probes/6 verifier groups/4 protected canaries and Linux735 tests pass. [Critical review](phase5-security-review.md) records scoped reachability and missing human approval. Development fixture outcomes are not model quality or held-out security claims. No new privileges/network/candidate tools, public endpoint or relaxed policies.
 
 D74 critical review: existing-PR recovery drill uses a read-only scoped installation token plus pre-network mutation rejection, and fixed claim/readback/defer-only fixture operations. Synthetic seed has no real credentials, DB network or production connection; production access is read-only snapshot/hash observation. Actual GET-reply loss and database restart leave pending state; unchanged180-second lease and fences govern takeover. Exact source/tree/PR/result and durable write hashes checked; stale controller/new dispatch denied; completed redelivery no-op and cleanup confirmed. No candidate execution, policy/SQL/approval changes or production rewinding. Original create-response-loss is NOT_REPRODUCED. [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json). Codex critical pass is not independent human approval.

@@ -9,13 +9,12 @@ import json
 import os
 import sys
 from pathlib import Path
-from uuid import uuid4
 
 ROOT = Path("/opt/proofflow-control")
 sys.path.insert(0, str(ROOT / "lib"))
 from orchestrator.probe_response import strict_json_object  # noqa: E402
 from orchestrator.worker_client import WorkerClient  # noqa: E402
-from worker.protocol import ExecutionRequest  # noqa: E402
+from worker.protocol import ExecutionRequest, authority_id  # noqa: E402
 from worker.wire import tls_context  # noqa: E402
 
 if len(sys.argv) != 2 or sys.argv[1] not in ("dense-coding-extended", "flash-coding-extended"):
@@ -38,7 +37,7 @@ records = [{"merchant": merchant, "amount_cents": amount} for merchant, amount i
            (("B", 900), ("A", 125), ("B", -100), ("C", 0), ("A", -25),
             ("D", 9007199254740993))]
 transactions = b"".join(json.dumps(row, sort_keys=True).encode() + b"\n" for row in records)
-request = ExecutionRequest(uuid4(), uuid4(), 1, code, transactions, b"", b"{}")
+request = ExecutionRequest(authority_id(), authority_id(), 1, code, transactions, b"", b"{}")
 directory = Path("/var/lib/proofflow-control/probes")
 intent = {"provider_response_sha256": provider["response_sha256"],
           "pipeline_sha256": hashlib.sha256(code).hexdigest(),

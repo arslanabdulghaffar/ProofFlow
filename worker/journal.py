@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import math
 import os
 import sqlite3
 import stat
@@ -10,15 +11,14 @@ from contextlib import closing, contextmanager
 from pathlib import Path
 from uuid import UUID
 
-from worker.protocol import ExecutionRequest, SupervisorError
+from worker.protocol import ExecutionRequest, SupervisorError, require_fresh_authority
 
 RECEIPT_TTL = 7 * 24 * 60 * 60
 
 
 def private_directory(path: Path) -> None:
     info = path.lstat()
-    if (not stat.S_ISDIR(info.st_mode) or info.st_uid != os.geteuid()
-            or info.st_mode & 0o077):
+    if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.geteuid() or info.st_mode & 0o077:
         raise SupervisorError("UNSAFE_WORKER_DIRECTORY")
 
 
@@ -29,8 +29,12 @@ class Journal:
         self.path = root / "journal.sqlite3"
         if self.path.exists() or self.path.is_symlink():
             info = self.path.lstat()
-            if (not stat.S_ISREG(info.st_mode) or info.st_nlink != 1
-                    or info.st_uid != os.geteuid() or info.st_mode & 0o077):
+            if (
+                not stat.S_ISREG(info.st_mode)
+                or info.st_nlink != 1
+                or info.st_uid != os.geteuid()
+                or info.st_mode & 0o077
+            ):
                 raise SupervisorError("UNSAFE_WORKER_JOURNAL")
         else:
             fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
@@ -40,25 +44,61 @@ class Journal:
                     id TEXT PRIMARY KEY, job TEXT NOT NULL, generation INTEGER NOT NULL,
                     manifest TEXT NOT NULL, state TEXT NOT NULL, cancel INTEGER NOT NULL DEFAULT 0,
                     receipt TEXT, preview_expires_at REAL, UNIQUE(job,generation))""")
-            db.execute("CREATE TABLE IF NOT EXISTS fences "
-                       "(job TEXT PRIMARY KEY, generation INTEGER NOT NULL)")
+            db.execute(
+                "CREATE TABLE IF NOT EXISTS fences "
+                "(job TEXT PRIMARY KEY, generation INTEGER NOT NULL)"
+            )
             columns = {row[1] for row in db.execute("PRAGMA table_info(executions)")}
             if "preview_expires_at" not in columns:
                 db.execute("ALTER TABLE executions ADD COLUMN preview_expires_at REAL")
                 # Legacy receipts have no trustworthy finish time. Start one bounded
                 # grace period at migration; reopening must never extend this deadline.
-                db.execute("UPDATE executions SET preview_expires_at=? "
-                           "WHERE receipt LIKE '%\"failure_log_preview\"%'", (time.time() + 300,))
-            db.execute("CREATE INDEX IF NOT EXISTS execution_preview_expiry "
-                       "ON executions(preview_expires_at) WHERE preview_expires_at IS NOT NULL")
+                db.execute(
+                    "UPDATE executions SET preview_expires_at=? "
+                    "WHERE receipt LIKE '%\"failure_log_preview\"%'",
+                    (time.time() + 300,),
+                )
+            db.execute(
+                "CREATE INDEX IF NOT EXISTS execution_preview_expiry "
+                "ON executions(preview_expires_at) WHERE preview_expires_at IS NOT NULL"
+            )
             if "receipt_expires_at" not in columns:
                 db.execute("ALTER TABLE executions ADD COLUMN receipt_expires_at REAL")
                 # Old receipts lack a reliable finish timestamp. One migration
                 # grace period; reopening and cleanup retries cannot renew it.
-                db.execute("UPDATE executions SET receipt_expires_at=? WHERE receipt IS NOT NULL",
-                           (time.time() + RECEIPT_TTL,))
-            db.execute("CREATE INDEX IF NOT EXISTS execution_receipt_expiry "
-                       "ON executions(receipt_expires_at) WHERE receipt_expires_at IS NOT NULL")
+                db.execute(
+                    "UPDATE executions SET receipt_expires_at=? WHERE receipt IS NOT NULL",
+                    (time.time() + RECEIPT_TTL,),
+                )
+            db.execute(
+                "CREATE INDEX IF NOT EXISTS execution_receipt_expiry "
+                "ON executions(receipt_expires_at) WHERE receipt_expires_at IS NOT NULL"
+            )
+            if "retire_at" not in columns:
+                db.execute("ALTER TABLE executions ADD COLUMN retire_at REAL")
+                db.execute("UPDATE executions SET retire_at=?", (time.time() + RECEIPT_TTL,))
+            fence_columns = {row[1] for row in db.execute("PRAGMA table_info(fences)")}
+            if "retire_at" not in fence_columns:
+                db.execute("ALTER TABLE fences ADD COLUMN retire_at REAL")
+                db.execute("UPDATE fences SET retire_at=?", (time.time() + RECEIPT_TTL,))
+            db.execute(
+                "CREATE TABLE IF NOT EXISTS authority_clock "
+                "(singleton INTEGER PRIMARY KEY CHECK(singleton=1), observed REAL NOT NULL)"
+            )
+            db.execute("INSERT OR IGNORE INTO authority_clock VALUES(1,?)", (time.time(),))
+            db.execute("CREATE INDEX IF NOT EXISTS execution_retire_at ON executions(retire_at)")
+
+    @staticmethod
+    def _now(db):
+        observed = time.time()
+        if not math.isfinite(observed) or observed < 0:
+            raise SupervisorError("AUTHORITY_CLOCK_INVALID")
+        now = max(
+            observed,
+            db.execute("SELECT observed FROM authority_clock WHERE singleton=1").fetchone()[0],
+        )
+        db.execute("UPDATE authority_clock SET observed=? WHERE singleton=1", (now,))
+        return now
 
     @contextmanager
     def _db(self):
@@ -78,56 +118,94 @@ class Journal:
         finally:
             db.close()
 
-    def admit(self, request: ExecutionRequest, runtime_digest: str,
-              *, retained_slots: int = 0) -> bool:
+    def admit(
+        self, request: ExecutionRequest, runtime_digest: str, *, retained_slots: int = 0
+    ) -> bool:
         if len(runtime_digest) != 64 or any(c not in "0123456789abcdef" for c in runtime_digest):
             raise SupervisorError("INVALID_RUNTIME_IDENTITY")
         digest = hashlib.sha256((request.manifest_hash() + runtime_digest).encode()).hexdigest()
         with self._db() as db:
-            old = db.execute("SELECT manifest FROM executions WHERE id=?",
-                             (request.execution_id.hex,)).fetchone()
+            old = db.execute(
+                "SELECT manifest FROM executions WHERE id=?", (request.execution_id.hex,)
+            ).fetchone()
             if old:
                 if old[0] != digest:
                     raise SupervisorError("EXECUTION_CONFLICT")
                 return False  # Existing IDs are reconciled, never re-executed.
             if retained_slots >= 20:
                 raise SupervisorError("RESULT_RETENTION_CAPACITY")
-            fence = db.execute("SELECT generation FROM fences WHERE job=?",
-                               (request.job_id.hex,)).fetchone()
+            now = self._now(db)
+            fence = db.execute(
+                "SELECT generation,retire_at FROM fences WHERE job=?", (request.job_id.hex,)
+            ).fetchone()
             if fence and request.generation < fence[0]:
                 raise SupervisorError("STALE_EXECUTION_GENERATION")
+            if fence and now >= fence[1]:
+                raise SupervisorError("JOB_AUTHORITY_EXPIRED")
+            require_fresh_authority(request.execution_id, now)
+            # Legacy jobs can reconcile against their retained fence only. Once
+            # retired, an unknown UUID4 can never regain admission.
+            if request.job_id.version == 7 or not fence:
+                require_fresh_authority(request.job_id, now)
+            if (
+                db.execute("SELECT count(*) FROM executions").fetchone()[0] >= 4096
+                or not fence
+                and db.execute("SELECT count(*) FROM fences").fetchone()[0] >= 4096
+            ):
+                raise SupervisorError("WORKER_HISTORY_CAPACITY")
             if db.execute("SELECT 1 FROM executions WHERE state='QUARANTINED'").fetchone():
                 raise SupervisorError("WORKER_QUARANTINED")
             query = "SELECT count(*) FROM executions WHERE state!='CLEANED'"
             count = db.execute(query).fetchone()[0]
             if count >= 2:
                 raise SupervisorError("WORKER_CAPACITY_EXHAUSTED")
-            if db.execute("SELECT 1 FROM executions WHERE job=? AND state!='CLEANED'",
-                          (request.job_id.hex,)).fetchone():
+            if db.execute(
+                "SELECT 1 FROM executions WHERE job=? AND state!='CLEANED'", (request.job_id.hex,)
+            ).fetchone():
                 raise SupervisorError("JOB_ALREADY_RUNNING")
-            db.execute("INSERT INTO fences VALUES (?,?) ON CONFLICT(job) DO UPDATE "
-                       "SET generation=max(generation,excluded.generation)",
-                       (request.job_id.hex, request.generation))
+            db.execute(
+                "INSERT INTO fences(job,generation,retire_at) VALUES (?,?,?) "
+                "ON CONFLICT(job) DO UPDATE "
+                "SET generation=max(generation,excluded.generation)",
+                (request.job_id.hex, request.generation, now + RECEIPT_TTL),
+            )
             try:
-                db.execute("INSERT INTO executions(id,job,generation,manifest,state) "
-                           "VALUES(?,?,?,?,'PREPARING')",
-                           (request.execution_id.hex, request.job_id.hex,
-                            request.generation, digest))
+                db.execute(
+                    "INSERT INTO executions(id,job,generation,manifest,state,retire_at) "
+                    "VALUES(?,?,?,?,'PREPARING',?)",
+                    (
+                        request.execution_id.hex,
+                        request.job_id.hex,
+                        request.generation,
+                        digest,
+                        now + RECEIPT_TTL,
+                    ),
+                )
             except sqlite3.IntegrityError:
                 raise SupervisorError("EXECUTION_GENERATION_REUSED") from None
         return True
 
     def running(self, identifier: UUID) -> None:
         with self._db() as db:
-            if db.execute("UPDATE executions SET state='RUNNING' WHERE id=? AND state='PREPARING'",
-                          (identifier.hex,)).rowcount != 1:
+            if (
+                db.execute(
+                    "UPDATE executions SET state='RUNNING' WHERE id=? AND state='PREPARING'",
+                    (identifier.hex,),
+                ).rowcount
+                != 1
+            ):
                 raise SupervisorError("INVALID_EXECUTION_TRANSITION")
 
     def cancel(self, identifier: UUID, job: UUID, generation: int) -> None:
         with self._db() as db:
-            if db.execute("UPDATE executions SET cancel=1 WHERE id=? AND job=? AND generation=? "
-                          "AND state!='CLEANED'",
-                          (identifier.hex, job.hex, generation)).rowcount != 1:
+            if (
+                db.execute(
+                    "UPDATE executions SET cancel=1 WHERE id=? AND job=? AND generation=? "
+                    "AND state!='CLEANED'",
+                    (identifier.hex, job.hex, generation),
+                ).rowcount
+                != 1
+            ):
                 raise SupervisorError("EXECUTION_SCOPE_MISMATCH")
 
     def fence(self, job: UUID, generation: int) -> None:
@@ -137,51 +215,76 @@ class Journal:
             old = db.execute("SELECT generation FROM fences WHERE job=?", (job.hex,)).fetchone()
             if old and generation <= old[0]:
                 raise SupervisorError("STALE_EXECUTION_GENERATION")
-            db.execute("INSERT INTO fences VALUES (?,?) ON CONFLICT(job) DO UPDATE "
-                       "SET generation=excluded.generation", (job.hex, generation))
-            db.execute("UPDATE executions SET cancel=1 WHERE job=? AND generation<? "
-                       "AND state!='CLEANED'",
-                       (job.hex, generation))
+            now = self._now(db)
+            if not old:
+                require_fresh_authority(job, now)
+            if not old and db.execute("SELECT count(*) FROM fences").fetchone()[0] >= 4096:
+                raise SupervisorError("WORKER_HISTORY_CAPACITY")
+            db.execute(
+                "INSERT INTO fences(job,generation,retire_at) VALUES (?,?,?) "
+                "ON CONFLICT(job) DO UPDATE "
+                "SET generation=excluded.generation",
+                (job.hex, generation, now + RECEIPT_TTL),
+            )
+            db.execute(
+                "UPDATE executions SET cancel=1 WHERE job=? AND generation<? AND state!='CLEANED'",
+                (job.hex, generation),
+            )
 
     def cancelled(self, identifier: UUID) -> bool:
         with self._db() as db:
-            row = db.execute("SELECT cancel FROM executions WHERE id=?",
-                             (identifier.hex,)).fetchone()
+            row = db.execute(
+                "SELECT cancel FROM executions WHERE id=?", (identifier.hex,)
+            ).fetchone()
             if row is None:
                 raise SupervisorError("UNKNOWN_EXECUTION")
             return bool(row[0])
 
     def finish(self, identifier: UUID, receipt: dict, *, cleaned: bool) -> None:
         with self._db() as db:
-            cancelled = db.execute("SELECT cancel FROM executions WHERE id=?",
-                                   (identifier.hex,)).fetchone()
+            cancelled = db.execute(
+                "SELECT cancel FROM executions WHERE id=?", (identifier.hex,)
+            ).fetchone()
             if cancelled and cancelled[0] and cleaned:
                 receipt["outcome"] = "cancelled"
             expiry = time.time() + 300 if "failure_log_preview" in receipt else None
-            if db.execute("UPDATE executions SET state=?,receipt=?,preview_expires_at=?, "
-                          "receipt_expires_at=coalesce(receipt_expires_at,?) "
-                          "WHERE id=? AND state!='CLEANED'",
-                          ("CLEANED" if cleaned else "QUARANTINED",
-                           json.dumps(receipt, sort_keys=True), expiry,
-                           time.time() + RECEIPT_TTL,
-                           identifier.hex)).rowcount != 1:
+            if (
+                db.execute(
+                    "UPDATE executions SET state=?,receipt=?,preview_expires_at=?, "
+                    "receipt_expires_at=coalesce(receipt_expires_at,?) "
+                    "WHERE id=? AND state!='CLEANED'",
+                    (
+                        "CLEANED" if cleaned else "QUARANTINED",
+                        json.dumps(receipt, sort_keys=True),
+                        expiry,
+                        time.time() + RECEIPT_TTL,
+                        identifier.hex,
+                    ),
+                ).rowcount
+                != 1
+            ):
                 raise SupervisorError("INVALID_EXECUTION_TRANSITION")
 
     def prune_failure_previews(self) -> int:
         """Retire raw log bytes only; keep identity, conflict and fencing tombstones."""
         with self._db() as db:
-            rows = db.execute("SELECT id,receipt FROM executions "
-                              "WHERE preview_expires_at<=? ORDER BY preview_expires_at LIMIT 32",
-                              (time.time(),)).fetchall()
+            rows = db.execute(
+                "SELECT id,receipt FROM executions "
+                "WHERE preview_expires_at<=? ORDER BY preview_expires_at LIMIT 32",
+                (time.time(),),
+            ).fetchall()
             for identifier, raw in rows:
                 receipt = json.loads(raw)
                 if "failure_log_preview" in receipt:
                     preview = receipt.pop("failure_log_preview")
                     receipt["failure_log_preview_sha256"] = hashlib.sha256(
-                        json.dumps(preview, sort_keys=True).encode()).hexdigest()
+                        json.dumps(preview, sort_keys=True).encode()
+                    ).hexdigest()
                     receipt["failure_log_preview_retired"] = True
-                db.execute("UPDATE executions SET receipt=?,preview_expires_at=NULL WHERE id=?",
-                           (json.dumps(receipt, sort_keys=True), identifier))
+                db.execute(
+                    "UPDATE executions SET receipt=?,preview_expires_at=NULL WHERE id=?",
+                    (json.dumps(receipt, sort_keys=True), identifier),
+                )
         # A commit alone leaves prior raw bytes in WAL frames. Always retry the
         # checkpoint, including after a crash between redaction and truncation.
         # Failure pauses supervisor admission via its normal maintenance gate.
@@ -198,16 +301,25 @@ class Journal:
         receipt cannot be used as verification or as authority to rerun an ID.
         """
         with self._db() as db:
-            rows = db.execute("SELECT id FROM executions WHERE state='CLEANED' "
-                              "AND receipt_expires_at<=? ORDER BY receipt_expires_at LIMIT 32",
-                              (time.time(),)).fetchall()
+            rows = db.execute(
+                "SELECT id FROM executions WHERE state='CLEANED' "
+                "AND receipt_expires_at<=? ORDER BY receipt_expires_at LIMIT 32",
+                (time.time(),),
+            ).fetchall()
             for (identifier,) in rows:
-                receipt = {"execution": identifier, "outcome": "receipt_retired",
-                           "cleanup": "confirmed", "collected": False,
-                           "verification": "NOT_PERFORMED", "receipt_retired": True}
-                db.execute("UPDATE executions SET receipt=?,preview_expires_at=NULL, "
-                           "receipt_expires_at=NULL WHERE id=?",
-                           (json.dumps(receipt, sort_keys=True), identifier))
+                receipt = {
+                    "execution": identifier,
+                    "outcome": "receipt_retired",
+                    "cleanup": "confirmed",
+                    "collected": False,
+                    "verification": "NOT_PERFORMED",
+                    "receipt_retired": True,
+                }
+                db.execute(
+                    "UPDATE executions SET receipt=?,preview_expires_at=NULL, "
+                    "receipt_expires_at=NULL WHERE id=?",
+                    (json.dumps(receipt, sort_keys=True), identifier),
+                )
         # Always checkpoint: a crash or busy reader can outlive the SQL commit.
         with closing(sqlite3.connect(self.path, timeout=3, isolation_level=None)) as db:
             if db.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()[0] != 0:
@@ -216,20 +328,55 @@ class Journal:
 
     def unfinished(self) -> list[UUID]:
         with self._db() as db:
-            return [UUID(hex=row[0]) for row in
-                    db.execute("SELECT id FROM executions WHERE state!='CLEANED'")]
+            return [
+                UUID(hex=row[0])
+                for row in db.execute("SELECT id FROM executions WHERE state!='CLEANED'")
+            ]
+
+    def prune_authority(self) -> dict:
+        """Expiry is safe only because unknown old/legacy IDs cannot be admitted.
+
+        Keep unfinished records and their fences indefinitely for cleanup; never
+        restart a job from a backup of this database. The clock floor must survive.
+        """
+        with self._db() as db:
+            now = self._now(db)
+            executions = db.execute(
+                "DELETE FROM executions WHERE id IN ("
+                "SELECT id FROM executions WHERE state='CLEANED' "
+                "AND retire_at<=? ORDER BY retire_at LIMIT 32)",
+                (now,),
+            ).rowcount
+            fences = db.execute(
+                "DELETE FROM fences WHERE job IN (SELECT f.job FROM fences f "
+                "WHERE f.retire_at<=? AND NOT EXISTS(SELECT 1 FROM executions e "
+                "WHERE e.job=f.job) ORDER BY f.retire_at LIMIT 32)",
+                (now,),
+            ).rowcount
+        with closing(sqlite3.connect(self.path, timeout=3, isolation_level=None)) as db:
+            if db.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()[0] != 0:
+                raise SupervisorError("WORKER_AUTHORITY_CHECKPOINT_BUSY")
+        return {"executions": executions, "fences": fences}
 
     def receipt(self, identifier: UUID) -> dict | None:
         with self._db() as db:
-            row = db.execute("SELECT receipt FROM executions WHERE id=?",
-                             (identifier.hex,)).fetchone()
+            row = db.execute(
+                "SELECT receipt FROM executions WHERE id=?", (identifier.hex,)
+            ).fetchone()
             return json.loads(row[0]) if row and row[0] else None
 
     def scoped_status(self, identifier: UUID, job: UUID, generation: int) -> dict:
         with self._db() as db:
-            row = db.execute("SELECT state,receipt FROM executions WHERE id=? AND job=? "
-                             "AND generation=?", (identifier.hex, job.hex, generation)).fetchone()
+            row = db.execute(
+                "SELECT state,receipt FROM executions WHERE id=? AND job=? AND generation=?",
+                (identifier.hex, job.hex, generation),
+            ).fetchone()
             if row is None:
                 raise SupervisorError("EXECUTION_SCOPE_MISMATCH")
-            return {"execution": identifier.hex, "job": job.hex, "generation": generation,
-                    "state": row[0], "receipt": json.loads(row[1]) if row[1] else None}
+            return {
+                "execution": identifier.hex,
+                "job": job.hex,
+                "generation": generation,
+                "state": row[0],
+                "receipt": json.loads(row[1]) if row[1] else None,
+            }

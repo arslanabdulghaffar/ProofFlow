@@ -11,6 +11,7 @@ import os
 import re
 import stat
 import sys
+import time
 from pathlib import Path
 from uuid import UUID
 
@@ -54,6 +55,62 @@ def marker(fd, name):
         finally:
             os.close(out)
         os.fsync(fd)
+
+
+def prune_markers(assets=ASSETS, jobs=JOBS):
+    """Seven-day expiry only on idle roots after time-bound admission is installed.
+
+    No snapshot may restore these roots. The caller must first verify the deployed
+    DB/worker ID-expiry gates. If any raw tree remains, all markers are retained.
+    Legacy UUID4 names are safe only because new legacy authority is now forbidden.
+    """
+    descriptors = []
+    try:
+        for path in (assets, jobs):
+            fd = root(path)
+            descriptors.append(fd)
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        inventories = [os.listdir(fd) for fd in descriptors]
+        if any(not name.startswith(".deleted-") for names in inventories for name in names):
+            return {"removed": 0, "deferred": "RAW_TREES_PRESENT"}
+        cutoff, removed = time.time() - 7 * 86400, 0
+        for fd, names in zip(descriptors, inventories, strict=True):
+            for name in sorted(names):
+                if removed >= 32:
+                    break
+                raw_id = name.removeprefix(".deleted-")
+                try:
+                    identifier = UUID(hex=raw_id)
+                except ValueError:
+                    raise RetentionError("RETENTION_MARKER_ID_INVALID") from None
+                if identifier.hex != raw_id:
+                    raise RetentionError("RETENTION_MARKER_ID_INVALID")
+                info = os.stat(name, dir_fd=fd, follow_symlinks=False)
+                if (not stat.S_ISREG(info.st_mode) or info.st_uid != os.geteuid()
+                        or info.st_nlink != 1 or stat.S_IMODE(info.st_mode) != 0o400
+                        or info.st_size != len(b"deleted\n")):
+                    raise RetentionError("RETENTION_MARKER_UNSAFE")
+                if info.st_mtime > cutoff or info.st_ctime > cutoff:
+                    continue
+                if identifier.version == 7 and (identifier.int >> 80) / 1000 > cutoff:
+                    continue
+                entry = os.open(name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=fd)
+                try:
+                    actual = os.fstat(entry)
+                    if (actual.st_ino != info.st_ino or actual.st_dev != info.st_dev
+                            or os.read(entry, 16) != b"deleted\n"):
+                        raise RetentionError("RETENTION_MARKER_CHANGED")
+                    os.unlink(name, dir_fd=fd)
+                finally:
+                    os.close(entry)
+                removed += 1
+            os.fsync(fd)
+        return {"removed": removed, "deferred": None}
+    except BlockingIOError:
+        raise RetentionError("RETENTION_BUSY") from None
+    finally:
+        for fd in descriptors:
+            os.close(fd)
 
 
 def inspect_tree(fd, device, depth=0, counter=None):
@@ -182,8 +239,12 @@ if __name__ == "__main__":
         raw = sys.stdin.buffer.read(32769)
         if len(raw) > 32768:
             raise RetentionError("RETENTION_PLAN_LIMIT")
-        print(json.dumps(retire(json.loads(raw), Path("/run/proofflow-retention-assets"),
-                                Path("/run/proofflow-retention-jobs"))))
+        value = json.loads(raw)
+        roots = (Path("/run/proofflow-retention-assets"), Path("/run/proofflow-retention-jobs"))
+        if value == {"operation": "prune_expired_markers_v1"}:
+            print(json.dumps(prune_markers(*roots)))
+        else:
+            print(json.dumps(retire(value, *roots)))
     except (OSError, ValueError, KeyError, TypeError, RetentionError):
         print("RETENTION_INCOMPLETE", file=sys.stderr)
         raise SystemExit(1) from None

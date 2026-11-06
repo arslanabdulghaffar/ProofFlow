@@ -22,7 +22,7 @@ from orchestrator.verification_run import VerificationRun, retained_receipt
 from orchestrator.verifier_client import VerifierClient
 from orchestrator.vultr_probe import ProbeDispatchError
 from verifier.protocol import decode
-from worker.protocol import SupervisorError, runtime_identity_digest
+from worker.protocol import SupervisorError, authority_id, runtime_identity_digest
 
 
 class RepairDispatcher:
@@ -139,7 +139,7 @@ class RepairDispatcher:
                 )
                 result = await asyncio.to_thread(
                     runner.execute,
-                    execution=uuid4(),
+                    execution=authority_id(),
                     job=identity,
                     generation=generation,
                     pipeline=source,

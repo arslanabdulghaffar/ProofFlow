@@ -44,7 +44,9 @@ def main():
     value = json.load(sys.stdin)
     require(os.geteuid() == 0 and Path('/etc/machine-id').read_text().strip()
             == value['machine_id'], "DESIGNATED_WORKER_REQUIRED")
-    require(set(value['new']) == {'journal.py', 'supervisor.py'}, "UNEXPECTED_WORKER_CHANGE")
+    require(set(value['new']) in ({'journal.py', 'supervisor.py'},
+                                 {'journal.py', 'supervisor.py', 'protocol.py'}),
+            "UNEXPECTED_WORKER_CHANGE")
     root = Path('/opt/proofflow-worker/worker')
     regular(root / 'journal.py', 0o644)
     for name, expected in value['old'].items():
@@ -76,7 +78,7 @@ def main():
     revision = hashlib.sha256(json.dumps(value['new'], sort_keys=True).encode()).hexdigest()
     backup = Path('/var/lib/proofflow-setup/retention-update-' + revision)
     backup.mkdir(mode=0o700)  # Unknown/partial upgrade cannot be blindly replayed.
-    for name in ('journal.py', 'supervisor.py'):
+    for name in sorted(decoded):
         old = (root / name).read_bytes()
         fd = os.open(backup / name, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o400)
         with os.fdopen(fd, 'wb') as file:
@@ -88,7 +90,8 @@ def main():
         replace_bytes(root / name, raw, 0o644)
         install['files']['code/' + name]['sha256'] = hashlib.sha256(raw).hexdigest()
     replace_bytes(receipt, json.dumps(install, sort_keys=True).encode(), 0o600)
-    print(json.dumps({'revision': revision, 'changed_files': 2, 'previous_sources_preserved': True,
+    print(json.dumps({'revision': revision, 'changed_files': len(decoded),
+                      'previous_sources_preserved': True,
                       'journal_copied': False}))
 
 

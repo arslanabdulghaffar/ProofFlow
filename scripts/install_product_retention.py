@@ -80,7 +80,8 @@ WantedBy=timers.target
     command(["/usr/bin/systemctl", "enable", "--now", "proofflow-product-retention.timer"])
     command(["/usr/bin/systemctl", "start", "proofflow-product-retention.service"], timeout=245)
     print(json.dumps({"timer": "enabled", "byte_uid": 10003, "byte_network": "denied",
-                      "raw_guest_expiry_margin_seconds": 300, "metadata_pruning": "not_enabled"}))
+                      "raw_guest_expiry_margin_seconds": 300,
+                      "metadata_pruning": "runtime_bound_gate"}))
 
 
 if __name__ == "__main__":

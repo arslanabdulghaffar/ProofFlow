@@ -1,0 +1,357 @@
+{
+  "observed_at": "2026-11-06T21:22:44.850688+00:00",
+  "phase": "5 IN PROGRESS",
+  "scope": "encrypted inert asset recovery and replay-safe metadata expiry",
+  "checkpoint_base": "03f8481857f1f32c7ed3631c0eab42b8acce10e5",
+  "product_image": "0ecb6e9d6d4183c40306b5e93af7e8b03de5e0bf2fd9eaaa5eb4a8a5c6abfdb3",
+  "worker_runtime": "fd9a1e227c437066fe9bb63f14deae0567cfbb7d70a5c9e23284c2fbbb09ac17",
+  "verification_epoch": 5,
+  "verifier": "0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b",
+  "source_hashes": [
+    {
+      "path": "api/app/product.py",
+      "sha256": "393c20dcf296139ba93a4eeabcbf2afb7370ede31dd1274905c6b8398f871e4b"
+    },
+    {
+      "path": "api/app/version_routes.py",
+      "sha256": "9b0cdc40d07284679ed8f0b78a9355eacf7081bb613bceb9f17e0e20c8c83544"
+    },
+    {
+      "path": "db/phase2/019_expiring_workspace_identity.sql",
+      "sha256": "b94439e849519dabf3d12c80515b4e02342a9ad823f1622526fbfcae4f9d8a27"
+    },
+    {
+      "path": "db/phase2/020_time_bound_batch_ids.sql",
+      "sha256": "25b9f2c432f9f816a98a23ca191892f79bacbae1cba82562bad8dc52df93396d"
+    },
+    {
+      "path": "orchestrator/asset_backup.py",
+      "sha256": "b6071b9ecd532cc33dc46c5edff86b417d13ea043a4ba00b536a6cee5e981766"
+    },
+    {
+      "path": "orchestrator/asset_recovery.py",
+      "sha256": "676b9c81db7384138de7729b55bbdf3b4beedd78664a06face58c89bfdbcb397"
+    },
+    {
+      "path": "orchestrator/product_dispatcher.py",
+      "sha256": "2c3745ce044ef29db97030c83e949d767c97fd80bed72161d1f112f53f71f7ef"
+    },
+    {
+      "path": "orchestrator/repair_dispatcher.py",
+      "sha256": "cd36df33ac5e0a778712781aae59c32bd4373caa321947ff069fd889d0c492cc"
+    },
+    {
+      "path": "orchestrator/restore_guard.py",
+      "sha256": "1745c78ccb4cd1fa051af4d415aa1b52fbd1ead5a2543e5caf6568853d083cee"
+    },
+    {
+      "path": "orchestrator/retention.py",
+      "sha256": "32b477effed8ea7b619354c60769fad192944576a15296dc2c01447f92b5462e"
+    },
+    {
+      "path": "scripts/Watch-VultrCredit.ps1",
+      "sha256": "a0a20d5e3c55cb4b3280ef6b39a820722bdc13acc15ce84700bb28a8c26ccd2b"
+    },
+    {
+      "path": "scripts/asset_backup_vault.py",
+      "sha256": "f5eff897fa079c8a72d2ca69d0e793b22cd732efce447808383cb37084f7a1c3"
+    },
+    {
+      "path": "scripts/check_asset_vault.py",
+      "sha256": "6800d1ca9edde1a2a1b5acc71abb05a86d80f05f9d96004d70c8613a49447788"
+    },
+    {
+      "path": "scripts/check_authority_lifecycle_live.py",
+      "sha256": "0b5693bd66e6be96fdda25a9583cb8dd25b675b317010d720c8b872a6764d88a"
+    },
+    {
+      "path": "scripts/check_deletion_expiry.py",
+      "sha256": "d03001f347ed1f98056a04acd321fd42a1e34c4a560e8f416990a2845b4c33e8"
+    },
+    {
+      "path": "scripts/check_deletion_safe_restore.py",
+      "sha256": "8d94ad75315ecce37f545bf70f250d70ccf489885fdebc2d48ed92f515d9f390"
+    },
+    {
+      "path": "scripts/check_encrypted_asset_recovery_live.py",
+      "sha256": "b850a4557d7ea4426ea443f885e8c0aab43bdeb0e96f236d9bcd35dcf93645b1"
+    },
+    {
+      "path": "scripts/check_product_image.py",
+      "sha256": "574adcf53638b2b988c9532b57a160a7180e68131306c587ad21eb2a3732f6f0"
+    },
+    {
+      "path": "scripts/check_signed_batches.py",
+      "sha256": "a66532270466fea9048dbb423652cbb2f421035a94e0f84e359a3f9a8b6dd282"
+    },
+    {
+      "path": "scripts/deploy_product_database.py",
+      "sha256": "85f51de8c45d90086e3f7f3b2a65dc0e017f5e26b973e4aeca829e2b0fdb057a"
+    },
+    {
+      "path": "scripts/deploy_worker_retention.py",
+      "sha256": "a1300c9240761c89b4989c6f4494e756aae7596d6fa4c44ac4c39aefa6e75d56"
+    },
+    {
+      "path": "scripts/enable_authority_retention.py",
+      "sha256": "3e9c8c7e7ac53c349527fbdea418691b60c2053ebeb76d63ab612f3dd5f8fad3"
+    },
+    {
+      "path": "scripts/install_product_database.py",
+      "sha256": "e7bfba492589154bfd9577c0f70a9460218ac7c7738d79213a0025603c75308d"
+    },
+    {
+      "path": "scripts/install_product_retention.py",
+      "sha256": "ee5ac422487bf50f29be65f4a453f8ba9f6c2ce7d068b2efcc6a3446c61f5906"
+    },
+    {
+      "path": "scripts/install_product_services.py",
+      "sha256": "e1208f9d4b7cab3daa4a0b892ce9f49ada68f64ff279be2b61a838d8ddf1eb01"
+    },
+    {
+      "path": "scripts/install_worker_retention_update.py",
+      "sha256": "cdbba1cc9e0a305812d36c690aa4238c9831f7badca88e5a41770bdbd116ff2f"
+    },
+    {
+      "path": "scripts/probe_generated_controller.py",
+      "sha256": "95fe3f52822a8dfe372d87ebde37d5f743bad76717dcb2eaf8510b48225d014d"
+    },
+    {
+      "path": "scripts/probe_worker_controller.py",
+      "sha256": "ee93da5ebeb170e1816a96f26c90118b0be1f6840da8891ea6be586bd61b06b9"
+    },
+    {
+      "path": "scripts/product_retention_host.py",
+      "sha256": "9441a508b0426a74a7873fe41c33a72fb5d579c00f9099e0b93da5bc3d55259e"
+    },
+    {
+      "path": "scripts/recovery_clock.py",
+      "sha256": "2a0366e5edc0f876f9d4ef26d5e65a48ccec65db55b80747ca7d4c4f116e2cc8"
+    },
+    {
+      "path": "scripts/restore_asset_fixture.py",
+      "sha256": "32781d7de8716f603761a2e31a5e16eb3d723d417afbda364297c88dc9a4e573"
+    },
+    {
+      "path": "scripts/resume_encrypted_asset_restore.py",
+      "sha256": "b8973043b23ab56b5dac82c2e10733611dd7237a6845d432bfcdce6772cf1549"
+    },
+    {
+      "path": "scripts/run_semantic_probes.py",
+      "sha256": "cfa0d2b23a3845ab91ab1bb88c10ba8086284f29e9706895396b551507e79b36"
+    },
+    {
+      "path": "tests/integration/product_database_fixture.py",
+      "sha256": "8fbe246b8cac73268f3d7e7d7ed81e00b821b109e0f04c01c90fbf18e86ec67e"
+    },
+    {
+      "path": "tests/security/supervisor_linux_check.py",
+      "sha256": "90026339e8f6f306dd80d9787b56135a584e78ec37c31a5b8492b5d5f692e55d"
+    },
+    {
+      "path": "tests/security/test_asset_backup.py",
+      "sha256": "e8a4faa09b3ade9400030d9127562719d2e5fda12cea8e3a284b5c3e8323b8de"
+    },
+    {
+      "path": "tests/security/test_authority_expiry.py",
+      "sha256": "fbd5389d4bbb8338184edf1e8afbf99cabf6cacece97209d2d8f3e99cc056655"
+    },
+    {
+      "path": "tests/security/test_marker_expiry.py",
+      "sha256": "cda428c8d5496c04053bb13f70101194b567949b8631c5b29c55ce5347f41a7a"
+    },
+    {
+      "path": "tests/security/test_supervisor_journal.py",
+      "sha256": "9251894d788e78f2789b044addfd7f941ffc378675da20dc26891095b4268d15"
+    },
+    {
+      "path": "tests/security/test_worker_preview_retention.py",
+      "sha256": "14288f197cfaa91c8d30dd8fdc27134681f50a64510b784cf59296155c2872cf"
+    },
+    {
+      "path": "tests/security/test_worker_receipt_retention.py",
+      "sha256": "f79a4c306f86b6fdf408dd763a7e487f2d88540758bc2ca883195362fbbad47a"
+    },
+    {
+      "path": "tests/unit/test_recovery_clock.py",
+      "sha256": "46d33e18d57c31d45ba46f45d0aae43b3844f2e1b1024a59fb30f1d7ba3d6790"
+    },
+    {
+      "path": "worker/journal.py",
+      "sha256": "11ab39f77b0409d0e9be38f06964eb22535efc45b367c22c30735f944c16f19d"
+    },
+    {
+      "path": "worker/protocol.py",
+      "sha256": "855b981ecc680d25aa8d775214356deab985e382122f4db5ab3bad0d6b162de6"
+    },
+    {
+      "path": "worker/supervisor.py",
+      "sha256": "5ad2b83ca5085227c7127c2fbce03318db591a3cc47d93129323bc1690eb2518"
+    }
+  ],
+  "private_receipt_hashes": [
+    {
+      "name": "phase5-worker-authority-expiry.json",
+      "sha256": "98eed8647e3dde5c6be411a493cecbe9e39fe8665303aa5ce54253a7ac9fcc3f"
+    },
+    {
+      "name": "phase5-authority-retention-enabled.json",
+      "sha256": "c473b26592c6f4a505fd2b2ea48601991d970818603664ca71ba7a1760cde775"
+    },
+    {
+      "name": "phase5-authority-lifecycle-readback.json",
+      "sha256": "6fc8c20da79ea86c99ee1a10b8d6a0cdce36658f68f5f63bc164c68f22a037bf"
+    },
+    {
+      "name": "phase5-encrypted-asset-recovery.json",
+      "sha256": "52bd284740ff7af5dd5bc154edf179a6d12323d5ed711a69cb48c5771413fa30"
+    },
+    {
+      "name": "phase5-encrypted-asset-recovery-initial.json",
+      "sha256": "2b6183285022786bb17c3bb19da190ab66191ed35e00dbfaaece047b09586eed"
+    },
+    {
+      "name": "phase5-encrypted-asset-recovery-after-backup.json",
+      "sha256": "4a0eba8a0ab6e44b616e465659baa675f599fda54f107d8b20df2bd5cac93108"
+    },
+    {
+      "name": "product-retention-install.json",
+      "sha256": "627ad87778f9a796083cc1c9a6f714e09e2fd159948ea0fb2b53fad79f31019c"
+    },
+    {
+      "name": "phase5-security-91b59bd6e9354a4081ec53fc2b04db31/summary.json",
+      "sha256": "3e66c4ffa7687b15501a0e8bed04d4ef128ef2b834f9b8b71605f3445466cd3a"
+    }
+  ],
+  "checks": {
+    "linux_pytest": {
+      "passed": 970,
+      "subtests_passed": 10
+    },
+    "windows_pytest": {
+      "passed": 797,
+      "linux_only_skipped": 173
+    },
+    "real_local_postgres_restore_groups": 7,
+    "real_local_postgres_deletion_expiry_groups": 7,
+    "signed_batch_sql_groups": 4,
+    "signed_batch_fresh_uuidv7": "PASS",
+    "product_image_exact_sources": 72,
+    "migrations_installed": 20,
+    "migrations_001_to_018": "UNCHANGED",
+    "ruff": "PASS",
+    "deployed_security": {
+      "run": "91b59bd6e9354a4081ec53fc2b04db31",
+      "passed": true,
+      "probe_count": 16,
+      "network_positive_controls": "NOT_RERUN; prior Phase1 evidence"
+    },
+    "windows_vault": {
+      "scope": "actual private ACL/DPAPI/AES inert fixture",
+      "roundtrip": "PASS",
+      "natural_expiry_seconds": 8,
+      "expired_recovery": "DENIED",
+      "key_and_ciphertext_removed": true,
+      "fixture_ciphertext_sha256": "9ecd234bb4b409a0c8b21e934d095d330e91f1eeb9fa30b6cca5e64d78467305"
+    },
+    "windows_scheduled_hook": {
+      "asset_backup_expiry": "checked",
+      "key_records_checked": 0
+    },
+    "documentation_hygiene": "PASS;276 entries/59 source pages",
+    "staged_secret_scan": "PASS;gitleaks zero findings",
+    "staged_source_hashes": "PASS;45 source files",
+    "private_repository": "VERIFIED;default branch main"
+  },
+  "actual_recovery": {
+    "synthetic_only": true,
+    "uploaded_assets": 5,
+    "retained_assets_recovered": 4,
+    "deleted_workspaces_excluded": 1,
+    "encryption": "AES-256-GCM random nonce/per-backup key/fixed version AAD",
+    "key_storage": "separate current-user DPAPI with explicit owner/SYSTEM ACL",
+    "quiesced_database_snapshot": true,
+    "ciphertext_sha256": "334e552509f926983797861b6799e9fe9536c8b2a363b40be02cba73c9a10dc2",
+    "raw_asset_hashes": [
+      {
+        "sha256": "2fd188443c8fe392e14cd7e7b661b8cc8823ef4042e13a48e2ffd1248633c02e",
+        "byte_size": 105
+      },
+      {
+        "sha256": "b04d968afa77711fca4b490b8523564c88f7669ddb3c6a293f4d1a34be3a596b",
+        "byte_size": 609
+      },
+      {
+        "sha256": "e1d9210e3ce68aabfe1914aaa24d7b99ecfb468a8ed72ef0d10cd15328010a13",
+        "byte_size": 59
+      },
+      {
+        "sha256": "0f740e70b7fa2b81a9d489974d8edfd7587f66c8393befe35cce006f244100bc",
+        "byte_size": 45
+      }
+    ],
+    "authority_restored": false,
+    "second_live_authority_check": "PASS",
+    "clone_removed": true,
+    "temporary_assets_removed": "confirmed",
+    "workspaces_retired": true,
+    "key_and_ciphertext_retired": true,
+    "job_replayed": false,
+    "production_promotion": false
+  },
+  "deployed_lifecycle": {
+    "counts": {
+      "CLEANED": 532
+    },
+    "fences": 311,
+    "missing_deadlines": 0,
+    "clock_floor_present": true,
+    "runtime_bound_expiry": true,
+    "retention_revision": "eaa221f6924ccbe08914d884048dc10bd6f3514a90858f8fbb7dfc50050490e6",
+    "retention_status": [
+      "Result=success",
+      "ExecMainStatus=0"
+    ],
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "workspaces_remaining": 0,
+    "restore_clones_remaining": 0,
+    "product_admission": "closed",
+    "inference_admission": "closed",
+    "natural_seven_day_expiry": "NOT_YET_ELAPSED",
+    "clock_edits": false
+  },
+  "preserved_failures": [
+    "Windows Get-Acl module loading unavailable; .NET owner/ACL checks passed and expired fixture reconciled",
+    "Initial live backup rejected DB clock lead of about1.5s; bounded wait then same-job/asset backup-only resume",
+    "Saved backup restore rejected by generic LiveSession DB allowlist; clone dropped; generated-clone-only helper resumed exact saved ciphertext without replay"
+  ],
+  "critical_review": "Separate Codex pass, not independent human sign-off. Watcher now checks key expiry even on billing lookup failure; authority, file/ACL/clock, restore and retention boundaries reviewed.",
+  "credit": {
+    "checked_at": "2026-11-06T21:17:56.504753+00:00",
+    "credit_guard": "within_early_cutoff",
+    "remaining_credit": "192.17",
+    "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+  },
+  "project_cap_usd": 150,
+  "inference_cap_usd": 25,
+  "reserved_project_allocation_usd": 145,
+  "new_cloud_resources": 0,
+  "provider_calls": 0,
+  "personal_payment": false,
+  "new_pr": false,
+  "public_release": false,
+  "limitations": [
+    "Natural seven-day wall time has not elapsed; deterministic clock changes only in disposable fixtures",
+    "Recovery requires live authenticated current deletion authority; unavailable authority denies recovery",
+    "DPAPI recovery needs this Windows profile; portable keys not implemented",
+    "No scheduled consistent backup capture or production promotion",
+    "Timer/desktop outages can delay physical expiry; no forensic erase guarantee",
+    "Existing native advisories and independent human review gap remain",
+    "Provider hard stop/tax and post-event coverage remain unknown; unchanged funded deadline",
+    "Final comparison frozen at its original sources/runtime; not rerun or regraded"
+  ]
+}

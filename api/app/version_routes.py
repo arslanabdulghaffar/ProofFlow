@@ -2,7 +2,6 @@
 
 import asyncio
 import hashlib
-from uuid import uuid4
 
 from fastapi import Request
 from pydantic import ValidationError
@@ -20,6 +19,7 @@ from api.app.wire import (
     VersionRevokeRequest,
 )
 from contracts.codec import parse_object
+from worker.protocol import authority_id
 
 
 def install_version_routes(app, store, assets, authorize):
@@ -120,7 +120,7 @@ def install_version_routes(app, store, assets, authorize):
                 csrf,
                 identifier(pipeline_id),
                 identifier(value.version_id),
-                uuid4(),
+                authority_id(),
                 identifier(value.idempotency_key),
                 identifier(value.transactions_id),
                 identifier(value.customers_id),

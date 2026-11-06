@@ -7,15 +7,14 @@ import unittest
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from pathlib import Path
-from uuid import uuid4
 
 from worker.journal import Journal
-from worker.protocol import ExecutionRequest, SupervisorError
+from worker.protocol import ExecutionRequest, SupervisorError, authority_id
 from worker.staging import Staging
 
 
 def request():
-    return ExecutionRequest(uuid4(), uuid4(), 1, b"# inert", b"", b"", b"{}")
+    return ExecutionRequest(authority_id(), authority_id(), 1, b"# inert", b"", b"", b"{}")
 
 
 @unittest.skipUnless(sys.platform == "linux", "Linux ownership and descriptor semantics")
@@ -51,13 +50,13 @@ class JournalChecks(unittest.TestCase):
         self.journal.fence(item.job_id, 2)
         self.assertTrue(self.journal.cancelled(item.execution_id))
         with self.assertRaisesRegex(SupervisorError, "STALE_EXECUTION_GENERATION"):
-            self.journal.admit(replace(item, execution_id=uuid4()), "a" * 64)
+            self.journal.admit(replace(item, execution_id=authority_id()), "a" * 64)
 
     def test_cancel_scope_and_terminal_state(self):
         item = request()
         self.journal.admit(item, "a" * 64)
         with self.assertRaisesRegex(SupervisorError, "EXECUTION_SCOPE_MISMATCH"):
-            self.journal.cancel(item.execution_id, uuid4(), 1)
+            self.journal.cancel(item.execution_id, authority_id(), 1)
         self.journal.cancel(item.execution_id, item.job_id, 1)
         receipt = {"outcome": "exited"}
         self.journal.finish(item.execution_id, receipt, cleaned=True)
@@ -78,14 +77,14 @@ class JournalChecks(unittest.TestCase):
         item = request()
         self.journal.admit(item, "a" * 64)
         with self.assertRaisesRegex(SupervisorError, "JOB_ALREADY_RUNNING"):
-            self.journal.admit(replace(item, execution_id=uuid4(), generation=2), "a" * 64)
+            self.journal.admit(replace(item, execution_id=authority_id(), generation=2), "a" * 64)
         self.journal.finish(item.execution_id, {}, cleaned=True)
-        self.assertTrue(self.journal.admit(replace(item, execution_id=uuid4(), generation=2),
+        self.assertTrue(self.journal.admit(replace(item, execution_id=authority_id(), generation=2),
                                            "a" * 64))
 
     def test_retention_cap_and_expired_exact_directory_prune(self):
         staging = Staging(self.root)
-        identifiers = [uuid4() for _ in range(20)]
+        identifiers = [authority_id() for _ in range(20)]
         for identifier in identifiers:
             target = self.root / "results" / identifier.hex
             target.mkdir(mode=0o700)
@@ -108,7 +107,7 @@ class JournalChecks(unittest.TestCase):
         staging = Staging(self.root)
         outside = self.root / "must-survive"
         outside.mkdir(mode=0o700)
-        identifier = uuid4()
+        identifier = authority_id()
         staging.path(identifier).symlink_to(outside)
         with self.assertRaisesRegex(SupervisorError, "UNSAFE_WORKER_DIRECTORY"):
             staging.cleanup(identifier)

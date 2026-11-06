@@ -19,11 +19,17 @@ PREVIOUS = '67920adc671b0084078fa71e1b17a929ed66dba2'
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--receipt-metadata', action='store_true',
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--receipt-metadata', action='store_true',
                         help='Distinct seven-day receipt update; never replay preview update')
+    mode.add_argument('--authority-expiry', action='store_true',
+                      help='Time-bound IDs and replay record expiry; distinct one-shot update')
     args = parser.parse_args()
     previous = 'ea8f7a23dc32e7908c95b38ef88863a2d40ab263' if args.receipt_metadata else PREVIOUS
     operation = 'worker-metadata-update' if args.receipt_metadata else 'worker-retention-update'
+    if args.authority_expiry:
+        previous = '03f8481857f1f32c7ed3631c0eab42b8acce10e5'
+        operation = 'worker-authority-expiry'
     receipt = PRIVATE / ('evidence/phase5-' + operation + '.json')
     require(not receipt.exists(), 'WORKER_UPDATE_ALREADY_STARTED_RECONCILE')
     old, new = {}, {}
@@ -34,7 +40,10 @@ def main():
         old[path.name] = hashlib.sha256(raw).hexdigest()
         if path.read_bytes() != raw:
             new[path.name] = base64.b64encode(path.read_bytes()).decode()
-    require(set(new) == {'journal.py', 'supervisor.py'}, 'UNEXPECTED_WORKER_CHANGES')
+    expected = {'journal.py', 'supervisor.py'}
+    if args.authority_expiry:
+        expected.add('protocol.py')
+    require(set(new) == expected, 'UNEXPECTED_WORKER_CHANGES')
     record = {'started_at': datetime.now(UTC).isoformat(), 'previous_commit': previous,
               'old_sources': old, 'new_sources': {
                   n: hashlib.sha256(base64.b64decode(raw)).hexdigest() for n, raw in new.items()},
@@ -57,6 +66,10 @@ def main():
                 'CONTROLLER_PINS_CHANGED')
         record.update(credit=live.credit, old_policy=live.policy,
                       old_runtime=control_config['runtime_sha256'])
+        if args.authority_expiry:
+            require(live.host('sha256sum /opt/proofflow-control/lib/worker/protocol.py')
+                    .decode().split()[0] == old['protocol.py'],
+                    'CONTROL_PROTOCOL_PREDECESSOR_CHANGED')
         identity = dict(control_config['runtime_identity'])
         # The identity binds exactly the fixed worker runtime file set.
         names = ('__init__', 'runtime', 'launcher', 'host', 'start_gate', 'staging', 'collector',
@@ -103,6 +116,30 @@ def main():
         worker('systemctl start proofflow-worker.service')
         require(worker('systemctl is-active proofflow-worker.service') == b'active',
                 'WORKER_NOT_ACTIVE')
+        if args.authority_expiry:
+            # The standalone read-only controller also needs the reviewed UUIDv7
+            # helper. Update only that fixed trusted module with exact predecessor.
+            import shlex
+
+            controller_update = """import base64,hashlib,json,os,stat,sys
+from pathlib import Path
+v=json.load(sys.stdin); p=Path('/opt/proofflow-control/lib/worker/protocol.py'); i=p.lstat()
+assert stat.S_ISREG(i.st_mode) and i.st_uid==0 and i.st_nlink==1 and not i.st_mode&0o022
+old=p.read_bytes(); assert hashlib.sha256(old).hexdigest()==v['old']
+raw=base64.b64decode(v['new'],validate=True); assert 0<len(raw)<65536
+b=Path('/var/lib/proofflow-setup/control-protocol-previous-'+v['old'])
+fd=os.open(b,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o400)
+with os.fdopen(fd,'wb') as f: f.write(old); f.flush(); os.fsync(f.fileno())
+t=p.with_name('protocol.py.expiry-pending')
+fd=os.open(t,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,stat.S_IMODE(i.st_mode))
+with os.fdopen(fd,'wb') as f: f.write(raw); f.flush(); os.fsync(f.fileno())
+os.replace(t,p); fd=os.open(p.parent,os.O_DIRECTORY|os.O_NOFOLLOW); os.fsync(fd); os.close(fd)
+print('controller_protocol_updated')
+"""
+            live.host('/usr/bin/python3 -I -S -B -c ' + shlex.quote(controller_update),
+                      json.dumps({'old': old['protocol.py'], 'new': new['protocol.py']}).encode())
+            record['controller_protocol_updated'] = True
+            persist()
         # Trusted fixed-path config update; no provider/App/TLS credentials are changed.
         update = """import hashlib,json,os,stat,sys
 from pathlib import Path

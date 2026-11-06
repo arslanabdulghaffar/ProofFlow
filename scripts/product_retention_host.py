@@ -67,10 +67,14 @@ def main():
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         plans = json.loads(sql("SELECT pf_product.retention_plan();"))
         completed = 0
-        for plan in plans:
-            workspace = str(UUID(plan["workspace"]))
-            digest = plan["manifest_sha256"]
-            if re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+        operations = list(plans)
+        if sql("SELECT pf_product.retention_expiry_ready();") == b"t":
+            operations.append({"operation": "prune_expired_markers_v1"})
+        for plan in operations:
+            pruning = plan == {"operation": "prune_expired_markers_v1"}
+            workspace = None if pruning else str(UUID(plan["workspace"]))
+            digest = None if pruning else plan["manifest_sha256"]
+            if not pruning and re.fullmatch(r"[0-9a-f]{64}", digest) is None:
                 raise RuntimeError("RETENTION_PLAN_INVALID")
             request, response = SCRATCH / "request", SCRATCH / "response"
             stop()
@@ -129,6 +133,14 @@ def main():
                     timeout=28,
                 )
                 receipt = json.loads(response.read_bytes())
+                if pruning:
+                    if (set(receipt) != {"removed", "deferred"}
+                            or type(receipt["removed"]) is not int
+                            or not 0 <= receipt["removed"] <= 32
+                            or receipt["deferred"] not in (None, "RAW_TREES_PRESENT")):
+                        raise RuntimeError("RETENTION_EXPIRY_RECEIPT_INVALID")
+                    sql("SELECT pf_product.prune_deletion_metadata();")
+                    continue
                 if receipt != {
                     "workspace": workspace,
                     "manifest_sha256": digest,

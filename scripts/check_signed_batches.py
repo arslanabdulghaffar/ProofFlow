@@ -4,7 +4,7 @@ import json
 import subprocess
 import time
 from concurrent.futures import ThreadPoolExecutor
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from scripts.check_budget_postgres import require
 from scripts.check_product_queue import APPROVE
@@ -54,6 +54,10 @@ def main():
         )
         checks.append("concurrent_signed_delivery_atomic_receipt_and_single_batch")
         batch = responses[0]["batch_id"]
+        batch_identity = UUID(batch)
+        require(batch_identity.version == 7
+                and abs((batch_identity.int >> 80) / 1000 - time.time()) < 60,
+                "Signed batch did not receive a fresh time-bound worker identity")
         db.expect(ACCEPT, "BATCH_DELIVERY_CONFLICT", **{**values, "digest": "b" * 64})
         db.expect(ACCEPT, "BATCH_DELIVERY_INVALID", **{**values, "stamp": int(time.time()) - 301})
         db.expect(

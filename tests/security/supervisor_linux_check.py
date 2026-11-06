@@ -16,11 +16,11 @@ import threading
 import time
 from dataclasses import replace
 from pathlib import Path
-from uuid import UUID, uuid4
+from uuid import UUID
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from worker.protocol import ExecutionRequest, SupervisorError  # noqa: E402
+from worker.protocol import ExecutionRequest, SupervisorError, authority_id  # noqa: E402
 from worker.runtime import SystemdRunsc  # noqa: E402
 from worker.staging import Staging, mount_inventory  # noqa: E402
 from worker.supervisor import Supervisor  # noqa: E402
@@ -39,8 +39,14 @@ class TrustedFixtureRuntime(SystemdRunsc):
         return {"runtime": "trusted_local_fixture", "runsc": "NOT_RUN"}
 
     def _runtime_args(self, identifier, path):
-        return ["/usr/bin/python3", "-I", str(Path(__file__).resolve()), "--service",
-                self.mode, str(path / "output")]
+        return [
+            "/usr/bin/python3",
+            "-I",
+            str(Path(__file__).resolve()),
+            "--service",
+            self.mode,
+            str(path / "output"),
+        ]
 
     def write_config(self, request, path):
         (path / "config.json").write_text('{"fixture_only":true}')
@@ -51,7 +57,9 @@ class TrustedFixtureRuntime(SystemdRunsc):
 
 def request():
     # Inert bytes are staged, never imported or executed by these fixtures.
-    return ExecutionRequest(uuid4(), uuid4(), 1, b"# never executed fixture\n", b"", b"", b"{}")
+    return ExecutionRequest(
+        authority_id(), authority_id(), 1, b"# never executed fixture\n", b"", b"", b"{}"
+    )
 
 
 def service(mode, output):
@@ -106,7 +114,8 @@ def wait_active(runtime, identifier, timeout=5):
 def main():
     root = Path(tempfile.mkdtemp(prefix="proofflow-supervisor-check-"))
     assert root.parent == Path(tempfile.gettempdir()) and root.name.startswith(
-        "proofflow-supervisor-check-")
+        "proofflow-supervisor-check-"
+    )
     owned = []
     threads = []
     runtime = TrustedFixtureRuntime()
@@ -166,11 +175,13 @@ def main():
 
         # A rejected watchdog readback must never release ExecStartPre.
         original_show = runtime.show
+
         def wrong_policy(identifier):
             state = original_show(identifier)
             if state.get("ActiveState") == "activating":
                 state["MemoryMax"] = "infinity"
             return state
+
         runtime.show = wrong_policy
         item = request()
         owned.append(item.execution_id)
@@ -186,8 +197,11 @@ def main():
         path = supervisor.staging.prepare(item)
         supervisor.staging.cleanup(item.execution_id)
         delayed = subprocess.run(  # noqa: S603 - fixed trusted fixture and owned UUID unit
-            runtime._start_args(item.execution_id, path), stdin=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10,
+            runtime._start_args(item.execution_id, path),
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=10,
         )
         assert delayed.returncode != 0
         runtime.confirm_stopped(item.execution_id)
@@ -211,8 +225,10 @@ def main():
         assert not retained.exists(), "Running supervisor did not prune expired fixture capture"
         assert supervisor.execute(item) == receipt  # Historical replay never reruns deleted bytes.
         original_prune = supervisor.staging.prune_results
+
         def failed_maintenance(_):
             raise SupervisorError("FIXTURE_MAINTENANCE_FAULT")
+
         supervisor.staging.prune_results = failed_maintenance
         deadline = time.monotonic() + 3
         while supervisor._recovered and time.monotonic() < deadline:
@@ -255,8 +271,10 @@ def main():
         # An injected normal-unmount/cleanup fault must quarantine admission.
         runtime.mode = "success"
         original_cleanup = supervisor.staging.cleanup
+
         def failed_cleanup(_):
             raise SupervisorError("FIXTURE_CLEANUP_FAULT")
+
         supervisor.staging.cleanup = failed_cleanup
         item = request()
         owned.append(item.execution_id)
@@ -274,11 +292,19 @@ def main():
         supervisor.close()
         supervisor = None
 
-        identifier = uuid4()
+        identifier = authority_id()
         owned.append(identifier)
         child = subprocess.Popen(  # noqa: S603 - fixed trusted local fixture
-            [sys.executable, "-I", str(Path(__file__).resolve()), "--child", str(root),
-             identifier.hex], stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+            [
+                sys.executable,
+                "-I",
+                str(Path(__file__).resolve()),
+                "--child",
+                str(root),
+                identifier.hex,
+            ],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
         )
         try:
             state = wait_active(runtime, identifier)
@@ -306,7 +332,9 @@ def main():
         supervisor.recover()
         assert not supervisor.staging.path(identifier).exists()
         assert supervisor.journal.receipt(identifier)["outcome"] == "interrupted"
-        checks.append("independent_20s_systemd_watchdog_after_supervisor_SIGKILL_and_restart_cleanup")
+        checks.append(
+            "independent_20s_systemd_watchdog_after_supervisor_SIGKILL_and_restart_cleanup"
+        )
     finally:
         for identifier in owned:
             runtime.stop_and_confirm(identifier)
@@ -321,8 +349,15 @@ def main():
         assert not any(p.startswith(str(root) + "/") for p in mount_inventory())
         assert root.name.startswith("proofflow-supervisor-check-")
         shutil.rmtree(root)  # Exact generated private root, after all mounts/writers are absent.
-    print(json.dumps({"scope": "trusted_local_systemd_fixtures_no_candidates_no_runsc",
-                      "checks": checks, "cleanup": "owned_units_mounts_processes_and_root_absent"}))
+    print(
+        json.dumps(
+            {
+                "scope": "trusted_local_systemd_fixtures_no_candidates_no_runsc",
+                "checks": checks,
+                "cleanup": "owned_units_mounts_processes_and_root_absent",
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

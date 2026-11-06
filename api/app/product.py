@@ -36,6 +36,7 @@ from api.app.wire import (
 )
 from contracts.codec import InputError, canonical_bytes, parse_object
 from contracts.policy import parse_contract
+from worker.protocol import authority_id
 
 LIMITS = {"pipeline": 16384, "contract": 32768, "transactions": 5242880, "customers": 5242880}
 STATIC = Path(__file__).parent / "static"
@@ -322,7 +323,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
                                           "customers_id", "contract_id"))
         names = ("idempotency_key", "pipeline_id", "transactions_id", "customers_id", "contract_id")
         ids = [identifier(value[key]) for key in names]
-        result = await store.call("enqueue", workspace, token, csrf, uuid4(), *ids)
+        result = await store.call("enqueue", workspace, token, csrf, authority_id(), *ids)
         return {"job_id": str(result[0]), "status_url": "/v1/jobs/" + str(result[0])}
 
     @app.get("/v1/jobs/{job_id}")
@@ -356,7 +357,7 @@ def create_product_app(store, assets, *, origin: str, journals=None):
     async def enqueue_repair(request: Request):
         workspace, token, csrf = await authorize(request, True)
         value = await json_body(request, ("parent_id", "idempotency_key"))
-        result = await store.call("repair_enqueue", workspace, token, csrf, uuid4(),
+        result = await store.call("repair_enqueue", workspace, token, csrf, authority_id(),
             identifier(value["idempotency_key"]), identifier(value["parent_id"]))
         return {"repair_id": str(result[0]), "status_url": "/v1/repairs/" + str(result[0])}
 

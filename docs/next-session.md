@@ -1,5 +1,73 @@
 # Resume ProofFlow
 
+## Current checkpoint — November 7 KST: encrypted assets and authority expiry
+
+Phase0–4 DONE; Phase5 IN PROGRESS. Continue authorized private, credit-only work;
+no continuation question, new PR, public release, submission or personal payment.
+Checkpoint base **03f8481857f1f32c7ed3631c0eab42b8acce10e5**; this checkpoint is
+verified Git HEAD/remote. [Evidence](evidence/phase5-encrypted-recovery-2026-11-07.json).
+This section supersedes the older lifecycle gaps below within the tested scope.
+
+Actual encrypted DB+asset recovery passed on the existing deployment. Two synthetic
+workspaces/five uploaded assets were captured with API/dispatcher quiesced; an AES-GCM
+envelope was saved off-VM with its separate DPAPI key and private Windows ACLs. Normal
+deletion removed one workspace. Recovery imported the trusted dump into a generated
+connection-limit-zero clone, removed every session/job/approval/outbox/configuration,
+recovered only four still-authorized assets into a private Linux directory, checked
+their bytes and a second current authority read, then removed the clone and assets.
+Both workspaces retired normally; backup key/ciphertext retired. No job replay,
+activation, PR, provider call or new resource. Candidate source remained inert outside
+the designated worker. This is data-only recovery, NOT production promotion or
+cross-profile disaster recovery; loss of authenticated current authority blocks it.
+
+Preserved harness failures: initial capture rejected a database clock about1.5s ahead
+of Windows; bounded waiting now keeps the original timestamp/expiry checks. Backup-only
+resume reused the same job/assets. Next restore stopped at the generic SQL helper's
+database allowlist; its empty clone was dropped. A separate generated-clone-only helper
+completed the exact saved backup without new uploads/jobs. Do not rerun
+check_encrypted_asset_recovery_live.py (either mode), resume_encrypted_asset_restore.py,
+enable_authority_retention.py or deploy_worker_retention.py --authority-expiry.
+Their completed private receipts and both failure receipts are retained.
+
+Worker admission now requires fresh UUIDv7 IDs for unknown jobs/executions. Known
+legacy jobs reconcile only while retained. Cleaned records/fences retire after seven
+days with persistent clock floors; unfinished/quarantined records remain. History
+capacity4096 fails closed. Additive019/020 migrations require fresh workspace IDs,
+generate time-bound signed-batch jobs and enable completed-deletion pruning only
+against the exact reviewed worker runtime. Marker pruning requires idle, locked roots,
+safe files and seven-day age. No worker journal/clock or raw-root rollback is supported.
+Historical UUID4 workspace/probe helpers cannot be blindly rerun; use current UUIDv7
+provisioning for new fixtures, never alter frozen final-comparison scripts/results.
+
+Product image **0ecb6e9d6d4183c40306b5e93af7e8b03de5e0bf2fd9eaaa5eb4a8a5c6abfdb3**;
+worker runtime **fd9a1e227c437066fe9bb63f14deae0567cfbb7d70a5c9e23284c2fbbb09ac17**;
+verifier unchanged **0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b**.
+Verification epoch5; old activations invalidated normally. Twenty migrations installed,
+001–018 unchanged;72 exact image files checked. Backup/recovery modules remain outside
+the product image. Runtime-bound expiry enabled and updated retention timer deployed.
+Readback:532 CLEANED executions,311 fences,zero missing deadlines; no active/quarantined
+work,workspace or restore clone. API/dispatcher/timer healthy; both admissions closed.
+
+Checks:970 Linux tests+10 subtests;797 Windows/173 Linux-only skips; seven real local
+PostgreSQL restore groups,seven deletion-expiry groups; actual Windows ACL/DPAPI/AES
+roundtrip and natural8-second key expiry;16 deployed containment/resource/capture/
+timeout/cleanup probes. Natural seven-day expiry has NOT elapsed; controlled clocks
+are confined to disposable tests. The existing Windows guard also runs backup-key
+expiry even if its billing check fails. It passed with no retained backup keys.
+Physical expiry depends on the machine/timers running; no forensic-erasure guarantee.
+
+Fresh credit **$192.17**, unchanged **$150 total/$25 inference** and$145 reservation;
+funded review deadline **2026-11-08T14:27:11.770445Z / Nov8 23:27 KST**. No renewal,
+new resource or personal payment. Tax/provider hard-stop and post-event terms remain
+unknown. Do not replay the completed prior funded review or final comparison.
+
+Next: audit remaining Phase5 acceptance and native advisory findings, then prepare
+Phase6 clean-browser/demo/source-live checks within existing authorization. Portable
+key recovery, disaster-available current deletion authority, production promotion and
+scheduled consistent backups remain release work; the scoped recovery rehearsal does
+not implement them. Independent human review and MIT/publication/submission decisions
+remain open. No owner action blocks independent engineering. This is a WIP checkpoint.
+
 ## Current checkpoint — November 7 KST: metadata expiry and restore rehearsal
 
 Phase0–4 DONE; Phase5 IN PROGRESS. Continue authorized private, credit-only development

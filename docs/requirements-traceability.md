@@ -1,5 +1,15 @@
 # Requirements traceability
 
+Current R34/R35/R37/T22 evidence: deployed time-bound admission and persistent clock
+floors permit bounded expiry of cleaned replay/fence/completed-deletion records;
+unfinished records remain. Runtime-bound idle-root marker expiry is enabled. Actual
+off-VM encrypted DB+asset recovery excluded a normally deleted workspace, stripped
+runtime authority and recovered four authorized assets before verified cleanup.
+Windows DPAPI/private ACL/natural key-expiry checks pass. [Source-bound evidence](evidence/phase5-encrypted-recovery-2026-11-07.json).
+Natural seven-day expiry has not elapsed; portable profile-independent keys, scheduled
+consistent snapshots, disaster-current deletion authority and production promotion
+remain open. Composite Phase5/6 rows are not promoted by this limited recovery path.
+
 November7 R34/R35/R37/T22 progress: cleaned worker receipt details now have a seven-day
 deadline with one legacy grace and retained replay fences; real SQLite clock/restart/
 WAL-reader tests cover retirement. A real disposable PostgreSQL restore excludes

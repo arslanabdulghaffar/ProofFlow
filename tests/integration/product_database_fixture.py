@@ -37,7 +37,7 @@ class Database:
             raise RuntimeError("Expected database rejection: " + code)
 
     def workspace(self):
-        identifier = str(uuid4())
+        identifier = self.sql("SELECT uuidv7();", "admin")
         self.sql("SELECT pf_product.create_workspace(:'w','operator',"
                  "clock_timestamp()+interval '23 hours');", "provisioner", w=identifier)
         session = hashlib.sha256((identifier + "session").encode()).hexdigest()

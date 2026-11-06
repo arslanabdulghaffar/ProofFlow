@@ -9,7 +9,7 @@ from psycopg.types.json import Jsonb
 from api.app.product_store import ProductFailure
 from orchestrator.verification_run import VerificationRun, retained_receipt
 from orchestrator.verifier_client import VerifierClient
-from worker.protocol import SupervisorError, runtime_identity_digest
+from worker.protocol import SupervisorError, authority_id, runtime_identity_digest
 
 
 class ProductDispatcher:
@@ -41,9 +41,16 @@ class ProductDispatcher:
                         if active:
                             request = active[0]
                             try:
-                                await asyncio.to_thread(self.worker.call, {
-                                    "v": 1, "op": "cancel", "execution": request.execution_id.hex,
-                                    "job": request.job_id.hex, "generation": request.generation})
+                                await asyncio.to_thread(
+                                    self.worker.call,
+                                    {
+                                        "v": 1,
+                                        "op": "cancel",
+                                        "execution": request.execution_id.hex,
+                                        "job": request.job_id.hex,
+                                        "generation": request.generation,
+                                    },
+                                )
                             except SupervisorError:
                                 pass  # Unknown cancellation; worker deadline still applies.
                         return
@@ -53,8 +60,10 @@ class ProductDispatcher:
             if job["state"] == "RECONCILING":
                 await self._reconcile(job, binding)
                 return True
-            if (job["runtime_sha256"] != self.worker.runtime_digest
-                    or job["verifier_sha256"] != self.verifier_sha256):
+            if (
+                job["runtime_sha256"] != self.worker.runtime_digest
+                or job["verifier_sha256"] != self.verifier_sha256
+            ):
                 await self.store.call("fail", *binding, Jsonb({"not_dispatched": True}))
                 return True
             metadata = (await self.store.call("assets", *binding))[0]
@@ -74,7 +83,8 @@ class ProductDispatcher:
                 if lost.is_set():
                     raise ProductFailure("STALE_JOB_LEASE")
                 future = asyncio.run_coroutine_threadsafe(
-                    self.store.call(operation, *arguments), loop)
+                    self.store.call(operation, *arguments), loop
+                )
                 return future.result(timeout=10)
 
             def before(request, _intent):
@@ -84,14 +94,27 @@ class ProductDispatcher:
             def captured(request, receipt):
                 committed("collected", *binding, request.execution_id, Jsonb(receipt))
 
-            runner = VerificationRun(self.worker, Path("/unused-administrator-image"),
-                self.verifier_sha256, self.journal, verifier=VerifierClient(self.verifier_sha256),
-                before_dispatch=before, after_capture=captured)
+            runner = VerificationRun(
+                self.worker,
+                Path("/unused-administrator-image"),
+                self.verifier_sha256,
+                self.journal,
+                verifier=VerifierClient(self.verifier_sha256),
+                before_dispatch=before,
+                after_capture=captured,
+            )
             try:
-                result = await asyncio.to_thread(runner.execute, execution=uuid4(), job=job_id,
-                    generation=job["generation"], pipeline=values["pipeline"],
-                    contract=values["contract"], transactions=values["transactions"],
-                    customers=values["customers"], purpose="original")
+                result = await asyncio.to_thread(
+                    runner.execute,
+                    execution=authority_id(),
+                    job=job_id,
+                    generation=job["generation"],
+                    pipeline=values["pipeline"],
+                    contract=values["contract"],
+                    transactions=values["transactions"],
+                    customers=values["customers"],
+                    purpose="original",
+                )
             except SupervisorError as error:
                 if str(error) == "SOURCE_PREPARATION_REJECTED" and not active and not lost.is_set():
                     await self.store.call("reject_input", *binding)
@@ -117,14 +140,23 @@ class ProductDispatcher:
     async def _reconcile(self, job, binding):
         # Raising/unknown state preserves the job and worker capacity. No replacement.
         job_id, execution = UUID(job["id"]), UUID(job["execution_id"])
-        fenced = await asyncio.to_thread(self.worker.call, {
-            "v": 1, "op": "fence", "job": job_id.hex, "generation": job["generation"]})
+        fenced = await asyncio.to_thread(
+            self.worker.call,
+            {"v": 1, "op": "fence", "job": job_id.hex, "generation": job["generation"]},
+        )
         if fenced != {"fenced": True}:
             raise SupervisorError("WORKER_FENCE_UNCERTAIN")
         for _ in range(25):
-            status = await asyncio.to_thread(self.worker.call, {"v": 1, "op": "status",
-                "job": job_id.hex, "execution": execution.hex,
-                "generation": job["execution_generation"]})
+            status = await asyncio.to_thread(
+                self.worker.call,
+                {
+                    "v": 1,
+                    "op": "status",
+                    "job": job_id.hex,
+                    "execution": execution.hex,
+                    "generation": job["execution_generation"],
+                },
+            )
             if status.get("state") == "CLEANED":
                 receipt = status.get("receipt")
                 if type(receipt) is not dict or receipt.get("cleanup") != "confirmed":

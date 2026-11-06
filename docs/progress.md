@@ -1,5 +1,27 @@
 # Progress
 
+## November 7 KST — encrypted assets recovered; replay/deletion expiry deployed
+
+Actual off-VM AES-GCM DB+asset recovery passed: normal deletion excluded one synthetic
+workspace; four authorized assets recovered byte-for-byte into inert quarantine, all
+runtime authority stripped, fresh deletion authority rechecked, clone/bytes/key removed.
+Two harness failures and exact-backup resumes are preserved; no job replay or new PR.
+Windows private ACL/DPAPI roundtrip and natural key expiry pass. The guard now checks
+backup expiry even when its independent credit check fails.
+
+Time-bound worker/workspace IDs, persistent clock floors, bounded seven-day cleaned
+record/fence/completed-deletion pruning and idle-root marker expiry are deployed.
+Unfinished work remains quarantined; unknown legacy/expired IDs cannot regain admission.
+Actual readback:532 cleaned records,311 fences,zero missing deadlines, healthy services,
+no remaining recovery fixture or clone. Twenty migrations/epoch5/current pins are in
+the [handoff](next-session.md). Natural seven-day elapsed-time acceptance is NOT RUN.
+
+970 Linux tests+10 subtests;797 Windows/173 Linux-only skips; seven real PostgreSQL
+restore and seven deletion-expiry groups;16 deployed worker security probes pass.
+Credit$192.17, unchanged caps/funded deadlineNov8 23:27 KST; no new service or inference.
+[Evidence](evidence/phase5-encrypted-recovery-2026-11-07.json). Phase5 remains IN PROGRESS;
+native advisory/human review and portable disaster/production recovery gaps remain.
+
 ## November 7 KST — receipt expiry deployed; deletion-safe recovery rehearsal passes
 
 Detailed cleaned receipts now expire after seven days without deleting execution IDs,

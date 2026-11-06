@@ -12,11 +12,10 @@ import json
 import os
 import sys
 from pathlib import Path
-from uuid import uuid4
 
 sys.path.insert(0, "/opt/proofflow-control/lib")
 from orchestrator.worker_client import WorkerClient  # noqa: E402
-from worker.protocol import ExecutionRequest, SupervisorError  # noqa: E402
+from worker.protocol import ExecutionRequest, SupervisorError, authority_id  # noqa: E402
 from worker.wire import tls_context  # noqa: E402
 
 ROOT = Path("/opt/proofflow-control")
@@ -269,7 +268,8 @@ try:
 except OSError as error: results['raw_socket']={'errno':error.errno,'type':type(error).__name__}
 emit(results)
 '''
-    request = ExecutionRequest(uuid4(), uuid4(), 1, pipeline.encode(), b"", b"", b"{}")
+    request = ExecutionRequest(authority_id(), authority_id(), 1,
+                               pipeline.encode(), b"", b"", b"{}")
     identifier = request.execution_id.hex
     intent = {"probe": args.probe, "execution": identifier, "job": request.job_id.hex,
               "generation": 1, "manifest": request.manifest_hash(),
