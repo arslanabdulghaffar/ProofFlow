@@ -1,0 +1,255 @@
+{
+  "observed_at": "2026-11-06T19:42:21.928362+00:00",
+  "phase": "5 IN PROGRESS",
+  "scope": "deployed receipt metadata expiry and local data-only restore rehearsal",
+  "product_image": "0856dea475ffc44c79393877b2b6513069a2a7680894f93b5a92d63ee38b7da7",
+  "worker_runtime": "7ed59b208ce35e6bd8502ee6e5908af2a2c7df244973c2155adde64c644f5b80",
+  "verification_epoch": 4,
+  "source_hashes": [
+    {
+      "path": "worker/journal.py",
+      "sha256": "959fb16f1391db72c5611aa6905805d1c3535eb57224806d1c14cd2ee249d236"
+    },
+    {
+      "path": "worker/supervisor.py",
+      "sha256": "208d660c82b354133c8532c689ba38301003b60db30dd616dc3a785af357be73"
+    },
+    {
+      "path": "orchestrator/restore_guard.py",
+      "sha256": "d612e543aa3a63e4d652efccbc5e3e672817e2791454b317fcb489dc70a2b82e"
+    },
+    {
+      "path": "scripts/check_deletion_safe_restore.py",
+      "sha256": "2af214dbc4bef4c7b84a66292b55f76e174c8d2ea987b106fd705f996d7695c7"
+    },
+    {
+      "path": "scripts/check_worker_metadata_live.py",
+      "sha256": "54153106967b8e28ab391840bb59d0d958cb9b7872c15d9f43845bc3d80ee249"
+    },
+    {
+      "path": "scripts/deploy_worker_retention.py",
+      "sha256": "a32dc05a0b3708e8164ea2d816fa569fc83ac82f2b63ad226ec45c97ee66da22"
+    },
+    {
+      "path": "scripts/check_phase5_security.py",
+      "sha256": "7e367cf211e73714b1da7edf87106cc35cc023c0af5b991696afc4fb621b34b8"
+    },
+    {
+      "path": "scripts/install_product_services.py",
+      "sha256": "3d35e6170c873935092469acb451b400b62e1bfb3d22347e89fcec2928e31baf"
+    },
+    {
+      "path": "scripts/check_product_image.py",
+      "sha256": "b880b4e11d008702bdd626ce56f064ac43dd43e58311b35123f545dec56b81ec"
+    },
+    {
+      "path": "tests/security/test_worker_receipt_retention.py",
+      "sha256": "7701ccad3f126168a4ab3136facd2397c81b576407ba9318c1f4b61fb78a8a3b"
+    },
+    {
+      "path": "tests/security/test_restore_guard.py",
+      "sha256": "e54ef610388b34c754c66f3103d10ba933608c511330de6b4e147c075c77aa20"
+    }
+  ],
+  "checks": {
+    "linux_pytest": {
+      "passed": 940,
+      "subtests_passed": 10
+    },
+    "windows_pytest": {
+      "passed": 779,
+      "linux_only_skipped": 161
+    },
+    "worker_receipt_retention": "5 Linux SQLite tests; controlled clocks, not elapsed seven-day wall time",
+    "restore_policy": "14 data-only tests",
+    "actual_postgres_restore": {
+      "scope": "local disposable synthetic metadata only",
+      "groups_passed": 6,
+      "cleanup": "confirmed",
+      "production_recovery": "NOT_RUN"
+    },
+    "product_image": {
+      "approved_source_files": 72,
+      "exact_hash_match": true
+    },
+    "deployed_worker": [
+      {
+        "probe": "filesystem",
+        "passed": true,
+        "execution": "1392a1f54b2d4017ab816f48ab7bf189",
+        "receipt_sha256": "8bade27e0d9eace08a2c2f7b82bdb6aab0a075411730fcd63943229c2c51542f",
+        "seconds": 1.625,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "network",
+        "passed": true,
+        "execution": "84865ede62b94b8e988addf74d109b9c",
+        "receipt_sha256": "43d86e87302a9c8920ddb8bbc56613a714c818dd27880400388587a41aae4eac",
+        "seconds": 1.672,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "cpu",
+        "passed": true,
+        "execution": "9b51631972ad486b961ee1c689c0330c",
+        "receipt_sha256": "67d9b0bd2e67f655e83128ab7d408685048c20cd90d9926aa23486babce4c4d6",
+        "seconds": 4.734,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "storage",
+        "passed": true,
+        "execution": "48093ba04fd9496482f867ca4fc67ee8",
+        "receipt_sha256": "5ac01dc5de56f54f50126e0d4e1ba3eeb7f64b8f575bd4602cc556c26b3098cf",
+        "seconds": 1.781,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "inodes",
+        "passed": true,
+        "execution": "1045f5706ccb47b39a36df089e81f269",
+        "receipt_sha256": "caab45e71efa4713894e00dca94f5a922fb647e15da3517d87fd0b9be896fc37",
+        "seconds": 2.141,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "logs",
+        "passed": true,
+        "execution": "9728f56228334d96bde9ae0984213f0c",
+        "receipt_sha256": "0a0e9de8b0eb347781a6fa5f7aa266b5725095681c291fbc676e2dad2763abfd",
+        "seconds": 1.484,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "symlink",
+        "passed": true,
+        "execution": "79a2a2271317476b816b02c594a289db",
+        "receipt_sha256": "6af1aa95680df1db7176b3081ab6c0136782fd5092e82665c53afa40b2d93b63",
+        "seconds": 1.141,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "fifo",
+        "passed": true,
+        "execution": "f16b110dfc0141999d9e0ceec1ff1816",
+        "receipt_sha256": "5703be1f352d276749c53ca3aca8315182184688cb6f3efe7be470b00d2530b7",
+        "seconds": 1.391,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "hardlink",
+        "passed": true,
+        "execution": "888ea8158fca40a0a51816d50af0843a",
+        "receipt_sha256": "86911b39867eccf5693e2474f2751ae5ece5f21748a10f89881eae35986b8698",
+        "seconds": 1.125,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "extra",
+        "passed": true,
+        "execution": "d331788906fc40139fa2ad37dc07e411",
+        "receipt_sha256": "f3ec8545c869e98147cd981305dd7a802380de24f4e0327f69fde2e76c728e4c",
+        "seconds": 1.203,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "output_bytes",
+        "passed": true,
+        "execution": "3f9d82e3cfa44f1ea246dd70c35700db",
+        "receipt_sha256": "ff16c83b20517737f9a16d6b201d028f7dcf12585f1f210ad0aa6d0cc5a48f73",
+        "seconds": 1.516,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "output_lines",
+        "passed": true,
+        "execution": "869943fe11c847b48875d1cea8bd5f90",
+        "receipt_sha256": "d1feb86700ba68041097c923abfdc41917adb18a0ac0b1c5075d3ed4106c3d3a",
+        "seconds": 1.469,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "memory",
+        "passed": true,
+        "execution": "bae377bac41f49bab4e85b9d91fb7693",
+        "receipt_sha256": "33972bef60e73c9c518120146f8d8ad9c57c08e59496ea4972e1bd29d933dc0b",
+        "seconds": 4.187,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "timeout",
+        "passed": true,
+        "execution": "af1968fb1afa456da5713e36229a33a7",
+        "receipt_sha256": "2279df66c94928563055aea37d9a79ac46f1afe724821d66914e046b35116f5c",
+        "seconds": 21.344,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "descendants",
+        "passed": true,
+        "execution": "0832e405b9cf48469861cdebba31a76b",
+        "receipt_sha256": "01e6093a6fde3d2dfc70d77e6de529cb09cb02bb5cb47b06f85b9f0e1ea6aaa1",
+        "seconds": 21.062,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "benign",
+        "passed": true,
+        "execution": "9f49ba04b0144b01b5ee3521a5f7ac86",
+        "receipt_sha256": "343aadcc0980704e63ef70d2d4589cff6ebab3966adec37c6586da9a74d97115",
+        "seconds": 3.313,
+        "cleanup": "confirmed"
+      }
+    ],
+    "http_statuses": {
+      "/health/live": 200,
+      "/health/ready": 503,
+      "/v1/session": 403
+    },
+    "network_positive_controls": "NOT_RERUN; prior Phase1 evidence retained",
+    "outbox_rows_unchanged": true,
+    "deployed_metadata": {
+      "cleaned_receipts": 515,
+      "fences": 294,
+      "missing_deadlines": 0,
+      "natural_seven_day_expiry": "NOT_YET_ELAPSED"
+    },
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "product_admission": "closed",
+    "inference_admission": "closed"
+  },
+  "credit": {
+    "checked_at": "2026-11-06T19:41:46.723511+00:00",
+    "credit_guard": "within_early_cutoff",
+    "remaining_credit": "192.38",
+    "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+  },
+  "provider_calls": 0,
+  "new_resources": 0,
+  "failures_preserved": [
+    {
+      "run": "d6f287fe336a40f8a4f9a0db26b566e3",
+      "stage": "before any worker probe",
+      "reason": "historical PR row already removed by normal retention; snapshot helper could not decode empty result",
+      "fix": "hash all current PR-intent/write rowsets including empty; no PR recreated"
+    },
+    {
+      "stage": "local image build",
+      "reason": "network-disabled build cache key missed dependency layer; DNS disabled",
+      "resolution": "ordinary build reused unchanged pinned dependency layers"
+    }
+  ],
+  "limitations": [
+    "Execution IDs/manifests/fences and deletion markers still retained; seven-day minimal metadata lifecycle incomplete.",
+    "Legacy worker receipts receive one migration grace period; no original timestamp reconstructed.",
+    "Quarantine-only restore removes runtime authority and requires live deletion authority; no promotion path.",
+    "Encrypted portable DB+asset backup, 24-hour rolling backup erasure, 48-hour raw exposure and production recovery NOT RUN.",
+    "No independent human review; known native advisory risks remain.",
+    "Final comparison stays bound to its original runtime; not rerun or regraded."
+  ]
+}

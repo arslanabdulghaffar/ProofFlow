@@ -1,5 +1,24 @@
 # Decision log
 
+## D84: expire receipt details; restore only into inert data quarantine
+
+Seven-day worker receipt expiry does not delete execution IDs, manifests or fences:
+removing those would permit replay under the present UUID protocol. One legacy grace
+period is persisted; recovery cannot renew it. Uncertain cleanup remains quarantined.
+Physical SQLite/WAL cleanup failure closes admission. This narrows retained details
+but does not complete minimal negative-authority metadata retention.
+
+Deletion-safe recovery first has a deliberately limited, tested data-only lane.
+Fresh current authority overrides a <=24-hour snapshot; missing/revoked/deleted or
+changed-lifetime workspaces are excluded, and authority is read again after restore.
+An isolated connection-limit-zero clone loses every session, approval, queued job,
+PR intent and allocation; even retained workspaces are revoked. No automatic
+promotion, credentials, lease resurrection, rollback of spend or external write.
+This does not authorize pruning tombstones. Full encrypted DB+asset recovery and
+disaster-available current deletion authority remain Phase5/6 gates. The existing
+legacy backup helper keeps its guest/deletion rejection. No dependency or cloud
+service added. Review is a separate Codex critical pass, not independent human approval.
+
 ## D83: renew only the funded existing-resource window
 
 Standing credit-use/development authorization covers a fresh review of existing resources. Actual $192.92 credit, exact $24/$48 plans/owned resources, closed/idle services, unchanged $120 non-inference ledger reservations and $150/$25/$2 caps passed. The full $145 project allocation remains reserved; expiry alone advanced to November 8 23:27 KST after durable intent and conditional SQL/readback, then local guard readback. No new resource, payment method, cap increase, refund, status edit or reopened stop. The fixed November 23 final cutoff remains. Provider hard-stop/tax unknowns and conflicting post-event hosting guidance remain explicit. [Evidence](evidence/phase5-final-comparison-2026-11-06.json).

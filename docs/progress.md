@@ -1,5 +1,29 @@
 # Progress
 
+## November 7 KST — receipt expiry deployed; deletion-safe recovery rehearsal passes
+
+Detailed cleaned receipts now expire after seven days without deleting execution IDs,
+conflict manifests or generation fences. One persisted legacy grace, quarantine-safe
+recovery and physical SQLite/WAL removal are covered by five meaningful tests. Actual
+deployed migration/readback confirms515 cleaned receipts/294 fences/zero missing
+deadlines after16 fresh containment/resource/capture/timeout/cleanup probes. Natural
+seven-day wall time has not elapsed. Product/runtime pins and epoch4 are recorded in
+the [handoff](next-session.md);72 exact source files verified,18 migrations unchanged.
+
+A real disposable PostgreSQL restore excludes completed/pending deletions using fresh
+current authority, blocks runtime logins before import, removes all authority in the
+clone, and detects deletion during recovery. Six groups and14 policy tests pass.
+This is local synthetic metadata-only recovery, not production restore or encrypted
+asset backup. The clone is dropped; no live data/status was rewritten.
+
+940 Linux tests plus10 subtests;779 Windows tests/161 Linux-only skips; Ruff/hygiene
+pass. Preserved initial security-runner failure before any probe: an expired historical
+PR row was gone. Fixed current outbox rowset hashing and reran successfully, without
+creating a PR. Credit$192.38; API/dispatcher/retention active, admissions closed,
+funded deadlineNov8 23:27 KST unchanged. No new service/inference call/personal payment.
+[Evidence](evidence/phase5-metadata-restore-2026-11-07.json). Phase5 remains IN PROGRESS:
+negative-authority TTL/capacity, full backup/restore and known native/human review gaps.
+
 ## November 6 KST — final comparison audited; funded hosting review passed
 
 All 96 predeclared jobs completed with no paid replay. Actual receipt audit reconciled 79 provider responses, candidate provenance, original failures, fresh protected checks, global reservations, all closures and 24 normal API retirements. [Report](../eval/final-comparison-2026-11-06.md): A 15/18 repairs, 6/6 holds/clarification, 0/15 incorrect acceptance; B 14/18, 1/6, 9/23; C 15/18, 6/6, 0/15; deterministic D 18/18, 6/6, 0/18. Preserve the interrupted A, five exhausted model runs, polling-only amendment, shared template and absent human oracle review. No A/C quality-superiority claim. Usage estimate $0.060841; $2.200387 held, no settlement.

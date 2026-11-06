@@ -13,7 +13,6 @@ from datetime import UTC, datetime
 from uuid import uuid4
 
 import httpx
-from check_existing_pr_recovery import production_snapshot
 from check_product_integrity import AUTH_PROBE
 from install_product_services import IMAGE
 from product_live_session import ORIGIN, LiveSession, require
@@ -22,6 +21,19 @@ from vultr_phase1 import PRIVATE, ROOT
 PROBES = ("filesystem", "network", "cpu", "storage", "inodes", "logs", "symlink",
           "fifo", "hardlink", "extra", "output_bytes", "output_lines", "memory",
           "timeout", "descendants", "benign")
+
+
+def outbox_snapshot(live):
+    """Current rowsets, including empty after normal retention; no historic ID assumption."""
+    return json.loads(live.sql("""
+        SELECT json_build_object(
+          'intents',(SELECT encode(sha256(convert_to(coalesce(
+            jsonb_agg(to_jsonb(p) ORDER BY to_jsonb(p)::text)::text,'[]'),'UTF8')),'hex')
+            FROM pf_product.pr_intents p),
+          'writes',(SELECT encode(sha256(convert_to(coalesce(
+            jsonb_agg(to_jsonb(p) ORDER BY to_jsonb(p)::text)::text,'[]'),'UTF8')),'hex')
+            FROM pf_product.pr_writes p));
+    """))
 
 
 def accepted(name, result, seconds):
@@ -77,7 +89,7 @@ def main():
     try:
         with LiveSession() as live:
             summary["credit"] = live.credit
-            before = production_snapshot(live)
+            before = outbox_snapshot(live)
             require(live.sql("SELECT count(*)=1 AND bool_and(blocked) FROM pf_budget.accounts;",
                              "proofflow_budget") == b"t", "INFERENCE_MUST_STAY_BLOCKED")
             for role in ("api", "dispatcher"):
@@ -127,7 +139,7 @@ def main():
                 summary["probes"].append(entry)
                 print(json.dumps(entry), flush=True)
                 require(passed, "CRITICAL_WORKER_GATE_FAILED")
-            require(production_snapshot(live) == before, "EXISTING_PR_RECEIPTS_CHANGED")
+            require(outbox_snapshot(live) == before, "EXISTING_PR_RECEIPTS_CHANGED")
             summary["existing_pr_unchanged"] = True
             require(live.sql("SELECT bool_or(enabled) FROM pf_product.execution_policy;") == b"f",
                     "PRODUCT_ADMISSION_CHANGED")

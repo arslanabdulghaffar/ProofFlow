@@ -1,6 +1,16 @@
 # Acceptance and verification plan
 
-Latest full local suites: **921 Linux tests plus 10 subtests**, **765 Windows tests / 156 Linux-only skips**. Final artifact recheck, Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These local tests supplement the actual comparison receipts; they do not substitute for missing metadata/restore or public-release acceptance.
+Latest full local suites: **940 Linux tests plus 10 subtests**, **779 Windows tests / 161 Linux-only skips**. Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These tests do not substitute for missing full metadata/restore or public-release acceptance.
+
+T22 follow-up: `test_worker_receipt_retention.py` covers real SQLite byte retirement,
+replay/conflict/generation denial, quarantine/recovery deadline, one legacy grace,
+bounded sweeps and pinned-WAL-reader failure/retry. `test_restore_guard.py` covers
+stale/future/malformed authority, expiry/lifetime change, deletion races, dump binding
+and target rejection. `python -m scripts.check_deletion_safe_restore` performs a real
+local pg_dump/restore in a disposable networkless fixture, completed/pending deletion,
+pre-sanitization login denial, production-target/schema rejection, authority stripping
+and second-live-read deletion detection. Cleanup is verified. It contains synthetic
+metadata only; portable encryption, asset backup and production recovery are NOT RUN.
 
 T20 final comparison: 96/96 actual jobs, 79 reconciled responses, no unaccounted cleanup; all failures, calls, costs and denominators preserved. Original/candidate/source/runtime/verifier/ledger/proposal/retirement audit passed; the portable artifact recomputes all case hashes/oracles/metrics offline. [Measured report](../eval/final-comparison-2026-11-06.md), [evidence](evidence/phase5-final-comparison-2026-11-06.json). One repeat/shared template/no human oracle review and A/C orchestration differences are explicit limitations. Funding review has 21 offline fault cases plus actual quote/credit/SQL/guard readback, without a cap increase. T22 metadata/restore lifecycle remains incomplete.
 

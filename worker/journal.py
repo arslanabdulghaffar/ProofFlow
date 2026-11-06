@@ -12,6 +12,8 @@ from uuid import UUID
 
 from worker.protocol import ExecutionRequest, SupervisorError
 
+RECEIPT_TTL = 7 * 24 * 60 * 60
+
 
 def private_directory(path: Path) -> None:
     info = path.lstat()
@@ -49,6 +51,14 @@ class Journal:
                            "WHERE receipt LIKE '%\"failure_log_preview\"%'", (time.time() + 300,))
             db.execute("CREATE INDEX IF NOT EXISTS execution_preview_expiry "
                        "ON executions(preview_expires_at) WHERE preview_expires_at IS NOT NULL")
+            if "receipt_expires_at" not in columns:
+                db.execute("ALTER TABLE executions ADD COLUMN receipt_expires_at REAL")
+                # Old receipts lack a reliable finish timestamp. One migration
+                # grace period; reopening and cleanup retries cannot renew it.
+                db.execute("UPDATE executions SET receipt_expires_at=? WHERE receipt IS NOT NULL",
+                           (time.time() + RECEIPT_TTL,))
+            db.execute("CREATE INDEX IF NOT EXISTS execution_receipt_expiry "
+                       "ON executions(receipt_expires_at) WHERE receipt_expires_at IS NOT NULL")
 
     @contextmanager
     def _db(self):
@@ -148,10 +158,12 @@ class Journal:
             if cancelled and cancelled[0] and cleaned:
                 receipt["outcome"] = "cancelled"
             expiry = time.time() + 300 if "failure_log_preview" in receipt else None
-            if db.execute("UPDATE executions SET state=?,receipt=?,preview_expires_at=? "
+            if db.execute("UPDATE executions SET state=?,receipt=?,preview_expires_at=?, "
+                          "receipt_expires_at=coalesce(receipt_expires_at,?) "
                           "WHERE id=? AND state!='CLEANED'",
                           ("CLEANED" if cleaned else "QUARANTINED",
                            json.dumps(receipt, sort_keys=True), expiry,
+                           time.time() + RECEIPT_TTL,
                            identifier.hex)).rowcount != 1:
                 raise SupervisorError("INVALID_EXECUTION_TRANSITION")
 
@@ -177,6 +189,29 @@ class Journal:
             checkpoint = db.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()
             if checkpoint[0] != 0:
                 raise SupervisorError("WORKER_PREVIEW_CHECKPOINT_BUSY")
+        return len(rows)
+
+    def prune_receipts(self) -> int:
+        """Retire cleaned receipt details, never execution IDs or generation fences.
+
+        Uncertain cleanup stays quarantined for explicit recovery. A retired
+        receipt cannot be used as verification or as authority to rerun an ID.
+        """
+        with self._db() as db:
+            rows = db.execute("SELECT id FROM executions WHERE state='CLEANED' "
+                              "AND receipt_expires_at<=? ORDER BY receipt_expires_at LIMIT 32",
+                              (time.time(),)).fetchall()
+            for (identifier,) in rows:
+                receipt = {"execution": identifier, "outcome": "receipt_retired",
+                           "cleanup": "confirmed", "collected": False,
+                           "verification": "NOT_PERFORMED", "receipt_retired": True}
+                db.execute("UPDATE executions SET receipt=?,preview_expires_at=NULL, "
+                           "receipt_expires_at=NULL WHERE id=?",
+                           (json.dumps(receipt, sort_keys=True), identifier))
+        # Always checkpoint: a crash or busy reader can outlive the SQL commit.
+        with closing(sqlite3.connect(self.path, timeout=3, isolation_level=None)) as db:
+            if db.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()[0] != 0:
+                raise SupervisorError("WORKER_RECEIPT_CHECKPOINT_BUSY")
         return len(rows)
 
     def unfinished(self) -> list[UUID]:

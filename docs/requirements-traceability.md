@@ -1,5 +1,12 @@
 # Requirements traceability
 
+November7 R34/R35/R37/T22 progress: cleaned worker receipt details now have a seven-day
+deadline with one legacy grace and retained replay fences; real SQLite clock/restart/
+WAL-reader tests cover retirement. A real disposable PostgreSQL restore excludes
+completed/pending deletions and strips all authority in an inaccessible data-only
+clone. These are partial lifecycle controls, not production/portable restore or
+negative-authority TTL completion. No composite requirement is promoted to DONE.
+
 Final R42/R43 evidence: all 96 predeclared jobs and 79 real responses are reconciled. [Report and limitations](../eval/final-comparison-2026-11-06.md), [artifact](../eval/final-comparison-2026-11-06.json), [receipt summary](evidence/phase5-final-comparison-2026-11-06.json). Row statuses distinguish measured comparison/accounting from incomplete independence, human review, broader fault variants and pure A/C ablation. R34/R35 adds 24 ordinary API fixture retirements; seven-day metadata/restore lifecycle remains incomplete. No composite Phase 5 promotion.
 
 R42/R43 receipt-audit follow-up: offline collection binds actual provider proposals, candidate hashes, isolated execution/verifier proofs and global spending reservations, preserving failures and unknown usage. The ongoing 96-job campaign is not yet scored. R34/R35 audit also requires every dispatch closure and normal API fixture retirement. Thirty-two focused receipt/collection tests pass; no final-evaluation or composite phase status is promoted from these fixtures.

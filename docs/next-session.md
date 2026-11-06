@@ -1,5 +1,66 @@
 # Resume ProofFlow
 
+## Current checkpoint — November 7 KST: metadata expiry and restore rehearsal
+
+Phase0–4 DONE; Phase5 IN PROGRESS. Continue authorized private, credit-only development
+without continuation questions. No new PR/publication/submission/personal payment.
+Checkpoint base ea8f7a23dc32e7908c95b38ef88863a2d40ab263; this checkpoint is verified
+Git HEAD/remote. [Evidence](evidence/phase5-metadata-restore-2026-11-07.json).
+
+Deployed seven-day detailed worker receipt expiry, one nonrenewable legacy grace,
+physical SQLite/WAL cleanup and explicit retired/non-verification receipts. Execution
+IDs/manifests/fences and quarantine remain intact. Actual migration/readback: 515
+cleaned receipts, 294 fences, zero missing deadlines after 16 fresh deployed worker
+probes. Natural seven-day expiry has NOT elapsed; five real SQLite controlled-clock
+tests cover expiry, physical removal, replay/fencing, recovery, legacy and busy-reader
+failure/retry. No cleanup status or clock was edited on the live worker.
+
+New product image **0856dea475ffc44c79393877b2b6513069a2a7680894f93b5a92d63ee38b7da7**;
+worker runtime **7ed59b208ce35e6bd8502ee6e5908af2a2c7df244973c2155adde64c644f5b80**;
+verifier unchanged **0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b**.
+Verification epoch advanced normally to4; old activations are invalidated, never
+rebound. Eighteen SQL migrations unchanged,72 exact product files. Source-only
+restore_guard.py is deliberately excluded from the product image. Provider settings
+retained unchanged/expired, inference remains blocked. Final comparison is immutable
+and still describes its original runtime; do not rerun/regrade it for this change.
+
+Actual local PostgreSQL restore rehearsal passes six groups: snapshot before completed
+and pending deletions, fresh current allowlist, blocked runtime login before import,
+production-target/schema-drift rejection, removal of all runtime authority and a
+second current read detecting concurrent deletion. This is **inert metadata recovery
+only**, not portable/production restore. A clone has connection limit0, no sessions,
+queues, approvals, PR outbox or allocations, and even retained workspaces are revoked.
+It is always dropped; no asset bytes or live credentials are imported. Missing live
+deletion authority blocks selection. Do not remove the old backup helper's guest/
+deletion gate or prune negative-authority records on the strength of this rehearsal.
+
+Full checks:940 Linux +10 subtests;779 Windows /161 Linux-only skips; Ruff/hygiene and
+exact image source check pass. Sixteen deployed containment/resource/capture/timeout/
+cleanup checks pass, SCRAM/privilege and private HTTP boundaries pass; network positive
+controls not rerun. The first security runner stopped before any probe because it
+expected a historical PR row already deleted by retention. Preserved failed run
+d6f287fe336a40f8a4f9a0db26b566e3; fixed current-rowset hashing, no PR recreation.
+Successful run59f266d0e3404c4c889d27f7578d04e9. Private evidence stays under the existing
+deployment/evidence folder. Do not replay completed deploy_worker_retention.py
+--receipt-metadata or either check_worker_metadata_live.py readback mode; their
+distinct one-shot receipts are complete. The original preview upgrade remains intact.
+
+At19:41 UTC Nov6, actual guard: **$192.38 remaining**, unchanged review deadline
+**2026-11-08T14:27:11.770445Z / Nov8 23:27 KST**, unchanged $145 reservation/$150 total/
+$25 inference limits. No new resource/provider call/payment. API, dispatcher and
+retention timer active; product/inference admission closed. Tax/provider hard-stop
+and post-event conditions remain unknown. A fresh funded review is needed before
+the existing deadline; do not blindly replay the completed prior renewal.
+
+Next authorized work: finish replay-safe lifecycle/capacity of minimal IDs/fences and
+deletion markers; design durable current deletion authority plus encrypted consistent
+DB+asset backups with24-hour snapshot/48-hour raw-exposure bounds and actual isolated
+recovery. The present data-only guard has no promotion path and cannot substitute for
+those gates. Preserve raw retirement, failed outcomes and scoped authority throughout.
+Native advisory/human-review and later MIT/publication/submission gaps stay explicit.
+No owner action blocks this independent engineering. This is a WIP checkpoint, not
+Phase5 completion. Historical handoff below is superseded by this current section.
+
 ## Current checkpoint and scope — November 6 KST
 
 Phase 0–4 DONE; Phase 5 IN PROGRESS. Owner is unavailable and authorizes continuous development/checkpoints without continuation questions. Keep both repositories private, use only promotional credits within $150 total/$25 inference, no personal payment, new external PR, publication or submission. No independent human security/oracle review or MIT ownership clearance. Last verified checkpoint before this final evidence update: 32c72a0bb6a58f8dc3b46c7f22b333ae009f59f4; this update's checkpoint is verified Git HEAD/remote.

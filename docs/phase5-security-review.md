@@ -1,5 +1,53 @@
 # Phase 5 security review — November 5
 
+## Metadata and isolated restore critical pass — November 7 KST
+
+Separate Codex review, not independent human approval. Cleaned worker receipt details
+expire after seven days; execution identity, manifest conflicts, generation fences
+and quarantine stay intact. Legacy receipts receive one migration grace deadline;
+cleanup/restart cannot extend it. Retirement produces an explicit non-verification
+receipt. Both normal housekeeping and recovery checkpoint the WAL, including on a
+retry after a committed redaction. A real pinned reader must fail maintenance until
+physical cleanup succeeds. Negative-authority metadata still has no safe TTL and is
+not pruned by this change. Long-term history capacity remains a release limitation.
+
+The new restore guard is an admin-only isolated rehearsal, excluded from the product
+image. An authenticated current allowlist must be newer than the snapshot and at
+most 60 seconds old. Snapshot age is at most 24 hours; workspace identity and original
+lifetime must match, with no expiry extension. Missing/revoked/deleted workspaces are
+excluded. A second live read detects deletion during recovery. Only a generated
+superuser-owned clone with connection limit zero accepts sanitization; schema drift
+or a production target fails before changes. All sessions, queues, approvals, PR
+outbox and allocation/configuration rows are removed, and retained workspaces are
+revoked. This is data-only quarantine, never a promotion or resumed authority path.
+Current authority must come from a trusted live connection, not archived metadata;
+the helper does not authenticate a caller-supplied dictionary by itself.
+
+Actual local PostgreSQL tests use labeled synthetic metadata and a locally generated
+dump only, no uploaded SQL/candidate execution. They cover completed/pending deletion,
+login denial before sanitization, target/schema rejection, stripping all authority,
+and a later deletion. The original backup helper's guest/deletion rejection remains.
+Encrypted portable DB+asset backup, raw byte exposure/backup expiry, post-disaster
+deletion authority and production restore are NOT RUN. No tombstone TTL or public
+release clearance follows from this rehearsal.
+
+Deployment review: only journal.py/supervisor.py change in the worker; exact prior
+hashes, closed/idle state, preserved predecessors and a distinct one-shot intent
+precede the update. Read-only identity readiness can retry; writes cannot. Normal
+configure_execution advances the verification epoch and invalidates old activations.
+No contract, verifier, canary, provider setting, dependency or resource limit changes.
+The initial network-disabled image build lacked the matching dependency cache and
+failed before producing an image; the ordinary build reused every unchanged pinned
+dependency layer. Exact 72-file image inventory passed. Deployed results are recorded
+separately after actual checks.
+
+Actual deployment follow-up: worker/source pins agree; all515 cleaned receipts have
+deadlines and294 fences remain after16 fresh passing sandbox probes. First security
+run failed before dispatch because a historical PR row had already been retired;
+the runner now hashes all current outbox rows, including empty. The failed receipt
+is preserved and no PR is recreated. Source/epoch/provider/credit readbacks and
+service state passed. [Sanitized evidence](evidence/phase5-metadata-restore-2026-11-07.json).
+
 ## Actual final audit and funded-window readback — November 6
 
 All 96 jobs and 79 provider responses now reconcile to actual immutable request/quote/global-ledger, source/proposal/runtime/verifier and lifecycle evidence. Original A receipts also bind their actual job/source/runtime and failure; already-correct originals cannot become repair successes. Four additional original-proof cases pass; receipt/collection tests total 36. The portable 24-case artifact passes data-only oracle/hash/denominator/metric recomputation with seven tampering tests. All 24 API fixtures retired normally; no new PR or activation. [Report](../eval/final-comparison-2026-11-06.md), [evidence](evidence/phase5-final-comparison-2026-11-06.json).

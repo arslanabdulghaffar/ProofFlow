@@ -1,5 +1,15 @@
 # Risks and owner decisions
 
+November7 retention follow-up: detailed cleaned receipts now expire after seven days,
+but execution IDs/manifests/fences and deletion tombstones remain to prevent replay.
+Their eventual pruning/capacity remains unresolved. Legacy records get one seven-day
+grace from migration because trustworthy original finish timestamps are absent.
+Natural seven-day expiry has not yet elapsed; deterministic SQLite tests cover it.
+The restore rehearsal requires current authenticated deletion authority and retains
+only inert metadata in a blocked clone. It cannot recover after losing that authority,
+restore asset bytes, provide portable encrypted backup, or promote a service. No
+public/guest-readiness or independent human security approval is implied.
+
 Current Phase 5: final 96-job comparison/79 real responses audited; A/C 15/18 repairs, D 18/18, B 9/23 incorrect acceptances. No generalization, witness superiority, human oracle approval or universal safety claim. One interrupted A and bounded failed repairs remain counted; source amendment/template coupling are disclosed. [Report](../eval/final-comparison-2026-11-06.md). Minimal metadata/fence/tombstone lifecycle, deletion-aware restore and native advisory risks remain. Actual funded review now expires November 8 23:27 KST, credit $192.92, unchanged $150/$25 caps, closed admission. Review again before that deadline; post-event payment-method wording remains unresolved under credit-only authorization. Private/public-license/submission restrictions remain unchanged.
 
 Phase5 current: original code failure now has real API/queue/model/fresh-check evidence, with no output-proof or activation shortcut. Initial exit-kind0 diagnostic failure is preserved; corrected code requires observed host limits and exact zero/success. Draft24-case synthetic comparison is not frozen or independently human-reviewed. Credit$193.13, shared development reserved$1.339265, all admissions closed. [Evidence](evidence/phase5-source-repair-2026-11-06.json). Existing native advisory, metadata/restore and public/license risks remain; no human sign-off or Phase5 completion claim.

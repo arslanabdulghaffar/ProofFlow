@@ -1,10 +1,12 @@
 """Closed/idle reviewed worker update and exact runtime repin on existing VMs only."""
 
+import argparse
 import base64
 import hashlib
 import json
 import subprocess
 import sys
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -16,18 +18,24 @@ PREVIOUS = '67920adc671b0084078fa71e1b17a929ed66dba2'
 
 
 def main():
-    receipt = PRIVATE / 'evidence/phase5-worker-retention-update.json'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--receipt-metadata', action='store_true',
+                        help='Distinct seven-day receipt update; never replay preview update')
+    args = parser.parse_args()
+    previous = 'ea8f7a23dc32e7908c95b38ef88863a2d40ab263' if args.receipt_metadata else PREVIOUS
+    operation = 'worker-metadata-update' if args.receipt_metadata else 'worker-retention-update'
+    receipt = PRIVATE / ('evidence/phase5-' + operation + '.json')
     require(not receipt.exists(), 'WORKER_UPDATE_ALREADY_STARTED_RECONCILE')
     old, new = {}, {}
     for path in sorted((ROOT / 'worker').glob('*.py')):
         raw = subprocess.run(  # noqa: S603 - fixed trusted commit, read-only source bytes
-            ['C:/Program Files/Git/cmd/git.exe', 'show', PREVIOUS + ':worker/' + path.name],
+            ['C:/Program Files/Git/cmd/git.exe', 'show', previous + ':worker/' + path.name],
             capture_output=True, check=True).stdout
         old[path.name] = hashlib.sha256(raw).hexdigest()
         if path.read_bytes() != raw:
             new[path.name] = base64.b64encode(path.read_bytes()).decode()
     require(set(new) == {'journal.py', 'supervisor.py'}, 'UNEXPECTED_WORKER_CHANGES')
-    record = {'started_at': datetime.now(UTC).isoformat(), 'previous_commit': PREVIOUS,
+    record = {'started_at': datetime.now(UTC).isoformat(), 'previous_commit': previous,
               'old_sources': old, 'new_sources': {
                   n: hashlib.sha256(base64.b64decode(raw)).hexdigest() for n, raw in new.items()},
               'completed': False}
@@ -78,7 +86,7 @@ def main():
         require(worker('cat /etc/machine-id').decode() == live.admin.state['worker_machine_id'],
                 'WORKER_IDENTITY_CHANGED')
         installer = (ROOT / 'scripts/install_worker_retention_update.py').read_bytes()
-        target = ('/var/lib/proofflow-setup/retention-installer-'
+        target = ('/var/lib/proofflow-setup/' + operation + '-installer-'
                   + hashlib.sha256(installer).hexdigest())
         worker('set -C; umask 077; cat > ' + target, installer)
         payload = json.dumps({'machine_id': live.admin.state['worker_machine_id'],
@@ -127,8 +135,17 @@ print('pins_updated')
                     'new': {'/opt/proofflow-control/worker.json': config,
                     '/etc/proofflow-product-dispatcher/worker/worker.json': {
                         **config, 'verifier_sha256': live.policy['verifier_sha256']}}}).encode())
-        record['identity'] = json.loads(live.host('/usr/bin/python3 -I -B '
-            '/opt/proofflow-control/probe_worker_controller.py identity'))
+        deadline = time.monotonic() + 10
+        while True:
+            try:
+                record['identity'] = json.loads(live.host('/usr/bin/python3 -I -B '
+                    '/opt/proofflow-control/probe_worker_controller.py identity'))
+                break
+            except RuntimeError:
+                # Identity is read-only; never retry a dispatch or installation.
+                if time.monotonic() >= deadline:
+                    raise
+                time.sleep(0.25)
         live.sql("SET ROLE pf_product_provisioner; SELECT pf_product.configure_execution('"
                  + runtime + "','" + live.policy['verifier_sha256'] + "',false);")
         record['new_policy'] = json.loads(live.sql(
