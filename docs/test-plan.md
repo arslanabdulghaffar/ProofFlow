@@ -1,5 +1,24 @@
 # Acceptance and verification plan
 
+November8 Phase6 scoped checks:83 Linux/42 Windows cases pass,including21 new unique
+portable crypto/deletion/expiry,scheduled integrity/retention and dated-funding cases.
+Actual Windows task LastTaskResult0 after integrity hardening;nonempty consistent
+capture/AES-DPAPI roundtrip and Windows-to-Linux inert selection pass. The same portable
+package excludes the normally deleted asset; no stale inventory used as authority.
+These are actual synthetic recovery probes,not a fresh compromised-host promotion.
+
+One new real Vultr call produced changed source,3 matching fresh checks,exact synthetic
+approval and a completed different batch. Original demo harness receipts remain FAILED:
+wrong expected terminal UI, then mistaken public report.worker access. Read-only journals
+prove both loops killed(signal9),no accepted output,cleanup and absent kernel writers.
+No paid rerun. Local forced browser exception now flushes video. Final139.04s MP4 fully
+decodes;key frames reviewed for readable claims/absence of secrets;edits are manifested.
+Live readback569 CLEANED/344 fences,zero missing deadlines/workspaces/clones,healthy
+services,closed admissions. [Evidence](evidence/phase6-scheduled-portable-demo-2026-11-08.json).
+Full1044-test baseline not rerun: production runtime/schema unchanged; these scoped
+checks supplement dated acceptance. Owner custody,lost-authority recovery,public smoke
+and human sign-off are NOT DONE. Earlier dated results below remain scoped history.
+
 Phase6 T21–T23 progress:41 scoped Linux cases pass(12 new bounded-pipe/target/deadline
 cases plus29 existing restore/backup cases). Real separate-PostgreSQL encrypted drill
 passes13 groups in20.824s,including concurrency,exporter failure,missing authority,

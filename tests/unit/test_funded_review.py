@@ -90,7 +90,10 @@ def test_existing_conservative_reservations_are_not_released(monkeypatch, fault)
 
 
 @pytest.mark.parametrize("fault", [None, "lost_reply", "ledger", "readback"])
-def test_durable_intent_and_old_deadline_preserved_on_uncertainty(monkeypatch, tmp_path, fault):
+@pytest.mark.parametrize("review_date", ["2026-11-06", "2026-11-08"])
+def test_durable_intent_and_old_deadline_preserved_on_uncertainty(
+    monkeypatch, tmp_path, fault, review_date
+):
     m, state, account, plans, budget, now = fixture(monkeypatch)
     budget["id"] = str(uuid4())
     record = m.review(state, account, plans, budget, now)
@@ -101,7 +104,7 @@ def test_durable_intent_and_old_deadline_preserved_on_uncertainty(monkeypatch, t
     def sql(statement, database):
         assert database == "proofflow_budget"
         if statement.startswith("UPDATE"):
-            assert (tmp_path / "funded-review-2026-11-06-intent.json").exists()
+            assert (tmp_path / ("funded-review-"+review_date+"-intent.json")).exists()
             assert not saved and state["review_due_at"] == record["prior_review_due_at"]
             writes.append(statement)
             if fault == "lost_reply":
@@ -117,13 +120,22 @@ def test_durable_intent_and_old_deadline_preserved_on_uncertainty(monkeypatch, t
     live = SimpleNamespace(admin=admin, sql=sql)
     if fault:
         with pytest.raises(RuntimeError):
-            m.apply_review(live, budget, before, record, tmp_path)
+            m.apply_review(live, budget, before, record, tmp_path, review_date)
         assert not saved and state["review_due_at"] == record["prior_review_due_at"]
-        assert not (tmp_path / "funded-review-2026-11-06-completed.json").exists()
+        assert not (tmp_path / ("funded-review-"+review_date+"-completed.json")).exists()
     else:
-        m.apply_review(live, budget, before, record, tmp_path)
+        m.apply_review(live, budget, before, record, tmp_path, review_date)
         assert len(saved) == 1 and state["review_due_at"] == record["review_due_at"]
     # Even an uncertain update is never submitted again through this intent.
     with pytest.raises(FileExistsError):
-        m.apply_review(live, budget, before, record, tmp_path)
+        m.apply_review(live, budget, before, record, tmp_path, review_date)
     assert len(writes) == 1
+
+
+@pytest.mark.parametrize("field", ["enabled", "runtime_sha256", "verifier_sha256"])
+def test_funding_cannot_accept_open_or_different_deployment(monkeypatch, field):
+    m, *_ = fixture(monkeypatch)
+    policy = {"enabled":False,"runtime_sha256":m.RUNTIME,"verifier_sha256":m.VERIFIER}
+    policy[field] = True if field == "enabled" else "0"*64
+    with pytest.raises(RuntimeError, match="POLICY_CHANGED"):
+        m.closed(SimpleNamespace(policy=policy))

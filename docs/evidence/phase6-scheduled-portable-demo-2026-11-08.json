@@ -1,0 +1,395 @@
+{
+  "base_commit": "0bf420862ba30d6e87a07fcba5bc28dba4bf6581",
+  "checks": {
+    "documentation": "PASS:276 entries/all59 source pages,links,templates,ignore rules",
+    "full_suite": "NOT_RERUN: production images/schema unchanged; scoped checks supplement dated1044-test baseline",
+    "linux_scoped_pytest": 83,
+    "local_exception_video_flush": "PASS, trusted local HTML only, no credentials/network",
+    "new_unique_cases": 21,
+    "ruff": "PASS",
+    "staged_secret_scan": "PASS:gitleaks staged redacted scan;0 findings",
+    "windows_scoped_pytest": 42
+  },
+  "containment": {
+    "cleanup": "confirmed",
+    "collected": false,
+    "error": "MISSING_OUTPUT_FILE",
+    "failure_note": "Second harness assumed public report.worker; FAILED_INFRA report is null. Separate journal readback verifies actual receipt; no product state edits.",
+    "kernel_writers": "absent_or_populated_zero",
+    "provider_calls": 0,
+    "raw_harness_completed": false,
+    "read_only_worker_journal_reconciled": true,
+    "runtime_exit_code": "9",
+    "separate_recording": true,
+    "state": "CLEANED",
+    "verification": "NOT_PERFORMED"
+  },
+  "deployment_pins": {
+    "note": "unchanged live deployment; portable module is offline, not deployed in product image",
+    "product_image": "e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358",
+    "verifier_rootfs": "0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b",
+    "worker_runtime": "fd9a1e227c437066fe9bb63f14deae0567cfbb7d70a5c9e23284c2fbbb09ac17"
+  },
+  "funded_review": {
+    "admission": false,
+    "inference": false,
+    "inference_cap_usd": 25,
+    "monthly_compute_quote_usd": 72,
+    "new_resources": 0,
+    "prior_review_due_at": "2026-11-08T14:27:11.770445+00:00",
+    "project_cap_usd": 150,
+    "provider_hard_stop": false,
+    "remaining_credit": "190.13",
+    "reservation_sha256": "7264f8d0fab18f3832dc20d6b65de778c06dde4aa3bd856f526340a4d32d2b8d",
+    "reserved_total_usd": 145,
+    "review_due_at": "2026-11-09T16:29:33.986905+00:00",
+    "reviewed_at": "2026-11-07T16:29:33.986905+00:00",
+    "tax_coverage_verified": false
+  },
+  "live_readback": {
+    "clock_edits": false,
+    "clock_floor_present": true,
+    "counts": {
+      "CLEANED": 569
+    },
+    "credit": {
+      "checked_at": "2026-11-07T16:56:43.301997+00:00",
+      "credit_guard": "within_early_cutoff",
+      "remaining_credit": "190.13",
+      "review_due_at": "2026-11-09T16:29:33.986905+00:00"
+    },
+    "fences": 344,
+    "inference_admission": "closed",
+    "missing_deadlines": 0,
+    "natural_seven_day_expiry": "NOT_YET_ELAPSED",
+    "observed_at": "2026-11-07T16:56:52.117770+00:00",
+    "product_admission": "closed",
+    "restore_clones_remaining": 0,
+    "retention_revision": "eaa221f6924ccbe08914d884048dc10bd6f3514a90858f8fbb7dfc50050490e6",
+    "retention_status": [
+      "Result=success",
+      "ExecMainStatus=0"
+    ],
+    "runtime_bound_expiry": true,
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "sources": {
+      "journal.py": "11ab39f77b0409d0e9be38f06964eb22535efc45b367c22c30735f944c16f19d",
+      "protocol.py": "855b981ecc680d25aa8d775214356deab985e382122f4db5ab3bad0d6b162de6",
+      "supervisor.py": "5ad2b83ca5085227c7127c2fbce03318db591a3cc47d93129323bc1690eb2518"
+    },
+    "workspaces_remaining": 0
+  },
+  "observed_at": "2026-11-07T16:56:52.117770+00:00",
+  "open": [
+    "owner offline custody",
+    "lost trustworthy current deletion authority",
+    "fresh compromised-host rebuild",
+    "private deck/cover/final package",
+    "MIT ownership clearance",
+    "explicit public release/submission",
+    "authenticated final form/deadline",
+    "funding review after current cutoff",
+    "independent human sign-off"
+  ],
+  "phase": "6",
+  "portable_recovery": {
+    "after_deletion": {
+      "asset_hashes": [],
+      "assets": 0,
+      "keep": 0,
+      "quarantined": true
+    },
+    "before_deletion": {
+      "asset_hashes": [
+        "3c5cb62a9c11344daaa5a5c000fd9225301b1d174fe7f5217ae4e62214b5e473"
+      ],
+      "assets": 1,
+      "keep": 1,
+      "quarantined": true
+    },
+    "current_authority": "required; authenticated caller; at most60s old",
+    "offline_copy_erasure": "operator custody; cannot remotely erase exported key",
+    "owner_offline_custody": "NOT_DONE",
+    "password": "ephemeral test bytes only in memory/stdin; not saved or owner custody",
+    "platforms": [
+      "Windows DPAPI vault",
+      "Linux password transport"
+    ],
+    "scope": "inert asset selection only; no SQL dump execution or production promotion"
+  },
+  "raw_receipt_hashes": {
+    "funded-review-2026-11-08-completed.json": "d06cf96a7947620378e0de0aa564cdc6f03b604fa7471207c5864a79b7fcfba5",
+    "phase6-browser-9226e15095a441a48272c48e2ffe8f48.json": "1ede6282ce14199fa258de153a641075a18aa94586adbbd2508ef4ab4500a2c7",
+    "phase6-containment-recording-readback.json": "8bffa17e18401c740fa58b034299832799380453863bc20fffd95a296bda9fc5",
+    "phase6-containment-recording.json": "3cff357dc8b53178e870df783ca4c5aedb05383faa17f8c0cd73eb8b4e75defe",
+    "phase6-demo-loop-readback.json": "bbe6e527b95ca4b7843cf53c1ab5c0fe794a35fa8a3a15c30e884aef410c35d6",
+    "phase6-lifecycle-2026-11-08.json": "f5275db81950c9367b274a8d84f44bf7fda10d33fe3b99a26fa346608e682d33",
+    "phase6-portable-cross-platform.json": "6a7f9b00f8edfd653dfeee71bd60354bc1b8b23fd9a8ccb1bf950177630c8c9c"
+  },
+  "real_ai_demo": {
+    "approval_digest": "f99361ec3868b8ca7798e6aed2bb3df50f9b994f9a867b9603c6127c1b493a7a",
+    "automated_synthetic_approval_not_human_signoff": true,
+    "batch_outcome": "match",
+    "batch_state": "COMPLETED",
+    "batch_verifier_report_sha256": "f7d01b9a6ff49602dd8503d75d88056c92d12376e338a3c203fbc70807be2e2d",
+    "bundle_sha256": "ed4bb0ca79049ccd8bf301255831b85e96dbd36a61480bbaf12b54912516a0c6",
+    "failure_note": "Real AI repair and batch passed; deliberate missing-output loop safely failed; harness expected wrong UI state. Video tail was not explicitly flushed on exception. No paid replay.",
+    "fresh_checks": [
+      {
+        "attempt": 1,
+        "cleanup_confirmed": true,
+        "comparison": "match",
+        "generation": 1,
+        "purpose": "candidate"
+      },
+      {
+        "attempt": 1,
+        "cleanup_confirmed": true,
+        "comparison": "match",
+        "generation": 2,
+        "purpose": "canary_ownership"
+      },
+      {
+        "attempt": 1,
+        "cleanup_confirmed": true,
+        "comparison": "match",
+        "generation": 3,
+        "purpose": "canary_quarantine"
+      }
+    ],
+    "mode": "ai_repair",
+    "model": "qwen3.8-flash-next",
+    "no_paid_replay": true,
+    "not_provider_invoice": true,
+    "original_outcome": "mismatch",
+    "ownership_witness_count": 1,
+    "provider_calls": 1,
+    "quote": {
+      "evidence_sha256": "dd105ee0765ebbb6d37691e8b512497d7085dc039639d7a8920cc31d32f7138a",
+      "input_micro_usd_per_million": 100000,
+      "model": "qwen3.8-flash-next",
+      "observed_at": "2026-11-07T16:35:47.383639+00:00",
+      "output_micro_usd_per_million": 200000,
+      "valid_until": "2026-11-07T17:35:47.383639+00:00"
+    },
+    "raw_harness_completed": false,
+    "reconciled_no_retry": true,
+    "repair_state": "AWAITING_APPROVAL",
+    "reservation_micro_usd": 27853
+  },
+  "review": {
+    "findings_fixed": [
+      "earliest deduplicated asset timestamp",
+      "not-due receipt authenticates key and envelope",
+      "finalize browser video on exceptional exit",
+      "current funding pins separate from frozen benchmark",
+      "FAILED_INFRA readback uses committed worker receipt rather than nonexistent public report"
+    ],
+    "new_dependency": "Local signed Ubuntu FFmpeg6.1.1-3ubuntu5 only; no application/cloud dependency",
+    "separate_critical_pass": "Codex; not independent human approval",
+    "unchanged": [
+      "product image",
+      "worker",
+      "verifier",
+      "schema20",
+      "contracts",
+      "frozen benchmark",
+      "spending caps",
+      "repository privacy"
+    ]
+  },
+  "scheduled_backup": {
+    "capture": {
+      "asset_count": 1,
+      "database_bytes": 185228,
+      "encrypted_sha256": "671c5aa2fb55245d7f4be8f75ac29c7fe64b2e8a7e225b8ca8a399e60bbb755d",
+      "expires_at": "2026-11-08T16:35:14.296450+00:00",
+      "new_resources": 0,
+      "provider_calls": 0,
+      "scheduled_backup": "captured",
+      "snapshot_at": "2026-11-07T16:35:14.29645+00:00",
+      "workspace_count": 1
+    },
+    "dependency": "desktop awake and logged in; closed/idle cloud required; no always-on RPO claim",
+    "frequency": "hourly; capture at12h or2h before expiry",
+    "principal": "current interactive user; limited; no stored task password",
+    "revision_note": "Actual nonempty capture preceded added image-pin/not-due checks. Exact unchanged image independently verified; final scheduled not-due integrity check passed.",
+    "task_checked_at": "2026-11-07T16:56:56.0043419Z",
+    "task_name": "ProofFlow-ProductBackup",
+    "task_result": 0,
+    "task_status": "not_due_authenticated"
+  },
+  "source_sha256_git_bytes": {
+    "orchestrator/asset_backup.py": "b6071b9ecd532cc33dc46c5edff86b417d13ea043a4ba00b536a6cee5e981766",
+    "orchestrator/portable_backup.py": "36a298b7180492b1e93c083cc93a5604db26c812c6f5590c41c406c1e64687d6",
+    "orchestrator/restore_guard.py": "1745c78ccb4cd1fa051af4d415aa1b52fbd1ead5a2543e5caf6568853d083cee",
+    "scripts/Export-PortableBackup.ps1": "9f716d4975ace9f7024af1e74eadf87bb0ccb12b15e41b11085b4c256768eab2",
+    "scripts/Install-ProductBackupTask.ps1": "a7bd66b41c4e231c325854ae2d40950f1f2c0b7614cc93a79b774e00a08d56bf",
+    "scripts/Run-ProductBackup.ps1": "416bd6ba4e1eb5763e33f4ce0c754d4c09b4514e4dad79fd8557fb2bc30e4e2e",
+    "scripts/asset_backup_vault.py": "0629c0a975cc8351fc3852f0a1a608641b9ff46a7bc4b055794cbc3634dcb506",
+    "scripts/check_phase6_browser.py": "5a443e1c27aa2366fdcf99005dee6ae4cc485a1d3fff5243f392a220825f1bd3",
+    "scripts/check_phase6_portable_live.py": "f7004a24dca13d99af55c092fd1627559951178fbb8172521f948125dd502030",
+    "scripts/check_preparation.py": "36cd5fcefbdee49d733608fa2c93f72b8b3a39d707ab3c5d2ee152f9baf441c4",
+    "scripts/check_product_image.py": "1d02700448122dbf9144334e4b324d1bd27859c36755711a222890bf0150f99c",
+    "scripts/consistent_product_backup.py": "19cc8c34a4e8768e935b493fa257db840866fb8793397270f77ff2330dc2d653",
+    "scripts/export_portable_backup.py": "07bf24d08e488cb07f30c0eba407d44aed849fdf196d9c8a86995985cad5c51c",
+    "scripts/product_live_session.py": "b73e419d2630cdd3abae227cc21c7e679ee80e60a65bb6df80eef19897782004",
+    "scripts/record_containment_demo.py": "adef86ccb33069c9afb655ccc8a5637e7705222bb304f6afe07e7ac6a3adbc2f",
+    "scripts/render_phase6_demo.py": "6b78ffea0eabf1db6db872e41128e83925bd0cc35c0289eab8ac40ca3f1055f2",
+    "scripts/review_credit_window.py": "049d8873342ebf57b0c6f0f81d1e37a9d65c8ffdc085cbeee9f4cf7cd27b22bc",
+    "scripts/scheduled_product_backup.py": "b53815f076b85aac99c610df27d91b9515d53b1cac5e76e2e84da02f010464ec",
+    "tests/security/test_portable_backup.py": "c520c0d291665afa456ae28aa77cbf17063aff3032130576ef2e3ccf78b7c577",
+    "tests/unit/test_funded_review.py": "4f0a829e235525fa378a2791ae5ac8711df9caec690cbb6151e15ac311f2a604",
+    "tests/unit/test_scheduled_backup.py": "61db67cb423c72017498835b9d543d06a5e44fb73581170d763d35f9d8e74859"
+  },
+  "status": "WIP_PRIVATE_COMPONENTS_VERIFIED_NOT_PUBLIC_RELEASE",
+  "video": {
+    "duration_seconds": 139.04,
+    "edits": "labeled holds/cards and separate loop; actual completed batch receipt summary, not fabricated browser UI",
+    "filename": "phase6-private-ai-demo-v2.mp4",
+    "manifest_sha256": "070456ad4bb75b22990aa07f4e6a0382642496774e5bda3da2a36d10a98b3b25",
+    "media": "H264 MP4,1366x1000,25fps,silent captions; private only",
+    "qa": "Full FFmpeg decode; original/final key-frame visual review including exact-version hold",
+    "raw_sources": {
+      "page@43817ee9a2577674c9752e90e8f7eecc.webm": "7d0758c289a41fdab3995035c5e9e27bc7e501db003540df27e6760ac655d3a9",
+      "page@f4ed291cae0bc0e795c0e5103886fb61.webm": "2439dc2131ccacdd1e4093174dee1136b0acd499518941b91a2c9453704f9367"
+    },
+    "scenes": [
+      {
+        "body": "Checked repairs before the next batch.\n\nA revenue import can run successfully and still assign the wrong owner.\nApprove the rules. Inspect the records. Check the repair.\n\nActual private browser recording, synthetic inputs and real Vultr inference.\nEdited with labeled pauses, receipt summaries and a separate loop segment.\nApprovals are automated tests, not independent human sign-off.",
+        "caption": "PRIVATE REVIEW COPY | Nov 8, 2026 KST | No publication or submission",
+        "duration_seconds": 10,
+        "kind": "card",
+        "segment_sha256": "dc7604661cb4a54872ddc99d55bf93f6f8ba7618c8e932cd3de1380985f30524",
+        "source": null,
+        "source_start_seconds": 0,
+        "title": "ProofFlow"
+      },
+      {
+        "body": null,
+        "caption": "1 / Exact contract, then isolated original execution. Browser time is unaccelerated.",
+        "duration_seconds": 6.25,
+        "kind": "clip",
+        "segment_sha256": "697e123fe76e3b31015d387d53336be11a36c40b6e5954e472e560fe2be96e5b",
+        "source": "page@f4ed291cae0bc0e795c0e5103886fb61.webm",
+        "source_start_seconds": 0,
+        "title": null
+      },
+      {
+        "body": null,
+        "caption": "PAUSED FRAME / The owner witness differs. The original result is not accepted.",
+        "duration_seconds": 10,
+        "kind": "hold",
+        "segment_sha256": "b230f9359f1c24ca96d6d30face5112a9a65b9b0c5a7f0abc5f98b1fb285a38c",
+        "source": "page@f4ed291cae0bc0e795c0e5103886fb61.webm",
+        "source_start_seconds": 6.25,
+        "title": null
+      },
+      {
+        "body": null,
+        "caption": "2 / One actual Vultr request. Model explanations remain unverified; checks decide.",
+        "duration_seconds": 14.55,
+        "kind": "clip",
+        "segment_sha256": "ceb9a46440286d1ebe2f6fec8da3d67feaaec62454a834c3425054850c5eb000",
+        "source": "page@f4ed291cae0bc0e795c0e5103886fb61.webm",
+        "source_start_seconds": 6.25,
+        "title": null
+      },
+      {
+        "body": null,
+        "caption": "PAUSED FRAME / Candidate + two protected checks match; cleanup confirmed. Still awaiting approval.",
+        "duration_seconds": 12,
+        "kind": "hold",
+        "segment_sha256": "8fa300d8c347c232252b8a3dff0ba15001b4dd47a7779c4f1f8233e387d15a0b",
+        "source": "page@f4ed291cae0bc0e795c0e5103886fb61.webm",
+        "source_start_seconds": 20.8,
+        "title": null
+      },
+      {
+        "body": null,
+        "caption": "3 / Exact-version test approval, then different inputs. No GitHub action is performed.",
+        "duration_seconds": 0.52,
+        "kind": "clip",
+        "segment_sha256": "4593c9878aac4703fd60d20593685fdafbda6a9afa1036044e92f5239573d8f5",
+        "source": "page@f4ed291cae0bc0e795c0e5103886fb61.webm",
+        "source_start_seconds": 20.8,
+        "title": null
+      },
+      {
+        "body": null,
+        "caption": "PAUSED FRAME / Exact preview and deliberate test approval. This does not approve a GitHub write.",
+        "duration_seconds": 8,
+        "kind": "hold",
+        "segment_sha256": "c0cd088aa6bf0d4dbf00fe1790c8c9599a6658dd4ee92728178ab2b8af4fda74",
+        "source": "page@f4ed291cae0bc0e795c0e5103886fb61.webm",
+        "source_start_seconds": 21.32,
+        "title": null
+      },
+      {
+        "body": null,
+        "caption": "3 / The approved version runs again on different input bytes.",
+        "duration_seconds": 3.88,
+        "kind": "clip",
+        "segment_sha256": "3c8483baff0f2a3cea7c52282a42165a6237821c64b3a95218d8de679df039b0",
+        "source": "page@f4ed291cae0bc0e795c0e5103886fb61.webm",
+        "source_start_seconds": 21.32,
+        "title": null
+      },
+      {
+        "body": "Real Vultr repair: 1 call; 3 checks matched and cleaned up.\nCandidate source changed; the downloaded evidence ZIP is retained privately.\nAn exact-version synthetic test approval enabled different input bytes.\n\nBatch 01a1b6e0-7a08-784a-ad70-7da9d9cc5670\nRecorded state: COMPLETED\n\n$0.027853 was reserved for this repair. This is not an invoice.\nThe raw clip moved on before a readable completed-batch frame was captured.",
+        "caption": "RECEIPT SUMMARY / Read from the retained actual run; this is not a reconstructed product screen.",
+        "duration_seconds": 14,
+        "kind": "card",
+        "segment_sha256": "832e9aab855c071fcce175ba4b0f2003d02ed097c54faa3fbc5a206070b6a0e0",
+        "source": null,
+        "source_start_seconds": 0,
+        "title": "The fresh batch completed"
+      },
+      {
+        "body": "A deliberately nonterminating Python upload runs only on the isolated worker.\n\nThe following browser segment is a separate real containment test.\nIt is not a rejected AI proposal or a continuous extension of the first run.",
+        "caption": "SEPARATE RECORDING / Deliberate loop, not model output; zero additional inference calls.",
+        "duration_seconds": 7,
+        "kind": "card",
+        "segment_sha256": "833798007f92cf54b65f4d5afc05699b9745826f76069af27185666a561a5559",
+        "source": null,
+        "source_start_seconds": 0,
+        "title": "What if uploaded code never stops?"
+      },
+      {
+        "body": null,
+        "caption": "4 / Unaccelerated separate loop test. No accepted result is published.",
+        "duration_seconds": 24.88,
+        "kind": "clip",
+        "segment_sha256": "d721d5d968827b6114ff8f180b50f55e3b2be02881336b25f31a5517c5eda60d",
+        "source": "page@43817ee9a2577674c9752e90e8f7eecc.webm",
+        "source_start_seconds": 0,
+        "title": null
+      },
+      {
+        "body": null,
+        "caption": "PAUSED FRAME + READBACK / Signal 9; no accepted output; cleanup confirmed; kernel writers absent.",
+        "duration_seconds": 10,
+        "kind": "hold",
+        "segment_sha256": "6ce8f9beb9dda7237f81514a9499255a3d82c8e83894374ac64fc31bfb7339de",
+        "source": "page@43817ee9a2577674c9752e90e8f7eecc.webm",
+        "source_start_seconds": 24.5,
+        "title": null
+      },
+      {
+        "body": "Frozen synthetic evaluation: full ProofFlow repaired 15/18.\nWrong acceptances: 0/15. The deterministic rebuild repaired 18/18.\nOne repeat, shared templates, no independent human oracle review.\n\nBoth recording harnesses stopped on later check errors; receipts stay failed.\nRead-only worker records confirm loop termination and cleanup.\nLive product states and the verifier were not changed to make tests pass.\n\nOriginal clips, exact bundle and edit manifest remain available privately.",
+        "caption": "Scope: synthetic merchant-revenue contract. No public service, security certification or customer ROI claim.",
+        "duration_seconds": 18,
+        "kind": "card",
+        "segment_sha256": "cba0f1922a349075ef44fe691a82c140340f11f2000f97476eb8b80772e3cae5",
+        "source": null,
+        "source_start_seconds": 0,
+        "title": "Evidence before confidence"
+      }
+    ],
+    "sha256": "93580699f50cb23b082481f849397ca42664a931a6ef8f71a1cb41aa2f597fac"
+  }
+}

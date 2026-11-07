@@ -1,5 +1,20 @@
 # Risks and owner decisions
 
+November8 current update (supersedes dated statements below): scheduled encrypted
+nonempty capture, profile-independent password transport and the private real-AI demo
+recording now have actual evidence. Desktop must be logged in/awake; current backup
+expires Nov9 01:35 KST. Owner-held offline kit/password is NOT DONE. Exported copies
+cannot be remotely crypto-erased; not a guest-retention guarantee. Loss of trustworthy
+current deletion authority still prevents restoration; fresh compromised-host rebuild
+is NOT RUN. Task failures are visible and do not establish an always-on RPO.
+
+Fresh credit$190.13 and a new bounded review extend the existing guard to **Nov10 01:29
+KST**. Caps/reservations unchanged; provider tax/hard-stop unknowns remain. The139.04s
+private demo preserves two failed harness receipts and discloses separate containment,
+pauses and a batch receipt-summary card. No benchmark superiority/human sign-off claim.
+Publication/submission/MIT ownership, authenticated final form and funded judging uptime
+remain open. [Evidence](evidence/phase6-scheduled-portable-demo-2026-11-08.json).
+
 Phase6 recovery/rehearsal update: consistent concurrent capture and separate-instance
 quarantine restore now pass,as do five current clean-browser contexts. Fresh-host trust,
 portable keys/current deletion authority,scheduled nonempty backups and final real-AI

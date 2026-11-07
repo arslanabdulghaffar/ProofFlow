@@ -1,5 +1,42 @@
 # Decision log
 
+## D91: scheduled local custody, portable synthetic transport and honest recorded evidence
+
+Use the existing private desktop as the off-VM backup destination without another paid
+service. A limited interactive-user Windows task checks hourly, captures every12h or2h
+before expiry and preserves closed/idle gates. It retries busy/failing runs and fails
+on pending uncertain receipts. Capture uses the D90 exported MVCC snapshot and fixed
+nonroot network-denied API asset reader; reads are inert, bounded and hash checked.
+Repeated blob registrations use the earliest creation time so deduplication cannot
+extend raw-data lifetime. Even a not-due result authenticates the vault key/envelope;
+a timestamp is not proof of a recoverable backup. Desktop sleep/logout remains a gap.
+
+Add offline password transport using existing cryptography50.0.2: scrypt n=2^17,r=8,p=1,
+random16-byte salt and AES-256-GCM key wrapping bound to the envelope hash. Fixed parser
+bounds; no key/password persistence, argv or chat. A24–256-byte UTF-8 password is entered
+twice only in a local interactive terminal. Existing snapshot/raw expiry is preserved.
+Current authenticated deletion authority is still required and must be <=60s old.
+The transport is not a backup-derived proof of non-deletion. Exported copies cannot
+be remotely crypto-erased; keep this synthetic owner-custody feature out of claims
+about enforced guest-data retention. Actual Windows-to-Linux drill passed with an
+ephemeral test password, not owner custody. No product endpoint/image/schema change.
+
+The real AI demo uses the official fresh provider quote and existing budget admission
+caps. No fixture patch substitutes for the model. Preserve the failed recording harness
+receipts and reconcile read-only worker records rather than spending again to obtain
+cleaner evidence. Missing output after a killed loop is FAILED_INFRA/report=null; the
+trusted worker_receipt proves cleanup, not a fabricated public verification report.
+Close browser contexts before browser shutdown on exceptions. Media may add labeled
+holds/cuts and actual receipt summaries, never false live states or human approval.
+
+Local signed Ubuntu FFmpeg6.1.1-3ubuntu5 was installed only for trusted own-video editing;
+not in the application,worker,verifier or cloud. No new Python/runtime dependency.
+Separate Codex critical review covered salt/nonce/KDF bounds, stale authority, expiry,
+secret-free capture, old-receipt replay, failed task reporting and funding pins. Fixed
+findings and21 new unique fault/policy cases are not independent human sign-off.
+Funding uses current accepted runtime pins independently of the frozen benchmark and
+date-specific exclusive intents; no cap increase, reservation release or old renewal replay.
+
 ## D90: consistent capture and private rehearsal without overstating recovery
 
 Use PostgreSQL exported read-only REPEATABLE READ snapshots for inventory,registry and

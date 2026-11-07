@@ -1,6 +1,6 @@
-"""Fresh private Chromium rehearsal, synthetic template-derived inputs, zero inference.
+"""Fresh private Chromium rehearsal with an explicit, bounded real-inference demo mode.
 
-No hidden stored AI patch; the correct source is a disclosed test fixture. Uploads
+Without --ai-demo, correct source is a disclosed fixture and inference stays closed. Uploads
 execute only on the designated worker. No GitHub action or persistent browser profile.
 Each run has its own durable receipt; reconcile failed receipts before another run.
 """
@@ -9,9 +9,11 @@ import argparse
 import base64
 import hashlib
 import json
+import re
 import ssl
 import time
-from datetime import UTC, datetime
+from contextlib import ExitStack
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from uuid import UUID, uuid4
 
@@ -26,30 +28,80 @@ from eval.development import cases
 from verifier.canaries import generate
 from worker.protocol import authority_id
 
+CAPTION = """document.addEventListener('DOMContentLoaded',()=>{
+ const d=document.createElement('div');
+ d.textContent='PRIVATE SYNTHETIC DEMO · REAL VULTR REQUEST · AUTOMATED TEST APPROVAL';
+ d.style='position:fixed;top:0;left:0;right:0;z-index:9999;background:#062f2b;'+
+ 'color:white;padding:8px;text-align:center;font:14px sans-serif';
+ document.body.append(d);});"""
 
-def version_rehearsal(page, client, files, run, item, save):
-    """Known-correct disclosed source, three real checks, exact test approval, new batch."""
+
+def containment_rehearsal(page, client, files, item, save, *, live):
+    page.goto(ORIGIN, wait_until="networkidle")
+    for kind, key in (("pipeline","pipeline.py.txt"),("transactions","transactions.csv"),
+                      ("customers","customers.csv"),("contract","contract.json")):
+        raw = b"# Deliberate containment demonstration, not AI output\nwhile True:\n    pass\n" \
+              if kind == "pipeline" else files[key]
+        page.locator("#"+kind).set_input_files({"name":key.removesuffix(".txt"),
+                                              "mimeType":"text/plain","buffer":raw})
+    page.locator("#files button").click()
+    expect(page.locator("#confirm-contract")).to_be_enabled()
+    page.locator("#confirm-contract").check()
+    page.locator("#approve").click()
+    expect(page.locator("#run")).to_be_enabled()
+    page.locator("#run").click()
+    page.wait_for_url("**/?job=*",timeout=20000)
+    job = str(UUID(page.url.split("?job=",1)[1]))
+    item["containment_job"] = job
+    save()
+    expect(page.locator("#state")).to_have_text(
+        re.compile("Needs review|Execution failed"),timeout=120000)
+    result = client.get("/v1/jobs/"+job).json()
+    # The public job view intentionally has report=null on infrastructure failure.
+    # Read the committed termination receipt through trusted admin access; never
+    # invent a public verification report or change the job's terminal state.
+    worker = json.loads(live.sql("SELECT worker_receipt FROM pf_product.jobs WHERE id='"  # noqa: S608 - parsed UUID
+                                 +job+"';"))
+    require(result["outcome"] in ("execution_failed", "infrastructure_failed")
+            and worker["cleanup"] == "confirmed" and worker["error"] == "MISSING_OUTPUT_FILE"
+            and worker["runtime_exit_code"] == "9" and not worker["collected"]
+            and worker["verification"] == "NOT_PERFORMED"
+            and worker["termination"]["kernel_writers"] == "absent_or_populated_zero",
+            "RECORDED_CONTAINMENT_FAILED")
+    item["containment_result"] = result
+    item["containment_worker_receipt"] = worker
+    item["checks"].append("deliberate_loop_failed_and_worker_cleanup_confirmed")
+    save()
+
+
+def version_rehearsal(page, client, files, run, item, save, *, real_ai=False):
+    """Disclosed original or real AI repair, fresh checks, exact test approval, new batch."""
     page.locator("#repair-start").click()
     page.wait_for_url("**/*repair=*", timeout=20000)
     repair = str(UUID(page.url.split("repair=", 1)[1].split("&", 1)[0]))
     item["repair"] = repair
     save()
-    for _ in range(150):
+    for step in range(360):
         result = client.get("/v1/repairs/" + repair).json()
         if result["state"] not in ("QUEUED", "RUNNING", "RECONCILING"):
             break
+        if step % 3 == 0:
+            page.locator("#repair-refresh").click()
         time.sleep(1)
     item["repair_result"] = result
     save()
-    require(result["state"] == "AWAITING_APPROVAL" and result["mode"] == "original"
-            and result["calls"] == 0 and len(result["checks"]) == 3
+    require(result["state"] == "AWAITING_APPROVAL"
+            and (1 <= result["calls"] <= 3 if real_ai else
+                 result["mode"] == "original" and result["calls"] == 0)
+            and len(result["checks"]) >= 3
             and all(check["cleanup_confirmed"] for check in result["checks"]),
-            "UNCHANGED_SOURCE_CHECKS_FAILED")
+            "RECORDED_REPAIR_CHECKS_FAILED")
     page.locator("#repair-refresh").click()
-    expect(page.locator("#repair-state")).to_contain_text("Original source, no AI")
+    if not real_ai:
+        expect(page.locator("#repair-state")).to_contain_text("Original source, no AI")
     export = client.get("/v1/repairs/" + repair + "/export").json()
-    require(export["candidate_source"].encode() == files["pipeline.py.txt"]
-            and not export["activation_approved"], "UNCHANGED_EXPORT_MISMATCH")
+    same = export["candidate_source"].encode() == files["pipeline.py.txt"]
+    require(same != real_ai and not export["activation_approved"], "DEMO_SOURCE_ORIGIN_MISMATCH")
     with page.expect_download() as download:
         page.locator("#repair-bundle").click()
     target = PRIVATE / "evidence" / ("phase6-" + run + "-bundle.zip")
@@ -91,7 +143,8 @@ def version_rehearsal(page, client, files, run, item, save):
     require(result["state"] == "COMPLETED", "FRESH_BATCH_FAILED")
     page.locator("#batch-refresh").click()
     expect(page.locator("#batch-result")).to_contain_text("COMPLETED")
-    item["checks"].extend(["three_fresh_checks_of_disclosed_original_no_model",
+    item["checks"].extend(["real_vultr_changed_source_and_fresh_checks" if real_ai else
+                           "three_fresh_checks_of_disclosed_original_no_model",
                            "actual_browser_bundle_download", "exact_synthetic_version_approval",
                            "fresh_batch_completed_on_designated_worker"])
 
@@ -126,7 +179,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--version-only", action="store_true",
                         help="Rehearse correct original, exact approval and fresh batch only")
+    parser.add_argument("--ai-demo", action="store_true",
+                        help="One bounded Vultr repair, activation and batch recording")
     options = parser.parse_args()
+    require(not (options.ai_demo and options.version_only), "DEMO_MODES_EXCLUSIVE")
     run = uuid4().hex
     path = PRIVATE / "evidence" / ("phase6-browser-" + run + ".json")
     # No automatic replay after an uncertain job or failed fixture cleanup.
@@ -138,6 +194,7 @@ def main():
               "scope": "private_fresh_context_template_derived_synthetic_rehearsal",
               "provider_calls": 0, "new_resources": 0, "workspaces": [], "cases": [],
               "version_rehearsal": options.version_only,
+              "real_ai_demo": options.ai_demo,
               "synthetic_automated_contract_approval_not_human_signoff": True}
 
     def save():
@@ -158,11 +215,30 @@ def main():
         )).digest()).decode()
         save()
         try:
+            if options.ai_demo:
+                config = json.loads((PRIVATE / "repair-provider.json").read_bytes())
+                require(json.loads(live.host("cat /etc/proofflow-repair/config.json")) == config,
+                        "DEMO_PROVIDER_CONFIG_DRIFT")
+                quote = config["quote"]
+                require(quote["model"] == "qwen3.8-flash-next"
+                        and quote["input_micro_usd_per_million"] == 100000
+                        and quote["output_micro_usd_per_million"] == 200000
+                        and datetime.fromisoformat(quote["valid_until"])
+                        > datetime.now(UTC)+timedelta(minutes=10), "DEMO_QUOTE_NOT_CURRENT")
+                record["quote"] = quote
+                save()
+                require(live.sql("UPDATE pf_budget.accounts SET blocked=false WHERE blocked "
+                                 "AND project_limit=150000000 AND inference_limit=25000000 "
+                                 "RETURNING blocked;", "proofflow_budget") == b"f",
+                        "BOUNDED_INFERENCE_ADMISSION_FAILED")
             live.admission(True)
-            with sync_playwright() as playwright:
+            with sync_playwright() as playwright, ExitStack() as browser_cleanup:
                 browser = playwright.chromium.launch(
                     args=["--ignore-certificate-errors-spki-list=" + spki])
+                browser_cleanup.callback(browser.close)
                 for index, name, expected, files in variants(run):
+                    if options.ai_demo and name != "joins-repairable":
+                        continue
                     if options.version_only and expected != "match":
                         continue
                     started = time.monotonic()
@@ -178,6 +254,7 @@ def main():
                              + "','operator',clock_timestamp()+interval '1 hour');")
                     client = live.login(workspace, minutes=20)
                     context = browser.new_context(viewport={"width": 1366, "height": 900})
+                    browser_cleanup.callback(context.close)
                     page = context.new_page()
                     errors = []
                     page.on("pageerror", lambda _, errors=errors: errors.append("SCRIPT_ERROR"))
@@ -192,6 +269,22 @@ def main():
                     require(not page.locator("#session-token").input_value()
                             and not page.locator("#csrf-token").input_value(),
                             "LOGIN_FIELDS_NOT_CLEARED")
+                    if options.ai_demo:
+                        cookies = context.cookies()  # In memory only, never storage_state on disk.
+                        context.close()
+                        context = browser.new_context(viewport={"width":1366,"height":900},
+                            record_video_dir=str(PRIVATE / "evidence"),
+                            record_video_size={"width":1366,"height":900})
+                        # ExitStack closes contexts before the browser on any assertion,
+                        # flushing the original recording without another paid run.
+                        browser_cleanup.callback(context.close)
+                        context.add_init_script(CAPTION)
+                        context.add_cookies(cookies)
+                        page = context.new_page()
+                        page.on("pageerror",lambda _,errors=errors: errors.append("SCRIPT_ERROR"))
+                        page.goto(ORIGIN,wait_until="networkidle")
+                        expect(page.locator("#workspace")).to_be_visible()
+                        item["video_started_at"] = datetime.now(UTC).isoformat()
                     for kind, key in (("pipeline", "pipeline.py.txt"),
                                       ("transactions", "transactions.csv"),
                                       ("customers", "customers.csv"),
@@ -234,8 +327,9 @@ def main():
                                            "exact_contract_required_before_run",
                                            "actual_worker_original_and_independent_comparison",
                                            "refresh_preserves_job_identity"])
-                    if options.version_only:
-                        version_rehearsal(page, client, files, run, item, save)
+                    if options.version_only or options.ai_demo:
+                        version_rehearsal(page, client, files, run, item, save,
+                                          real_ai=options.ai_demo)
                     image = PRIVATE / "evidence" / ("phase6-" + run + "-" + str(index) + ".png")
                     page.locator("#job").screenshot(path=str(image))
                     item["screenshot_sha256"] = hashlib.sha256(image.read_bytes()).hexdigest()
@@ -243,6 +337,9 @@ def main():
                     require(page.evaluate("document.documentElement.scrollWidth<=innerWidth"),
                             "MOBILE_PAGE_OVERFLOW")
                     require(not errors, "BROWSER_SCRIPT_ERROR")
+                    if options.ai_demo:
+                        page.set_viewport_size({"width":1366,"height":900})
+                        containment_rehearsal(page,client,files,item,save,live=live)
                     page.locator("#logout").click()
                     expect(page.locator("#access")).to_be_visible()
                     # Test the revoked credential on a NEW transport. A server idle
@@ -254,13 +351,28 @@ def main():
                         require(negative.get("/v1/jobs/" + item["job"]).status_code == 403,
                                 "LOGGED_OUT_SESSION_STILL_READS_JOB")
                     context.close()
+                    if options.ai_demo:
+                        video = Path(page.video.path())
+                        item["video_file"] = video.name
+                        item["video_sha256"] = hashlib.sha256(video.read_bytes()).hexdigest()
+                        item["video_finished_at"] = datetime.now(UTC).isoformat()
                     item["checks"].extend(["mobile_no_page_overflow", "logout_revokes_evidence"])
                     item["elapsed_seconds"] = round(time.monotonic()-started, 3)
                     save()
                     print(json.dumps({"case": name, "outcome": expected}), flush=True)
-                browser.close()
-            require(live.sql(counts) == baseline, "MODEL_CALL_OR_PR_INTENT_CREATED")
+            after = live.sql(counts)
+            if options.ai_demo:
+                first, last = json.loads(baseline), json.loads(after)
+                record["provider_calls"] = last[0]-first[0]
+                require(1 <= record["provider_calls"] <= 3 and last[1] == first[1],
+                        "DEMO_CALL_OR_PR_BOUNDARY_CHANGED")
+            else:
+                require(after == baseline, "MODEL_CALL_OR_PR_INTENT_CREATED")
         finally:
+            if options.ai_demo:
+                live.sql("UPDATE pf_budget.accounts SET blocked=true;", "proofflow_budget")
+                record["provider_calls"] = json.loads(live.sql(counts))[0]-json.loads(baseline)[0]
+                save()
             live.admission(False)
             for workspace in record["workspaces"]:
                 if live.sql("SELECT count(*) FROM pf_product.workspaces WHERE id='"  # noqa: S608 - generated UUID

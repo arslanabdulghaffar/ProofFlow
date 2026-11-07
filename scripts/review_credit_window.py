@@ -5,10 +5,11 @@ plan, identity, closed-admission and unchanged-reservation checks. A latched or
 expired stop cannot be reopened. Partial/uncertain application requires readback.
 """
 
+import argparse
 import hashlib
 import json
 import sys
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from uuid import UUID
@@ -16,13 +17,35 @@ from uuid import UUID
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from comparison_api import save  # noqa: E402
+from install_product_services import IMAGE  # noqa: E402
 from product_live_session import LiveSession, require  # noqa: E402
-from run_comparison import closed  # noqa: E402
 from vultr_credit_guard import FINAL_TEARDOWN  # noqa: E402
 from vultr_phase1 import LABEL, PLANS, PRICES, PRIVATE  # noqa: E402
 
 RESERVATIONS = {"compute": 72, "inference": 25, "later_storage": 18,
                 "incidental": 10, "contingency": 20}
+RUNTIME = "fd9a1e227c437066fe9bb63f14deae0567cfbb7d70a5c9e23284c2fbbb09ac17"
+VERIFIER = "0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b"
+
+
+def closed(live):
+    # Funding uses the accepted current deployment, not frozen evaluation pins.
+    require(not live.policy["enabled"] and live.policy["runtime_sha256"] == RUNTIME
+            and live.policy["verifier_sha256"] == VERIFIER, "FUNDED_REVIEW_POLICY_CHANGED")
+    require(live.sql("SELECT count(*)=1 AND bool_and(blocked) FROM pf_budget.accounts;",
+                     "proofflow_budget") == b"t", "FUNDED_REVIEW_INFERENCE_OPEN")
+    require(live.sql("SELECT count(*) FROM pf_product.jobs WHERE state NOT IN "
+                     "('NEEDS_REVIEW','FAILED_INFRA','CANCELLED');") == b"0",
+            "FUNDED_REVIEW_JOBS_NOT_IDLE")
+    require(live.sql("SELECT count(*) FROM pf_product.pr_intents WHERE lease_owner IS NOT NULL "
+                     "OR state IN ('BRANCH_PENDING','COMMIT_PENDING','PR_PENDING');") == b"0",
+            "FUNDED_REVIEW_PR_NOT_IDLE")
+    require(live.host("systemctl is-active proofflow-product-api.service "
+                      "proofflow-product-dispatcher.service proofflow-product-retention.timer")
+            == b"active\nactive\nactive", "FUNDED_REVIEW_SERVICES_UNHEALTHY")
+    for role in ("api", "dispatcher"):
+        require(live.host("docker inspect --format='{{.Image}}' proofflow-product-" + role)
+                == ("sha256:" + IMAGE).encode(), "FUNDED_REVIEW_IMAGE_CHANGED")
 
 
 def review(state, account, plans, budget, now):
@@ -94,8 +117,15 @@ def check_reservations(rows, account):
 LEDGER_SQL = "SELECT coalesce(json_agg(r ORDER BY id),'[]'::json) FROM pf_budget.reservations r;"
 
 
-def apply_review(live, budget, before, record, root):
-    save(root, "funded-review-2026-11-06-intent.json", record)
+def receipt_prefix(review_date):
+    require(date.fromisoformat(review_date).isoformat() == review_date,
+            "FUNDED_REVIEW_DATE_INVALID")
+    return "funded-review-" + review_date
+
+
+def apply_review(live, budget, before, record, root, review_date="2026-11-06"):
+    prefix = receipt_prefix(review_date)
+    save(root, prefix + "-intent.json", record)
     prior = datetime.fromisoformat(record["prior_review_due_at"]).isoformat()
     due = datetime.fromisoformat(record["review_due_at"]).isoformat()
     identifier = str(UUID(budget["id"]))
@@ -119,13 +149,19 @@ def apply_review(live, budget, before, record, root):
     live.admin.state["review_due_at"] = due
     live.admin.state["funded_review"] = record
     live.admin.save()
-    save(root, "funded-review-2026-11-06-completed.json", record)
+    save(root, prefix + "-completed.json", record)
 
 
 def main():
-    require(sys.argv[1:] == ["--apply"], "FUNDED_REVIEW_EXPLICIT_APPLY_REQUIRED")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--apply", action="store_true", required=True)
+    parser.add_argument("--review-date", required=True, help="Today's KST date; new receipt only")
+    options = parser.parse_args()
+    require(options.review_date == (datetime.now(UTC)+timedelta(hours=9)).date().isoformat(),
+            "FUNDED_REVIEW_DATE_MUST_BE_TODAY_KST")
+    prefix = receipt_prefix(options.review_date)
     root = PRIVATE / "evidence"
-    require(not (root / "funded-review-2026-11-06-intent.json").exists(),
+    require(not (root / (prefix + "-intent.json")).exists(),
             "FUNDED_REVIEW_ALREADY_ATTEMPTED_RECONCILE")
     with LiveSession() as live:
         closed(live)
@@ -158,7 +194,7 @@ def main():
         check_reservations(json.loads(before), identifier)
         record = review(live.admin.state, account, plans, budget, datetime.now(UTC))
         record["reservation_sha256"] = hashlib.sha256(before).hexdigest()
-        apply_review(live, budget, before, record, root)
+        apply_review(live, budget, before, record, root, options.review_date)
         print(json.dumps(record))
 
 

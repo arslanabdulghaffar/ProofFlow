@@ -1,5 +1,58 @@
 # Resume ProofFlow
 
+## Current checkpoint — November8 KST: scheduled backup, portable transport, real AI recording
+
+Phase0–5 DONE; Phase6 IN PROGRESS. Base0bf420862ba30d6e87a07fcba5bc28dba4bf6581;
+checkpoint is Git HEAD after matching remote verification. Private and credit-only.
+[Evidence](evidence/phase6-scheduled-portable-demo-2026-11-08.json).
+
+Installed actual current-user Windows task `ProofFlow-ProductBackup`: checks hourly,
+captures when12h old or within2h of expiry, only with closed/idle cloud services.
+No stored task password or new cloud resource. Desktop must be awake/logged in;
+this is not an always-on RPO guarantee. Actual nonempty exported-MVCC capture passes:
+185,228 database bytes and1 inert synthetic asset, AES-GCM/DPAPI readback. Latest
+snapshot expires **Nov9 01:35 KST**, and now authenticates even on a not-due check.
+Task LastTaskResult0 verified after this hardening. Failed/busy checks retry visibly;
+uncertain pending receipts require reconciliation. Do not force another capture for evidence.
+
+Actual Windows-to-Linux password-wrapped transport recovers the exact inert asset,
+then the SAME package excludes it after normal deletion. Password test value existed
+only in memory/stdin. Owner offline password/kit custody is NOT DONE; the optional
+hidden-terminal helper is `scripts/Export-PortableBackup.ps1`. Never choose/store an
+owner password or ask for it in chat. Lost trustworthy current deletion authority
+still blocks recovery. Offline exports cannot promise remote cryptographic erasure.
+No compromised-host rebuild or production promotion was performed.
+
+Final private silent captioned video is `phase6-private-ai-demo-v2.mp4` (139.04s),
+outside Git under the deployment evidence directory. Matching edit manifest retains
+raw hashes/cuts/holds. Actual real Vultr repair used1 call,$0.027853 reserved (not bill),
+changed source,3 matching fresh isolated checks and a completed different batch after
+exact synthetic test approval. No new PR. Both subsequent containment probes killed
+the deliberate loop with signal9 and cleaned up. Two harness errors remain FAILED
+and reconciled: wrong expected UI state, then incorrect assumption that FAILED_INFRA
+has a public report.worker. Actual worker journals independently confirm termination.
+Do NOT replay paid repair or containment just to replace those receipts. First raw clip
+tail was not flushed on exception; separate finalized loop segment is explicitly labeled.
+The completed batch appears as a receipt-summary card, not fabricated browser pixels.
+
+83 scoped Linux/42 Windows tests pass (21 new unique cases), actual scheduled task,
+portable drill, full media decode and frame QA. Product image e64a0040... unchanged;
+worker/verifier/schema/contracts/frozen benchmark unchanged. New crypto module is
+offline only; local FFmpeg added for rendering, no cloud/runtime dependency. Separate
+Codex critical review is not independent human sign-off.
+
+Final readback569 CLEANED/344 fences/zero missing deadlines/workspaces/restore clones;
+three services healthy, both admissions closed. Credit$190.13. A NEW bounded funded
+review completed, preserving the Nov6 receipt: **Nov10 01:29 KST** cutoff, unchanged
+$145 reservations and $150 total/$25 inference caps. Do not replay the Nov8 renewal.
+Provider hard stop/tax treatment are still unknown, not universal blockers or guarantees.
+
+Next: reviewable private deck/cover/submission package and source/media claim agreement;
+resolve owner custody and disaster authority without resurrecting deleted data. Public
+release, MIT ownership, authenticated final form/deadline verification and judging-uptime
+funding remain open. No publication/submission/contact or new PR is authorized. Ordinary
+independent work needs no continuation question. Earlier dated entries are historical.
+
 ## Current checkpoint — November7 KST: Phase6 recovery and browser rehearsal
 
 Phase0–5 DONE; Phase6 IN PROGRESS. Base a2ea131621d80a035b7c91b8bee5b8f3fee7eb18;

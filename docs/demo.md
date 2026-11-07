@@ -1,5 +1,44 @@
 # Demonstration and public explanation
 
+## Final private AI recording — November8
+
+Completed a **139.04-second silent captioned review video**:
+`C:\Users\IT\.proofflow\deployment\evidence\phase6-private-ai-demo-v2.mp4`.
+SHA256 `93580699f50cb23b082481f849397ca42664a931a6ef8f71a1cb41aa2f597fac`.
+The neighboring `phase6-private-ai-demo-v2-manifest.json` lists original hashes, source
+timestamps, every clip/hold/card and output metadata. Local FFmpeg6.1.1 rendered it;
+full decode and frame QA pass. Version1 is retained; v2 adds a readable approval pause.
+No media or raw runtime artifacts enter Git. [Checkpoint evidence](evidence/phase6-scheduled-portable-demo-2026-11-08.json).
+
+The first real recording starts from a clean authenticated context,with no credentials
+recorded. Fresh synthetic first-match source exhibits a wrong-owner witness. The fixed
+Vultr adapter makes1 actual qwen3.8-flash-next call with a fresh official quote;changed
+source passes candidate,ownership-canary and quarantine-canary checks with cleanup.
+Browser ZIP download,exact-version automated test approval and a genuinely different
+completed batch are retained. $0.027853 is the conservative reservation,not the invoice.
+No correct fixture was substituted for the model; no new PR was created.
+
+The final edit preserves that real footage at original speed,adds labeled paused frames,
+then shows the actual fresh-batch receipt as an explicitly labeled summary card. The
+raw clip did not capture a readable completed-batch frame; no browser state is fabricated.
+A separate finalized24.88s recording shows the deliberate loop failing. Read-only worker
+receipts show signal9,no accepted output,cleanup confirmed and kernel writers absent.
+It is explicitly a separate test,not AI output or a continuous live take. All fixtures
+were normally deleted;the final live readback confirms healthy services/closed admissions.
+
+Both original recording harness receipts remain **FAILED/reconciled**: first expected
+Needs review instead of the valid Execution failed state;second expected a public worker
+report although FAILED_INFRA has report=null. The committed worker journals are the
+independent-byte/control evidence,not invented PASS output. The first raw video tail was
+not explicitly flushed on exception;the separate clip was. The final source now flushes
+on exceptions and a local forced-error recording check passes. No paid repair was rerun.
+
+The closing card retains actual frozen A15/18,0/15 wrong acceptances and deterministic
+D18/18 results,with shared-template/one-repeat/no-human-review limits. Do not claim AI
+superiority,customer impact or formal proof. The private video is ready for owner review;
+deck/cover/final-form compatibility,ownership and publication/submission are still open.
+The earlier storyboard below is historical planning,not a reason to repeat paid evidence.
+
 ## Phase6 private rehearsal, November7
 
 Current-image Chromium rehearsal passed with four fresh, template-derived synthetic

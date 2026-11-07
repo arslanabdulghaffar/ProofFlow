@@ -1,6 +1,15 @@
 # Requirements traceability
 
-Phase6 R37-02/05/06,R38-03,T21–T23 now have additional scoped evidence: shared MVCC
+November8 Phase6 update: R37-02,R40-03/04,R49-01–04 and T21–T23 have additional
+actual scheduled nonempty capture, Windows-to-Linux inert portable recovery/deletion,
+one real Vultr repair/exact approval/new batch, separate containment and139.04s private
+recording evidence. [Current record](evidence/phase6-scheduled-portable-demo-2026-11-08.json).
+PARTIAL_PHASE6 means the named private component passes its scoped checks; it does not
+mean public release, owner-held custody, portable deletion authority, fresh-host recovery,
+restic/S3 architecture or submission is complete. Two demo harness failures remain
+failed/reconciled. The completed-batch card is a receipt summary,not simulated live UI.
+
+Earlier November7 record: Phase6 R37-02/05/06,R38-03,T21–T23 have scoped evidence: shared MVCC
 capture,actual encrypted recovery in a separate fresh PostgreSQL instance with current
 deletion exclusions,one live empty-product off-VM vault capture,and five clean private
 browser contexts including exact activation/new batch. [Evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json).
@@ -330,7 +339,7 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R36-06 | 36 | DESIGN | P0 | Bind exact bytes/policy/epochs and idempotent fenced side effects | [threat-model.md](threat-model.md) | T13–T17 | Real runtime/agent/integration | IMPLEMENTED_PHASE5 |
 | R36-07 | 36 | DESIGN | P0 | Use bounded benign markers/loops/allocations/controlled denial targets; disclose exact containment scope | [threat-model.md](threat-model.md) | T07 and demo review | Real runtime/agent/integration | IMPLEMENTED_PHASE5 |
 | R37-01 | 37 | DESIGN | P0 | Controller provider/App secret files, short-lived tokens, restricted mTLS and separate keys | [threat-model.md](threat-model.md) | T10,T17 configuration audit | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
-| R37-02 | 37 | DESIGN | P0 | Guest assets24h, minimal metadata7d, backups <=24h rolling and <=48h raw data exposure | [threat-model.md](threat-model.md) | T22 retention/deletion clock tests | Phase 1 secrets + Phase 2 retention | PARTIAL_PHASE5 |
+| R37-02 | 37 | DESIGN | P0 | Guest assets24h, minimal metadata7d, backups <=24h rolling and <=48h raw data exposure | [threat-model.md](threat-model.md) | T22 retention/deletion clock tests | Phase 1 secrets + Phase 2 retention | PARTIAL_PHASE6 |
 | R37-03 | 37 | DESIGN | P0 | Synthetic/licensed fixture provenance; minimum code/contract/witness goes to inference | [threat-model.md](threat-model.md) | T10,T20 | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
 | R37-04 | 37 | DESIGN | P0 | Do not claim provider retention/residency/compliance without account terms | [threat-model.md](threat-model.md) | Intake disclosure and release copy | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
 | R37-05 | 37 | DESIGN | P0 | Incident response pause/preserve/revoke/isolate/rebuild/restore/retest and impact record | [threat-model.md](threat-model.md) | Runbook rehearsal | Phase 1 secrets + Phase 2 retention | PARTIAL_PHASE5 |
@@ -349,8 +358,8 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R39-07 | 39 | DESIGN | P0 | Reproducible cloud-init/doctor/probe/deploy; unhealthy dependencies refuse repair admission | [release.md](release.md) | T18,T21 | Timing, eligible bounded charges | DEFERRED_PHASE1 |
 | R40-01 | 40 | DESIGN | P0 | Reviewed tag/immutable images/tests/backup/additive migration/deploy/readiness/public smoke/release record | [release.md](release.md) | T21 exact live-source match | Phase 6 complete core | DEFERRED_PHASE6 |
 | R40-02 | 40 | DESIGN | P0 | Schema-compatible rollback or tested restore; no assumed reverse migration | [release.md](release.md) | T21,T22 | Phase 6 complete core | DEFERRED_PHASE6 |
-| R40-03 | 40 | DESIGN | P0 | Consistent DB+artifacts encrypted restic/private S3 backup daily/pre-release and actual compatibility/minimums | [release.md](release.md) | T22 actual endpoint | Phase 6 complete core | DEFERRED_PHASE6 |
-| R40-04 | 40 | DESIGN | P0 | Separate restore checks relations/hashes/benign replay and retention/prune/tombstones | [release.md](release.md) | T22 | Phase 6 complete core | DEFERRED_PHASE6 |
+| R40-03 | 40 | DESIGN | P0 | Consistent DB+artifacts encrypted restic/private S3 backup daily/pre-release and actual compatibility/minimums | [release.md](release.md) | T22 actual endpoint | Phase 6 complete core | PARTIAL_PHASE6 |
+| R40-04 | 40 | DESIGN | P0 | Separate restore checks relations/hashes/benign replay and retention/prune/tombstones | [release.md](release.md) | T22 | Phase 6 complete core | PARTIAL_PHASE6 |
 | R40-05 | 40 | TARGET | P0 | Measure 24h loss-window/60min restore targets, never promise unmeasured SLA | [release.md](release.md) | T22 elapsed evidence and limits | Actual restore and funding | DEFERRED_PHASE6 |
 | R40-06 | 40 | TARGET | P0 | Fund/monitor demo until judging understood; preserve prior images/history/revoked state | [release.md](release.md) | G-12 owner/uptime budget | Actual restore and funding | DEFERRED_PHASE6 |
 | R41-01 | 41 | DESIGN | P0 | Semantics/money/refund/currency/time and verifier mutation tests decide correctness | [test-plan.md](test-plan.md) | T01–T05 | Phase 1–6 components | DEFERRED_PHASE5 |
@@ -393,10 +402,10 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R48-03 | 48 | DESIGN | P0 | External HTTPS and benign workflow health; pauses/alerts before saturation | [release.md](release.md) | Real health probe and incident drill | Phase 2–6 telemetry | DEFERRED_PHASE6 |
 | R48-04 | 48 | DESIGN | P0 | Provider/worker/wrong-acceptance/disk-DB runbooks and post-submit on-call/funding/TLS checks | [release.md](release.md) | Release runbook and assigned actual owner | Phase 2–6 telemetry | DEFERRED_PHASE6 |
 | R48-05 | 48 | DESIGN | P0 | No manual VERIFIED/COMPLETED edits or hidden operator intervention | [release.md](release.md) | Audit/recovery tests | Phase 2–6 telemetry | DEFERRED_PHASE6 |
-| R49-01 | 49 | DESIGN | P0 | Record silent original failure, fresh real model patch, independent rejection/verification and new approved batch | [demo.md](demo.md) | Matching video/run/evidence manifests | Phase 6 actual release | DEFERRED_PHASE6 |
-| R49-02 | 49 | DESIGN | P0 | Show actual safe capped loop/cleanup/app health and measured results/limits | [demo.md](demo.md) | T07 containment segment, T20 report | Phase 6 actual release | DEFERRED_PHASE6 |
-| R49-03 | 49 | DESIGN | P0 | Natural bad repair only if it occurred; deliberate mutation/replay/editing clearly labeled | [demo.md](demo.md) | Video review and unedited record | Phase 6 actual release | DEFERRED_PHASE6 |
-| R49-04 | 49 | DESIGN | P0 | Clean-browser rehearsal, current balance/permissions/downloads, no secrets; failures honest | [demo.md](demo.md) | T19,T23 rehearsal | Phase 6 actual release | DEFERRED_PHASE6 |
+| R49-01 | 49 | DESIGN | P0 | Record silent original failure, fresh real model patch, independent rejection/verification and new approved batch | [demo.md](demo.md) | Matching video/run/evidence manifests | Phase 6 actual release | PARTIAL_PHASE6 |
+| R49-02 | 49 | DESIGN | P0 | Show actual safe capped loop/cleanup/app health and measured results/limits | [demo.md](demo.md) | T07 containment segment, T20 report | Phase 6 actual release | PARTIAL_PHASE6 |
+| R49-03 | 49 | DESIGN | P0 | Natural bad repair only if it occurred; deliberate mutation/replay/editing clearly labeled | [demo.md](demo.md) | Video review and unedited record | Phase 6 actual release | PARTIAL_PHASE6 |
+| R49-04 | 49 | DESIGN | P0 | Clean-browser rehearsal, current balance/permissions/downloads, no secrets; failures honest | [demo.md](demo.md) | T19,T23 rehearsal | Phase 6 actual release | PARTIAL_PHASE6 |
 | R50-01 | 50 | DESIGN | P0 | Self-service compatible unseen input to evidence, approval, fresh batch; separate operator PR | [demo.md](demo.md) | T19,T23 walkthrough | Phase 6 live product | DEFERRED_PHASE6 |
 | R50-02 | 50 | DESIGN | P0 | Explain prior art/false PASS/total-only failure/normalizer alternative/synthetic data/security scope | [demo.md](demo.md) | Evidence-linked FAQ and claim review | Phase 6 live product | DEFERRED_PHASE6 |
 | R50-03 | 50 | DESIGN | P1 | Fair human repair-time baseline and two target-user interviews only if actually performed | [../eval/plan.md](../eval/plan.md) | Otherwise system latency only; no fabricated ROI | Consenting users and outreach instruction | DEFERRED_P1 |

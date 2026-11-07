@@ -1,5 +1,57 @@
 # Release and operations plan
 
+## Phase6 current status — November8, private scheduled recovery and recorded AI demo
+
+[Current evidence](evidence/phase6-scheduled-portable-demo-2026-11-08.json) supersedes
+the dated open-work statements below. Actual scheduled backup, nonempty capture and
+portable Windows-to-Linux inert recovery now pass. Final private edited video is139.04s;
+original clips and receipts stay outside Git. Phase6 remains IN PROGRESS for portable
+authority/compromised-host recovery, owner custody and the final public package/gates.
+
+The existing desktop task `ProofFlow-ProductBackup` runs as the current interactive user
+with limited privileges/no stored password. It checks hourly and captures at12h or2h
+before expiry. It needs this machine awake/logged in; busy/failed capture is a visible
+retry,not a successful backup. Latest actual capture:185,228 SQL bytes,1 synthetic asset,
+snapshot Nov8 01:35 KST,expires **Nov9 01:35 KST**. Even a not-due check authenticates the
+encrypted envelope/key. Latest receipt is `scheduled-backup-latest.json`; task status is
+`scheduled-backup-task-last.json` in the private deployment directory. Preserve pending
+receipts; reconcile before retry. Existing vault expiry remains enforced.
+
+Optional owner custody: run this in a private interactive PowerShell terminal:
+
+```powershell
+powershell -NoProfile -File "A:\hackathon\ProofFlow\scripts\Export-PortableBackup.ps1"
+```
+
+Enter a unique long recovery password only at the hidden prompts,
+then copy the displayed encrypted kit to secure offline storage and keep the password
+separately. No password is saved by the helper or requested in chat. This has NOT been
+completed by the owner. Expiry is not extended by export; destroy copies by their expiry.
+Exported keys cannot be remotely erased,so this is synthetic operator custody rather
+than an enforced guest-data retention claim. Recover with `recover_portable` only after
+obtaining fresh authenticated trustworthy deletion authority. The package itself is
+never that authority. Existing quarantine/strip/recheck rules below still apply.
+
+The real portable test used an ephemeral random in-memory password and authenticated
+inert bytes on Linux, then excluded them after deletion using the SAME package. It did
+not execute its SQL dump, restore production or reconstruct a compromised host. The
+prior actual separate-DB restore drill remains the SQL/quarantine evidence; together
+these are scoped proofs,not an end-to-end host disaster or measured production RTO.
+
+New funded review verified$190.13 credit and unchanged$72/month VM quotes,$145 reservations
+and$150/$25 caps. Cutoff is now **Nov10 01:29 KST**; do not replay either completed renewal.
+Provider hard stop/taxes are unknown. No card/payment/new resource/PR/public action.
+Judging uptime beyond this cutoff requires another fresh bounded review,not a bypass.
+Both admissions are closed after recording; public readiness is not claimed.
+
+The139.04s video records one real Vultr call,three fresh matching checks and exact test
+activation/new batch. The batch's completion is a labeled actual-receipt summary because
+the raw browser clip moved on too quickly. Separate loop clip/readback confirms kill
+and cleanup. Two failed harness receipts remain failed and reconciled. `demo.md` lists
+the filenames,hash and edit disclosure. No new paid attempt was used to conceal them.
+
+Earlier dated entries below remain historical evidence,not current gate status.
+
 ## Phase6 current status — November7, private WIP
 
 [Recovery and rehearsal evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json)

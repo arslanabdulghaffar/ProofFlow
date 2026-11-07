@@ -1,5 +1,36 @@
 # Progress
 
+## November8 KST — Phase6 scheduled capture, portable recovery and real AI media
+
+Installed hourly current-user backup task with12h capture cadence/early expiry refresh,
+bounded consistent DB/asset capture, authenticated AES/DPAPI readback and visible retry.
+Actual nonempty backup contains185,228 SQL bytes and1 inert synthetic asset; expires
+Nov9 01:35 KST. Task ran successfully after added not-due integrity checking. Desktop
+login/awake dependence is explicit; no always-on RPO claim or new storage service.
+
+Real Windows-to-Linux password-wrapped recovery passes before deletion, then excludes
+the same asset after normal deletion. Current authority remains mandatory. Owner-held
+offline password/kit and lost-authority/compromised-host recovery remain unfinished.
+No plaintext SQL materialization/execution or candidate execution on the desktop.
+
+Recorded one actual Vultr repair:1 call,$0.027853 reservation,changed source,3 fresh
+matching isolated checks,ZIP download,exact automated synthetic approval and a new
+completed batch. Both deliberate loops terminated/cleaned up. Two demo harness errors
+remain failed/reconciled; neither product states nor verifier acceptance were changed.
+Final139.04s private MP4 has clear edits/paused frames/separate loop/receipt-summary
+labels, plus original videos and manifest. Full decode and frame review pass. No PR.
+
+Separate critical pass fixed earliest asset retention timestamp, not-due backup health
+checks and exceptional recording flush.83 scoped Linux/42 Windows tests pass (21 new
+unique cases); no independent human sign-off. Product/worker/verifier images and schema
+unchanged. Local FFmpeg only, no new cloud/runtime dependency. [Evidence](evidence/phase6-scheduled-portable-demo-2026-11-08.json).
+
+Readback569 CLEANED/344 fences,zero missing deadlines/workspaces/clones,healthy services,
+both admissions closed. Credit$190.13. New dated funding review extends existing cutoff
+to Nov10 01:29 KST with the same$145 reservation/$150 project/$25 inference caps. Earlier
+renewal and frozen comparison remain untouched. Private WIP checkpoint,not Phase6 release
+completion; public package/ownership/submission/disaster-authority gaps remain.
+
 ## November7 KST — Phase6 consistent backup and clean-browser rehearsal
 
 Added a bounded exported-snapshot coordinator so asset inventory and pg_dump describe
