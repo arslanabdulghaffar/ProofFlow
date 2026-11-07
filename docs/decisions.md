@@ -1,5 +1,33 @@
 # Decision log
 
+## D90: consistent capture and private rehearsal without overstating recovery
+
+Use PostgreSQL exported read-only REPEATABLE READ snapshots for inventory,registry and
+pg_dump instead of relying on a future scheduler to quiesce every writer. Freeze the
+expiry observation inside the snapshot; keep the exporter alive until dump success.
+Fixed trusted Docker targets,Unix sockets,no shell,read-time byte caps,shared50s
+deadline,55s container-owned kill and server timeouts bound capture. Caller failure
+rolls back; an ended snapshot cannot silently fall back to a new one. The new helper
+adds no dependency,privilege,network endpoint or product policy. A separate critical
+pass identified and fixed the missing independent process lifetime bound.12 new fault
+tests and actual PostgreSQL integration support it; no independent human sign-off.
+
+Do not call same-profile DPAPI a portable recovery key,or an old backup inventory fresh
+deletion authority. Live empty-product capture proves actual vault transport; separate
+nonempty concurrent-data recovery proves quarantine behavior on another DB instance.
+Neither proves fresh-host compromise recovery,scheduling or public readiness. The live
+capture preceded final55s hardening; preserve that revision distinction and do not replay
+its completed receipt merely to replace the evidence.
+
+Browser scenarios use fresh seeded synthetic variants and disclose their template
+origin. One first-match faulty source was explicitly constructed for the visible owner
+witness after an earlier sample correctly rejected duplicate matches instead. Preserve
+that failed harness expectation. A separate pooled-connection failure after logout is
+not an authorization verdict; a new transport using the revoked token passed403 in the
+amended run. Full final comparison remains frozen. The correct-source version rehearsal
+is not AI repair; exact approval is labeled automated synthetic testing,not human review.
+No product GitHub action is needed for another recording. [Evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json).
+
 ## D89: complete finite security acceptance without hiding coverage limits
 
 Use static govulncheck binary analysis after the filesystem scanner recognized no Go

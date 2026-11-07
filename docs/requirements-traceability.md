@@ -1,5 +1,14 @@
 # Requirements traceability
 
+Phase6 R37-02/05/06,R38-03,T21–T23 now have additional scoped evidence: shared MVCC
+capture,actual encrypted recovery in a separate fresh PostgreSQL instance with current
+deletion exclusions,one live empty-product off-VM vault capture,and five clean private
+browser contexts including exact activation/new batch. [Evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json).
+Keep these composite obligations partial: no scheduled portable backup,fresh-host
+compromise recovery,final real-AI recording or public package. Local20.824s fixture time
+does not satisfy a production RTO claim. No independent human sign-off or benchmark
+independence/superiority added. Original requirement rows below preserve these limits.
+
 Phase5 acceptance audit: original private technical gate passes with actual patched-host
 containment/auth/mutations,frozen96-job accounting and separate critical review.
 [acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json). R36-02/03/06/07 and R38-05 now have completed scoped evidence. R36-04 retains

@@ -1,5 +1,35 @@
 # Progress
 
+## November7 KST — Phase6 consistent backup and clean-browser rehearsal
+
+Added a bounded exported-snapshot coordinator so asset inventory and pg_dump describe
+one committed database state. Separate review added an independent55s container-owned
+deadline; killing the Docker client or timing out SQL alone is insufficient to bound
+a client blocked on output. No product/schema/contract/verifier/dependency changes.
+
+Actual two-instance encrypted restore passed13 groups,including concurrent commits,
+ended exporter reuse,interruption,missing current authority,deletion exclusions,
+quarantine/schema checks and cleanup.20.824s is a small local fixture duration,not an
+RTO. Live existing empty-product capture184,540 bytes passed actual off-VM AES/DPAPI
+roundtrip; no services stopped. Snapshot expires Nov8 18:04 KST. Scheduled/portable
+recovery is still incomplete; completed live backup receipt must not be replayed.
+
+Four current clean-browser original cases passed(mismatch/mismatch/match/held),plus a
+separate no-AI original/three protected checks/download/exact approval/fresh batch path.
+Screenshots and ZIP retained privately; fresh inputs remain template-derived synthetic
+tests,not independent held-out evaluation. Preserved two failed harness attempts and
+their normal cleanup; amended sample/HTTP transport only,not acceptance policy.
+
+41 scoped Linux tests(12 new),Ruff and documentation checks pass. Separate Codex review
+is not independent human sign-off. Final readback562 CLEANED,339 fences,zero missing
+deadlines/workspaces/clones;both admissions closed,three services healthy. Credit$190.88;
+no inference/new resource/PR/publication. Source remains private. [Evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json).
+
+Phase6 WIP checkpoint,not release completion. Demo narration now ties each scene to
+actual evidence and identifies remaining real-AI recording/public package gates.
+Funded review cutoff Nov8 23:27 KST remains earlier than the old submission target;
+a fresh bounded review is required before then. No caps raised or old renewal replayed.
+
 ## November7 KST — binary review, kernel fix and Phase5 acceptance
 
 Completed the bounded private Phase5 acceptance audit. A critical TCP vulnerability

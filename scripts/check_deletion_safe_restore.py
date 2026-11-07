@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 import subprocess
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -29,15 +30,32 @@ from orchestrator.restore_guard import (
     revalidate_restore,
 )
 from scripts.check_budget_postgres import docker, require
+from scripts.consistent_product_backup import CaptureError
+from scripts.consistent_product_backup import snapshot as consistent_snapshot
 from tests.integration.product_database_fixture import database
 
 
 def main():
+    started = time.monotonic()
     clone = "proofflow_restore_" + uuid4().hex
     checks = []
-    with database() as db, TemporaryDirectory(prefix="proofflow-encrypted-restore-") as temporary:
+    with (database() as db, database() as recovery_db,
+          TemporaryDirectory(prefix="proofflow-encrypted-restore-") as temporary):
         from orchestrator.retention import retire
 
+        # Real cached image's watchdog binary, shortened only for this fixed trusted
+        # pg_sleep fault. Production command remains hardcoded to 55 seconds.
+        timer = time.monotonic()
+        try:
+            docker("exec", "--user", "70:70", db.name, "timeout", "-s", "KILL", "1",
+                   "psql", "-X", "-qAt", "-U", "postgres", "-d", "proofflow_product",
+                   "-c", "SELECT pg_sleep(10);")
+        except subprocess.CalledProcessError as error:
+            require(error.returncode == 137 and time.monotonic()-timer < 5,
+                    "Container watchdog did not kill bounded database client")
+        else:
+            raise RuntimeError("CONTAINER_DEADLINE_MISSING")
+        checks.append("container_owned_client_watchdog_kills_independently")
         source, recovered, jobs = (Path(temporary) / n for n in ("source", "recovered", "jobs"))
         for directory in (source, recovered, jobs):
             directory.mkdir(mode=0o700)
@@ -48,7 +66,7 @@ def main():
                 "-i",
                 "--user",
                 "70:70",
-                db.name,
+                recovery_db.name,
                 "psql",
                 "-X",
                 "-qAt",
@@ -103,21 +121,34 @@ def main():
                 )
         finally:
             os.close(fd)
-        snapshot = json.loads(db.sql(CURRENT_AUTHORITY_SQL, "admin"))
-        # Trusted locally generated pg_dump, never an uploaded SQL program. Keep
-        # in memory only. Schema and all workspace rows are captured consistently.
-        raw = docker(
-            "exec",
-            "--user",
-            "70:70",
-            db.name,
-            "pg_dump",
-            "-U",
-            "postgres",
-            "--no-owner",
-            "--no-privileges",
-            "proofflow_product",
-        ).encode()
+        with consistent_snapshot(db.name) as capture:
+            snapshot = capture.inventory
+            require({a["sha256"] for a in capture.assets} == {a["sha256"] for a in assets},
+                    "Snapshot registry and bytes disagree")
+            # Commit concurrent metadata writes AFTER export, BEFORE pg_dump.
+            # A separate uncoordinated dump would include these later rows.
+            late = db.workspace()
+            late_asset = db.asset(retained)
+            raw = capture.dump()
+        require(db.sql("SELECT count(*) FROM pg_stat_activity WHERE application_name='psql' "
+                       "AND state='idle in transaction';", "admin") == "0",
+                "Exporter transaction leaked")
+        checks.append("exported_snapshot_registry_and_dump_exclude_concurrent_commits")
+        try:
+            capture.dump()  # Exporter ended: reuse must fail, never silently take a new snapshot.
+        except CaptureError:
+            checks.append("ended_exporter_snapshot_cannot_be_reused")
+        else:
+            raise RuntimeError("EXPIRED_SNAPSHOT_REUSED")
+        try:
+            with consistent_snapshot(db.name):
+                raise RuntimeError("INJECTED_CAPTURE_INTERRUPTION")
+        except RuntimeError as error:
+            require(str(error) == "INJECTED_CAPTURE_INTERRUPTION", "Wrong capture failure")
+        require(db.sql("SELECT count(*) FROM pg_stat_activity WHERE application_name='psql' "
+                       "AND state='idle in transaction';", "admin") == "0",
+                "Interrupted exporter transaction leaked")
+        checks.append("interrupted_capture_rolls_back_exporter")
         check_dump(raw, hashlib.sha256(raw).hexdigest())
         key = AESGCM.generate_key(bit_length=256)  # Per-snapshot, memory-only fixture key.
         encrypted = seal(snapshot, assets, raw, key, now=datetime.now(UTC))
@@ -142,13 +173,25 @@ def main():
         )
         db.sql("SELECT pf_product.request_deletion(:'w',:'s',:'c');", **revoked)
         current = json.loads(db.sql(CURRENT_AUTHORITY_SQL, "admin"))
+        try:
+            plan_restore(snapshot, None, now=datetime.now(UTC))
+        except RestoreError:
+            checks.append("missing_current_deletion_authority_denies_restore")
+        else:
+            raise RuntimeError("MISSING_AUTHORITY_ALLOWED")
         plan = plan_restore(snapshot, current, now=datetime.now(UTC))
         require(plan["keep"] == [retained["w"]], "Deleted/revoked workspace selected")
         checks.append("post_snapshot_completed_and_pending_deletions_excluded")
         # Connection limit zero starts with CREATE, before any restore statement.
-        db.sql("CREATE DATABASE " + clone + " TEMPLATE template0 CONNECTION LIMIT 0;", "admin")
+        recovery_db.sql("CREATE DATABASE " + clone + " TEMPLATE template0 CONNECTION LIMIT 0;",
+                        "admin")
         try:
             cloned_sql(raw.decode())
+            require(cloned_sql("SELECT count(*) FROM pf_product.workspaces WHERE id='"  # noqa: S608 - generated UUID
+                               + str(UUID(late["w"])) + "';") == "0", "Later workspace in dump")
+            require(cloned_sql("SELECT count(*) FROM pf_product.assets WHERE id='"  # noqa: S608 - generated UUID
+                               + str(UUID(late_asset["a"])) + "';") == "0", "Later asset in dump")
+            checks.append("restored_into_separate_fresh_isolated_postgres_instance")
             denied("SELECT 1;", lambda q: cloned_sql(q, "fixture_api"), "too many connections")
             checks.append("runtime_login_denied_before_sanitization")
             sql = quarantine_sql(clone, plan["keep"])
@@ -209,9 +252,10 @@ def main():
                 raise RuntimeError("CONCURRENT_DELETION_ACCEPTED")
             checks.append("second_live_read_detects_deletion_during_restore")
         finally:
-            db.sql("DROP DATABASE " + clone + ";", "admin")
+            recovery_db.sql("DROP DATABASE " + clone + ";", "admin")
         require(
-            db.sql("SELECT count(*) FROM pg_database WHERE datname=:'clone';", "admin", clone=clone)
+            recovery_db.sql("SELECT count(*) FROM pg_database WHERE datname=:'clone';",
+                            "admin", clone=clone)
             == "0",
             "Clone cleanup failed",
         )
@@ -224,6 +268,8 @@ def main():
                 "cleanup": "confirmed",
                 "cloud_calls": 0,
                 "production_recovery": "NOT_RUN",
+                "elapsed_seconds": round(time.monotonic() - started, 3),
+                "dump_bytes": len(raw),
             }
         )
     )

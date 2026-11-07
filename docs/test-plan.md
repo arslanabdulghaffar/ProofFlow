@@ -1,5 +1,21 @@
 # Acceptance and verification plan
 
+Phase6 T21–T23 progress:41 scoped Linux cases pass(12 new bounded-pipe/target/deadline
+cases plus29 existing restore/backup cases). Real separate-PostgreSQL encrypted drill
+passes13 groups in20.824s,including concurrency,exporter failure,missing authority,
+quarantine and deletion during restore. A real1s shortened watchdog fault kills its
+trusted test client; production cap stays55s. Windows pipe suite NOT RUN(Linux-only
+selectors/Unix Docker socket). Full1044-test baseline not rerun: production source and
+dependencies unchanged. Current checks do not replace that dated baseline.
+
+Actual existing-host empty-product export/vault roundtrip passes. Five fresh private
+Chromium contexts pass four original outcomes and a separate unchanged-source protected
+check/exact activation/new-batch path; no inference. Refresh,mobile,download,logout and
+normal retention checked. Two harness failures remain recorded,not counted as passes.
+Final readback562 CLEANED/339 fences/zero missing deadlines/workspaces/clones. [Evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json).
+Composite Phase6 gates stay partial: scheduled/portable recovery,compromised-host rebuild,
+real-AI final recording,public release/media/form and funded judging uptime remain.
+
 Phase5 private technical acceptance audit now passes. On patched149 hosts,all16 fresh
 T07/T08 probes pass with confirmed cleanup;exact72 source files and container policy,
 HTTP200/503/403,role denial and retention readback pass.1044 Linux+10 subtests;

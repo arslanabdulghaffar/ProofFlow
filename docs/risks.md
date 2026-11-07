@@ -1,5 +1,21 @@
 # Risks and owner decisions
 
+Phase6 recovery/rehearsal update: consistent concurrent capture and separate-instance
+quarantine restore now pass,as do five current clean-browser contexts. Fresh-host trust,
+portable keys/current deletion authority,scheduled nonempty backups and final real-AI
+recording/public package remain incomplete. Current one-shot off-VM key expires
+**Nov8 18:04 KST**; DPAPI profile loss cannot be repaired from Git. Missing trustworthy
+current deletion authority deliberately prevents restoration. Small local20.824s drill
+is not a production RTO. No new dependency,public endpoint or independent human sign-off.
+[Evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json).
+
+Availability is time-sensitive: the existing funded review expires **Nov8 23:27 KST**,
+before the previously recorded submission target. The guard may delete resources then.
+Fresh balance$190.88 does not itself extend that deadline or guarantee post-event credit
+coverage. Complete another bounded review before cutoff; no card,payment,cap increase,
+automatic old-receipt replay or guard bypass. Repository remains private; MIT ownership
+and explicit publication/submission permission are still separate release gates.
+
 Current Phase5 acceptance audit: the concrete Critical host TCP finding is patched on
 both VMs and verified by reboot into149 plus16 real containment probes. Binary coverage
 now distinguishes five Go scans from three manually reviewed native helpers;18 Go IDs

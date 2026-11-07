@@ -1,5 +1,68 @@
 # Release and operations plan
 
+## Phase6 current status — November7, private WIP
+
+[Recovery and rehearsal evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json)
+now covers a consistent PostgreSQL export, encrypted recovery in a separate fresh
+database instance, a real off-VM vault capture and current private-browser rehearsal.
+Phase6 is not DONE: scheduled nonempty backups, portable keys/current deletion
+authority, compromised-host reconstruction, final live AI recording and public package
+remain separate gates. Public release, MIT ownership and submission remain unapproved.
+
+`scripts/consistent_product_backup.py` holds a fixed read-only exported MVCC snapshot
+while reading the workspace/asset inventories and running pg_dump with that snapshot.
+Only trusted fixed Docker/Unix-socket commands are admitted. Output is bounded while
+reading; the final helper has a50-second shared client deadline,55-second container-owned
+kill deadline and45-second SQL/60-second abandoned-transaction timeouts. No plaintext
+dump is written to disk. This improves capture under concurrent writes; earlier
+quiesced fixture backups remain valid scoped evidence. Official PostgreSQL
+[snapshot synchronization](https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-SNAPSHOT-SYNCHRONIZATION)
+and [pg_dump snapshot option](https://www.postgresql.org/docs/current/app-pgdump.html)
+were checked November7. A dump is executable trusted-admin SQL, never an upload to run.
+
+Actual disposable recovery used two distinct network-denied PostgreSQL containers.
+Concurrent workspace/asset commits were excluded from the shared snapshot. Deleted
+and revoked workspaces stayed excluded; all24 runtime-authority tables were emptied,
+surviving workspace access remained revoked, normal logins were refused and a deletion
+during recovery invalidated the plan. Both containers/volumes and temporary data were
+removed.20.824 seconds measured the entire small synthetic fixture, not a production
+RTO or fresh-host rebuild. RPO24h/RTO60min remain targets.
+
+The live one-shot `check_phase6_backup_live.py` captured the then-empty private product
+without stopping its services:184,540 SQL bytes,zero assets. AES-GCM envelope plus
+current-user DPAPI key survived the actual off-VM vault roundtrip; exact database bytes
+were authenticated in memory. This live capture predates the later independent55s
+process-timeout hardening, which passed the separate local real-database drill. Do not
+replay its completed receipt. Its key expires **November8 18:04:03 KST**; existing vault
+expiry enforcement must remain active. An expired snapshot is not a usable backup.
+
+### Disaster runbook and honest stop points
+
+1. Keep product/inference admission closed. Preserve the incident evidence and record
+   the trusted source/image hashes. Never restart a known compromised predecessor.
+2. Recover the envelope/key only through the vault under the same Windows identity.
+   Missing profile/key, failed authentication, expiry or clock-floor uncertainty is a
+   stop. Do not restore an older vault clock file to revive a key.
+3. Obtain current deletion authority from an authenticated trustworthy source. A stale
+   backup inventory cannot replace it. If that authority was lost with the host, data
+   recovery is currently blocked; this is the portable-disaster gap to solve.
+4. Restore only a trusted dump into a new isolated `proofflow_restore_<uuidhex>` database,
+   created with connection limit zero. Require the exact reviewed schema and quarantine
+   plan; strip sessions, approvals, repair allocations/intents and other runtime authority.
+   Restore hash-checked inert assets only for currently eligible workspaces; re-read
+   deletion authority before accepting the result. Never overwrite production.
+5. A quarantined data check is not permission to promote it. Reimaged-host trust, new
+   scoped credentials, source/runtime checks, spending controls and real containment
+   probes are required before any future promotion. Compromised-dump execution and
+   new paid services are outside this tested drill.
+
+No object-storage service, backup schedule or new paid resource was enabled. The
+existing$145 reservation and$150/$25 caps remain; fresh credit was about$191. Funded
+review still expires **November8 23:27 KST**, earlier than the previously recorded
+submission target. Do a new bounded funded review before that cutoff; do not replay
+the completed November6 renewal, raise caps or promise post-event uptime from balance
+alone. The guard may tear down resources at its cutoff. Do not disable it for filming.
+
 Phase5 private technical acceptance passes after binary review and two-host149 kernel
 patch/reboot;all16 new containment probes and exact deployed-source checks pass.
 [acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json). This closes the previous Phase5 audit,not Phase6 release gates. Admission remains

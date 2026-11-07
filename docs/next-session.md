@@ -1,5 +1,50 @@
 # Resume ProofFlow
 
+## Current checkpoint — November7 KST: Phase6 recovery and browser rehearsal
+
+Phase0–5 DONE; Phase6 IN PROGRESS. Base a2ea131621d80a035b7c91b8bee5b8f3fee7eb18;
+checkpoint is Git HEAD after matching remote verification. Keep private and credit-only.
+[Current evidence](evidence/phase6-recovery-rehearsal-2026-11-07.json).
+
+New trusted Linux snapshot coordinator shares exported MVCC state across inventories
+and pg_dump; bounded output,50s caller/55s container deadline,SQL/idle timeouts. Real
+two-container encrypted recovery passed13 groups in20.824s: concurrent writes excluded,
+missing/stale authority denied,deleted data excluded,24 authority tables cleared,
+changed deletion recheck denied,cleanup confirmed. This is small trusted synthetic
+data on two separate DB instances,not a reimaged host or production RTO.
+
+Actual live empty-product capture184,540 bytes saved/reopened in existing AES/DPAPI
+vault without stopping services. Its completed receipt is phase6-consistent-backup.json;
+DO NOT REPLAY. Expiry **Nov8 18:04 KST**. Live capture preceded final independent55s
+timeout addition; stricter final helper passed the real local drill. Scheduled nonempty
+backups and portable key/current-deletion-authority recovery remain unfinished.
+
+Five clean private Chromium contexts passed: wrong owner/units rejected,correct source
+matched,ambiguity held; separately,correct disclosed fixture → three fresh worker checks
+→ ZIP download → exact synthetic approval → different completed batch. No model call,
+PR or new resource. Not a held-out benchmark or a fresh AI-repair recording. Two earlier
+harness failures are retained/reconciled; no product/verifier changes to force a pass.
+Do not blindly replay browser receipts; successful originals c9458c05e7d1414297ea5850d558d96d
+and version rehearsal2c389d4f583b4a7d8f1bc987f906cefe are private evidence identifiers.
+Screenshots/ZIP stay outside Git; demo.md has narration and claim boundaries.
+
+41 scoped Linux tests pass including12 new pipe/target/deadline cases. Ruff/hygiene and
+secret scan accompany checkpoint. Separate Codex critical pass,not human sign-off.
+No product image,worker,verifier,schema,contract,benchmark or dependencies changed.
+Readback562 CLEANED/339 fences/zero missing deadlines;no workspaces/restore clones;
+services healthy and both admissions closed. Credit$190.88 at09:10:52UTC.
+
+Next: finish scheduled/portable disaster design without trusting old deletion authority;
+prepare final real-AI demo/containment recording,deck/cover and reviewable release package.
+Do not label fixture source as model output. New funded review is needed before
+**Nov8 23:27 KST**; guard cutoff precedes the old submission target and may tear down
+resources. Do not replay the completed Nov6 renewal or disable spending controls.
+Ownership/publication/submission and authenticated form/deadline verification remain
+open. Official Nov7 text still says live/open but countdown renders zeros. No repeated
+continuation or billing question is needed for ordinary independent work.
+
+Historical checkpoint entries follow; current status above supersedes them.
+
 ## Current checkpoint — November7 KST: Phase5 private technical acceptance
 
 Phase0–5 technical acceptance PASS; Phase5 DONE only with this checkpoint's matching

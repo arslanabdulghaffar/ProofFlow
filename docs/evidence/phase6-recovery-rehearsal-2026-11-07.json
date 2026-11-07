@@ -1,0 +1,285 @@
+{
+  "base_commit": "a2ea131621d80a035b7c91b8bee5b8f3fee7eb18",
+  "browser": {
+    "cases": [
+      {
+        "blocking_occurrences": 0,
+        "case": "joins-repairable",
+        "checks": [
+          "clean_unauthenticated_context_denied",
+          "exact_contract_required_before_run",
+          "actual_worker_original_and_independent_comparison",
+          "refresh_preserves_job_identity",
+          "mobile_no_page_overflow",
+          "logout_revokes_evidence"
+        ],
+        "elapsed_seconds": 11.0,
+        "expected": "mismatch",
+        "file_sha256": {
+          "contract.json": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+          "customers.csv": "41ce3cd364e51edb0a7b4d2580facfdc6dea7eb7649f82360c8b0a74f9cb950c",
+          "pipeline.py.txt": "0eeb971699393a3e942b43edfe5a06b5cb510f0d39841d685b935eec8271fc52",
+          "transactions.csv": "945fd955b618b20ded091ce21964106c1eab5e142cfca18c6412114e86f643bb"
+        },
+        "outcome": "mismatch",
+        "ownership_witness_count": 1,
+        "screenshot_sha256": "92d41b30dee20b6da7c6f6c1913e266aa9d672f2ad7bf06cfc0afa1c3c906bb7"
+      },
+      {
+        "blocking_occurrences": 0,
+        "case": "units-repairable",
+        "checks": [
+          "clean_unauthenticated_context_denied",
+          "exact_contract_required_before_run",
+          "actual_worker_original_and_independent_comparison",
+          "refresh_preserves_job_identity",
+          "mobile_no_page_overflow",
+          "logout_revokes_evidence"
+        ],
+        "elapsed_seconds": 9.422,
+        "expected": "mismatch",
+        "file_sha256": {
+          "contract.json": "f8c572aba6e7bf1e6a5c575a39787c331bc0be20301a6e5f2d2eb942fee16f3e",
+          "customers.csv": "ede114b11428dbe7289fead7334a4e826044ffd36668fff3e243c29b12b68ba5",
+          "pipeline.py.txt": "f6fb2c9aa8000c5a16e8bd77bfd7844d576c1a62eb9572246e0c6f69d81aa297",
+          "transactions.csv": "eb0fccd49e0ca31b6e99f5653b9be8d63df2cb773654d6542cefdd12a2f44fd5"
+        },
+        "outcome": "mismatch",
+        "ownership_witness_count": 0,
+        "screenshot_sha256": "e61df57eaa06c5ee9730090af2608d681ae92715ed209e366b9317eda9a3fd89"
+      },
+      {
+        "blocking_occurrences": 0,
+        "case": "completeness-repairable",
+        "checks": [
+          "clean_unauthenticated_context_denied",
+          "exact_contract_required_before_run",
+          "actual_worker_original_and_independent_comparison",
+          "refresh_preserves_job_identity",
+          "mobile_no_page_overflow",
+          "logout_revokes_evidence"
+        ],
+        "elapsed_seconds": 11.203,
+        "expected": "match",
+        "file_sha256": {
+          "contract.json": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+          "customers.csv": "98f527606c8f98cc92c6ebc1d12e441a38d802c431c465fec5e50bf95b84545b",
+          "pipeline.py.txt": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+          "transactions.csv": "b9645dee745434516f9dd24828f1828b734da7a87e02dc5be6e8e52739a9c86f"
+        },
+        "outcome": "match",
+        "ownership_witness_count": 0,
+        "screenshot_sha256": "19ce445c5a774ffe0e79765455730c81a69b306f0c45c143bc8399f166a5b30e"
+      },
+      {
+        "blocking_occurrences": 4,
+        "case": "joins-ambiguous",
+        "checks": [
+          "clean_unauthenticated_context_denied",
+          "exact_contract_required_before_run",
+          "actual_worker_original_and_independent_comparison",
+          "refresh_preserves_job_identity",
+          "mobile_no_page_overflow",
+          "logout_revokes_evidence"
+        ],
+        "elapsed_seconds": 10.531,
+        "expected": "held",
+        "file_sha256": {
+          "contract.json": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+          "customers.csv": "59e4a36e42a90ec54bee0971cfae392db9e5926ff127fb82126fc8c8eb83fa90",
+          "pipeline.py.txt": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+          "transactions.csv": "95934141fbd5b048f8872b1018cbfcba7261a40b326c96bb4cf49cc2c191ab9d"
+        },
+        "outcome": "held",
+        "ownership_witness_count": 0,
+        "screenshot_sha256": "6f04b46c03bebe8ede859356db1729756eda6ebe0108399e8e372b12363bd3f9"
+      },
+      {
+        "batch": {
+          "outcome": "match",
+          "state": "COMPLETED"
+        },
+        "blocking_occurrences": 0,
+        "bundle_sha256": "0fdbebcc0fd9598b45edb38c7359a86905c4ea9a05c2b5d2ead46aaa226af9d5",
+        "case": "completeness-repairable",
+        "checks": [
+          "clean_unauthenticated_context_denied",
+          "exact_contract_required_before_run",
+          "actual_worker_original_and_independent_comparison",
+          "refresh_preserves_job_identity",
+          "three_fresh_checks_of_disclosed_original_no_model",
+          "actual_browser_bundle_download",
+          "exact_synthetic_version_approval",
+          "fresh_batch_completed_on_designated_worker",
+          "mobile_no_page_overflow",
+          "logout_revokes_evidence"
+        ],
+        "elapsed_seconds": 25.656,
+        "expected": "match",
+        "file_sha256": {
+          "contract.json": "2e90c59bcd409827e4e794eaaa25f94f489378474caed40daf619f8d3718a056",
+          "customers.csv": "ce922a1fa3df98fc029587337fcef823bf207bce52c1c93d1de08e824108ef7b",
+          "pipeline.py.txt": "23b768c7abf77327255e2943051df12febbf17d921259177fde0133dc539a9c3",
+          "transactions.csv": "f1dc96123bfec03fd55306cac4998934d148f00ca3968e9f6cf563b59534be60"
+        },
+        "outcome": "match",
+        "ownership_witness_count": 0,
+        "screenshot_sha256": "ce8b16957e77a1a3050cae72de2893520b05218d9c01d0d77ac92902bbc219bf",
+        "synthetic_version_approval_not_human_signoff": true,
+        "unchanged_original": {
+          "calls": 0,
+          "checks": [
+            {
+              "attempt": 0,
+              "cleanup_confirmed": true,
+              "comparison": "match",
+              "generation": 1,
+              "purpose": "candidate"
+            },
+            {
+              "attempt": 0,
+              "cleanup_confirmed": true,
+              "comparison": "match",
+              "generation": 2,
+              "purpose": "canary_ownership"
+            },
+            {
+              "attempt": 0,
+              "cleanup_confirmed": true,
+              "comparison": "match",
+              "generation": 3,
+              "purpose": "canary_quarantine"
+            }
+          ],
+          "mode": "original",
+          "reserved_micro": 0,
+          "state": "AWAITING_APPROVAL"
+        }
+      }
+    ],
+    "clean_contexts_passed": 5,
+    "cleanup_confirmed": true,
+    "current_ai_repair_recording": "NOT_RUN",
+    "scope": "private_fresh_context_template_derived_synthetic_rehearsal",
+    "template_independence_claim": false
+  },
+  "checkpoint_hash_scope": "Canonical staged Git bytes; final reviewed helpers, not a claim that every earlier attempt ran the final revision.",
+  "checkpoint_source_sha256": {
+    "scripts/check_deletion_safe_restore.py": "4b6d06c15c920ae4086da77a36d1675a4aeebabe4ab0c8eb4cf35651884e1fcd",
+    "scripts/check_phase6_backup_live.py": "d6047914b871dd9928de02f0fdfad5087214cf99c31820b9d4a360405827e5ca",
+    "scripts/check_phase6_browser.py": "da1ca5a3fa489ecd5c04da70e4acb4eb3dc658cb1b93a94b495372c863332ac5",
+    "scripts/consistent_product_backup.py": "19cc8c34a4e8768e935b493fa257db840866fb8793397270f77ff2330dc2d653",
+    "tests/security/test_consistent_backup.py": "4f221d11ce4fb4491f9a58ed44fe0f08a9a542c1f35982f07af6295513cbbc15"
+  },
+  "checks": {
+    "documentation_hygiene": "PASS: 276 entries/59 pages and local links",
+    "full_regression": "NOT_RERUN: production source and dependencies unchanged",
+    "linux_scoped_tests_passed": 41,
+    "new_linux_pipe_boundary_cases": 12,
+    "ruff": "PASS",
+    "staged_diff_check": "PASS",
+    "staged_gitleaks": "PASS: no leaks found",
+    "windows_pipe_tests": "NOT_RUN: Linux-only selectors and Docker Unix socket"
+  },
+  "live_backup": {
+    "asset_count": 0,
+    "checks": [
+      "one_exported_database_snapshot",
+      "encrypted_offvm_dpapi_vault",
+      "authenticated_exact_database_recovery_in_memory",
+      "no_services_stopped_or_new_cloud_services"
+    ],
+    "completed": true,
+    "dump_bytes": 184540,
+    "encrypted_sha256": "09f93682ec153da6405a31f47674be2a8ff15ae43bb166cdc6d4dc74cc6dff33",
+    "expires_at": "2026-11-08T09:04:03.793006+00:00",
+    "exporter_cleanup": "confirmed",
+    "portable_key_recovery": false,
+    "scheduled_backup": false,
+    "scope": "existing_empty_private_product_database_capture",
+    "snapshot_at": "2026-11-07T09:04:03.793006+00:00"
+  },
+  "local_database_drill": {
+    "assets_before_deletion": 3,
+    "assets_restored": 1,
+    "checks": [
+      "container_owned_client_watchdog_kills_independently",
+      "exported_snapshot_registry_and_dump_exclude_concurrent_commits",
+      "ended_exporter_snapshot_cannot_be_reused",
+      "interrupted_capture_rolls_back_exporter",
+      "encrypted_database_and_asset_roundtrip",
+      "missing_current_deletion_authority_denies_restore",
+      "post_snapshot_completed_and_pending_deletions_excluded",
+      "restored_into_separate_fresh_isolated_postgres_instance",
+      "runtime_login_denied_before_sanitization",
+      "production_database_target_rejected",
+      "schema_drift_rejected_atomically",
+      "only_current_data_retained_all_runtime_authority_removed",
+      "second_live_read_detects_deletion_during_restore"
+    ],
+    "cleanup": "confirmed",
+    "compromised_host_rebuild": "NOT_RUN",
+    "dump_bytes": 172314,
+    "elapsed_seconds": 20.824,
+    "production_rto_claim": false,
+    "runtime_authority_tables_cleared": 24,
+    "scope": "two fresh disposable PostgreSQL instances on one local Docker host"
+  },
+  "new_cloud_resources": 0,
+  "new_prs": 0,
+  "observed_at": "2026-11-07T09:12:32.292647+00:00",
+  "phase": 6,
+  "provider_calls": 0,
+  "readback": {
+    "counts": {
+      "CLEANED": 562
+    },
+    "credit": {
+      "checked_at": "2026-11-07T09:10:52.514335+00:00",
+      "credit_guard": "within_early_cutoff",
+      "remaining_credit": "190.88",
+      "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+    },
+    "fences": 339,
+    "inference_admission": "closed",
+    "missing_deadlines": 0,
+    "natural_seven_day_expiry": "NOT_YET_ELAPSED",
+    "observed_at": "2026-11-07T09:11:02.009455+00:00",
+    "product_admission": "closed",
+    "restore_clones_remaining": 0,
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "workspaces_remaining": 0
+  },
+  "remaining": [
+    "scheduled nonempty consistent backups",
+    "portable recovery keys and fresh deletion authority",
+    "compromised-host reconstruction",
+    "final real-inference recording and containment video",
+    "cover/deck/public package",
+    "MIT ownership and explicit publication/submission",
+    "new funded review before November8 23:27 KST; no unconditional post-event uptime guarantee"
+  ],
+  "retained_harness_failures": [
+    {
+      "cleanup_confirmed": true,
+      "failure": "Harness expected ownership witness from duplicate-match rejection fixture; original mismatch preserved, normal fixture cleanup confirmed. New first-match bug is a separate disclosed scenario.",
+      "receipt_sha256": "bc6820e1894e55d6fc9cb8343d9cf486bf9123aee26c4be6d9b241e4b5c12c3c"
+    },
+    {
+      "cleanup_confirmed": true,
+      "failure": "All four original outcomes correct; final post-logout HTTPX pooled transport closed before response. No auth result inferred. Normal cleanup confirmed. Fresh transport used by amended harness; failed receipt retained.",
+      "receipt_sha256": "f3a23070f52f90f9bf165f99f7704c889e365f8fc9b8d684642ffab89dae92dd"
+    }
+  ],
+  "review": {
+    "independent_human": "NOT_AVAILABLE",
+    "live_capture_revision_note": "Live one-shot capture preceded later 55-second container timeout addition; final helper passed real local PostgreSQL drill. Existing capture is not replayed.",
+    "separate_codex_critical_pass": "Fixed missing independent DB-client lifetime bound; fixed targets, no shell, bounded pipes, trusted dumps only, no restored authority, no new dependencies or product policy changes; broken-stdin cleanup also tested with a real hanging child"
+  },
+  "scope": "private recovery and current-browser rehearsal; no public release",
+  "status": "IN_PROGRESS"
+}
