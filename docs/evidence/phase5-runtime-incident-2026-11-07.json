@@ -1,0 +1,428 @@
+{
+  "observed_at": "2026-11-07T00:44:25.610094+00:00",
+  "phase": "5 IN PROGRESS",
+  "checkpoint_base": "34553763b519f3f79d4e396953c4e6da85db8fe1",
+  "source_hashes": [
+    {
+      "path": "scripts/install_product_services.py",
+      "sha256": "daa3029784795ecf33e7c7a80c02a502841c581c0edf395b01fa31dfaa6cc600"
+    },
+    {
+      "path": "scripts/check_runtime_exposure.py",
+      "sha256": "76edd51c939ab20dac368a4d973185d1b4209d207fd915010a40158a68436b4a"
+    },
+    {
+      "path": "scripts/check_incident_api_rebuild.py",
+      "sha256": "d9f5a505edafd27c1b497f28fb275f68119af6b54b230b97eb9943ec7aad53d1"
+    },
+    {
+      "path": "tests/security/test_product_container_drift.py",
+      "sha256": "1c3240bdc2b8c2d565989ca4e353053e6e86cff9eedd3cd52a1fe96925a9f929"
+    },
+    {
+      "path": "worker/runtime.py",
+      "sha256": "efd94d6c628bcf4f8833901c3948bc67a9e230aa7f5740aca012efac3acefc6f"
+    },
+    {
+      "path": "worker/runtime_bundle.py",
+      "sha256": "b65b8d526f0b94c2e352aac5d17bb5ff91068424446627dd3ffc9a342e0194a9"
+    },
+    {
+      "path": "infra/gvisor/runsc-release.json",
+      "sha256": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe"
+    }
+  ],
+  "finding": "Existing product container validation omitted privilege, mount, command and several resource settings",
+  "fix": "Reject drift before accepting existing/rebuilt service; pinned image alone is insufficient",
+  "checks": {
+    "linux_passed": 1023,
+    "linux_subtests_passed": 10,
+    "windows_passed": 849,
+    "windows_linux_only_skips": 174,
+    "new_drift_cases": 28,
+    "ruff": "PASS"
+  },
+  "runtime_inventory": {
+    "control": {
+      "kernel": "6.8.0-147-generic",
+      "packages": {
+        "exit": 0,
+        "stdout": "containerd.io 2.4.2-3~ubuntu.24.04~noble\ndocker-ce 5:29.9.2-1~ubuntu.24.04~noble\nlinux-image-generic 6.8.0-147.147\nopenssl 3.0.13-0ubuntu3.16"
+      },
+      "containerd_version": {
+        "exit": 0,
+        "stdout": "containerd containerd v2.4.2 b7a25261e029d68978bbf290df0a62fc819b3c51"
+      },
+      "docker_version": {
+        "exit": 0,
+        "stdout": "Docker version 29.9.2, build a82e528"
+      },
+      "runtime_processes": {
+        "containerd": 1,
+        "dockerd": 1
+      },
+      "cdi_specs": {
+        "/etc/cdi": 0,
+        "/var/run/cdi": 0
+      },
+      "sockets": {
+        "/run/containerd/containerd.sock": {
+          "gid": 0,
+          "mode": "0o660",
+          "socket": true,
+          "uid": 0
+        },
+        "/run/docker.sock": {
+          "gid": 0,
+          "mode": "0o600",
+          "socket": true,
+          "uid": 0
+        }
+      },
+      "runtime_members": {},
+      "cri_loaded": true,
+      "containerd_tcp_plugin_active": false,
+      "tcp_listener_ports": [
+        22,
+        53,
+        443,
+        8443
+      ]
+    },
+    "worker": {
+      "kernel": "6.8.0-147-generic",
+      "packages": {
+        "exit": 1,
+        "stdout": "linux-image-generic 6.8.0-147.147\nopenssl 3.0.13-0ubuntu3.16"
+      },
+      "containerd_version": {
+        "absent": true,
+        "exit": null
+      },
+      "docker_version": {
+        "absent": true,
+        "exit": null
+      },
+      "runtime_processes": {},
+      "cdi_specs": {
+        "/etc/cdi": 0,
+        "/var/run/cdi": 0
+      },
+      "sockets": {
+        "/run/containerd/containerd.sock": {
+          "absent": true
+        },
+        "/run/docker.sock": {
+          "absent": true
+        }
+      },
+      "runtime_members": {
+        "containerd-shim-runsc-v1": {
+          "links": 1,
+          "matches": true,
+          "mode": "0o755",
+          "sha256": "6187d6d34f4996e859353fbb4c56d5ed41fc35b5afa44bff766f4e4b424da5bb",
+          "uid": 0
+        },
+        "gvisor-bin/checkpointgofer": {
+          "links": 1,
+          "matches": true,
+          "mode": "0o755",
+          "sha256": "37e6e92d6dcb3296e10dc2f21b0ef6156f1373ff0668d27a4fccc8ded2b51f94",
+          "uid": 0
+        },
+        "gvisor-bin/gvisor-proc-umounter": {
+          "links": 1,
+          "matches": true,
+          "mode": "0o755",
+          "sha256": "b3bbbaef5ddc62084e5febd19d3acca14f3d42b2a25d8552fb40def699467019",
+          "uid": 0
+        },
+        "gvisor-bin/gvisor-sentry-prewarmer": {
+          "links": 1,
+          "matches": true,
+          "mode": "0o755",
+          "sha256": "046e3ec1de3aa7b7ec7ce53b4f0d1e08db15987847606a8e361133d5c5bd3d73",
+          "uid": 0
+        },
+        "gvisor-bin/gvisor_sentry": {
+          "links": 1,
+          "matches": true,
+          "mode": "0o755",
+          "sha256": "6dfd3af65e664663f332d0e4b9fb82452496e34ebc6cb568ae49f5b1ac9d8166",
+          "uid": 0
+        },
+        "gvisor-bin/runsc-fd-parking": {
+          "links": 1,
+          "matches": true,
+          "mode": "0o755",
+          "sha256": "03af90d07ea466c10ecc3e3ba839b2a59540959dd3286aea3886917cba850c11",
+          "uid": 0
+        },
+        "gvisor-bin/runsc-metric-server": {
+          "links": 1,
+          "matches": true,
+          "mode": "0o755",
+          "sha256": "b9857ebe290c403fda7ff014368df3a0f45e5428dc1eb6efe413cfe0e5a940f4",
+          "uid": 0
+        },
+        "runsc": {
+          "links": 1,
+          "matches": true,
+          "mode": "0o755",
+          "sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+          "uid": 0
+        }
+      },
+      "cri_loaded": false,
+      "containerd_tcp_plugin_active": false,
+      "tcp_listener_ports": [
+        22,
+        53,
+        443,
+        9443
+      ]
+    }
+  },
+  "runtime_review": {
+    "official_sources": [
+      "https://github.com/google/gvisor/releases/tag/release-20261102.0",
+      "https://github.com/google/gvisor/security/advisories",
+      "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/config/config.go",
+      "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/config/flags.go",
+      "https://github.com/containerd/containerd/security/advisories/GHSA-xhf5-7wjv-pqxp",
+      "https://github.com/containerd/containerd/security/advisories/GHSA-33vj-92qq-66hc",
+      "https://github.com/containerd/containerd/releases/tag/v2.4.2",
+      "https://github.com/grpc/grpc-go/security/advisories/GHSA-qc2q-p7wx-3px3",
+      "https://pkg.go.dev/vuln/GO-2026-5932",
+      "https://gvisor.dev/docs/architecture_guide/security/",
+      "https://gvisor.dev/docs/user_guide/production/"
+    ],
+    "source_scan_counts": {
+      "LOW": 2,
+      "HIGH": 10,
+      "MEDIUM": 7,
+      "UNKNOWN": 1
+    },
+    "source_scan_findings": [
+      {
+        "VulnerabilityID": "CVE-2026-10722",
+        "PkgName": "github.com/cilium/ebpf",
+        "InstalledVersion": "v0.16.0",
+        "FixedVersion": "0.22.0",
+        "Severity": "LOW"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-46680",
+        "PkgName": "github.com/containerd/containerd/v2",
+        "InstalledVersion": "v2.1.5",
+        "FixedVersion": "2.0.9, 2.2.4, 2.3.1",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-53488",
+        "PkgName": "github.com/containerd/containerd/v2",
+        "InstalledVersion": "v2.1.5",
+        "FixedVersion": "2.0.10, 2.1.9, 2.2.5, 2.3.2",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-53489",
+        "PkgName": "github.com/containerd/containerd/v2",
+        "InstalledVersion": "v2.1.5",
+        "FixedVersion": "2.1.9, 2.2.5, 2.3.2",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-53492",
+        "PkgName": "github.com/containerd/containerd/v2",
+        "InstalledVersion": "v2.1.5",
+        "FixedVersion": "2.1.9, 2.2.5, 2.3.2",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-95837",
+        "PkgName": "github.com/containerd/containerd/v2",
+        "InstalledVersion": "v2.1.5",
+        "FixedVersion": "2.2.7, 2.3.4",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-47262",
+        "PkgName": "github.com/containerd/containerd/v2",
+        "InstalledVersion": "v2.1.5",
+        "FixedVersion": "2.0.10, 2.1.9, 2.2.5, 2.3.2",
+        "Severity": "MEDIUM"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-50195",
+        "PkgName": "github.com/containerd/containerd/v2",
+        "InstalledVersion": "v2.1.5",
+        "FixedVersion": "2.1.9, 2.2.5, 2.3.2",
+        "Severity": "MEDIUM"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-53493",
+        "PkgName": "github.com/containerd/containerd/v2",
+        "InstalledVersion": "v2.1.5",
+        "FixedVersion": "2.0.13, 2.2.9, 2.3.6, 2.4.1",
+        "Severity": "MEDIUM"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-116587",
+        "PkgName": "github.com/go-jose/go-jose/v4",
+        "InstalledVersion": "v4.1.4",
+        "FixedVersion": "4.1.6",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-116585",
+        "PkgName": "github.com/go-jose/go-jose/v4",
+        "InstalledVersion": "v4.1.4",
+        "FixedVersion": "4.1.5",
+        "Severity": "MEDIUM"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-116586",
+        "PkgName": "github.com/go-jose/go-jose/v4",
+        "InstalledVersion": "v4.1.4",
+        "FixedVersion": "4.1.5",
+        "Severity": "MEDIUM"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-81870",
+        "PkgName": "go.opentelemetry.io/otel/sdk",
+        "InstalledVersion": "v1.43.0",
+        "FixedVersion": "1.45.0",
+        "Severity": "LOW"
+      },
+      {
+        "VulnerabilityID": "GO-2026-5932",
+        "PkgName": "golang.org/x/crypto",
+        "InstalledVersion": "v0.57.0",
+        "FixedVersion": "0.58.1-0.20261009181718-2f1f834330b2",
+        "Severity": "UNKNOWN"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-78661",
+        "PkgName": "golang.org/x/net",
+        "InstalledVersion": "v0.60.0",
+        "FixedVersion": "0.62.0",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-97045",
+        "PkgName": "golang.org/x/net",
+        "InstalledVersion": "v0.60.0",
+        "FixedVersion": "0.62.0",
+        "Severity": "MEDIUM"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-84304",
+        "PkgName": "google.golang.org/grpc",
+        "InstalledVersion": "v1.80.0",
+        "FixedVersion": "1.83.1",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-84445",
+        "PkgName": "google.golang.org/grpc",
+        "InstalledVersion": "v1.80.0",
+        "FixedVersion": "1.82.2, 1.83.2, 1.84.0-dev.0.20260825144003-d5a41119e0e3, 1.85.0-dev.0.20260825072537-93e31b48545e",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "GHSA-hrxh-6v49-42gf",
+        "PkgName": "google.golang.org/grpc",
+        "InstalledVersion": "v1.80.0",
+        "FixedVersion": "1.82.1",
+        "Severity": "HIGH"
+      },
+      {
+        "VulnerabilityID": "CVE-2026-84303",
+        "PkgName": "google.golang.org/grpc",
+        "InstalledVersion": "v1.80.0",
+        "FixedVersion": "1.83.1",
+        "Severity": "MEDIUM"
+      }
+    ],
+    "source_scan_sha256": "36775c625645bad916350822155c310497348942aa19d716fb4a11d9fe04dde5",
+    "scanner_db": {
+      "Version": 2,
+      "NextUpdate": "2026-11-07T18:59:52.855177045Z",
+      "UpdatedAt": "2026-11-06T18:59:52.855177206Z",
+      "DownloadedAt": "2026-11-06T21:29:24.198857769Z"
+    },
+    "binary_scan_sha256": "c77042d5a223c7880b49477aa32535ac26838683d9ed87099e5e28a503915d96",
+    "binary_scan": "NO_LANGUAGE_PACKAGES_DETECTED_NOT_A_CLEAN_SCAN",
+    "source_vs_host": "gVisor source references containerd/v2 v2.1.5; installed control daemon is v2.4.2; worker has no daemon",
+    "observed_optional_services": "No idle runsc metric/checkpoint/shim processes; no CDI specs; control CRI loaded via root-owned Unix socket",
+    "inference": "Fixed worker run path has no checkpoint/metrics operation; upstream metrics default is empty. This is scoped exposure evidence, not complete binary call-graph proof.",
+    "critical_source_findings": "Upstream 53488/53492 Critical ratings retained despite scanner HIGH; not waived",
+    "waivers": 0
+  },
+  "incident": {
+    "scope": "real_private_API_container_rebuild_same_trusted_host",
+    "image": "e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358",
+    "installer_revision": "4e3bbc29d5ace96513631ea0738ff2898de1203daec88ef4f79fa054a03f15a9",
+    "completed": true,
+    "stage": "completed",
+    "checks": [
+      "session_revoked_before_rebuild",
+      "new_container_exact_image_config_and_sources",
+      "durable_authority_unchanged",
+      "revoked_session_stays_denied",
+      "fresh_authorized_session_reads_exact_asset",
+      "readiness_stays_closed"
+    ],
+    "source_files_verified": 72,
+    "authority_before_sha256": "17429d5ee0b36fb1a1e023f2fd5d45511a37d7d084e15d6714243473ab1b8faf",
+    "authority_after_sha256": "17429d5ee0b36fb1a1e023f2fd5d45511a37d7d084e15d6714243473ab1b8faf",
+    "cleanup_confirmed": true,
+    "product_admission": "closed",
+    "inference_admission": "closed",
+    "host_reimage": false,
+    "new_resources": 0,
+    "provider_calls": 0
+  },
+  "incident_container_id_changed": true,
+  "predecessor": "Retained stopped under generated incident name in private receipt; no automatic rollback",
+  "lifecycle": {
+    "counts": {
+      "CLEANED": 532
+    },
+    "fences": 311,
+    "missing_deadlines": 0,
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "workspaces_remaining": 0,
+    "restore_clones_remaining": 0,
+    "runtime_bound_expiry": true,
+    "natural_seven_day_expiry": "NOT_YET_ELAPSED"
+  },
+  "credit": {
+    "checked_at": "2026-11-07T00:41:19.754097+00:00",
+    "credit_guard": "within_early_cutoff",
+    "remaining_credit": "191.85",
+    "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+  },
+  "no_payment_method_or_personal_spending": true,
+  "initial_probe_limitation": "First read-only inventory assumed containerd commands exist on worker; corrected explicit absent-tool handling. No service mutation occurred.",
+  "separate_critical_review": [
+    "Read-only inventory uses fixed trusted commands; raw listener addresses remain private; eight runtime hashes/owners/modes match.",
+    "Container validation checks exact mounts/RW/propagation, env/entrypoint/command, UID/groups, privileges, resource limits and namespaces; no relaxation.",
+    "Rebuild is one-shot with flushed atomic stages, guard/closed/idle checks, exact installer hashes, stopped predecessor retained, no state rewrites.",
+    "Actual revoked token reused on a new HTTP transport after rebuild; fresh login is separate. Metadata/assets exact before and after.",
+    "Service rebuild does not establish trusted recovery from a compromised host, compromised credentials or lost deletion authority.",
+    "Automated/Codex review only; independent human review remains unavailable."
+  ],
+  "remaining": [
+    "Binary-level companion dependency reachability/host-kernel vulnerability coverage not exhaustive",
+    "Fresh-host trust establishment, credential rotation and portable disaster restore NOT RUN (Phase6 recovery scope)",
+    "No new worker candidate probes: unchanged runtime retains prior 16-probe evidence",
+    "Final release clean-browser/package/ownership/publication gates remain open"
+  ]
+}

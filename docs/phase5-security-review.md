@@ -1,5 +1,41 @@
 # Phase 5 security review — November 5
 
+## Runtime inventory and rebuild critical pass — November 7
+
+Expanded installer checks now reject changed mount sources or permissions,
+added privileges,missing no-new-privileges,changed swap/CPU/PID limits,
+host namespaces and substituted commands or environments.28 fixture cases and both actual containers
+pass. Actual one-shot rebuild from the same pinned image reconstructs API identity,
+retains stopped predecessor and matches all72 source files. Durable workspace/session/
+asset fingerprint and job/repair/version/PR counts remain identical. Revoked session
+still403;fresh login exact download;normal deletion cleanup;admissions remain closed.
+No fabricated compromised-host recovery: host,keys and live DB remain trusted.
+1023 Linux+10 subtests,849 Windows/174 skips. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json).
+
+Read-only actual exposure: worker has no Docker/containerd commands,processes or
+sockets;all8 gVisor binaries match pinned hashes/root ownership/0755/single links.
+Control runs Docker29.9.2/containerd2.4.2;CRI is loaded,grpc-tcp skipped,Unix socket
+root:root0660;Docker socket root:root0600. Neither service container mounts these
+management sockets. No CDI specifications or idle gVisor optional services observed.
+Listener inventory records only existing SSH,DNS,private health and worker RPC ports;
+raw addresses stay in the private receipt. This is not an external firewall port scan.
+
+Official review:
+
+- [Containerd label issue](https://github.com/containerd/containerd/security/advisories/GHSA-xhf5-7wjv-pqxp) and [CDI restore issue](https://github.com/containerd/containerd/security/advisories/GHSA-33vj-92qq-66hc) have upstream Critical severity. Source v2.1.5 is in affected ranges;actual daemon v2.4.2 is outside those listed ranges. Keep source findings;do not apply a global waiver.
+- [Installed daemon release](https://github.com/containerd/containerd/releases/tag/v2.4.2) records security fixes. Actual version/commit matches this release. It is not proof of no other host vulnerabilities.
+- [Pinned gVisor flags](https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/config/flags.go) default metric-server to empty. Our fixed launcher uses run,networknone and disables annotation overrides;no checkpoint/restore operation. [Config](https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/config/config.go) requires explicit matching metrics configuration. Idle process absence alone is not reachability proof.
+- [gRPC xDS advisory](https://github.com/grpc/grpc-go/security/advisories/GHSA-qc2q-p7wx-3px3) concerns xDS RBAC;worker RPC is Python TLS framing. [OpenPGP advisory](https://pkg.go.dev/vuln/GO-2026-5932) concerns specific unmaintained crypto packages,not every use of x/crypto. Full binary symbol/call-path attribution remains open.
+- [gVisor security model](https://gvisor.dev/docs/architecture_guide/security/) provides layered isolation,not elimination of every host vulnerability. Its [production guide](https://gvisor.dev/docs/user_guide/production/) explicitly does not cover untrusted-code hosting;we retain dedicated-worker containment evidence rather than treating that guide as clearance.
+
+Fresh source scan with DB updated2026-11-06T18:59Z:20 findings(10 HIGH,7 MEDIUM,2 LOW,
+1 UNKNOWN). Binary filesystem scan found0 language packages,so **NOT ANALYZED**,not
+zero vulnerabilities. gVisor's empty public advisory page similarly is not proof of
+absence. No dependencies/runtime updated or scanner suppressions introduced. Remaining
+binary/host-kernel coverage and independent human review are explicit gaps. Full host
+reimage,credential rotation and portable disaster-current deletion authority are NOT RUN.
+The completed API drill must not be blindly replayed;use its private durable receipt.
+
 ## Cancellation and coverage audit — November 7
 
 Confirmed/fixed: route finally released bundle admission when cancellation ended its

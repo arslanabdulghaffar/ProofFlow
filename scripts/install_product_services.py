@@ -12,6 +12,75 @@ PREVIOUS = "0ecb6e9d6d4183c40306b5e93af7e8b03de5e0bf2fd9eaaa5eb4a8a5c6abfdb3"
 DOCKER = ["/usr/bin/docker", "--host=unix:///var/run/docker.sock"]
 
 
+def expected_mounts(role):
+    if role not in ("api", "dispatcher"):
+        raise RuntimeError("PRODUCT_ROLE_INVALID")
+    mounts = {
+        "/run/proofflow-budget": ("/run/proofflow-budget", False),
+        "/etc/proofflow-product/credentials": (
+            "/etc/proofflow-product-" + role + "/credentials", False),
+        "/var/lib/proofflow-product/assets": ("/var/lib/proofflow-product/assets", role == "api"),
+        "/var/lib/proofflow-product/jobs": ("/var/lib/proofflow-product/jobs", role != "api"),
+    }
+    if role == "api":
+        mounts.update({
+            "/etc/proofflow-batch-events": ("/etc/proofflow-batch-events", False),
+            "/run/proofflow-product-api": ("/run/proofflow-product-api", True),
+            "/etc/proofflow-product/tls": ("/etc/proofflow-product-api/tls", False),
+        })
+    else:
+        mounts.update({
+            "/etc/proofflow-github": ("/etc/proofflow-github", False),
+            "/etc/proofflow-repair": ("/etc/proofflow-repair", False),
+            "/etc/proofflow-product/worker": ("/etc/proofflow-product-dispatcher/worker", False),
+            "/run/proofflow-verifier": ("/run/proofflow-verifier", False),
+        })
+    return mounts
+
+
+def validate_container(config, role, image_env):
+    """Reject security drift before accepting an existing or rebuilt container.
+
+    The immutable image alone cannot pin host mounts, privileges or runtime limits.
+    Called only with trusted Docker inspect data; errors never include its contents.
+    """
+    try:
+        host, process = config["HostConfig"], config["Config"]
+        expected = expected_mounts(role)
+        mounts = config["Mounts"]
+        actual = {m["Destination"]: (m["Source"], m["RW"]) for m in mounts}
+        limits = {v["Name"]: (v["Soft"], v["Hard"]) for v in host["Ulimits"]}
+        module = "api.app.product_bootstrap" if role == "api" else "orchestrator.product_bootstrap"
+        valid = (
+            config["Image"] == "sha256:" + IMAGE
+            and process["Labels"].get("proofflow.role") == "product-" + role
+            and process["User"] == "10003:10003" and process["WorkingDir"] == "/app"
+            and process["Cmd"] == ["python", "-m", module] and not process["Entrypoint"]
+            and process["Env"] == image_env
+            and host["ReadonlyRootfs"] is True and host["Privileged"] is False
+            and host["CapDrop"] == ["ALL"] and not host["CapAdd"]
+            and host["SecurityOpt"] == ["no-new-privileges"]
+            and host["Memory"] == host["MemorySwap"] == 384 * 1024 * 1024
+            and host["NanoCpus"] == 1000000000 and host["PidsLimit"] == 64
+            and host["GroupAdd"] == ["10001"]
+            and limits == {"core": (0, 0), "nofile": (128, 128)}
+            and len(host["Ulimits"]) == len(limits)
+            and host["NetworkMode"] == ("none" if role == "api" else "host")
+            and not host["PortBindings"] and not host["PublishAllPorts"]
+            and host["PidMode"] == "" and host["IpcMode"] == "private"
+            and host["UTSMode"] == "" and host["UsernsMode"] == ""
+            and host["CgroupnsMode"] == "private" and host["Runtime"] == "runc"
+            and all(not host.get(k) for k in ("Binds", "VolumesFrom", "Tmpfs", "Devices",
+                                              "DeviceRequests", "DeviceCgroupRules", "Links"))
+            and actual == expected and len(mounts) == len(expected)
+            and all(m["Type"] == "bind" and m["Propagation"] == "rprivate" for m in mounts)
+        )
+    except (KeyError, TypeError, AttributeError):
+        valid = False
+    if not valid:
+        raise RuntimeError("PRODUCT_CONTAINER_CONFIGURATION_CHANGED")
+
+
 def command(args, timeout=30):
     result = subprocess.run(args, capture_output=True, timeout=timeout,  # noqa: S603 - fixed admin argv
                             env={"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LANG": "C"})
@@ -232,15 +301,7 @@ WantedBy=sockets.target
         if not existing:
             command(args)
         config = json.loads(command([*DOCKER, "inspect", name]))[0]
-        if (config["Image"] != "sha256:" + IMAGE
-                or config["Config"]["Labels"].get("proofflow.role") != "product-" + role
-                or config["Config"]["User"] != "10003:10003"
-                or not config["HostConfig"]["ReadonlyRootfs"]
-                or config["HostConfig"]["CapDrop"] != ["ALL"]
-                or config["HostConfig"]["Memory"] != 384 * 1024 * 1024
-                or config["HostConfig"]["NetworkMode"] != ("none" if role == "api" else "host")
-                or config["HostConfig"]["PortBindings"]):
-            raise RuntimeError("PRODUCT_CONTAINER_CONFIGURATION_CHANGED")
+        validate_container(config, role, image["Config"]["Env"])
         unit = f"""[Unit]
 Description=ProofFlow private product {role}
 Requires=docker.service proofflow-budget.service proofflow-verifier-helper.socket

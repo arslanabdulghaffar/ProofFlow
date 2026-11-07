@@ -1,5 +1,29 @@
 # Progress
 
+## November 7 KST — runtime exposure and real service rebuild
+
+Found/fixed incomplete existing-container acceptance: exact image alone did not deny
+changed security flags,mounts,commands or several resource/namespace settings.28
+new negative/positive cases pass;actual API and dispatcher match expanded checks.
+Deployed trusted installer update changes no application image or runtime policy.
+
+Actual API reconstruction passed on the existing trusted control VM,with closed
+admissions and unchanged durable workspace/session/assets plus job/version/PR counts.
+Revoked token remained denied;fresh login retrieved identical bytes;72 exact source
+files verified. Stopped predecessor retained,synthetic workspace normally deleted.
+This does not claim recovery of a compromised host or lost credentials.
+
+Eight worker runtime files verified;worker has no Docker/containerd daemon. Control
+daemon2.4.2 is distinct from vulnerable2.1.5 in gVisor source dependencies. CRI is
+loaded locally;no CDI specs or containerd TCP service.20 source findings remain;
+binary scanner recognized no packages,so no clean-binary result claimed. Official
+release/config/advisory review recorded without suppressions. Initial read-only
+probe assumed absent worker tools existed; explicit absence handling corrected it.
+
+1023 Linux+10 subtests,849 Windows/174 skips,Ruff. Fresh credit$191.85;existing funded
+window/caps unchanged. No new resource,model call,worker candidate or PR. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json).
+Phase5 remains IN PROGRESS pending remaining runtime coverage and acceptance audit.
+
 ## November 7 KST — cancelled-work capacity fixed and deployed
 
 Found and reproduced a semaphore lifetime gap: timed-out/disconnected HTTP requests

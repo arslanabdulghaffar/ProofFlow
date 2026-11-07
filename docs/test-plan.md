@@ -1,12 +1,18 @@
 # Acceptance and verification plan
 
+Latest runtime/rebuild evidence:28 concrete container-drift cases;both real deployed
+container configurations pass;actual API stop/archive/reconstruction,72 exact source
+files,unchanged durable authority,revoked session denial,exact authorized download and
+fixture cleanup pass. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json). Full compromised-host/key-rotation recovery NOT RUN.
+Source scan20 findings;binary package recognition0 means uncovered,not clean.
+
 Latest cancellation evidence:7 real executor/ASGI-double cases cover disconnected and
 deadline-ended bundle builds (success/error),bounded asset IO,late upload without
 registry commit and revocation during export. Six deployed private HTTP groups and
 new-image inert recovery/20.437s kill-cleanup pass. [Receipt](evidence/phase5-http-cancellation-2026-11-07.json).
 No additional model call,worker candidate or PR; full host-compromise drill NOT RUN.
 
-Latest full local suites: **995 Linux tests plus 10 subtests**, **821 Windows tests / 174 Linux-only skips**. Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These tests do not substitute for missing portable disaster/production recovery or public-release acceptance.
+Latest full local suites: **1023 Linux tests plus 10 subtests**, **849 Windows tests / 174 Linux-only skips**. Ruff, document/traceability hygiene and secret scan accompany the private checkpoint. These tests do not substitute for missing portable disaster/production recovery or public-release acceptance.
 
 Vault recovery follow-up:13 explicit policy-double cases exercise clock rollback,
 post-read expiry,missing/corrupt clock,cipher tampering,partial publication/retirement,

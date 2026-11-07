@@ -1,5 +1,22 @@
 # Decision log
 
+## D88: rebuild from exact policy, preserve durable authority
+
+Existing container identity must include immutable image AND exact command/environment,
+mount destinations/sources/RW/propagation,nonroot identity/groups,no privileges/added
+caps,NNP,CPU/RAM/no-swap/PID/ulimit bounds and private namespaces. Do not accept a
+matching image with changed host authority.28 concrete drift cases and real readback
+support the expanded installer gate;no candidate/verifier/approval rule changes.
+
+The incident drill reconstructs only the API container from an authenticated pinned
+installer,after fresh credit/closed/idle checks. Flush and atomically publish stages;
+stop/archive predecessor,never erase or silently roll back it. Compare durable
+authority,source bytes and revoked-token denial before cleanup. Actual new container
+and readback pass. This is not fresh-host recovery or secret rotation;those require
+separate trustworthy credentials/deletion authority. No new resources or public action.
+Source findings and zero detected binary packages are not binary security clearance.
+Separate critical pass is Codex/automated,not human sign-off. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json).
+
 ## D87: capacity belongs to real executor work, not its HTTP waiter
 
 Background filesystem/ZIP work is not stopped by cancelling an asyncio waiter.

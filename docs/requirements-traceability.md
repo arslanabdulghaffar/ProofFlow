@@ -1,5 +1,12 @@
 # Requirements traceability
 
+T07/T15/T18/T21 runtime/rebuild follow-up: eight exact deployed runtime members;
+installed-daemon/optional-service/socket inventory;28 installer-drift tests;actual API
+reconstruction from pinned image/installer with72 source matches,preserved authority,
+revoked-session denial and normal cleanup. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json). This is same-host API recovery;
+fresh-host/credential-compromise recovery and complete binary advisory coverage are
+not claimed. No original benchmark/provider/PR replay or candidate execution.
+
 T09/T10/T18 and HTTP capacity follow-up: fixed cancellation releasing limits before
 executor completion. Seven real-thread/ASGI-double cases plus actual private deployed
 CSRF,revoked/foreign access and inert-byte checks pass; no inference or external write.

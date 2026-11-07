@@ -1,5 +1,13 @@
 # Threat model and controls
 
+Current D88 review: runtime inventory verifies all8 worker binaries and no worker
+Docker/containerd daemon;control CRI is local/root-socket only in the observed setup.
+No full binary/host advisory clearance claimed. Installer accepts only exact mounts,
+privileges,resource bounds,namespace and command/environment policy. Actual API rebuild
+retains revoked access and durable data;this assumes trusted host/keys/current DB.
+Full host compromise requires new trust and credential rotation,not a container restart.
+[Evidence](evidence/phase5-runtime-incident-2026-11-07.json). Independent human review remains open.
+
 Current lifecycle control (D85): expiry cannot revive unknown old/legacy worker or
 workspace IDs. Persist clock floors; keep unfinished/quarantined work; prune only
 bounded eligible rows and safe markers on idle locked roots. Runtime identity binds

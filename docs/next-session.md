@@ -1,5 +1,45 @@
 # Resume ProofFlow
 
+## Current checkpoint — November 7 KST: runtime inventory and real API rebuild
+
+Phase0–4 DONE;Phase5 IN PROGRESS. Base34553763b519f3f79d4e396953c4e6da85db8fe1;
+verified checkpoint is HEAD/remote after push. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json). Keep private/credit-only.
+
+Fixed an installer acceptance gap: image identity did not check all privileges,
+mounts,commands,swap/PID/CPU bounds and namespaces. Expanded validation now requires
+the exact deployed policy;28 drift cases pass. Both real containers passed before
+and after the reviewed installer update. Product image remains e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358;
+worker/verifier/schema/epoch5 unchanged.1023 Linux+10 subtests;849 Windows/174 skips.
+
+Actual one-shot API rebuild passed: normal revoke;durable stop/archive/new container
+from pinned image and installer;all72 source files exact;workspace/session/asset data
+fingerprint and execution/version/PR counts unchanged across rebuild;old credentials
+still403;fresh authorized login reads exact bytes;readiness503;normal fixture cleanup.
+The predecessor remains stopped. This is same-host service recovery,not a reimaged
+host or credential-compromise recovery. Do NOT rerun check_incident_api_rebuild.py:
+completed private receipt phase5-incident-api-rebuild.json is its reconciliation key.
+
+Read-only runtime inventory: eight gVisor member hashes/owners/modes match;worker has
+no Docker/containerd tools,daemons or sockets. Control Docker29.9.2/containerd2.4.2;
+CRI is loaded on a root-owned Unix socket,grpc-tcp skipped,no CDI specs. No optional
+gVisor metric/checkpoint/shim process observed while idle. Fixed launcher/default
+flags do not request metrics or restore. Source scan retains20 findings(10 HIGH,
+7 MEDIUM,2 LOW,1 UNKNOWN),including upstream Critical ratings recorded previously.
+Binary scan detected0 language packages: **unresolved coverage,not clean**. Source
+module2.1.5 is not the installed2.4.2 daemon. No advisory suppression or blanket waiver.
+
+Live readback:532 CLEANED,311 fences,zero missing deadlines/workspaces/restore clones;
+three services healthy;product/inference closed. Fresh credit$191.85;Nov8 23:27 KST
+funded review unchanged. No provider call,new resource,payment method or public action.
+
+Next: resolve remaining binary-level companion/host-kernel advisory coverage and
+bounded Phase5 acceptance audit. Avoid turning exhaustive vulnerability research into
+an invented completion claim. Fresh-host trust/credential rotation/portable disaster
+restore and release rehearsal remain Phase6 scope. Prior completed comparison,live
+encrypted restore,renewal and PR must not be replayed. No continuation question needed.
+
+Older checkpoint entries below are historical; counts/status above supersede them.
+
 ## Current checkpoint — November 7 KST: cancelled HTTP work remains bounded
 
 Phase0–4 DONE; Phase5 IN PROGRESS. Base371e4abb91955a59a5f60d09921bc951c2fd6b03;

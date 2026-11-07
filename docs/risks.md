@@ -1,5 +1,13 @@
 # Risks and owner decisions
 
+Current runtime/rebuild follow-up: installer now rejects privilege,mount,resource and
+command drift even with matching image;actual API rebuild preserves revoked access
+and durable data.28 drift cases pass. Same-host service recovery does not repair a
+compromised host/key. Stopped predecessor retained for evidence;no automatic rollback.
+Actual worker has no Docker/containerd daemon;control CRI is locally loaded.20 gVisor
+source findings remain;binary scan found no analyzable package metadata,not a clean
+result. Full companion/host-kernel reachability remains unresolved. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json).
+
 Current cancelled-work finding fixed/deployed: timed-out HTTP waiters no longer
 release admission while filesystem/ZIP threads continue. Actual limits are4 asset IO
 operations plus1 bundle per API process. Stuck IO can deny capacity until process

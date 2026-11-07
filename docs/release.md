@@ -1,5 +1,11 @@
 # Release and operations plan
 
+Actual private API-container rebuild now passes with unchanged image/source pins,
+preserved revoked sessions/data and normal cleanup. Expanded installer checks require
+the full security configuration,not just image identity. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json). This does not establish
+fresh-host/credential-compromise recovery or public readiness. Phase5 remains open.
+Do not replay the completed one-shot incident drill or restore its stopped predecessor.
+
 Latest private image is e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358;
 72 source matches and deployed auth/inert-upload smoke pass after cancelled-work
 capacity hardening. Worker/verifier/schema/epoch5 unchanged. Product/inference remain
