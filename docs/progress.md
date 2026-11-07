@@ -1,5 +1,22 @@
 # Progress
 
+## November8 KST — verified private package checkpoint
+
+Source commit `d6dfceae1d22a901442f85e0dc5440ad4149993a` was committed, pushed and
+matched to remote main. Built the 4,729,372-byte private ZIP from that clean commit:
+13 outer files, including eight-slide editable deck, standalone cover, existing video,
+submission draft, evidence, setup and 486-file tracked source snapshot. Separate
+readback passed outer/source CRCs, manifest hashes, exact membership, source-commit
+identity, reviewed asset pins, document consistency and native comparison table checks.
+Receipt: `evidence/phase6-release-package-2026-11-08.json`. The archive remains local
+and private; only sources, tests, sanitized hashes/evidence and handoff are committed.
+
+Private deck/cover/package task is complete. Phase6 remains IN PROGRESS for public
+authorization and access, licensing/ownership, actual form/enrollment/deadline checks,
+recovery gaps and judging-period hosting. Offline key custody stays owner-deferred.
+No cloud/model calls or new spending commitments for this package; existing funded
+service charges continue. No independent human sign-off. No new PR or submission.
+
 ## November8 KST — Phase6 private deck, cover and release package
 
 Prepared8 editable slides with actual synthetic screenshot,3 native evidence tables

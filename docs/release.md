@@ -7,7 +7,11 @@ existing real-AI video,draft submission fields/copy,safe setup notes and a manif
 builder. Exact reviewed media hashes are in [assets.json](../release/assets.json).
 The builder requires clean committed source and never calls cloud/publishing APIs.
 It verifies native comparison values,ZIP membership/hash/commit identity and private
-gate flags. Final package readback is recorded after the source checkpoint.
+gate flags. [Final package readback](evidence/phase6-release-package-2026-11-08.json)
+passes: 13 files, 4,729,372 bytes, including a 486-file tracked source snapshot from
+verified checkpoint `d6dfceae1d22a901442f85e0dc5440ad4149993a`. The ZIP is outside Git
+in the owner's private release directory. Do not rebuild it merely to include its
+later receipt commit; the manifest and receipt explicitly distinguish those commits.
 
 This is private review readiness,not Phase6 completion or public release. The owner
 deferred offline key custody. Public repository/demo/media and permissive licensing

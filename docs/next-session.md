@@ -32,9 +32,16 @@ ZIP filename normalization; the builder now rejects original/decoded name differ
 See `docs/evidence/phase6-release-assets-2026-11-08.json`. Source snapshot and final verification checkpoint may differ
 only by the later package receipt; final evidence records both. Do not publish the ZIP.
 
-Finish package assembly from the committed source if the final receipt is not yet present;
-otherwise read its evidence and never overwrite the completed package. Current source
-materials are a WIP checkpoint until final artifact/source ZIP verification is saved.
+Private package is now VERIFIED: `ProofFlow-private-release.zip`, 4,729,372 bytes,
+13 outer files and 486 tracked source files. Source checkpoint
+`d6dfceae1d22a901442f85e0dc5440ad4149993a` was pushed and its remote SHA verified.
+ZIP SHA-256: `431297680b87824691ffb352e616dfb2fdd0fc80f4632c7cd650bd42e7d2e421`.
+Private location: `C:/Users/IT/.proofflow/release/2026-11-08/ProofFlow-private-release.zip`.
+Read `docs/evidence/phase6-release-package-2026-11-08.json`; do not overwrite or
+rebuild the completed package. Separate verification checked CRCs, exact file set,
+all hashes, source comment/selected committed bytes, reviewed media pins, normalized
+document bytes and native comparison values. Its later receipt checkpoint contains
+only evidence/handoff changes. This completes private packaging, not all Phase6 gates.
 No new cloud resource,inference,credential,dependency or spending change for this work.
 Latest observed credit remains$190.13 (previous session),funded cutoff Nov10 01:29 KST.
 

@@ -3,8 +3,8 @@
 November8 package follow-up: R49/R50/R51–R53 have private8-slide deck,standalone cover,
 existing actual AI recording,source-bound draft copy and an offline review-ZIP builder.
 [Package guide](../release/README.md). Native table claims match frozen accounting;
-public URLs/license/release flags remain unset/false. Final archive receipt follows its
-source commit. These are private preparation components,not public smoke,submission,
+public URLs/license/release flags remain unset/false. The [final archive receipt](evidence/phase6-release-package-2026-11-08.json)
+verifies all 13 files and the exact source snapshot. These are private preparation components,not public smoke,submission,
 ownership clearance or human sign-off. Offline key custody was deferred by the owner.
 
 November8 Phase6 update: R37-02,R40-03/04,R49-01–04 and T21–T23 have additional

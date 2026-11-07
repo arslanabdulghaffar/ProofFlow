@@ -14,6 +14,11 @@ cover private paths, Windows normalization, symlinks, declarations, encoding and
 An initial Windows separator probe failed; raw-byte construction and original-name
 validation were corrected before the passing rerun.
 
+Final ZIP independently re-opened: 13 files, 486 tracked source files, all CRC/hash/file
+set/source-commit and media-pin checks pass. Selected source bytes match `git show`;
+package documents match committed source after line-ending normalization. Native deck
+table matches committed content and frozen accounting. See the package evidence receipt.
+
 November8 Phase6 scoped checks:83 Linux/42 Windows cases pass,including21 new unique
 portable crypto/deletion/expiry,scheduled integrity/retention and dated-funding cases.
 Actual Windows task LastTaskResult0 after integrity hardening;nonempty consistent
