@@ -1,5 +1,15 @@
 # Risks and owner decisions
 
+Current Phase5 acceptance audit: the concrete Critical host TCP finding is patched on
+both VMs and verified by reboot into149 plus16 real containment probes. Binary coverage
+now distinguishes five Go scans from three manually reviewed native helpers;18 Go IDs
+and prior native/source findings remain triaged,not suppressed. Missing versioned
+main-module/platform metadata and static-analysis limits prevent blanket security claims.
+Private technical acceptance does not clear public release,portable disaster recovery,
+MIT ownership or independent human review. D outperformed A on the narrow synthetic
+repair set;no witness-quality or beyond-normalizer advantage is established. [acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json).
+The earlier current-status paragraphs below are historical and superseded by this audit.
+
 Current runtime/rebuild follow-up: installer now rejects privilege,mount,resource and
 command drift even with matching image;actual API rebuild preserves revoked access
 and durable data.28 drift cases pass. Same-host service recovery does not repair a

@@ -1,5 +1,14 @@
 # Acceptance and verification plan
 
+Phase5 private technical acceptance audit now passes. On patched149 hosts,all16 fresh
+T07/T08 probes pass with confirmed cleanup;exact72 source files and container policy,
+HTTP200/503/403,role denial and retention readback pass.1044 Linux+10 subtests;
+870 Windows/174 Linux-only skips. New13 scanner-report and8 kernel-plan tests cover
+false-clean results,metadata/warnings,package/version/origin/removal drift. Frozen
+comparison artifact rechecked without new calls. [acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json). Phase6 T21–T23 release/portable
+disaster obligations and independent human review remain separate;older counts below
+are historical. No exploit or candidate executes on the development/control computer.
+
 Latest runtime/rebuild evidence:28 concrete container-drift cases;both real deployed
 container configurations pass;actual API stop/archive/reconstruction,72 exact source
 files,unchanged durable authority,revoked session denial,exact authorized download and

@@ -1,0 +1,1333 @@
+{
+  "observed_at": "2026-11-07T01:06:43.951908+00:00",
+  "checkpoint_base": "1ec94de00f026780f445dc1ab26ee828a5be8a40",
+  "phase5_acceptance": "PASS_PRIVATE_TECHNICAL_SCOPE",
+  "completion_rule": "DONE only after this checkpoint is pushed and remote SHA verified",
+  "release_approval": false,
+  "source_hashes": {
+    "scripts/audit_gvisor_scan.py": "820c6673bc9ec643ffd028fb2a1813064fa8711d398ef0e6a02005afc795cab7",
+    "scripts/update_host_kernel.py": "7ceb9916e6ef0ba1b4e394479ecde9365d0dd3be41d8ae131af276a229eacff1",
+    "tests/security/test_binary_scan_coverage.py": "75e04d61a94fee3485be018ac23c949426347022efe4ae3251b528249cf878cb",
+    "tests/security/test_kernel_maintenance_plan.py": "024c3771059a1abc63e9eaa087d3dbd0d1c7936dc9fc43d2734a840113509701",
+    "scripts/check_phase5_security.py": "7e367cf211e73714b1da7edf87106cc35cc023c0af5b991696afc4fb621b34b8",
+    "scripts/check_runtime_exposure.py": "76edd51c939ab20dac368a4d973185d1b4209d207fd915010a40158a68436b4a",
+    "worker/runtime.py": "efd94d6c628bcf4f8833901c3948bc67a9e230aa7f5740aca012efac3acefc6f",
+    "worker/runtime_bundle.py": "b65b8d526f0b94c2e352aac5d17bb5ff91068424446627dd3ffc9a342e0194a9",
+    "infra/gvisor/runsc-release.json": "7c50f528e54024e3c5b3fd05a28c6c46288c39c41701249bd8e53ce590133cbe"
+  },
+  "prior_evidence_hashes": {
+    "docs/evidence/phase5-security-development-2026-11-05.json": "88a96ce0e23ab095024eb9e444651cf2cdaaf365371535febe91cb9427fac6e4",
+    "docs/evidence/phase5-final-comparison-2026-11-06.json": "a45cd87b9ad91a1c75c3fd887588b82837847745cc4838ea2423f5ab2c41d2fc",
+    "eval/final-comparison-2026-11-06.json": "eb46c5c01e19d299597a5c22488aa6a3f4c8f8f1e9d354438ed350d31a6f67a1",
+    "docs/evidence/phase5-encrypted-recovery-2026-11-07.json": "7232a419602b3c55aa45f4bdb60344678b16abfe5be96947e3453b7a50e53b99",
+    "docs/evidence/phase5-vault-native-review-2026-11-07.json": "b112726f3ff72236fb6a6630cf2cd4797bf5b42e173ec6f55623064fd0d3039d",
+    "docs/evidence/phase5-http-cancellation-2026-11-07.json": "fc49482361e7fcdc1943d8ef0b5d25fe8f8a8f02ccf56d16925445a8151f48b4",
+    "docs/evidence/phase5-runtime-incident-2026-11-07.json": "8026f05dbcba201a85ebe6bd477d40d6cdbd6bc0ab230f5919711e46660fc633",
+    "docs/evidence/phase4-acceptance-2026-11-05.json": "b815c951e9a855ce758136d0040f4e0420e0a31b87af0bec676d1af0de54d1b9"
+  },
+  "kernel_fix": {
+    "advisory": "CVE-2026-98432",
+    "vendor_severity": "Critical",
+    "source": "https://ubuntu.com/blog/fixes-available-in-proposed-pocket-for-cve-2026-98432",
+    "tracker": "https://ubuntu.com/security/CVE-2026-98432",
+    "repository": "Ubuntu noble-updates, signed by existing Ubuntu archive keyring; no proposed or unsigned packages",
+    "hosts": {
+      "worker": {
+        "previous_kernel": "6.8.0-147-generic",
+        "running_kernel": "6.8.0-149-generic",
+        "boot_id_changed": true,
+        "package_integrity_audit": "PASS",
+        "packages": {
+          "linux-generic": "6.8.0-149.149",
+          "linux-headers-6.8.0-149": "6.8.0-149.149",
+          "linux-headers-6.8.0-149-generic": "6.8.0-149.149",
+          "linux-headers-generic": "6.8.0-149.149",
+          "linux-image-6.8.0-149-generic": "6.8.0-149.149",
+          "linux-image-generic": "6.8.0-149.149",
+          "linux-libc-dev": "6.8.0-149.149",
+          "linux-modules-6.8.0-149-generic": "6.8.0-149.149",
+          "linux-modules-extra-6.8.0-149-generic": "6.8.0-149.149",
+          "linux-tools-common": "6.8.0-149.149"
+        },
+        "install_unit_success": "Result=success\nExecMainStatus=0\nLoadState=loaded\nActiveState=active\nSubState=exited",
+        "private_receipt_sha256": "26154bab503f02d6f71cbb84717df3570c90a24eed64171d86fafd6ac08b2025"
+      },
+      "control": {
+        "previous_kernel": "6.8.0-147-generic",
+        "running_kernel": "6.8.0-149-generic",
+        "boot_id_changed": true,
+        "package_integrity_audit": "PASS",
+        "packages": {
+          "linux-generic": "6.8.0-149.149",
+          "linux-headers-6.8.0-149": "6.8.0-149.149",
+          "linux-headers-6.8.0-149-generic": "6.8.0-149.149",
+          "linux-headers-generic": "6.8.0-149.149",
+          "linux-image-6.8.0-149-generic": "6.8.0-149.149",
+          "linux-image-generic": "6.8.0-149.149",
+          "linux-libc-dev": "6.8.0-149.149",
+          "linux-modules-6.8.0-149-generic": "6.8.0-149.149",
+          "linux-modules-extra-6.8.0-149-generic": "6.8.0-149.149",
+          "linux-tools-common": "6.8.0-149.149"
+        },
+        "install_unit_success": "Result=success\nExecMainStatus=0\nLoadState=loaded\nActiveState=active\nSubState=exited",
+        "private_receipt_sha256": "e35d148b40f3898fdd6d57509d95ad003efa50da4d1e2bddcd9376b76ed798f3"
+      }
+    },
+    "reboot_order": [
+      "worker",
+      "control"
+    ],
+    "old_kernel_removed": false,
+    "no_automatic_vulnerable_rollback": true
+  },
+  "binary_review": {
+    "toolchain": {
+      "url": "https://go.dev/dl/go1.27.3.linux-amd64.tar.gz",
+      "sha256": "65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40",
+      "version": "go1.27.3",
+      "govulncheck": "v1.9.0",
+      "scope": "local static analysis only; no target execution"
+    },
+    "govulncheck_binary_sha256": "150b60cb9e794519e022500e595891b5b570a91a2901f62f9238590ff76bf536",
+    "govulncheck_module_sum": "h1:12VaqnI9kJfqwRoPptxoqsUhQtdfrSbdksT7X/KY/sc=",
+    "db_last_modified": "2026-11-05T23:49:57Z",
+    "documentation": "https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck",
+    "command": "govulncheck -mode=binary -json PINNED_MEMBER",
+    "members": [
+      {
+        "member": "containerd-shim-runsc-v1",
+        "binary_sha256": "6187d6d34f4996e859353fbb4c56d5ed41fc35b5afa44bff766f4e4b424da5bb",
+        "scan_sha256": "c35be85f21acfc51c4fd528f8377adcd1ac31c5049d844b13033612e69050410",
+        "config": {
+          "protocol_version": "v1.0.0",
+          "scanner_name": "govulncheck",
+          "scanner_version": "v1.9.0",
+          "db": "https://vuln.go.dev",
+          "db_last_modified": "2026-11-05T23:49:57Z",
+          "scan_level": "symbol",
+          "scan_mode": "binary"
+        },
+        "exit": 0,
+        "release_clearance": false,
+        "warnings": [
+          "warning: failed to extract build system specification GOOS:  GOARCH: \n"
+        ],
+        "coverage": "GO_BINARY_ANALYSIS_COMPLETED",
+        "sbom": {
+          "go_version": "go1.27.3",
+          "modules": [
+            "github.com/BurntSushi/toml@v1.4.1-0.20240526193622-a339e1f7089c",
+            "github.com/cenkalti/backoff@v2.2.1+incompatible",
+            "github.com/cilium/ebpf@v0.16.0",
+            "github.com/containerd/cgroups/v3@v3.0.5",
+            "github.com/containerd/console@v1.0.4",
+            "github.com/containerd/containerd/api@v1.10.0",
+            "github.com/containerd/containerd/v2@v2.1.5",
+            "github.com/containerd/continuity@v0.4.5",
+            "github.com/containerd/errdefs@v1.0.0",
+            "github.com/containerd/errdefs/pkg@v0.3.0",
+            "github.com/containerd/fifo@v1.1.0",
+            "github.com/containerd/go-runc@v1.1.0",
+            "github.com/containerd/log@v0.1.0",
+            "github.com/containerd/plugin@v1.0.0",
+            "github.com/containerd/ttrpc@v1.2.7",
+            "github.com/containerd/typeurl/v2@v2.2.3",
+            "github.com/coreos/go-systemd/v22@v22.6.0",
+            "github.com/docker/go-units@v0.5.0",
+            "github.com/godbus/dbus/v5@v5.1.0",
+            "github.com/gogo/protobuf@v1.3.2",
+            "github.com/golang/protobuf@v1.5.4",
+            "github.com/google/go-cmp@v0.7.0",
+            "github.com/mdlayher/socket@v0.5.1",
+            "github.com/mdlayher/vsock@v1.2.1",
+            "github.com/moby/sys/capability@v0.4.0",
+            "github.com/moby/sys/mountinfo@v0.7.2",
+            "github.com/moby/sys/userns@v0.1.0",
+            "github.com/mohae/deepcopy@v0.0.0-20170308212314-bb9b5e7adda9",
+            "github.com/opencontainers/go-digest@v1.0.0",
+            "github.com/opencontainers/image-spec@v1.1.1",
+            "github.com/opencontainers/runtime-spec@v1.2.1",
+            "github.com/sirupsen/logrus@v1.9.3",
+            "golang.org/x/exp@v0.0.0-20250711185948-6ae5c78190dc",
+            "golang.org/x/net@v0.60.0",
+            "golang.org/x/sync@v0.23.0",
+            "golang.org/x/sys@v0.48.0",
+            "golang.org/x/text@v0.42.0",
+            "golang.org/x/time@v0.15.0",
+            "google.golang.org/genproto/googleapis/rpc@v0.0.0-20260401024825-9d38bb4040a9",
+            "google.golang.org/grpc@v1.80.0",
+            "google.golang.org/protobuf@v1.36.11",
+            "stdlib@go1.27.3"
+          ]
+        },
+        "finding_messages": 824,
+        "advisories": [
+          {
+            "id": "GO-2026-5064",
+            "aliases": [
+              "CVE-2026-53492",
+              "GHSA-33vj-92qq-66hc"
+            ],
+            "summary": "containerd CRI checkpoint restore CDI annotation smuggling in github.com/containerd/containerd",
+            "levels": {
+              "module": 1,
+              "package": 18,
+              "symbol": 76
+            },
+            "distinct_frames": 95,
+            "fixed_versions": [
+              "v2.1.9"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5064"
+          },
+          {
+            "id": "GO-2026-5338",
+            "aliases": [
+              "CVE-2026-50195",
+              "GHSA-cvxm-645q-p574"
+            ],
+            "summary": "containerd: CRI checkpoint import allows local image tag poisoning in github.com/containerd/containerd",
+            "levels": {
+              "module": 1,
+              "package": 18,
+              "symbol": 76
+            },
+            "distinct_frames": 95,
+            "fixed_versions": [
+              "v2.1.9"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5338"
+          },
+          {
+            "id": "GO-2026-5378",
+            "aliases": [
+              "CVE-2026-46680",
+              "GHSA-fqw6-gf59-qr4w"
+            ],
+            "summary": "containerd user ID handling bypass allows runAsNonRoot evasion in github.com/containerd/containerd",
+            "levels": {
+              "module": 1,
+              "package": 18,
+              "symbol": 76
+            },
+            "distinct_frames": 95,
+            "fixed_versions": [
+              "v2.2.4"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5378"
+          },
+          {
+            "id": "GO-2026-5475",
+            "aliases": [
+              "CVE-2026-47262",
+              "GHSA-jpcc-p29g-p8mq"
+            ],
+            "summary": "containerd image-triggered runtime DoS via unbounded group parsing in github.com/containerd/containerd",
+            "levels": {
+              "module": 1,
+              "package": 18,
+              "symbol": 76
+            },
+            "distinct_frames": 95,
+            "fixed_versions": [
+              "v2.1.9"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5475"
+          },
+          {
+            "id": "GO-2026-5622",
+            "aliases": [
+              "CVE-2026-53489",
+              "GHSA-rgh6-rfwx-v388"
+            ],
+            "summary": "Arbitrary host CRI log file read via symlink following in CRI checkpoint restore in github.com/containerd/containerd",
+            "levels": {
+              "module": 1,
+              "package": 18,
+              "symbol": 76
+            },
+            "distinct_frames": 95,
+            "fixed_versions": [
+              "v2.1.9"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5622"
+          },
+          {
+            "id": "GO-2026-5758",
+            "aliases": [
+              "CVE-2026-53488",
+              "GHSA-xhf5-7wjv-pqxp"
+            ],
+            "summary": "containerd CRI \u2014 image-config `LABEL` flows to restart-monitor `binary://` logger: host-root command execution from an image pull in github.com/containerd/containerd",
+            "levels": {
+              "module": 1,
+              "package": 18,
+              "symbol": 76
+            },
+            "distinct_frames": 95,
+            "fixed_versions": [
+              "v2.1.9"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5758"
+          },
+          {
+            "id": "GO-2026-6061",
+            "aliases": [
+              "GHSA-hrxh-6v49-42gf"
+            ],
+            "summary": "Vulnerabilities in the xDS RBAC authorization engine and the HTTP/2 transport server implementation in google.golang.org/grpc",
+            "levels": {
+              "module": 1,
+              "package": 1,
+              "symbol": 22
+            },
+            "distinct_frames": 24,
+            "fixed_versions": [
+              "v1.82.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6061"
+          },
+          {
+            "id": "GO-2026-6238",
+            "aliases": [
+              "CVE-2026-10722",
+              "GHSA-xhgw-qwwf-pg32"
+            ],
+            "summary": "Integer overflow in BTF parsing in github.com/cilium/ebpf",
+            "levels": {
+              "module": 1,
+              "package": 1,
+              "symbol": 4
+            },
+            "distinct_frames": 6,
+            "fixed_versions": [
+              "v0.22.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6238"
+          },
+          {
+            "id": "GO-2026-6348",
+            "aliases": [
+              "CVE-2026-84304",
+              "GHSA-vp52-pcj8-j9qc"
+            ],
+            "summary": "Heap Memory Exhaustion (OOM) via HTTP/2 DATA Frame Fragmentation in google.golang.org/grpc",
+            "levels": {
+              "module": 1,
+              "package": 2,
+              "symbol": 25
+            },
+            "distinct_frames": 28,
+            "fixed_versions": [
+              "v1.83.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6348"
+          },
+          {
+            "id": "GO-2026-6441",
+            "aliases": [
+              "CVE-2026-84303",
+              "GHSA-qc2q-p7wx-3px3"
+            ],
+            "summary": "Bypass of xDS RBAC HTTP filter header matching in google.golang.org/grpc",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v1.83.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6441"
+          },
+          {
+            "id": "GO-2026-6443",
+            "aliases": [
+              "CVE-2026-84445",
+              "GHSA-2v4p-qf9q-27wj"
+            ],
+            "summary": "Server panic via missing authority or Host headers in google.golang.org/grpc",
+            "levels": {
+              "module": 1,
+              "package": 1,
+              "symbol": 1
+            },
+            "distinct_frames": 3,
+            "fixed_versions": [
+              "v1.82.2"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6443"
+          },
+          {
+            "id": "GO-2026-6597",
+            "aliases": [
+              "CVE-2026-53493",
+              "GHSA-pg57-6jwg-q645"
+            ],
+            "summary": "Containerd has image-pull DoS via crafted OCI index graph amplification in github.com/containerd/containerd",
+            "levels": {
+              "module": 1,
+              "package": 18,
+              "symbol": 76
+            },
+            "distinct_frames": 95,
+            "fixed_versions": [
+              "v2.2.9"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6597"
+          },
+          {
+            "id": "GO-2026-6791",
+            "aliases": [
+              "CVE-2026-95837",
+              "GHSA-p7v4-vr35-mj6f"
+            ],
+            "summary": "containerd CRI plugin: Checkpoint restore bypasses destination security context in github.com/containerd/containerd",
+            "levels": {
+              "module": 1,
+              "package": 18,
+              "symbol": 76
+            },
+            "distinct_frames": 95,
+            "fixed_versions": [
+              "v2.2.7"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6791"
+          },
+          {
+            "id": "GO-2026-6860",
+            "aliases": [
+              "CVE-2026-78661"
+            ],
+            "summary": "Avoid quadratic complexity when coalescing text nodes in html in golang.org/x/net",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.62.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6860"
+          },
+          {
+            "id": "GO-2026-6866",
+            "aliases": [
+              "CVE-2026-97045"
+            ],
+            "summary": "Check all ancestor namespace transitions when rendering raw text in html in golang.org/x/net",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.62.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6866"
+          }
+        ],
+        "disposition": "REVIEW_REQUIRED",
+        "limitations": "Requested symbol analysis can fall back to module matches. Symbol presence is not runtime reachability. Missing main-module versions, native code and advisory database omissions are not cleared."
+      },
+      {
+        "member": "gvisor-bin/checkpointgofer",
+        "binary_sha256": "37e6e92d6dcb3296e10dc2f21b0ef6156f1373ff0668d27a4fccc8ded2b51f94",
+        "scan_sha256": "005195b8bcae75ff8c873a8f2ee414c0ac1fec3330e3bb812c69891afbff039d",
+        "config": {
+          "protocol_version": "v1.0.0",
+          "scanner_name": "govulncheck",
+          "scanner_version": "v1.9.0",
+          "db": "https://vuln.go.dev",
+          "db_last_modified": "2026-11-05T23:49:57Z",
+          "scan_level": "symbol",
+          "scan_mode": "binary"
+        },
+        "exit": 0,
+        "release_clearance": false,
+        "warnings": [
+          "warning: failed to extract build system specification GOOS:  GOARCH: \n"
+        ],
+        "coverage": "GO_BINARY_ANALYSIS_COMPLETED",
+        "sbom": {
+          "go_version": "go1.27.3",
+          "modules": [
+            "cloud.google.com/go@v0.123.0",
+            "cloud.google.com/go/auth@v0.20.0",
+            "cloud.google.com/go/auth/oauth2adapt@v0.2.8",
+            "cloud.google.com/go/compute/metadata@v0.9.0",
+            "cloud.google.com/go/iam@v1.7.0",
+            "cloud.google.com/go/monitoring@v1.24.3",
+            "cloud.google.com/go/storage@v1.62.1",
+            "github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp@v1.31.0",
+            "github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric@v0.55.0",
+            "github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping@v0.55.0",
+            "github.com/cenkalti/backoff@v2.2.1+incompatible",
+            "github.com/cespare/xxhash/v2@v2.3.0",
+            "github.com/cncf/xds/go@v0.0.0-20251210132809-ee656c7534f5",
+            "github.com/envoyproxy/go-control-plane/envoy@v1.36.0",
+            "github.com/felixge/httpsnoop@v1.0.4",
+            "github.com/go-jose/go-jose/v4@v4.1.4",
+            "github.com/go-logr/logr@v1.4.3",
+            "github.com/go-logr/stdr@v1.2.2",
+            "github.com/golang/protobuf@v1.5.4",
+            "github.com/google/s2a-go@v0.1.9",
+            "github.com/google/subcommands@v1.0.2-0.20190508160503-636abe8753b8",
+            "github.com/google/uuid@v1.6.0",
+            "github.com/googleapis/enterprise-certificate-proxy@v0.3.14",
+            "github.com/googleapis/gax-go/v2@v2.21.0",
+            "github.com/moby/sys/capability@v0.4.0",
+            "github.com/mohae/deepcopy@v0.0.0-20170308212314-bb9b5e7adda9",
+            "github.com/opencontainers/runtime-spec@v1.2.1",
+            "github.com/spiffe/go-spiffe/v2@v2.6.0",
+            "go.opentelemetry.io/auto/sdk@v1.2.1",
+            "go.opentelemetry.io/contrib/detectors/gcp@v1.39.0",
+            "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc@v0.67.0",
+            "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp@v0.67.0",
+            "go.opentelemetry.io/otel@v1.43.0",
+            "go.opentelemetry.io/otel/metric@v1.43.0",
+            "go.opentelemetry.io/otel/sdk@v1.43.0",
+            "go.opentelemetry.io/otel/sdk/metric@v1.43.0",
+            "go.opentelemetry.io/otel/trace@v1.43.0",
+            "golang.org/x/crypto@v0.57.0",
+            "golang.org/x/exp@v0.0.0-20250711185948-6ae5c78190dc",
+            "golang.org/x/net@v0.60.0",
+            "golang.org/x/oauth2@v0.36.0",
+            "golang.org/x/sync@v0.23.0",
+            "golang.org/x/sys@v0.48.0",
+            "golang.org/x/text@v0.42.0",
+            "golang.org/x/time@v0.15.0",
+            "google.golang.org/api@v0.274.0",
+            "google.golang.org/genproto@v0.0.0-20260319201613-d00831a3d3e7",
+            "google.golang.org/genproto/googleapis/api@v0.0.0-20260401024825-9d38bb4040a9",
+            "google.golang.org/genproto/googleapis/rpc@v0.0.0-20260401024825-9d38bb4040a9",
+            "google.golang.org/grpc@v1.80.0",
+            "google.golang.org/protobuf@v1.36.11",
+            "stdlib@go1.27.3"
+          ]
+        },
+        "finding_messages": 337,
+        "advisories": [
+          {
+            "id": "GO-2026-5158",
+            "aliases": [
+              "CVE-2026-41178",
+              "GHSA-5wrp-cwcj-q835"
+            ],
+            "summary": "Opentelemetry-go's baggage parsing no longer caps raw header length in go.opentelemetry.io/otel",
+            "levels": {
+              "module": 1,
+              "package": 1
+            },
+            "distinct_frames": 2,
+            "fixed_versions": [
+              "v1.44.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5158"
+          },
+          {
+            "id": "GO-2026-5932",
+            "aliases": [],
+            "summary": "The golang.org/x/crypto/openpgp package is unmaintained, unsafe by design, and has known security issues",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.58.1-0.20261009181718-2f1f834330b2"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5932"
+          },
+          {
+            "id": "GO-2026-6061",
+            "aliases": [
+              "GHSA-hrxh-6v49-42gf"
+            ],
+            "summary": "Vulnerabilities in the xDS RBAC authorization engine and the HTTP/2 transport server implementation in google.golang.org/grpc",
+            "levels": {
+              "module": 1,
+              "package": 2,
+              "symbol": 24
+            },
+            "distinct_frames": 27,
+            "fixed_versions": [
+              "v1.82.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6061"
+          },
+          {
+            "id": "GO-2026-6348",
+            "aliases": [
+              "CVE-2026-84304",
+              "GHSA-vp52-pcj8-j9qc"
+            ],
+            "summary": "Heap Memory Exhaustion (OOM) via HTTP/2 DATA Frame Fragmentation in google.golang.org/grpc",
+            "levels": {
+              "module": 1,
+              "package": 2,
+              "symbol": 25
+            },
+            "distinct_frames": 28,
+            "fixed_versions": [
+              "v1.83.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6348"
+          },
+          {
+            "id": "GO-2026-6441",
+            "aliases": [
+              "CVE-2026-84303",
+              "GHSA-qc2q-p7wx-3px3"
+            ],
+            "summary": "Bypass of xDS RBAC HTTP filter header matching in google.golang.org/grpc",
+            "levels": {
+              "module": 1,
+              "package": 1,
+              "symbol": 2
+            },
+            "distinct_frames": 4,
+            "fixed_versions": [
+              "v1.83.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6441"
+          },
+          {
+            "id": "GO-2026-6443",
+            "aliases": [
+              "CVE-2026-84445",
+              "GHSA-2v4p-qf9q-27wj"
+            ],
+            "summary": "Server panic via missing authority or Host headers in google.golang.org/grpc",
+            "levels": {
+              "module": 1,
+              "package": 2,
+              "symbol": 1
+            },
+            "distinct_frames": 4,
+            "fixed_versions": [
+              "v1.82.2"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6443"
+          },
+          {
+            "id": "GO-2026-6505",
+            "aliases": [
+              "CVE-2026-81870",
+              "GHSA-8wmf-6v46-5gfg"
+            ],
+            "summary": "OpenTelemetry-Go: Exporter config logging may leak endpoint URLs in info logs in go.opentelemetry.io/otel/exporters/otlp/otlptrace",
+            "levels": {
+              "module": 1,
+              "package": 7,
+              "symbol": 261
+            },
+            "distinct_frames": 149,
+            "fixed_versions": [
+              "v1.45.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6505"
+          },
+          {
+            "id": "GO-2026-6860",
+            "aliases": [
+              "CVE-2026-78661"
+            ],
+            "summary": "Avoid quadratic complexity when coalescing text nodes in html in golang.org/x/net",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.62.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6860"
+          },
+          {
+            "id": "GO-2026-6866",
+            "aliases": [
+              "CVE-2026-97045"
+            ],
+            "summary": "Check all ancestor namespace transitions when rendering raw text in html in golang.org/x/net",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.62.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6866"
+          }
+        ],
+        "disposition": "REVIEW_REQUIRED",
+        "limitations": "Requested symbol analysis can fall back to module matches. Symbol presence is not runtime reachability. Missing main-module versions, native code and advisory database omissions are not cleared."
+      },
+      {
+        "member": "gvisor-bin/gvisor-proc-umounter",
+        "binary_sha256": "b3bbbaef5ddc62084e5febd19d3acca14f3d42b2a25d8552fb40def699467019",
+        "scan_sha256": "6408de2887145af3f16983f188faeacae8394f789f78d9d259670747dc9bf54c",
+        "config": {
+          "protocol_version": "v1.0.0",
+          "scanner_name": "govulncheck",
+          "scanner_version": "v1.9.0",
+          "db": "https://vuln.go.dev",
+          "db_last_modified": "2026-11-05T23:49:57Z",
+          "scan_level": "symbol",
+          "scan_mode": "binary"
+        },
+        "exit": 1,
+        "release_clearance": false,
+        "warnings": [],
+        "coverage": "NOT_ANALYZED",
+        "finding_messages": 0,
+        "elf_sha256": "03da8e246501fe1d39d7d454875579f00ea38af8e9815a35d568b2c2adfe44f5",
+        "native_dynamic_section_absent": true,
+        "native_interpreter_absent": true,
+        "disassembly_sha256": "7f8752aeb03f1523822dbb4f8c2f234c61b8fc273186a8c3f0626f5654b552cf",
+        "classification": "freestanding native ELF; Go analysis unsupported; separate source/disassembly review"
+      },
+      {
+        "member": "gvisor-bin/gvisor-sentry-prewarmer",
+        "binary_sha256": "046e3ec1de3aa7b7ec7ce53b4f0d1e08db15987847606a8e361133d5c5bd3d73",
+        "scan_sha256": "6408de2887145af3f16983f188faeacae8394f789f78d9d259670747dc9bf54c",
+        "config": {
+          "protocol_version": "v1.0.0",
+          "scanner_name": "govulncheck",
+          "scanner_version": "v1.9.0",
+          "db": "https://vuln.go.dev",
+          "db_last_modified": "2026-11-05T23:49:57Z",
+          "scan_level": "symbol",
+          "scan_mode": "binary"
+        },
+        "exit": 1,
+        "release_clearance": false,
+        "warnings": [],
+        "coverage": "NOT_ANALYZED",
+        "finding_messages": 0,
+        "elf_sha256": "2d29617fb3b5831c0236cd7fde8a8a9898b64d2fc08e73cda973165f057ac92e",
+        "native_dynamic_section_absent": true,
+        "native_interpreter_absent": true,
+        "disassembly_sha256": "866ca2664f1c597f9c1f81047918fa75c9250e71a14c543672d1035decddc624",
+        "classification": "freestanding native ELF; Go analysis unsupported; separate source/disassembly review"
+      },
+      {
+        "member": "gvisor-bin/gvisor_sentry",
+        "binary_sha256": "6dfd3af65e664663f332d0e4b9fb82452496e34ebc6cb568ae49f5b1ac9d8166",
+        "scan_sha256": "bd6bd81f6305e72d2f1875c51a6114e1a1fafd1266b1492468ae8f5d8ddd27cd",
+        "config": {
+          "protocol_version": "v1.0.0",
+          "scanner_name": "govulncheck",
+          "scanner_version": "v1.9.0",
+          "db": "https://vuln.go.dev",
+          "db_last_modified": "2026-11-05T23:49:57Z",
+          "scan_level": "symbol",
+          "scan_mode": "binary"
+        },
+        "exit": 0,
+        "release_clearance": false,
+        "warnings": [
+          "warning: failed to extract build system specification GOOS:  GOARCH: \n"
+        ],
+        "coverage": "GO_BINARY_ANALYSIS_COMPLETED",
+        "sbom": {
+          "go_version": "go1.27.3",
+          "modules": [
+            "github.com/cenkalti/backoff@v2.2.1+incompatible",
+            "github.com/golang/protobuf@v1.5.4",
+            "github.com/google/btree@v1.1.2",
+            "github.com/google/subcommands@v1.0.2-0.20190508160503-636abe8753b8",
+            "github.com/moby/sys/capability@v0.4.0",
+            "github.com/mohae/deepcopy@v0.0.0-20170308212314-bb9b5e7adda9",
+            "github.com/opencontainers/runtime-spec@v1.2.1",
+            "golang.org/x/exp@v0.0.0-20250711185948-6ae5c78190dc",
+            "golang.org/x/mod@v0.41.0",
+            "golang.org/x/sync@v0.23.0",
+            "golang.org/x/sys@v0.48.0",
+            "golang.org/x/time@v0.15.0",
+            "google.golang.org/protobuf@v1.36.11",
+            "stdlib@go1.27.3"
+          ]
+        },
+        "finding_messages": 0,
+        "advisories": [],
+        "disposition": "NO_KNOWN_GO_MATCHES",
+        "limitations": "Requested symbol analysis can fall back to module matches. Symbol presence is not runtime reachability. Missing main-module versions, native code and advisory database omissions are not cleared."
+      },
+      {
+        "member": "gvisor-bin/runsc-fd-parking",
+        "binary_sha256": "03af90d07ea466c10ecc3e3ba839b2a59540959dd3286aea3886917cba850c11",
+        "scan_sha256": "6408de2887145af3f16983f188faeacae8394f789f78d9d259670747dc9bf54c",
+        "config": {
+          "protocol_version": "v1.0.0",
+          "scanner_name": "govulncheck",
+          "scanner_version": "v1.9.0",
+          "db": "https://vuln.go.dev",
+          "db_last_modified": "2026-11-05T23:49:57Z",
+          "scan_level": "symbol",
+          "scan_mode": "binary"
+        },
+        "exit": 1,
+        "release_clearance": false,
+        "warnings": [],
+        "coverage": "NOT_ANALYZED",
+        "finding_messages": 0,
+        "elf_sha256": "681b2c43eb19e6b0c45ddb1d13d6a432397365c05e5841416ee9cf737a6acd11",
+        "native_dynamic_section_absent": true,
+        "native_interpreter_absent": true,
+        "disassembly_sha256": "a4c45b0ed9fbe2107175f811eb56083b2df386a3b0ac1e6e2f9c72860caee604",
+        "classification": "freestanding native ELF; Go analysis unsupported; separate source/disassembly review"
+      },
+      {
+        "member": "gvisor-bin/runsc-metric-server",
+        "binary_sha256": "b9857ebe290c403fda7ff014368df3a0f45e5428dc1eb6efe413cfe0e5a940f4",
+        "scan_sha256": "ef30400d1a5c1464b9481a6032fdfaea3e2709693954c6e5f1de376818e9f029",
+        "config": {
+          "protocol_version": "v1.0.0",
+          "scanner_name": "govulncheck",
+          "scanner_version": "v1.9.0",
+          "db": "https://vuln.go.dev",
+          "db_last_modified": "2026-11-05T23:49:57Z",
+          "scan_level": "symbol",
+          "scan_mode": "binary"
+        },
+        "exit": 0,
+        "release_clearance": false,
+        "warnings": [
+          "warning: failed to extract build system specification GOOS:  GOARCH: \n"
+        ],
+        "coverage": "GO_BINARY_ANALYSIS_COMPLETED",
+        "sbom": {
+          "go_version": "go1.27.3",
+          "modules": [
+            "cloud.google.com/go/auth@v0.20.0",
+            "cloud.google.com/go/auth/oauth2adapt@v0.2.8",
+            "cloud.google.com/go/compute/metadata@v0.9.0",
+            "github.com/cenkalti/backoff@v2.2.1+incompatible",
+            "github.com/cilium/ebpf@v0.16.0",
+            "github.com/coreos/go-systemd/v22@v22.6.0",
+            "github.com/creack/pty@v1.1.24",
+            "github.com/godbus/dbus/v5@v5.1.0",
+            "github.com/gofrs/flock@v0.8.0",
+            "github.com/golang/protobuf@v1.5.4",
+            "github.com/google/s2a-go@v0.1.9",
+            "github.com/google/subcommands@v1.0.2-0.20190508160503-636abe8753b8",
+            "github.com/googleapis/enterprise-certificate-proxy@v0.3.14",
+            "github.com/googleapis/gax-go/v2@v2.21.0",
+            "github.com/moby/sys/capability@v0.4.0",
+            "github.com/mohae/deepcopy@v0.0.0-20170308212314-bb9b5e7adda9",
+            "github.com/opencontainers/runtime-spec@v1.2.1",
+            "github.com/vishvananda/netlink@v1.3.1-0.20250303224720-0e7078ed04c8",
+            "github.com/vishvananda/netns@v0.0.5",
+            "golang.org/x/crypto@v0.57.0",
+            "golang.org/x/exp@v0.0.0-20250711185948-6ae5c78190dc",
+            "golang.org/x/mod@v0.41.0",
+            "golang.org/x/net@v0.60.0",
+            "golang.org/x/oauth2@v0.36.0",
+            "golang.org/x/sync@v0.23.0",
+            "golang.org/x/sys@v0.48.0",
+            "golang.org/x/text@v0.42.0",
+            "golang.org/x/time@v0.15.0",
+            "google.golang.org/api@v0.274.0",
+            "google.golang.org/genproto/googleapis/rpc@v0.0.0-20260401024825-9d38bb4040a9",
+            "google.golang.org/grpc@v1.80.0",
+            "google.golang.org/protobuf@v1.36.11",
+            "stdlib@go1.27.3"
+          ]
+        },
+        "finding_messages": 8,
+        "advisories": [
+          {
+            "id": "GO-2026-5932",
+            "aliases": [],
+            "summary": "The golang.org/x/crypto/openpgp package is unmaintained, unsafe by design, and has known security issues",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.58.1-0.20261009181718-2f1f834330b2"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-5932"
+          },
+          {
+            "id": "GO-2026-6061",
+            "aliases": [
+              "GHSA-hrxh-6v49-42gf"
+            ],
+            "summary": "Vulnerabilities in the xDS RBAC authorization engine and the HTTP/2 transport server implementation in google.golang.org/grpc",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v1.82.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6061"
+          },
+          {
+            "id": "GO-2026-6238",
+            "aliases": [
+              "CVE-2026-10722",
+              "GHSA-xhgw-qwwf-pg32"
+            ],
+            "summary": "Integer overflow in BTF parsing in github.com/cilium/ebpf",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.22.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6238"
+          },
+          {
+            "id": "GO-2026-6348",
+            "aliases": [
+              "CVE-2026-84304",
+              "GHSA-vp52-pcj8-j9qc"
+            ],
+            "summary": "Heap Memory Exhaustion (OOM) via HTTP/2 DATA Frame Fragmentation in google.golang.org/grpc",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v1.83.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6348"
+          },
+          {
+            "id": "GO-2026-6441",
+            "aliases": [
+              "CVE-2026-84303",
+              "GHSA-qc2q-p7wx-3px3"
+            ],
+            "summary": "Bypass of xDS RBAC HTTP filter header matching in google.golang.org/grpc",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v1.83.1"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6441"
+          },
+          {
+            "id": "GO-2026-6443",
+            "aliases": [
+              "CVE-2026-84445",
+              "GHSA-2v4p-qf9q-27wj"
+            ],
+            "summary": "Server panic via missing authority or Host headers in google.golang.org/grpc",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v1.82.2"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6443"
+          },
+          {
+            "id": "GO-2026-6860",
+            "aliases": [
+              "CVE-2026-78661"
+            ],
+            "summary": "Avoid quadratic complexity when coalescing text nodes in html in golang.org/x/net",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.62.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6860"
+          },
+          {
+            "id": "GO-2026-6866",
+            "aliases": [
+              "CVE-2026-97045"
+            ],
+            "summary": "Check all ancestor namespace transitions when rendering raw text in html in golang.org/x/net",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.62.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6866"
+          }
+        ],
+        "disposition": "REVIEW_REQUIRED",
+        "limitations": "Requested symbol analysis can fall back to module matches. Symbol presence is not runtime reachability. Missing main-module versions, native code and advisory database omissions are not cleared."
+      },
+      {
+        "member": "runsc",
+        "binary_sha256": "c5a5a7ba1209b605d08874fdd4429035f95afcb2d482bc95ed3fb13d31a25098",
+        "scan_sha256": "45d535d0d4ac3133d13b31650efc91d00141935c0beb4b7e42b74c77d83f5bc0",
+        "config": {
+          "protocol_version": "v1.0.0",
+          "scanner_name": "govulncheck",
+          "scanner_version": "v1.9.0",
+          "db": "https://vuln.go.dev",
+          "db_last_modified": "2026-11-05T23:49:57Z",
+          "scan_level": "symbol",
+          "scan_mode": "binary"
+        },
+        "exit": 0,
+        "release_clearance": false,
+        "warnings": [
+          "warning: failed to extract build system specification GOOS:  GOARCH: \n"
+        ],
+        "coverage": "GO_BINARY_ANALYSIS_COMPLETED",
+        "sbom": {
+          "go_version": "go1.27.3",
+          "modules": [
+            "github.com/cenkalti/backoff@v2.2.1+incompatible",
+            "github.com/cilium/ebpf@v0.16.0",
+            "github.com/coreos/go-systemd/v22@v22.6.0",
+            "github.com/creack/pty@v1.1.24",
+            "github.com/godbus/dbus/v5@v5.1.0",
+            "github.com/gofrs/flock@v0.8.0",
+            "github.com/golang/protobuf@v1.5.4",
+            "github.com/google/subcommands@v1.0.2-0.20190508160503-636abe8753b8",
+            "github.com/moby/sys/capability@v0.4.0",
+            "github.com/mohae/deepcopy@v0.0.0-20170308212314-bb9b5e7adda9",
+            "github.com/opencontainers/runtime-spec@v1.2.1",
+            "github.com/vishvananda/netlink@v1.3.1-0.20250303224720-0e7078ed04c8",
+            "github.com/vishvananda/netns@v0.0.5",
+            "golang.org/x/exp@v0.0.0-20250711185948-6ae5c78190dc",
+            "golang.org/x/mod@v0.41.0",
+            "golang.org/x/sync@v0.23.0",
+            "golang.org/x/sys@v0.48.0",
+            "golang.org/x/time@v0.15.0",
+            "google.golang.org/protobuf@v1.36.11",
+            "gopkg.in/yaml.v2@v2.4.0",
+            "stdlib@go1.27.3"
+          ]
+        },
+        "finding_messages": 1,
+        "advisories": [
+          {
+            "id": "GO-2026-6238",
+            "aliases": [
+              "CVE-2026-10722",
+              "GHSA-xhgw-qwwf-pg32"
+            ],
+            "summary": "Integer overflow in BTF parsing in github.com/cilium/ebpf",
+            "levels": {
+              "module": 1
+            },
+            "distinct_frames": 1,
+            "fixed_versions": [
+              "v0.22.0"
+            ],
+            "reference": "https://pkg.go.dev/vuln/GO-2026-6238"
+          }
+        ],
+        "disposition": "REVIEW_REQUIRED",
+        "limitations": "Requested symbol analysis can fall back to module matches. Symbol presence is not runtime reachability. Missing main-module versions, native code and advisory database omissions are not cleared."
+      }
+    ],
+    "unique_go_advisory_ids": 18,
+    "source_scan_findings_retained": 20,
+    "native_review": "Three freestanding ELF helpers have no interpreter or dynamic section. Pinned C sources, build flags, disassembly and parent descriptor/argument setup reviewed; not Go-analyzed or formally verified.",
+    "native_main_module_limit": "Bazel metadata does not provide a versioned gvisor.dev/gvisor main module. GOOS/GOARCH warnings retained. No blanket gVisor or native vulnerability clearance.",
+    "script_correction": "All eight members are ELF binaries; three small members are C utilities, not shell scripts.",
+    "targets_executed_locally": false,
+    "upstream_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/procumounter/procumounter.c",
+        "sha256": "af499f1f3d6d627bb7bbe1965455ca4d1bae5b3ea44b20936d88e691b1d26da0"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/prewarmer/prewarmer.c",
+        "sha256": "c7bce249be1b5f8cefd948db5b8467b9551292dfbbe12c136abef9aa16512a3c"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/fdparking/fdparking.c",
+        "sha256": "23811478b25e7de655c2f4f0b173b09670577fcfdcc1d0388c5eddea2f658e50"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/checkpointgofer/README.md",
+        "sha256": "3e5acb6510aa07c480704cc280dea7e0cb2ef5df0aa6bb582973c66d9498b84e"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/procumounter/BUILD",
+        "sha256": "2208f063c8072ec15b9a6e0a2d046d22b1c8e8c1c2d746026ac5443eb0db6ff0"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/prewarmer/BUILD",
+        "sha256": "93186a97b2b45f91e0cf5eee759760a54a31085e355bd50197d5c4d47bfbdbcc"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/fdparking/BUILD",
+        "sha256": "08cc9e6da234b2a426c5d19400564c8e931608d48f39c8ce95baced78ac72ea7"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/boot/loader.go",
+        "sha256": "a9819fa720aa3ace7499d08d2c32ad9a9e7904b6ae9daeeb785166119e7e41d8"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/sandbox/sandbox.go",
+        "sha256": "aa0f97e0f6632f5cc26afe0cce4e4aaa5893693a343ee6143cfca04503ed1167"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/container/container.go",
+        "sha256": "bcc5e74ec1eb429a19dc0ae4c38f0f7d3e4081373cca3be3d369dc69e824dc84"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/google/gvisor/release-20261102.0/runsc/cmd/sandboxsetup/process.go",
+        "sha256": "bc068f720b67811686ff182c775dd739f0b848885d7091924bcd75154c9423cf"
+      }
+    ]
+  },
+  "post_update_security": {
+    "run": "a0f785b2d40448e39cd9bce64be0f370",
+    "started_at": "2026-11-07T01:01:17.617272+00:00",
+    "image": "e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358",
+    "provider_calls": 0,
+    "new_cloud_resources": 0,
+    "probes": [
+      {
+        "probe": "filesystem",
+        "passed": true,
+        "execution": "01a1b3866a7177cea66b8f8d927304a9",
+        "receipt_sha256": "6f46334eb736ba2e6128f9d8f886866a99cc26c756d4af33ab760ae539109594",
+        "seconds": 1.782,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "network",
+        "passed": true,
+        "execution": "01a1b3867169703bb48a9fc072b5c119",
+        "receipt_sha256": "7b838f1f9b3b9780a7d577fbdd2d375c91c9a936fae282a99b3ad033179eed9a",
+        "seconds": 1.781,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "cpu",
+        "passed": true,
+        "execution": "01a1b386785774eaa2eac5f88f8fc1d7",
+        "receipt_sha256": "bfc1410dc468732f6fe9ab1f10a70e92b811d2393093dcdd880c3400ae096259",
+        "seconds": 4.656,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "storage",
+        "passed": true,
+        "execution": "01a1b386898b7da9a0e2304f27dd95e2",
+        "receipt_sha256": "9bded0b29a2f8f9c1315816851873e61559c1ef0fc4d58317be8dffd3ea4a930",
+        "seconds": 1.859,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "inodes",
+        "passed": true,
+        "execution": "01a1b38690dd713e943b186ed05b673f",
+        "receipt_sha256": "04ce74d0419c64557e1d12768dc956f0e814c590bc46190c34a9054b3944e8e4",
+        "seconds": 2.422,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "logs",
+        "passed": true,
+        "execution": "01a1b3869b5376e4b47d48c5e75f63ac",
+        "receipt_sha256": "ac786e87cc180af89a4159f2e74e22f7f0d6a24d9ceb21329416492cd73388d3",
+        "seconds": 1.766,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "symlink",
+        "passed": true,
+        "execution": "01a1b386a133773aa56eeaad46139a93",
+        "receipt_sha256": "087bd5f8c997778b7409ff5537372da57d27ab8a4a0a02456e2ad782f140b2a3",
+        "seconds": 1.125,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "fifo",
+        "passed": true,
+        "execution": "01a1b386a68572c5879408b3849285a1",
+        "receipt_sha256": "919cb11be9b5be67e98d5d2d22ec1a83a8c85206fac528f69d9b1b74c5b98326",
+        "seconds": 1.484,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "hardlink",
+        "passed": true,
+        "execution": "01a1b386ac787871a32eeb114229cebb",
+        "receipt_sha256": "4c50ed2c46e37c3da4841e28acb93647c7279b9ad21c9e3e82733bd1f52315eb",
+        "seconds": 1.516,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "extra",
+        "passed": true,
+        "execution": "01a1b386b1547fc4814fa5a4827c9422",
+        "receipt_sha256": "c19ee6fa4f39dbd412fc780895c2bb29d9bd27dc1ab73a64c9aec39d4e228efe",
+        "seconds": 1.265,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "output_bytes",
+        "passed": true,
+        "execution": "01a1b386b6567ad380e30292168d7dc2",
+        "receipt_sha256": "ef1cfacc0058f32dc510ed85141c8a3485a3bc34359b8600d9f5d37a7b5781db",
+        "seconds": 1.235,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "output_lines",
+        "passed": true,
+        "execution": "01a1b386bb04701c85721f98da865022",
+        "receipt_sha256": "fbe0ba0701a958df0cd2b0c7bad0376044a0bbbb54ef3407b5cd7358516fabf3",
+        "seconds": 1.156,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "memory",
+        "passed": true,
+        "execution": "01a1b386bf7a758c93b6fd4e6cb3a05d",
+        "receipt_sha256": "dd9375d4f2cab49163f6f257511979cd3ee14c627d10379869eac70e9b44a09e",
+        "seconds": 5.812,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "timeout",
+        "passed": true,
+        "execution": "01a1b386d75d7d0d88ef5a03c73359d1",
+        "receipt_sha256": "3af79013151fc5d5671aca760ef69683474dcd51a1242b6c8aee9a3b10d12a2e",
+        "seconds": 21.422,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "descendants",
+        "passed": true,
+        "execution": "01a1b3872c137054b8a565b4a953027c",
+        "receipt_sha256": "9ebee5a139027094029b623817a1a4b6bf33c97c5fb0c124c79f97b833a39748",
+        "seconds": 21.672,
+        "cleanup": "confirmed"
+      },
+      {
+        "probe": "benign",
+        "passed": true,
+        "execution": "01a1b3877e8a7ed08a72b27607bc9857",
+        "receipt_sha256": "ad1d16e2651d8bb1d6be2fff420d79649eec0096b7c3e30feeeefc23913f58c6",
+        "seconds": 3.375,
+        "cleanup": "confirmed"
+      }
+    ],
+    "network_positive_controls": "NOT_RERUN; prior Phase1 evidence retained",
+    "independent_human_review": "NOT_AVAILABLE",
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-07T01:01:20.170878+00:00",
+      "remaining_credit": "191.85",
+      "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+    },
+    "api_auth": {
+      "role": "api",
+      "scram": "passed",
+      "table_owner_schema_denied": true
+    },
+    "dispatcher_auth": {
+      "role": "dispatcher",
+      "scram": "passed",
+      "table_owner_schema_denied": true
+    },
+    "http_statuses": {
+      "/health/live": 200,
+      "/health/ready": 503,
+      "/v1/session": 403
+    },
+    "probe_source_sha256": "ee93da5ebeb170e1816a96f26c90118b0be1f6840da8891ea6be586bd61b06b9",
+    "worker_identity": {
+      "identity": "matched_independent_install_pins",
+      "unauthorized_client_and_server_pin": "rejected"
+    },
+    "existing_pr_unchanged": true,
+    "passed": true,
+    "finished_at": "2026-11-07T01:02:45.931524+00:00"
+  },
+  "post_update_source": {
+    "observed_at": "2026-11-07T01:05:24.803175+00:00",
+    "image": "e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358",
+    "source_files": 72,
+    "all_sources_exact": true,
+    "exact_container_policies": true,
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-07T01:05:17.967075+00:00",
+      "remaining_credit": "191.85",
+      "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+    },
+    "policy": {
+      "singleton": true,
+      "epoch": 102,
+      "runtime_sha256": "fd9a1e227c437066fe9bb63f14deae0567cfbb7d70a5c9e23284c2fbbb09ac17",
+      "verifier_sha256": "0290920d63d9b55108c83d300922f5af84608147495f340e86025fc0e599e63b",
+      "enabled": false,
+      "verification_epoch": 5
+    }
+  },
+  "lifecycle": {
+    "counts": {
+      "CLEANED": 548
+    },
+    "fences": 327,
+    "missing_deadlines": 0,
+    "services": [
+      "active",
+      "active",
+      "active"
+    ],
+    "workspaces_remaining": 0,
+    "restore_clones_remaining": 0,
+    "natural_seven_day_expiry": "NOT_YET_ELAPSED"
+  },
+  "checks": {
+    "linux_full_passed": 1044,
+    "linux_subtests": 10,
+    "windows_full_passed": 870,
+    "windows_linux_only_skips": 174,
+    "new_scanner_cases": 13,
+    "new_kernel_plan_cases": 8,
+    "frozen_comparison_artifact": "PASS_NO_RERUN_OR_REGRADE",
+    "ruff": "PASS"
+  },
+  "credit": {
+    "credit_guard": "within_early_cutoff",
+    "checked_at": "2026-11-07T01:05:17.967075+00:00",
+    "remaining_credit": "191.85",
+    "review_due_at": "2026-11-08T14:27:11.770445+00:00"
+  },
+  "new_resources": 0,
+  "provider_calls": 0,
+  "product_pr_writes": 0,
+  "admissions": "closed",
+  "acceptance_audit": {
+    "containment_auth_mutations": "PASS: new16 worker probes plus retained actual auth/verifier/canary/approval evidence",
+    "frozen_comparison": "PASS:96 jobs,79 actual responses; all outcomes preserved",
+    "denominators_cost_latency": "PASS: frozen portable artifact rechecked offline; estimates not invoices",
+    "retention_recovery": "PASS within private tested scope; live deletion-aware encrypted inert restore and service rebuild retained",
+    "separate_critical_review": "PASS Codex/automated review only; no independent human sign-off",
+    "known_critical_findings": "Host TCP issue patched and rebooted; companion findings retained with disabled-call-path triage; no blanket security clearance"
+  },
+  "not_run_or_limits": [
+    "Independent human security and oracle review unavailable by owner-authorized workflow",
+    "Natural seven-day wall-clock expiry not yet elapsed; controlled-clock tests only",
+    "Native findings and static-analysis limitations retained; no production certification",
+    "A15/18 vs C15/18 vs deterministic D18/18: no witness-quality or beyond-normalizer superiority established",
+    "Fresh-host compromise/credential-rotation/portable disaster restore and scheduled consistent backups remain Phase6",
+    "Public clean-browser/demo/package/license/publication/submission remain Phase6; repository stays private",
+    "Original PR creation-response-loss injection not reproduced; retained Phase4 recovery-only drill uses existing PR"
+  ],
+  "review_notes": [
+    "Fixed false-clean interpretation risk: JSON scanner exits0 even with findings. Reporter requires metadata and preserves warnings and module/package/symbol levels.",
+    "Exact10-package149 plan validated on each existing host. No remove/unexpected package/version/origin allowed; durable intent before dispatch and reboot; worker before control.",
+    "Status during reboot briefly failed SSH; subsequent read-only status verified new boot. Concurrent status attempt refused existing admin lock; no second mutation.",
+    "Initial source helper queried nonexistent semantic_epoch; corrected read-only observation to actual epoch102 and verification_epoch5. No schema/state change.",
+    "Three C helpers are trusted startup machinery, not assumed absent because idle inventory found none. FD parking inherits the execution cgroup despite a new session.",
+    "Fixed run launch has networknone/systrap/no annotation overrides, no restore/metrics. Worker has no containerd daemon; actual control2.4.2 distinct from shim-linked2.1.5.",
+    "No runtime image, verifier, contract, applied migration, expected result, candidate limit or approval rule changed."
+  ],
+  "evidence_hash_encoding": "SHA256 of canonical Git blob bytes; worktree CRLF may differ"
+}

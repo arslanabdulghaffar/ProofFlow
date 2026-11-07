@@ -1,5 +1,13 @@
 # Requirements traceability
 
+Phase5 acceptance audit: original private technical gate passes with actual patched-host
+containment/auth/mutations,frozen96-job accounting and separate critical review.
+[acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json). R36-02/03/06/07 and R38-05 now have completed scoped evidence. R36-04 retains
+release/license review;R37-02/05/06 and R38-03 remain composite partial obligations for
+Phase6 backup/incident/release work. R42/R43 partial independence/ablation limitations
+are preserved. R07-01's beyond-normalizer advantage is not demonstrated;comparison
+completion does not promote that claim. No blanket P0/public acceptance is implied.
+
 T07/T15/T18/T21 runtime/rebuild follow-up: eight exact deployed runtime members;
 installed-daemon/optional-service/socket inventory;28 installer-drift tests;actual API
 reconstruction from pinned image/installer with72 source matches,preserved authority,
@@ -149,7 +157,7 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R06-03 | 6 | OPEN | P0 | Confirm actual field/media limits, judging timetable and multiple-entry/track prize policy | [rules.md](rules.md) | Live form and dated organizer answer | Owner/organizer/account evidence | BLOCKED_OWNER |
 | R06-04 | 6 | DESIGN | P0 | Prefer current event-specific evidence; retain conflicting sources; draft questions only | [rules.md](rules.md) | Rules log and unsent question list | None | IMPLEMENTED_DOC |
 | R06-05 | 6 | DESIGN | P0 | Treat prize figures as context, never winning probability | [rules.md](rules.md) | Demo/release claim discipline | None | IMPLEMENTED_DOC |
-| R07-01 | 7 | DESIGN | P0 | Choose narrow revenue-import workflow and demonstrate preserved behavior beyond a normalizer | [product.md](product.md) | A/B/C/D comparison and downstream regressions | Phase 5 evaluation | DEFERRED_PHASE5 |
+| R07-01 | 7 | DESIGN | P0 | Choose narrow revenue-import workflow and demonstrate preserved behavior beyond a normalizer | [product.md](product.md) | A/B/C/D comparison and downstream regressions | Phase 5 evaluation | PARTIAL_PHASE5 |
 | R07-02 | 7 | DESIGN | P0 | Stop unsupported novelty claim if no added value is measured | [product.md](product.md) | Evaluation limitations and public-copy review | Phase 5 evaluation | DEFERRED_PHASE5 |
 | R07-03 | 7 | CONTEXT | P1 | CaseLedger, SupplyRecovery, VisionIntegrity, AccessRepair and MigrationRehearsal are alternatives | [phase-plan.md](phase-plan.md) | No second-track implementation; source index preserves context | Post-event scope decision | DEFERRED_P1 |
 | R08-01 | 8 | DESIGN | P0 | Acknowledge Datafold/Soda/ADP-MA/AegisFlow and generic coding-agent overlap | [demo.md](demo.md) | Prior-art citations; no first-self-healing claim | Phase 5 actual results | DEFERRED_PHASE5 |
@@ -306,23 +314,23 @@ Local budget follow-up: R46-03/04 now have partial real PostgreSQL reservation/c
 | R35-05 | 35 | DESIGN | P0 | Safe errors/logs/private storage; attachment filenames/content-type/nosniff and authorization | [threat-model.md](threat-model.md) | T09,T10 | Phase 2 first routes | IMPLEMENTED_PHASE2 |
 | R35-06 | 35 | DESIGN | P0 | Implement controls with first routes rather than late retrofit | [threat-model.md](threat-model.md) | Phase 2 acceptance review | Phase 2 first routes | IMPLEMENTED_PHASE2 |
 | R36-01 | 36 | DESIGN | P0 | Prompt injection cannot grant tools/permissions or edit rules/images/mounts/limits/approvals | [threat-model.md](threat-model.md) | T10,T17 | Real runtime/agent/integration | DEFERRED_PHASE5 |
-| R36-02 | 36 | DESIGN | P0 | Actual network/metadata/secret denial plus process/memory/storage/watchdog boundaries | [threat-model.md](threat-model.md) | T07 | Real runtime/agent/integration | DEFERRED_PHASE5 |
-| R36-03 | 36 | DESIGN | P0 | Stop writers and no-follow collection prevent artifact substitution | [threat-model.md](threat-model.md) | T08 | Real runtime/agent/integration | DEFERRED_PHASE5 |
-| R36-04 | 36 | DESIGN | P0 | Lock dependencies/images, provenance/license/scanner review and critical finding triage | [threat-model.md](threat-model.md) | T21 release scan | Real runtime/agent/integration | DEFERRED_PHASE5 |
+| R36-02 | 36 | DESIGN | P0 | Actual network/metadata/secret denial plus process/memory/storage/watchdog boundaries | [threat-model.md](threat-model.md) | T07 | Real runtime/agent/integration | IMPLEMENTED_PHASE5 |
+| R36-03 | 36 | DESIGN | P0 | Stop writers and no-follow collection prevent artifact substitution | [threat-model.md](threat-model.md) | T08 | Real runtime/agent/integration | IMPLEMENTED_PHASE5 |
+| R36-04 | 36 | DESIGN | P0 | Lock dependencies/images, provenance/license/scanner review and critical finding triage | [threat-model.md](threat-model.md) | T21 release scan | Real runtime/agent/integration | PARTIAL_PHASE5 |
 | R36-05 | 36 | DESIGN | P0 | Candidate PR repo Actions disabled or reviewed no-secret isolation; no privileged shared CI | [threat-model.md](threat-model.md) | T17,T21 | Real runtime/agent/integration | DEFERRED_PHASE5 |
-| R36-06 | 36 | DESIGN | P0 | Bind exact bytes/policy/epochs and idempotent fenced side effects | [threat-model.md](threat-model.md) | T13–T17 | Real runtime/agent/integration | DEFERRED_PHASE5 |
-| R36-07 | 36 | DESIGN | P0 | Use bounded benign markers/loops/allocations/controlled denial targets; disclose exact containment scope | [threat-model.md](threat-model.md) | T07 and demo review | Real runtime/agent/integration | DEFERRED_PHASE5 |
+| R36-06 | 36 | DESIGN | P0 | Bind exact bytes/policy/epochs and idempotent fenced side effects | [threat-model.md](threat-model.md) | T13–T17 | Real runtime/agent/integration | IMPLEMENTED_PHASE5 |
+| R36-07 | 36 | DESIGN | P0 | Use bounded benign markers/loops/allocations/controlled denial targets; disclose exact containment scope | [threat-model.md](threat-model.md) | T07 and demo review | Real runtime/agent/integration | IMPLEMENTED_PHASE5 |
 | R37-01 | 37 | DESIGN | P0 | Controller provider/App secret files, short-lived tokens, restricted mTLS and separate keys | [threat-model.md](threat-model.md) | T10,T17 configuration audit | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
-| R37-02 | 37 | DESIGN | P0 | Guest assets24h, minimal metadata7d, backups <=24h rolling and <=48h raw data exposure | [threat-model.md](threat-model.md) | T22 retention/deletion clock tests | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
+| R37-02 | 37 | DESIGN | P0 | Guest assets24h, minimal metadata7d, backups <=24h rolling and <=48h raw data exposure | [threat-model.md](threat-model.md) | T22 retention/deletion clock tests | Phase 1 secrets + Phase 2 retention | PARTIAL_PHASE5 |
 | R37-03 | 37 | DESIGN | P0 | Synthetic/licensed fixture provenance; minimum code/contract/witness goes to inference | [threat-model.md](threat-model.md) | T10,T20 | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
 | R37-04 | 37 | DESIGN | P0 | Do not claim provider retention/residency/compliance without account terms | [threat-model.md](threat-model.md) | Intake disclosure and release copy | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
-| R37-05 | 37 | DESIGN | P0 | Incident response pause/preserve/revoke/isolate/rebuild/restore/retest and impact record | [threat-model.md](threat-model.md) | Runbook rehearsal | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
-| R37-06 | 37 | DESIGN | P0 | Immediate workspace access revoke plus deletion; restore respects tombstones; hashes not anonymous | [threat-model.md](threat-model.md) | T09,T22 | Phase 1 secrets + Phase 2 retention | DEFERRED_PHASE5 |
+| R37-05 | 37 | DESIGN | P0 | Incident response pause/preserve/revoke/isolate/rebuild/restore/retest and impact record | [threat-model.md](threat-model.md) | Runbook rehearsal | Phase 1 secrets + Phase 2 retention | PARTIAL_PHASE5 |
+| R37-06 | 37 | DESIGN | P0 | Immediate workspace access revoke plus deletion; restore respects tombstones; hashes not anonymous | [threat-model.md](threat-model.md) | T09,T22 | Phase 1 secrets + Phase 2 retention | PARTIAL_PHASE5 |
 | R38-01 | 38 | DESIGN | P0 | Lock install/lint/types/schema-drift/secret checks and trusted semantics/permissions/state tests | [test-plan.md](test-plan.md) | T01–T05,T09,T13,T21 | Phase 1–6 components | DEFERRED_PHASE5 |
 | R38-02 | 38 | DESIGN | P0 | Real DB/queue/artifact/verifier integration, isolated runtime tests with no deployment secrets | [test-plan.md](test-plan.md) | T06–T18 | Phase 1–6 components | DEFERRED_PHASE5 |
-| R38-03 | 38 | DESIGN | P0 | Frontend behaviors, production builds/image/dependency scan/license manifest and live smoke | [test-plan.md](test-plan.md) | T19,T21,T23 | Phase 1–6 components | DEFERRED_PHASE5 |
+| R38-03 | 38 | DESIGN | P0 | Frontend behaviors, production builds/image/dependency scan/license manifest and live smoke | [test-plan.md](test-plan.md) | T19,T21,T23 | Phase 1–6 components | PARTIAL_PHASE5 |
 | R38-04 | 38 | DESIGN | P0 | Local trusted development only; labeled fixture provider forbidden in release | [test-plan.md](test-plan.md) | T06,T21 release-config check | Phase 1–6 components | DEFERRED_PHASE5 |
-| R38-05 | 38 | DESIGN | P0 | Protected changes reviewed with evidence; owner permits automated/separate critical review while human gap remains | [test-plan.md](test-plan.md) | CONTRIBUTING and actual review record | Phase 1–6 components | DEFERRED_PHASE5 |
+| R38-05 | 38 | DESIGN | P0 | Protected changes reviewed with evidence; owner permits automated/separate critical review while human gap remains | [test-plan.md](test-plan.md) | CONTRIBUTING and actual review record | Phase 1–6 components | IMPLEMENTED_PHASE5 |
 | R39-01 | 39 | DESIGN | P0 | Verify individual account/enrollment and actual gift code/balance/expiry/charges before provisioning | [release.md](release.md) | Redacted account evidence; no assumed pooling | Timing, eligible bounded charges | DEFERRED_PHASE1 |
 | R39-02 | 39 | DESIGN | P0 | Confirm region/VM quote, private network, public HTTPS/allowlisted SSH, worker private RPC | [release.md](release.md) | Manifest and network probes | Timing, eligible bounded charges | DEFERRED_PHASE1 |
 | R39-03 | 39 | DESIGN | P0 | Harden supported hosts/users/keys/time; private DB, artifact volumes and separated roles | [release.md](release.md) | T07,T09,T21 | Timing, eligible bounded charges | DEFERRED_PHASE1 |

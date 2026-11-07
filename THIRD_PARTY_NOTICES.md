@@ -1,5 +1,13 @@
 # Ownership and attribution inventory
 
+Local review tooling added November7: Go1.27.3 and golang.org/x/vuln/cmd/govulncheck1.9.0
+(BSD-3-Clause), with official archive SHA/module checksum/tool hash in the
+[Phase5 audit](docs/evidence/phase5-binary-acceptance-2026-11-07.json). These tools and
+the pinned upstream gVisor C/source excerpts stay in ignored local storage;no runtime
+application dependency or redistributed third-party source was added. Existing VM
+Ubuntu kernel packages upgraded to signed noble-updates6.8.0-149.149;distribution
+copyright/license files remain installed. This inventory is not MIT ownership clearance.
+
 MIT is the proposed license for team-owned code. No LICENSE grant is issued in Phase 0 because the copyright holder, contributor rights and any employer restrictions are unconfirmed. The owner must settle these before publication. “MIT-compliant” is an event requirement, not evidence that the team owns everything supplied.
 
 The engineering handoff is attributed in docs/source-review.md. Its PDF, extracted text and page images remain outside Git; redistribution rights have not been established. Repository documentation paraphrases the specification and records decisions rather than republishing the source.

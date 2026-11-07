@@ -1,5 +1,68 @@
 # Phase 5 security review — November 5
 
+## Binary review and acceptance audit — November7
+
+**Private Phase5 technical acceptance passes; completion requires the verified GitHub
+checkpoint. Public/production release is not accepted.** [acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json) binds sources,prior
+receipts,tool provenance,all8 runtime files,post-update tests and limitations.
+
+Found/fixed CVE-2026-98432 on both hosts. [Ubuntu's advisory](https://ubuntu.com/blog/fixes-available-in-proposed-pocket-for-cve-2026-98432)
+identifies a Critical TCP issue and149 fix;the [tracker](https://ubuntu.com/security/CVE-2026-98432)
+still described qualification work at review time. Actual fresh signed apt metadata
+already offers149 in noble-updates. Installed only the exact10 reviewed149 packages,
+without removals or proposed repositories;worker then control rebooted. New boot IDs,
+running149 and clean dpkg audits verified. No claim that disabling MPTCP would fix it.
+All16 actual post-update containment probes and service/source/retention checks pass.
+
+Local-only Go1.27.3 archive SHA and govulncheck1.9.0 module checksum/tool SHA recorded;
+no application dependency or privileged tool added to a VM. [Official scanner behavior](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck)
+explains JSON success despite findings and lack of binary call graphs. Our reporter
+preserves findings/warnings and refuses missing build metadata as clean. It never
+emits release clearance. Raw Go records remain in ignored local review storage.
+
+| Pinned member | Observed Go advisory matches | Disposition |
+| --- | --- | --- |
+| runsc | 1 module-only BTF advisory;0 package/symbol matches | Retained;no vulnerable BTF symbol reported in launcher |
+| gvisor_sentry | 0 known Go matches;14 modules including stdlib | Scoped scanner result only |
+| containerd-shim-runsc-v1 | 15 IDs;12 with symbol matches | No containerd daemon on worker;fixed direct runsc launch never invokes shim |
+| checkpointgofer | 9 IDs;5 with symbol matches | Fixed launcher has no checkpoint/restore operation or remote checkpoint input |
+| runsc-metric-server | 8 module-only IDs | Metric-server configuration remains empty;no metrics service |
+| proc-umounter,prewarmer,fd-parking | Go analyzer rejects format | Three native ELF helpers separately reviewed;not zero-vulnerability scans |
+
+18 distinct Go IDs across members;do not sum per-symbol messages as vulnerabilities.
+The20 source findings remain a separate tool/database scope,including go-jose findings
+not emitted by this Go database. All five Go scans warn about missing GOOS/GOARCH;
+Bazel build info also lacks versioned gvisor.dev/gvisor main-module attribution.
+No full first-party gVisor vulnerability clearance is claimed. Existing native product
+scan186 pairs is retained with prior reachability review;no suppressions or waivers.
+
+The three C helpers have no ELF interpreter/dynamic section;upstream builds explicitly
+use freestanding static C without stack protector/PIE. Reviewed pinned source and
+actual disassembly,not a reproduced upstream build or formal memory-safety proof.
+Proc umounter waits on a fixed inherited FD then unmounts parent-selected /proc inside
+the runtime setup namespace;prewarmer execs the donated sentry FD after bounded FD-table
+setup;FD parking receives only descriptors0–4 from its parent and holds the pinring
+until sentry exit. Its new session does not leave the systemd execution cgroup. These
+are real startup components;idle process absence never establishes they are unused.
+Runtime bundle hashes/ownership are checked before launch;candidate bytes cannot pick
+these executables,host arguments,sidecar directory,flags or descriptor donations.
+
+| Original Phase5 acceptance criterion | Audit disposition and evidence |
+| --- | --- |
+| Actual containment and capture | PASS:16 new worker probes on patched hosts,including network/metadata/filesystem/resource/timeout/descendant cleanup;prior positive network controls retained |
+| Authorization and mutations | PASS within tested private scope:actual HTTP/SQL denial,protected verifier/canary mutations and exact-approval races in linked Phase2–5 receipts;no new external write |
+| Frozen A/B/C/D comparison | PASS:96 recorded jobs and79 responses;portable artifact rechecked offline,no rerun or regrading |
+| Honest denominators,cost and latency | PASS:all failures/holds/timeouts retained;usage estimate and held reservations distinct;one-repeat/template/oracle/A-C limitations explicit |
+| Lifecycle and recovery hardening | PASS for tested private scope:normal deletion,metadata/replay expiry,encrypted inert recovery,vault crash/clock checks,real API rebuild and actual two-host patch reboot |
+| Separate critical review | PASS:review of scanner coverage,exact package plan/intent ordering,pins,closed admission and retained findings;Codex/automated review,not independent human approval |
+
+Phase acceptance means these finite engineering checks pass. R07 beyond-normalizer
+advantage is **not demonstrated** (D18/18 versus A15/18);R42/R43 independence/ablation
+limits remain PARTIAL. Composite license,scheduled/portable disaster backup,full
+compromised-host recovery and public rehearsal obligations stay open for Phase6,as
+already assigned. Natural seven-day expiry has not elapsed. No security certification,
+human sign-off,public readiness or new business-policy approval is implied.
+
 ## Runtime inventory and rebuild critical pass — November 7
 
 Expanded installer checks now reject changed mount sources or permissions,

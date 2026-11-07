@@ -1,5 +1,50 @@
 # Resume ProofFlow
 
+## Current checkpoint — November7 KST: Phase5 private technical acceptance
+
+Phase0–5 technical acceptance PASS; Phase5 DONE only with this checkpoint's matching
+remote SHA. Base1ec94de00f026780f445dc1ab26ee828a5be8a40; final checkpoint is Git HEAD.
+[acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json). Keep repository private and $150 total/$25 inference credit-only limits.
+
+Found a concrete Critical host issue, CVE-2026-98432. Both existing VMs now run signed
+Ubuntu noble-updates kernel6.8.0-149-generic (previous147), installed worker first.
+Exact10-package plans, successful installation, changed boot IDs and clean dpkg audit
+verified. No proposed repository, new VM or payment. Completed kernel maintenance
+receipts phase5-kernel149-worker/control.json must not be replayed. Old kernels remain
+for evidence; do not automatically boot the vulnerable predecessor.
+
+All16 fresh designated-worker containment/resource/output/timeout/cleanup probes pass
+on149.72 deployed source files and exact API/dispatcher policy match;548 CLEANED,
+327 fences,zero missing deadlines/workspaces/restore clones;services healthy. Product
+image e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358 unchanged.
+Worker/verifier hashes unchanged. Admission epoch102,verification_epoch5; earlier
+shortened “epoch5” refers to verification identity,not admission epoch. Both admissions
+closed/readiness503.1044 Linux+10 subtests;870 Windows/174 Linux skips;21 new cases.
+
+Binary coverage now includes five Go executables using govulncheck1.9.0 and three
+freestanding C helpers via pinned source/disassembly/ELF inspection.18 distinct Go
+advisory IDs retained;runsc has one module-only BTF match,sentry has no known Go match,
+shim/checkpoint companions have symbol matches. Those optional paths are not enabled
+by the fixed launcher. Native helpers DO participate in startup;idle absence is not
+proof otherwise. GOOS/GOARCH warnings,missing versioned gVisor main module,20 source
+scan findings and186 native image pairs remain explicit limitations,not waivers.
+
+The acceptance table in phase5-security-review.md maps the original Phase5 gates to
+actual receipts. It does not establish beyond-normalizer superiority: A15/18,C15/18,
+D18/18;one repeat/shared templates/no independent human oracle review. No rerun/tuning.
+Human security review remains absent under the owner's authorized automated workflow.
+
+Next authorized work should address Phase6 release preparation: scheduled consistent
+backup/portable deletion authority and recovery,clean-browser current-source rehearsal,
+demo/package/claim checks,funded judging uptime. Fresh-host compromise recovery is NOT
+RUN. Do not invent a new model campaign or repeat the completed live encrypted restore,
+API incident rebuild,funded renewal or product PR. Publication/MIT ownership/submission
+remain owner decisions; private preparatory engineering needs no continuation question.
+
+Fresh credit$191.85 at01:05UTC;funded review remains2026-11-08T14:27:11.770445Z
+(Nov8 23:27KST). Recheck before further cloud work; no inference calls or new resources.
+Historical entries below are superseded for current status,not erased evidence.
+
 ## Current checkpoint — November 7 KST: runtime inventory and real API rebuild
 
 Phase0–4 DONE;Phase5 IN PROGRESS. Base34553763b519f3f79d4e396953c4e6da85db8fe1;

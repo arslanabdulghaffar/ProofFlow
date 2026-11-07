@@ -1,5 +1,13 @@
 # Threat model and controls
 
+November7 audit: both existing hosts now run signed Ubuntu kernel6.8.0-149-generic,
+fixing the reviewed Critical TCP advisory.16 fresh isolated-worker probes pass after
+reboot. Go binary findings and native helper source/disassembly review are recorded
+without blanket clearance;startup helpers are not assumed unused from idle inventory.
+No candidate can select host binaries/FDs/flags. Separate Codex review is not human
+sign-off. Phase5 private technical acceptance retains native,administrator,side-channel
+and disaster-recovery limits. [acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json).
+
 Current D88 review: runtime inventory verifies all8 worker binaries and no worker
 Docker/containerd daemon;control CRI is local/root-socket only in the observed setup.
 No full binary/host advisory clearance claimed. Installer accepts only exact mounts,

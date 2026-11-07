@@ -1,5 +1,14 @@
 # Release and operations plan
 
+Phase5 private technical acceptance passes after binary review and two-host149 kernel
+patch/reboot;all16 new containment probes and exact deployed-source checks pass.
+[acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json). This closes the previous Phase5 audit,not Phase6 release gates. Admission remains
+closed;repository private. Next work is the existing Phase6 portable/scheduled recovery,
+clean-browser rehearsal,media/package/source agreement and funded-uptime plan. Public
+publication/submission/license clearance remain unresolved. Do not rerun completed
+kernel maintenance,API rebuild,encrypted recovery,comparison,renewal or product PR.
+Earlier Phase5-open statements below are historical.
+
 Actual private API-container rebuild now passes with unchanged image/source pins,
 preserved revoked sessions/data and normal cleanup. Expanded installer checks require
 the full security configuration,not just image identity. [Evidence](evidence/phase5-runtime-incident-2026-11-07.json). This does not establish

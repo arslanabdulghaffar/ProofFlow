@@ -1,5 +1,26 @@
 # Decision log
 
+## D89: complete finite security acceptance without hiding coverage limits
+
+Use static govulncheck binary analysis after the filesystem scanner recognized no Go
+packages. Record source/tool hashes and actual build modules;retain warnings and all
+finding levels. JSON exit0 is transport success,not safety. Three tiny helpers are
+native ELF binaries,not scripts;review their parent FD/argument setup and disassembly
+separately. Unknown main-module/platform/native coverage remains visible.
+
+Patch the concrete Critical host TCP issue with exact signed noble-updates149 packages
+on existing idle hosts. Require closed inference/product admission,empty jobs/workspaces,
+no pending external write,exact package/origin plan,durable install/reboot intent and
+new-kernel readback. Worker first;no removal,new service,proposed repository or automatic
+vulnerable rollback. Retest all16 actual containment probes after reboot.
+
+The existing Phase5 plan requires tested containment/auth/mutations,honest frozen
+comparison/accounting and separate critical review. Those private technical gates now
+pass;verified push completes the phase. Do not convert unresolved production/disaster/
+license/public-release obligations into fake passes or endless unspecific Phase5 work.
+Keep composite traceability partial and disclose the deterministic baseline advantage.
+No independent human approval exists. [acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json).
+
 ## D88: rebuild from exact policy, preserve durable authority
 
 Existing container identity must include immutable image AND exact command/environment,

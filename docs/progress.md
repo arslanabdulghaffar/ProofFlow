@@ -1,5 +1,24 @@
 # Progress
 
+## November7 KST — binary review, kernel fix and Phase5 acceptance
+
+Completed the bounded private Phase5 acceptance audit. A critical TCP vulnerability
+in the installed host kernel required a real fix: both VMs upgraded from147 to signed
+Ubuntu149 and rebooted sequentially. Exact packages/new boot IDs/integrity verified;
+all16 post-update worker probes pass with cleanup.72 source matches and full service
+policy readback pass;548 CLEANED/327 fences/zero unfinished retention fixtures.
+
+Go binary analysis closes the prior zero-package scanner gap for five binaries;three
+small ELF C helpers received separate source/disassembly review.18 distinct Go IDs
+remain recorded with module/package/symbol distinction. Added fail-closed reporting
+of missing metadata,scanner errors and warnings;JSON exit0 never means clean.21 new
+boundary tests;1044 Linux+10 subtests,870 Windows/174 skips. No runtime/contract/verifier
+policy relaxation. README's stale Phase3-only status corrected.
+
+[acceptance evidence](evidence/phase5-binary-acceptance-2026-11-07.json). Original Phase5 private technical gates pass,with DONE contingent on verified
+push. Phase6 disaster/release work and independent human review remain explicit gaps.
+No product PR,model call or new service. Credit$191.85;caps/cutoff unchanged.
+
 ## November 7 KST — runtime exposure and real service rebuild
 
 Found/fixed incomplete existing-container acceptance: exact image alone did not deny
