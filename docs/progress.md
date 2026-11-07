@@ -1,5 +1,33 @@
 # Progress
 
+## November8 KST — Phase6 private deck, cover and release package
+
+Prepared8 editable slides with actual synthetic screenshot,3 native evidence tables
+and source-linked speaker notes,plus standalone1920×1080 cover. Final-file structure,
+font/layout and Artifact Tool re-import checks pass; all8 slides visually reviewed.
+Fixed fallback-font export and one source-note filename; no product/runtime changes.
+Existing139.04s video and its disclosed failed-harness reconciliation are preserved.
+
+Added private submission fields/copy,setup notes and deterministic file selection for
+an offline release ZIP. Source comes from a clean committed `git archive`; media are
+pinned by SHA-256. Public URLs stay null; license/release flags stay false. The deck's
+native comparison table agrees with the offline frozen artifact,including the better
+deterministic baseline. Eight archive/XML/claim negative checks pass. No candidate or
+model invocation. Package assembly/readback follows the first source checkpoint,with
+its separate receipt committed afterward; do not confuse prepared sources with a
+verified archive before that receipt exists.
+
+Owner deferred offline key custody; recorded without re-prompting. Event page/dashboard
+rechecked,but authenticated form/deadline/registration remain unknown. No public action,
+new paid service,credit renewal or application dependency. Phase6 remains IN PROGRESS
+for release authorization,public smoke and recovery/uptime gaps.
+
+Packaging review added 13 durable guard tests. The first pass had one failure because
+Windows normalizes ZIP backslashes; corrected the raw-byte probe and rejected filename
+normalization in the reader. All 13 now pass, plus the eight actual-deck/negative probes.
+The final comparison heading says "Held / clarified" to cover both correct outcomes.
+Sanitized asset validation is in `evidence/phase6-release-assets-2026-11-08.json`.
+
 ## November8 KST — Phase6 scheduled capture, portable recovery and real AI media
 
 Installed hourly current-user backup task with12h capture cadence/early expiry refresh,

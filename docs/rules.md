@@ -1,5 +1,14 @@
 # Rules and implementation timing
 
+Rechecked **November8 KST** while packaging: the [official event page](https://lablab.build/ai-hackathons/vultr-hackathon)
+still lists the repository/demo/video/slides and Challenge1 containment requirements.
+The [dashboard](https://lablab.build/ai-hackathons/vultr-hackathon/live) labels submissions
+open but its text countdown remains zero. General rules/guide routes were unavailable
+to web retrieval. This does not verify the authenticated form,enrollment,media limits
+or absolute closing time. Keep the existing Nov9 03:00 KST internal target and explicit
+private boundary; no login,submission,publication or contact was performed. Prepared
+fields and missing URLs are in `release/submission.json`; no guessed limits are binding.
+
 Rechecked November7,2026 UTC for Phase6: [official event page](https://lablab.build/ai-hackathons/vultr-hackathon)
 still lists November3–8 and Challenge1's actual sandboxed work on Vultr; the
 [dashboard](https://lablab.build/ai-hackathons/vultr-hackathon/live) says live/submissions

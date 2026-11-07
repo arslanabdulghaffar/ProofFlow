@@ -1,5 +1,33 @@
 # Decision log
 
+## D92: private release assets with verifiable source and truthful gate status
+
+Use local editable PPTX and a standalone cover for the repository's private release
+package. Bundled Artifact Tool renders/exports the deck; no presentation SaaS publication
+or new application dependency. Text uses the actual product palette; the one screenshot
+is hash-checked against its synthetic run. Source notes and native tables preserve
+evidence/limitations. The finalizer checks structure,fonts,geometry and re-import; visual
+review covers every slide. These checks are not native PowerPoint or public-form tests.
+
+Pin reviewed media before assembling an explicit allowlist of package files. Archive
+only clean committed tracked source with Git; do not sweep the workspace/private
+deployment directory. Bound ZIP/XML parsing,deny unsafe/duplicate names,secret filenames,
+symlinks,external PPTX relationships/macros and DTD/entities. SHA-256 proves consistency,
+not independent live-provider authenticity. An outer ZIP manifest binds file lengths,
+hashes and source commit; the later checkpoint records that ZIP hash without pretending
+the archive can contain its own future receipt commit.
+
+The public form is not verified,so draft fields retain null public URLs and false release/
+license flags. Offline key custody is OWNER_DEFERRED. Current public/private scope and
+full disaster gaps stay visible; ordinary preparation continues. No new runtime privilege,
+model campaign,external write or spending. Separate Codex claim/privacy review is not
+independent human sign-off. Eight negative gate probes supplement actual export and
+offline benchmark accounting; application tests need no repeat for document-only work.
+
+The offline packager has 13 durable guard tests. Windows ZipInfo normalizes separators
+on read; require the original name to equal the parsed name before validating paths.
+The raw archive mutation test verifies that boundary. Runtime security policy is unchanged.
+
 ## D91: scheduled local custody, portable synthetic transport and honest recorded evidence
 
 Use the existing private desktop as the off-VM backup destination without another paid

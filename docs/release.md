@@ -1,5 +1,20 @@
 # Release and operations plan
 
+## Private release package — November8
+
+The [package source and guide](../release/README.md) now include8-slide deck,cover,
+existing real-AI video,draft submission fields/copy,safe setup notes and a manifest
+builder. Exact reviewed media hashes are in [assets.json](../release/assets.json).
+The builder requires clean committed source and never calls cloud/publishing APIs.
+It verifies native comparison values,ZIP membership/hash/commit identity and private
+gate flags. Final package readback is recorded after the source checkpoint.
+
+This is private review readiness,not Phase6 completion or public release. The owner
+deferred offline key custody. Public repository/demo/media and permissive licensing
+remain unapproved; authenticated form/deadline/registration remain unverified. Keep
+public URLs null. Existing$150/$25 credit caps and Nov10 01:29 KST cutoff remain intact.
+No resource,inference request,cloud charge category or runtime dependency was added.
+
 ## Phase6 current status — November8, private scheduled recovery and recorded AI demo
 
 [Current evidence](evidence/phase6-scheduled-portable-demo-2026-11-08.json) supersedes

@@ -2,7 +2,24 @@
 
 ProofFlow is a private prototype for repairing supported Python revenue-import pipelines, checking their actual records against human-approved business rules, and using an exact approved version for subsequent batches.
 
-**Phases1–5 private technical acceptance is recorded; Phase5 completion requires its verified remote checkpoint.** Real Vultr repair, isolated execution, independent deterministic checks, exact-version approval, fresh batches and one separately approved private draft PR have evidence. Phase5 adds security/recovery hardening and a frozen96-job comparison. The deterministic baseline repaired18/18 cases versus ProofFlow15/18; no beyond-normalizer or witness-quality superiority is claimed. Both VMs received the reviewed Critical kernel fix and passed16 fresh containment probes. Native advisory and independent human-review limitations remain. Public demo/release work is Phase6 and is not complete. See [acceptance audit](docs/phase5-security-review.md), [measured comparison](eval/final-comparison-2026-11-06.md), [progress](docs/progress.md) and [resume instructions](docs/next-session.md).
+**Current Phase6 review materials:** an eight-slide editable deck, standalone cover,
+139.04s real-AI demo and private release-package sources are prepared. See the
+[package guide](release/README.md), [draft submission copy](release/submission-copy.md)
+and [exact asset hashes](release/assets.json). Public URLs remain unset; no release or
+submission has occurred. The owner deferred offline key custody. Phases0–5 are complete
+at their verified private checkpoints; Phase6 still has public/disaster-recovery gates.
+
+## Actual Vultr use
+
+Vultr Compute hosts the private web API, trusted dispatcher, PostgreSQL state/budget
+and restricted deterministic verifier on the control VM. A separate Compute VM runs
+untrusted code under gVisor with enforced network/resource/lifecycle limits. Application
+agent proposals come only from Vultr Serverless Inference (`qwen3.8-flash-next` in the
+recorded run). Only the dispatcher receives provider credentials. The verifier checks
+collected bytes and never executes candidate source. See [architecture](docs/architecture.md),
+[sandbox](docs/sandbox.md) and [setup for review](release/setup.md).
+
+**Phases 1–5 passed private technical acceptance and their remote checkpoints are verified.** Real Vultr repair, isolated execution, independent deterministic checks, exact-version approval, fresh batches and one separately approved private draft PR have evidence. Phase5 adds security/recovery hardening and a frozen96-job comparison. The deterministic baseline repaired18/18 cases versus ProofFlow15/18; no beyond-normalizer or witness-quality superiority is claimed. Both VMs received the reviewed Critical kernel fix and passed16 fresh containment probes. Native advisory and independent human-review limitations remain. Public demo/release work is Phase6 and is not complete. See [acceptance audit](docs/phase5-security-review.md), [measured comparison](eval/final-comparison-2026-11-06.md), [progress](docs/progress.md) and [resume instructions](docs/next-session.md).
 
 The intended workflow is intake → original execution → independent checks → bounded Vultr-generated repair → fresh sandbox → independent verification → human approval → verified fresh batch. A separate operator approval permits an actual draft GitHub PR. Humans supply inputs and business decisions; they do not manually repair code or advance repair stages.
 

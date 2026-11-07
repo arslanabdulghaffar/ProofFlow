@@ -1,5 +1,23 @@
 # Demonstration and public explanation
 
+## Private presentation and cover — November8
+
+Eight-slide editable PPTX now accompanies the existing video: problem witness,workflow,
+actual Vultr boundaries,recorded AI repair/approval/batch,containment,full measured
+comparison and scope. Source notes and3 native evidence tables are retained. All8 final
+slides were rendered from the final PPTX and visually reviewed; structure,font/layout
+and re-import checks pass. Native PowerPoint playback was NOT RUN.
+
+Standalone1920×1080 cover matches the product palette and says private/synthetic.
+Authoring source and exact media hashes live in `release/`; final binaries remain
+outside Git in the private release directory. No generated event artwork or mockup
+is passed off as execution evidence. Draft submission copy retains the deterministic
+baseline advantage and all scope limitations. [Package guide](../release/README.md).
+
+The finished package is for private review; public URLs,authenticated form limits,
+ownership/license,public access and submission remain separate gates. Offline key
+custody was deferred by the owner and is not a reason to stop independent preparation.
+
 ## Final private AI recording — November8
 
 Completed a **139.04-second silent captioned review video**:

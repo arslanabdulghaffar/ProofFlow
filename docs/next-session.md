@@ -1,5 +1,51 @@
 # Resume ProofFlow
 
+## Current checkpoint — November8 KST: private deck, cover and release package
+
+Base58dca0d0c392282dfc376532adbda52d045c2eea. Phase0–5 DONE;Phase6 IN PROGRESS.
+Keep repository/media private and credit-only. The owner explicitly deferred offline
+key custody; do not ask again or make it a universal prerequisite for preparation.
+
+Eight editable slides with source notes and3 native evidence tables passed structural,
+font,layout and re-import checks. Every final slide was visually inspected; no native
+PowerPoint playback claim. Final deck `ProofFlow-deck-v4.pptx`, standalone1920×1080 cover
+`ProofFlow-cover-final.png`, and existing139.04s AI video stay outside Git under the
+private release/deployment directories. `release/assets.json` pins their exact bytes.
+An initial export used fallback Aptos despite an Arial style property; corrected actual
+typeface/theme and reran all checks. A source-note filename was also corrected; all8
+final renders remained identical for that note-only correction. The final comparison
+heading was then clarified to "Held / clarified" and that slide re-rendered/reviewed.
+No fabricated screenshot or generated model patch.
+
+`release/` now contains editable authoring sources, submission fields/copy, package
+README and safe review/setup notes. Public URLs remain null,release_allowed=false,
+license_issued=false. Root README describes actual Vultr services and trust boundaries.
+The native deck's comparison matches the frozen artifact's exact denominators,including
+D18/18 beating A15/18; no AI superiority/human sign-off/customer-ROI claim.
+
+The offline package builder requires a clean commit, exact reviewed media hashes and
+private gate flags. It bundles only explicit docs/media plus `git archive` of that commit;
+verifies the ZIP/comment/hash/file set and native table without executing any candidate
+or extracting files. Traversal/secret-name/symlink/DTD/entity/size gates fail closed.
+Eight artifact probes and 13 durable packaging tests pass. The tests exposed Windows
+ZIP filename normalization; the builder now rejects original/decoded name differences.
+See `docs/evidence/phase6-release-assets-2026-11-08.json`. Source snapshot and final verification checkpoint may differ
+only by the later package receipt; final evidence records both. Do not publish the ZIP.
+
+Finish package assembly from the committed source if the final receipt is not yet present;
+otherwise read its evidence and never overwrite the completed package. Current source
+materials are a WIP checkpoint until final artifact/source ZIP verification is saved.
+No new cloud resource,inference,credential,dependency or spending change for this work.
+Latest observed credit remains$190.13 (previous session),funded cutoff Nov10 01:29 KST.
+
+Official page rechecked Nov8 KST still requires public repository/demo/video/slides;
+dashboard says submissions open but text countdown is zero. Authenticated form/enrollment
+and absolute deadline remain unverified. No login/contact/public action was attempted.
+Next independent work: private release-readiness/gate audit and public-access design.
+Actual publication,visibility/license/submission changes remain owner decisions. Lost
+trusted deletion authority,compromised-host recovery and judging-period funding remain
+explicit gaps. No new PR,benchmark rerun or paid demo replay is needed.
+
 ## Current checkpoint — November8 KST: scheduled backup, portable transport, real AI recording
 
 Phase0–5 DONE; Phase6 IN PROGRESS. Base0bf420862ba30d6e87a07fcba5bc28dba4bf6581;

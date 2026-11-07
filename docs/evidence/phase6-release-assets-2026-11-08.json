@@ -1,0 +1,89 @@
+{
+  "status": "PRIVATE_ASSETS_VERIFIED_PACKAGE_PENDING_CLEAN_SOURCE_COMMIT",
+  "phase6_complete": false,
+  "runtime_evidence_checkpoint": "58dca0d0c392282dfc376532adbda52d045c2eea",
+  "assets": {
+    "ProofFlow-cover.png": {
+      "bytes": 52142,
+      "filename": "ProofFlow-cover-final.png",
+      "sha256": "1ded3c8bf7dcdd8bad1070f45c7dd1d6c40f4bc2c749777316b849794c133dbb",
+      "source": "artifacts"
+    },
+    "ProofFlow-deck.pptx": {
+      "bytes": 73690,
+      "filename": "ProofFlow-deck-v4.pptx",
+      "sha256": "f9f738dbc3c6a93898c2840e3339e1bce6154da918e8c007002f85b93fe45204",
+      "source": "artifacts"
+    },
+    "ProofFlow-demo.mp4": {
+      "bytes": 3396705,
+      "filename": "phase6-private-ai-demo-v2.mp4",
+      "sha256": "93580699f50cb23b082481f849397ca42664a931a6ef8f71a1cb41aa2f597fac",
+      "source": "evidence"
+    },
+    "demo-edit-manifest.json": {
+      "bytes": 9636,
+      "filename": "phase6-private-ai-demo-v2-manifest.json",
+      "sha256": "070456ad4bb75b22990aa07f4e6a0382642496774e5bda3da2a36d10a98b3b25",
+      "source": "evidence"
+    }
+  },
+  "validation": {
+    "slides": 8,
+    "native_tables": 3,
+    "source_notes": 8,
+    "package_integrity": "pass",
+    "layout_findings": 0,
+    "font_policy_passed": true,
+    "reimport_passed": true,
+    "all_final_slides_visually_reviewed": true,
+    "final_render_sha256": {
+      "1": "39050275e14195b0d1d8e91750bd4dcd1ed9f75664357b1a6dab60f3f55bbd87",
+      "2": "bdef5b07b3d0587b2c71894546201f5e2b642bcca4cd9345e131816b8d91c4d1",
+      "3": "6c7cfdbba17c89e19bfe42e4c58c92cb76011f16e923d0ff173496e2c582c8ed",
+      "4": "16ee337790620c33d255f5736bdc63128f70042fa4cb51be964c31c9a953e675",
+      "5": "ea3ba0d470ce3ee3c26a4ac2f63eec13ac8ffde9d61dd4d11e5172a27f349f59",
+      "6": "4b2c7289dcf832c2fb1fb5e0707e8d097ef18dbff4c9f23971133c156ffd4324",
+      "7": "64d6c628957c50f9fe616d86c711f7a5dc86cefd7e242a4c2f1f636fff52282a",
+      "8": "bfadd288d741c5432efbf74076dca2a0796f5e87bc5c1d6b2df7edef17460821"
+    },
+    "cover_visually_reviewed": true,
+    "cover_dimensions": [
+      1920,
+      1080
+    ],
+    "frozen_96_job_claims_check": "PASS",
+    "actual_deck_and_eight_negative_probes": "PASS",
+    "durable_release_guard_tests": {
+      "passed": 13,
+      "failed": 0
+    },
+    "ruff": "PASS",
+    "documentation_hygiene": "PASS: 276 entries, 59 pages",
+    "native_powerpoint_playback": "NOT RUN: bundled renderer used",
+    "application_and_live_security_tests": "NOT RERUN: runtime unchanged"
+  },
+  "findings_fixed": [
+    "Initial fallback font corrected to actual Arial typeface/theme; finalizer rerun.",
+    "Source-note filename corrected to orchestrator/repair_dispatcher.py.",
+    "Comparison label distinguishes held/clarified outcomes; final slide re-rendered and reviewed.",
+    "Windows ZIP parser normalizes backslashes; reject original/decoded filename changes and test raw ZIP bytes. Initial test failure preserved in progress."
+  ],
+  "critical_review": {
+    "reviewer": "Codex separate claim/privacy/packaging review; not independent human approval",
+    "boundaries": [
+      "No candidate execution",
+      "No new runtime dependency or privilege",
+      "No cloud/model call",
+      "No publication or submission",
+      "Explicit media allowlist, pinned hashes, clean Git source only",
+      "Bounded archive/XML, unsafe names and external PPTX links denied"
+    ]
+  },
+  "owner_offline_key_custody": "DEFERRED",
+  "repository_visibility": "private",
+  "public_release_allowed": false,
+  "license_issued": false,
+  "new_cloud_requests": 0,
+  "billing_observation": "No fresh balance claim; existing service charges continue under prior controls"
+}

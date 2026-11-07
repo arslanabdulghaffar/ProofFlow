@@ -1,5 +1,19 @@
 # Acceptance and verification plan
 
+November8 private package checks:8-slide PPTX package integrity,Arial font policy,
+geometry/native-table ownership and Artifact Tool import pass. Every final slide and
+standalone1920×1080 cover visually inspected.8 negative archive/XML/table-drift probes
+reject unsafe input. Frozen96-job artifact accounting rechecked offline; no model call
+or source execution. Final package SHA/file-set/source-commit verification follows the
+clean source checkpoint. Native PowerPoint and authenticated submission-form checks
+NOT RUN; public-release gates remain open. Product tests are not repeated for unchanged
+runtime/schema/contract code. No independent human sign-off is claimed.
+
+`pytest -q tests/unit/test_release_package.py`: 13 pass. These inert archive/XML tests
+cover private paths, Windows normalization, symlinks, declarations, encoding and bounds.
+An initial Windows separator probe failed; raw-byte construction and original-name
+validation were corrected before the passing rerun.
+
 November8 Phase6 scoped checks:83 Linux/42 Windows cases pass,including21 new unique
 portable crypto/deletion/expiry,scheduled integrity/retention and dated-funding cases.
 Actual Windows task LastTaskResult0 after integrity hardening;nonempty consistent
