@@ -10,6 +10,7 @@ import shlex
 import subprocess
 import sys
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from uuid import uuid4
 
 import httpx
@@ -292,9 +293,7 @@ def require_active_window(access):
         admin.close()
 
 
-def open_browser():
-    from playwright.sync_api import sync_playwright
-
+def prepare_guest_access():
     try:
         latest = current()
         access = load(latest["access_file"])
@@ -306,24 +305,55 @@ def open_browser():
     except (FileNotFoundError, RuntimeError):
         start()
         access = load(current()["access_file"])
-    print(
-        "Opening your guest browser. This demo window closes in at most 30 minutes."
-    )
-    print("Use synthetic data only. Review and approve the contract and exact version yourself.")
+    return access
+
+
+def launch_visible_browser(chromium):
+    from playwright.sync_api import Error as BrowserError
+
+    if sys.platform == 'win32':
+        # Use the supported installed Edge channel with a NEW ephemeral profile.
+        # The downloaded CFT build can fail native Windows assembly activation
+        # even when the separate headless-shell executable works.
+        try:
+            return chromium.launch(channel='msedge', headless=False)
+        except BrowserError:
+            raise RuntimeError('Visible Microsoft Edge could not start. '
+                               'No demo window was opened; repair Edge before retrying.') from None
+    if not Path(chromium.executable_path).is_file():
+        raise RuntimeError(
+            "Visible Chromium is missing. No demo window was opened. Run: "
+            '"' + sys.executable + '" -m playwright install chromium --no-shell --no-remove'
+        )
+    return chromium.launch(headless=False)
+
+
+def open_browser():
+    from playwright.sync_api import sync_playwright
+
+    # Prove the actual visible executable can launch BEFORE remote admission,
+    # quote refresh, guest provisioning or any credential readback.
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        context = browser.new_context(viewport={"width": 1366, "height": 900})
-        page = context.new_page()
-        sign_in_and_stage(page, access)
-        # Memory-only browser cookies: no persistent profile or storage_state file.
-        while browser.is_connected() and datetime.now(UTC) < datetime.fromisoformat(
-            access["expires_at"]
-        ):
-            try:
-                page.wait_for_timeout(1000)
-            except Exception:
-                break
-        browser.close()
+        browser = launch_visible_browser(p.chromium)
+        try:
+            access = prepare_guest_access()
+            print("Opening your guest browser. This demo window closes in at most 30 minutes.")
+            print("Use synthetic data only. Review the contract and version before approving.")
+            context = browser.new_context(viewport={"width": 1366, "height": 900})
+            page = context.new_page()
+            sign_in_and_stage(page, access)
+            print("Guest browser ready. Files are selected; nothing has been uploaded or approved.",
+                  flush=True)
+            # Memory-only cookies; closing a browser does not extend the host deadline.
+            while browser.is_connected() and datetime.now(UTC) < datetime.fromisoformat(
+                access["expires_at"]
+            ):
+                try:
+                    page.wait_for_timeout(1000)
+                except Exception:
+                    break
+        finally:
+            browser.close()
 
 
 def main():

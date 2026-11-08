@@ -26,7 +26,9 @@ From the owner’s Windows PowerShell:
 powershell -NoProfile -File "A:\hackathon\ProofFlow\scripts\Open-PublicDemo.ps1"
 ```
 
-No key entry is needed. The launcher checks credits/current prices and creates one
+No key entry is needed. On Windows the launcher first proves the installed Microsoft
+Edge can open a new ephemeral profile; no existing Edge profile is reused. A browser
+startup failure occurs before any guest admission. It then checks credits/current prices and creates one
 30-minute guest window, or reopens its still-valid window. It opens a dedicated browser
 and selects disclosed synthetic files without uploading or approving anything. Click
 **Upload and review**, read/approve the contract, run the original, then request repair.

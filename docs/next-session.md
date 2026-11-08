@@ -1,5 +1,26 @@
 # Resume ProofFlow
 
+## November8 KST — visible Windows browser launcher repaired
+
+The owner reported missing `chromium-1248/chrome-win64/chrome.exe`: prior acceptance
+used the separate installed headless shell, so it did not prove the visible launcher.
+Installing the matching CFT package exposed a second Windows side-by-side assembly
+activation failure. No Windows security policy or system runtime was changed to bypass it.
+
+Windows launcher now uses Playwright's installed Microsoft Edge channel with a fresh
+nonpersistent profile. It launches the real visible browser BEFORE guest credential
+access, provider refresh or admission. Missing/failing browser therefore cannot open a
+new demo window. The browser closes on later setup failure. Two regression tests and
+six access-envelope tests pass. Actual visible Edge157.0.4341.42 launch and the full
+existing-window login/file-selection path passed: workspace visible, login fields cleared,
+run disabled, contract unchecked. A separate Edge guest window was left open for the
+owner; no automatic upload/approval or new model call. Existing window expiry remains
+Nov8 12:34:59 KST; no deadline extension or new guest was needed.
+
+Repository stays private. This repairs local browser setup only; app/worker/TLS image,
+spending caps and server expiry guard are unchanged. The earlier headless tests remain
+valid for their stated scope; they did not cover native visible-browser installation.
+
 ## November8 KST — bounded guest launcher and real public AI workflow accepted
 
 Current owner-ready window: ACTIVE until **Nov8 12:34:59 KST**. Exactly one guest,

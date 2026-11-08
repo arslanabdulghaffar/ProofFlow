@@ -1,5 +1,16 @@
 # Decision log
 
+## D97: prove visible browser startup before opening guest authority
+
+Use the installed Microsoft Edge Playwright channel on Windows, in a fresh ephemeral
+profile. Actual visible launch and guest intake were tested after the bundled Chromium
+executable was missing and its downloaded replacement failed native assembly activation.
+Do not treat headless-shell acceptance as visible-browser installation proof. Launch the
+visible browser before reading access credentials or invoking remote guest preparation;
+close it if setup fails. Preserve public system TLS trust and exact approvals. No app
+runtime dependency, browser profile reuse or OS security relaxation. Non-Windows retains
+the explicit bundled-Chromium existence check. No independent human review claimed.
+
 ## D96: individual expiring guest windows and desktop-independent closure
 
 The owner explicitly authorized guest access and bounded live demo operation on Nov8.
