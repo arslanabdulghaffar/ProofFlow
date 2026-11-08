@@ -1,5 +1,22 @@
 # Decision log
 
+## D99: prepare judging hosting without changing operational authority
+
+Use a fixed read-only account/instance/inference/ledger preview. Check exact project and
+instance identities, no backup/DDoS add-ons, approved plan prices, unchanged caps and
+conservative reservation totals; do not refund reservations using an hourly estimate.
+Vultr's672-hour billing basis gives approximate7/14-day compute costs. Preserve current
+48-hour funded-review discipline and final teardown; account credit does not settle
+post-event access terms. A powered-off VM still bills; do not confuse shutdown with
+teardown. No new services, personal payment, invitation or admission change.
+
+Recovery denial drill uses inert synthetic data and the existing pinned networkless,
+nonroot, read-only container with512MiB memory and64MiB tmpfs. Require exact failure codes and no returned data,
+with successful controls and cleanup; arbitrary infrastructure errors cannot count as
+security denials. Same-source local recovery does not establish a reimaged trusted host
+or replace lost current deletion authority. Separate critical review and automated checks
+are not independent human sign-off. No runtime, verifier, contract or privilege change.
+
 ## D98: bind offline export and release receipts to their authenticated content
 
 Owner export must match scheduled digest/capture/expiry to the authenticated backup,

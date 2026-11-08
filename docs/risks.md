@@ -1,5 +1,11 @@
 # Risks and owner decisions
 
+November8 recovery/hosting: eight actual isolated recovery controls/denials and cleanup
+pass; current account/plan/ledger preview stays read-only. Credit$188.96;14-day compute
+estimate$36 inside unchanged monthly reservation. Post-event payment-method wording
+remains unresolved; no cutoff extension or compromised-host claim.
+[Scoped evidence](evidence/phase6-recovery-hosting-2026-11-08.json).
+
 November8 recovery/package follow-up: authenticated current-profile backup readback and
 receipt/source-binding regression checks pass; no offline custody or compromised-host
 recovery claim. [Scoped evidence](evidence/phase6-recovery-release-hardening-2026-11-08.json).

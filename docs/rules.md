@@ -1,5 +1,13 @@
 # Rules and implementation timing
 
+November8 judging-hosting recheck: the [event page](https://lablab.build/ai-hackathons/vultr-hackathon)
+still asks for a payment method after the event; owner-relayed judging coverage does not
+resolve that account-access condition. No personal payment authorized or added. Current
+credit/quotes support a conditional cost plan, not a promise of post-event access.
+[Official billing](https://docs.vultr.com/support/platform/billing/how-am-i-billed-for-my-servers)
+states non-GPU hourly billing capped at672 hours/month and billing continues while stopped.
+The read-only plan keeps full reservations and the existing cutoff; no automatic extension.
+
 Rechecked **November8 KST** while packaging: the [official event page](https://lablab.build/ai-hackathons/vultr-hackathon)
 still lists the repository/demo/video/slides and Challenge1 containment requirements.
 The [dashboard](https://lablab.build/ai-hackathons/vultr-hackathon/live) labels submissions

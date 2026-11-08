@@ -1,5 +1,36 @@
 # Resume ProofFlow
 
+## November8 KST — recovery denial drill and judging-hosting preparation
+
+Eight actual fresh local pinned recovery containers passed: valid inert materialization,
+deleted-workspace exclusion, missing/stale/future authority, wrong key, corrupted envelope
+and expired backup. Every denial returned the expected fixed error with no data; every
+container was removed. No production restore, candidate execution or owner offline key.
+42 Windows tests pass/1 Linux-only skip, plus5 Linux tests pass and Ruff. A read-only
+hosting harness result-shape error was fixed and regression-tested; no remote mutation.
+[Evidence](evidence/phase6-recovery-hosting-2026-11-08.json).
+
+Fresh account/VM/ledger readback at12:32 KST: credit$188.96; existing plans$24+$48/month.
+Additional7/14-day compute estimates$18/$36; full$72 compute and$145 total reservations
+remain unchanged, with$150/$25 caps. Created-to-final-cutoff compute estimate$49.18.
+These estimates exclude unknown taxes/overages and do not establish post-event eligibility.
+Current funded cutoff remains **Nov10 01:29:33 KST**; absolute stop Nov23 09:00 KST.
+No extension or new resource. `scripts/prepare_judging_hosting.py` performs GET/SELECT
+only and can recheck current quotes/ledger without closing an owner's active guest window.
+
+Official event page still says post-event deployments require a payment method, contrary
+to owner-relayed judging guidance. Record the conflict once; no card, inferred clearance,
+repeated approval request or promise of two-week uptime. Future extension uses existing
+closed/idle, fresh-account48-hour review only; never bypass its latched stop or caps.
+Renewal and guest timers active; certificate expires Nov15 01:01:59 KST, next renewal
+check Nov8 21:00:44 KST, last renewal result0. Future production rotation remains unobserved.
+Desktop credit guard12:29/backup11:36 KST last result0; awake/logged-in dependency remains.
+
+Phase6 IN PROGRESS. Offline custody deferred; lost-authority/fresh compromised-host
+recovery, post-event access and publication/license/submission remain open. Preserve
+private v4 as a dated package; this later operational evidence is in Git. Do not rebuild
+the same archive or replay completed paid tests merely to refresh its date.
+
 ## November8 KST — private release v4 sealed and read back
 
 Source checkpoint `0d2dff6217899f6029178bcc83c3cf59d16a0682` is verified on remote main. The private v4 ZIP

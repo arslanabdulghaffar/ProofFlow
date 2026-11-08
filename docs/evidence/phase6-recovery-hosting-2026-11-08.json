@@ -1,0 +1,158 @@
+{
+  "status": "PHASE6_SCOPED_RECOVERY_AND_HOSTING_PREPARATION",
+  "phase6_complete": false,
+  "hosting": {
+    "observed_at": "2026-11-08T03:32:20.230316+00:00",
+    "status": "CONDITIONAL_READ_ONLY_PREPARATION",
+    "remaining_credit_usd": "188.96",
+    "vm_quotes": [
+      {
+        "role": "control",
+        "plan": "vhp-2c-4gb-amd",
+        "monthly_usd": 24
+      },
+      {
+        "role": "worker",
+        "plan": "vhp-4c-8gb-amd",
+        "monthly_usd": 48
+      }
+    ],
+    "additional_7_day_compute_estimate_usd": "18.00",
+    "additional_14_day_compute_estimate_usd": "36.00",
+    "compute_from_creation_to_final_cutoff_estimate_usd": "49.18",
+    "compute_reservation_usd": 72,
+    "total_reservation_usd": 145,
+    "project_cap_usd": 150,
+    "inference_cap_usd": 25,
+    "current_funded_cutoff": "2026-11-09T16:29:33.986905+00:00",
+    "absolute_final_cutoff": "2026-11-23T00:00:00+00:00",
+    "credit_ledger_expiry_date": "2026-12-04",
+    "post_event_no_payment_access_verified": false,
+    "provider_hard_stop_verified": false,
+    "tax_coverage_verified": false,
+    "deadline_extended": false,
+    "new_resources": 0,
+    "model_calls": 0,
+    "estimate_note": "Compute only, rounded up; full monthly reservation retained. Excludes unknown taxes/overages. Credit is not post-event eligibility.",
+    "next_review": "Closed/idle fresh review, at most48 hours via existing helper; do not reopen a latched/expired stop or change final cutoff.",
+    "reservations_readback": "PASS",
+    "inference_admission_blocked_at_observation": false
+  },
+  "recovery": {
+    "observed_at": "2026-11-08T03:32:27.119054+00:00",
+    "cases": [
+      {
+        "case": "valid",
+        "passed": true,
+        "exit": 0,
+        "denial_code": null,
+        "container_removed": true,
+        "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4"
+      },
+      {
+        "case": "deleted_workspace",
+        "passed": true,
+        "exit": 0,
+        "denial_code": null,
+        "container_removed": true,
+        "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4"
+      },
+      {
+        "case": "missing_authority",
+        "passed": true,
+        "exit": 1,
+        "denial_code": "RESTORE_AUTHORITY_INVALID",
+        "container_removed": true,
+        "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4"
+      },
+      {
+        "case": "stale_authority",
+        "passed": true,
+        "exit": 1,
+        "denial_code": "RESTORE_CURRENT_AUTHORITY_REQUIRED",
+        "container_removed": true,
+        "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4"
+      },
+      {
+        "case": "future_authority",
+        "passed": true,
+        "exit": 1,
+        "denial_code": "RESTORE_CURRENT_AUTHORITY_REQUIRED",
+        "container_removed": true,
+        "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4"
+      },
+      {
+        "case": "wrong_key",
+        "passed": true,
+        "exit": 1,
+        "denial_code": "BACKUP_AUTHENTICATION_OR_FORMAT_FAILED",
+        "container_removed": true,
+        "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4"
+      },
+      {
+        "case": "tampered_ciphertext",
+        "passed": true,
+        "exit": 1,
+        "denial_code": "BACKUP_AUTHENTICATION_OR_FORMAT_FAILED",
+        "container_removed": true,
+        "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4"
+      },
+      {
+        "case": "expired_backup",
+        "passed": true,
+        "exit": 1,
+        "denial_code": "BACKUP_EXPIRED_OR_CLOCK_INVALID",
+        "container_removed": true,
+        "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4"
+      }
+    ],
+    "scope": "real_local_pinned_recovery_containers_synthetic_inert_data",
+    "cloud_calls": 0,
+    "production_restore": false,
+    "compromised_host_rebuild": false,
+    "offline_owner_key_used": false
+  },
+  "maintenance": {
+    "timers": "NextElapseUSecRealtime=Sun 2026-11-08 12:00:44 UTC\nId=proofflow-public-renew.timer\nActiveState=active\n\nNextElapseUSecRealtime=\nId=proofflow-guest-demo.timer\nActiveState=active",
+    "public_certificate": "notAfter=Nov 14 16:01:59 2026 GMT",
+    "renewal_last_result": "Result=success\nExecMainStatus=0"
+  },
+  "tests": {
+    "windows_passed": 42,
+    "windows_skipped": 1,
+    "skip_reason": "Linux symlink check; separately passed on Linux",
+    "linux_passed": 5,
+    "ruff": "PASS"
+  },
+  "scheduled_task_readback": {
+    "credit_guard_last_run_kst": "2026-11-08T12:29:39+09:00",
+    "credit_guard_result": 0,
+    "backup_last_run_kst": "2026-11-08T11:36:07+09:00",
+    "backup_result": 0
+  },
+  "sources": [
+    {
+      "url": "https://lablab.build/ai-hackathons/vultr-hackathon",
+      "checked_kst": "2026-11-08",
+      "finding": "Event page still instructs adding a payment method for post-event deployments; conflicts with owner-relayed judging coverage. No payment method authorized or added."
+    },
+    {
+      "url": "https://docs.vultr.com/support/platform/billing/how-am-i-billed-for-my-servers",
+      "checked_kst": "2026-11-08",
+      "finding": "Non-GPU hourly billing capped at672 hours monthly; stopped servers remain billed until destroyed. Used only for compute estimate; not tax/credit-coverage proof."
+    }
+  ],
+  "initial_harness_findings": [
+    "Hosting readback initially passed CompletedProcess to JSON parser. Fixed to check exit and parse captured stdout; added representative result-shape regression. Read-only failure made no remote change.",
+    "Recovery negative cases now require exact rejection code and exit1, not merely any nonzero child exit; all eight rerun successfully."
+  ],
+  "limitations": [
+    "No compromised-host rebuild or production RTO/RPO claim",
+    "Lost trustworthy current deletion authority remains a restore blocker",
+    "Offline key custody deferred",
+    "Post-event no-payment account access unverified; cutoff NOT extended",
+    "No provider hard stop or tax guarantee; desktop guard requires awake logged-in owner computer",
+    "Future certificate renewal not yet observed; timer currently active",
+    "No independent human sign-off; private source/media and submission gates remain"
+  ]
+}
