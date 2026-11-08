@@ -1,5 +1,23 @@
 # Progress
 
+## November8 KST — public TLS source checkpoint and private package v3 verified
+
+Source checkpoint `72f6800c1a356bdd7ad4ffdc22f552e3578b86fc` pushed to main and matched by remote SHA;
+repository private verified. New private archive `ProofFlow-private-release-v3.zip` has15 files,
+509 source files and4793703 bytes. SHA-256 `1dff901b4516f070ab1b748c420ae40cdc4ca091d9986c5e516cbfea76b56a7a`.
+Independent ZIP/source/committed-byte/media readback passed. [Receipt](evidence/phase6-release-package-v3-2026-11-08.json).
+Location: `C:/Users/IT/.proofflow/release/2026-11-08/ProofFlow-private-release-v3.zip`.
+Previous archives/video/deck preserved. Package now contains the accepted public URL
+and scoped TLS/guest/restart evidence; package/repository/media remain private.
+
+Next authorized work should target remaining recovery/guest-operating readiness, not
+repeat completed certificate issuance or the same tests. No shared live invitation;
+execution/inference closed after test cleanup. Do not blindly rerun one-shot installers
+or dated receipt scripts. Funded cutoff Nov10 01:29 KST remains; use a fresh bounded
+review before extending uptime. Offline owner custody deferred; lost-authority restore,
+fresh compromised-host reconstruction, public source/license/submission and human review
+remain incomplete. Phase6 is IN PROGRESS, not falsely marked DONE.
+
 ## November8 KST — public guest TLS and restart recovery accepted
 
 Scheduled credit guard recovered from RETRY_REQUIRED during serialized administration:

@@ -1,0 +1,26 @@
+{
+  "verified": true,
+  "files": 15,
+  "source_commit": "72f6800c1a356bdd7ad4ffdc22f552e3578b86fc",
+  "package_sha256": "1dff901b4516f070ab1b748c420ae40cdc4ca091d9986c5e516cbfea76b56a7a",
+  "bytes": 4793703,
+  "filename": "ProofFlow-private-release-v3.zip",
+  "source_archive_files": 509,
+  "status": "PRIVATE_PACKAGE_VERIFIED_NOT_SUBMITTED",
+  "phase6_complete": false,
+  "public_demo_url": "https://158.247.227.66:8443",
+  "repository_visibility": "private",
+  "checks": [
+    "ZIP and source CRC",
+    "Exact source commit",
+    "Selected implementation bytes against commit",
+    "Public acceptance receipt against source",
+    "Media against unchanged committed pins",
+    "Native deck table/frozen evidence agreement"
+  ],
+  "private_artifacts_unchanged": true,
+  "model_calls": 0,
+  "new_resources": 0,
+  "offline_key_custody": "DEFERRED",
+  "note": "Source checkpoint72f6800 verified on remote main; this readback receipt necessarily has a later commit."
+}
