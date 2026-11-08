@@ -1,5 +1,12 @@
 # Threat model and controls
 
+November9: self-service synthetic guest access is deployed and accepted. The guest-only
+bootstrap creates a fresh expiring workspace, with no operator promotion or automatic
+approval. A root timer checks fixed rates/funding and renews a short admission lease.
+Public visitors are not verified judge identities; bounded abuse can reduce availability.
+See [judging controls and review](judging-hosting.md) and [evidence](evidence/phase6-judge-access-2026-11-09.json).
+Earlier invited-only status below is historical. Human-review/full-host/offline-key gaps persist.
+
 November8 guest-operation update supersedes earlier private-only/provisioning gaps:
 one individual30-minute guest window, profile-encrypted launcher, no auto approval,
 source-pinned host expiry guard and actual public AI repair/fresh batch now pass.

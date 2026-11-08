@@ -9,6 +9,7 @@ import psycopg
 from orchestrator.budget_store import BudgetConnection, BudgetUnavailable
 
 API_OPERATIONS = {
+    "judge_claim": ("SELECT pf_product.claim_judge(%s,%s,%s)", 3),
     "batch_event": ("SELECT pf_product.accept_batch_event(%s,%s,%s,%s,%s,%s)", 6),
     "batch_connection_revoke": ("SELECT pf_product.revoke_batch_connection(%s,%s,%s,%s)", 4),
     "pr_request": ("SELECT pf_product.request_pr_preview(%s,%s,%s,%s,%s)", 5),

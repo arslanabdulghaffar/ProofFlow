@@ -13,15 +13,42 @@ from vultr_credit_guard import run as credit_guard
 from vultr_phase1 import PRIVATE, ROOT, Admin
 
 
+def retained_provider(prior):
+    """Preserve a legitimately refreshed quote, not the historical install receipt."""
+    admin = Admin()
+    try:
+        identity = admin.host("control", "cat /etc/machine-id")
+        if (identity.returncode
+                or identity.stdout.decode().strip() != admin.state["control_machine_id"]):
+            raise RuntimeError("DESIGNATED_CONTROL_CHANGED")
+        closed = admin.host("control", "docker exec --user=70:70 proofflow-budget psql -X -qAt "
+            "-h /run/proofflow-budget -U postgres -d proofflow_budget -c "
+            '"SELECT count(*)=1 AND bool_and(blocked) FROM pf_budget.accounts;"')
+        if closed.returncode or closed.stdout.strip() != b"t":
+            raise RuntimeError("PROVIDER_RETENTION_REQUIRES_CLOSED_BUDGET")
+        reply = admin.host("control", "cat /etc/proofflow-repair/config.json")
+        if reply.returncode or len(reply.stdout) > 4096:
+            raise RuntimeError("INSTALLED_PROVIDER_UNAVAILABLE")
+        provider = json.loads(reply.stdout)
+        if provider["account_id"] != prior["account_id"] or any(
+            provider["quote"][key] != prior["quote"][key] for key in
+            ("model", "input_micro_usd_per_million", "output_micro_usd_per_million")
+        ):
+            raise RuntimeError("INSTALLED_PROVIDER_IDENTITY_CHANGED")
+        return provider
+    finally:
+        admin.close()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--retain-installed-provider", action="store_true",
-                        help="Use the last install receipt's unchanged provider settings")
+                        help="Retain installed quote with unchanged account/model/rates")
     args = parser.parse_args()
     deployment = json.loads((PRIVATE / "evidence/verifier-deployment.json").read_bytes())
     if args.retain_installed_provider:
         installed = json.loads((PRIVATE / "evidence/product-service-install.json").read_bytes())
-        provider = installed["verifier"]["repair_provider"]
+        provider = retained_provider(installed["verifier"]["repair_provider"])
     else:
         provider = json.loads((PRIVATE / "repair-provider.json").read_bytes())
     quote_expired = datetime.fromisoformat(provider["quote"]["valid_until"]) <= datetime.now(UTC)

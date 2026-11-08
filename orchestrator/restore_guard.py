@@ -21,7 +21,7 @@ AUTHORITY_TABLES = (
     "repairs", "repair_allocation", "repair_calls", "repair_executions", "repair_events",
     "repair_candidates", "pipelines", "versions", "approval_intents", "batches", "version_events",
     "github_configuration", "pr_intents", "pr_writes", "batch_connections", "batch_deliveries",
-    "evaluation_allocations", "retention_clock",
+    "evaluation_allocations", "retention_clock", "judge_admission",
 )
 TABLES = frozenset((*AUTHORITY_TABLES, "workspaces", "assets", "deletions"))
 

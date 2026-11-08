@@ -4,6 +4,13 @@ Read `docs/next-session.md`, `docs/product.md`, `docs/contract.md`, `docs/threat
 
 ## Current boundary
 
+Latest November9 instruction authorizes finishing self-service judge access and keeping
+the existing deployment running during judging within credit-only caps. Access is now
+accepted; follow docs/judging-hosting.md and the recurring maintenance review. Do not use
+the historical single-guest launcher while judging admission is open. Main repo public/MIT,
+ProofFlow-Demo private; no new product PR or personal-spending authority.
+
+
 Latest November9 owner instruction: the owner approved the narrated video and explicitly
 requested completing the hackathon submission and final PowerPoint. Publication and
 submission are authorized. Keep presentation copy focused on ProofFlow without development-tool

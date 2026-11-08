@@ -112,3 +112,6 @@ integrations/**
 !integrations/__init__.py
 !integrations/github_app.py
 !integrations/github_setup.py
+
+!orchestrator/judge_quote.py
+!api/app/static/judge-example.json

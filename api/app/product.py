@@ -16,7 +16,7 @@ from fastapi.responses import JSONResponse, Response, StreamingResponse
 from pydantic import ValidationError
 from starlette.exceptions import HTTPException
 
-from api.app.auth import AuthError, SessionSecrets, request_digests
+from api.app.auth import AuthError, SessionSecrets, csrf_digest, request_digests, session_digest
 from api.app.evidence_bundle import build_bundle
 from api.app.ingress import authority, check_ingress
 from api.app.product_store import ProductFailure
@@ -241,7 +241,7 @@ def create_product_app(store, assets, *, origin: str, journals=None, guest_only=
         types = {"github.js": "application/javascript", "versions.js": "application/javascript",
                  "intake.js": "application/javascript",
                  "recovery.js": "application/javascript",
-                 "intake.css": "text/css"}
+                 "intake.css": "text/css", "judge-example.json": "application/json"}
         if name not in types:
             raise HttpFailure(404, "ASSET_NOT_FOUND")
         return Response((STATIC / name).read_bytes(), media_type=types[name])
@@ -268,6 +268,34 @@ def create_product_app(store, assets, *, origin: str, journals=None, guest_only=
             value.csrf_token).cookie(max_age=age))
         response.headers.append("Set-Cookie", "__Host-proofflow-csrf=" + value.csrf_token
             + "; Path=/; Max-Age=" + str(age) + "; Secure; SameSite=Strict")
+        return response
+
+    @app.post("/v1/judge/start")
+    async def start_judge(request: Request):
+        if not guest_only:
+            raise HttpFailure(404, "ASSET_NOT_FOUND")
+        # Bootstrap has no prior session. Require explicit same-origin JSON;
+        # inject freshly generated credentials ONLY for the existing origin check.
+        value = parse_object(await body(request, 128))
+        if set(value) != {"synthetic_only"} or value["synthetic_only"] is not True:
+            raise HttpFailure(400, "SYNTHETIC_CONSENT_REQUIRED")
+        if request.headers.get("content-type") != "application/json":
+            raise HttpFailure(400, "INVALID_CONTENT_TYPE")
+        credentials = SessionSecrets.create()
+        headers = [(k, v) for k, v in request.scope["headers"]
+                   if k.lower() not in (b"cookie", b"x-proofflow-csrf")]
+        headers += [(b"cookie", ("__Host-proofflow=" + credentials.token).encode()),
+                    (b"x-proofflow-csrf", credentials.csrf.encode())]
+        request_digests(headers, expected_origin=origin, writing=True)
+        workspace = authority_id()
+        (expiry,) = await store.call("judge_claim", workspace,
+                                    session_digest(credentials.token),
+                                    csrf_digest(credentials.csrf))
+        response = JSONResponse(SessionResponse(workspace_id=str(workspace), kind="guest",
+                                                expires_at=expiry.isoformat()).model_dump())
+        response.headers.append("Set-Cookie", credentials.cookie(max_age=1800))
+        response.headers.append("Set-Cookie", "__Host-proofflow-csrf=" + credentials.csrf
+                                + "; Path=/; Max-Age=1800; Secure; SameSite=Strict")
         return response
 
     async def authorize(request, writing=False):

@@ -26,22 +26,24 @@ not independent human sign-off. The downloadable source is MIT licensed.
 ## Live execution
 
 [Open the Vultr-hosted application](https://158.247.227.66:8443/).
-The application currently uses individual invited guest sessions, lasting at most
-30 minutes. This URL alone does not grant execution. No shared judge password,
-Vultr account access or GitHub App credentials are distributed in the public release.
-Live judge-session delivery is still pending; the recorded workflow and source are
-available without login. This limitation must be included in the submission.
+Select synthetic-only consent and **Start demo**, then **Load synthetic example**.
+No account, invitation, owner launcher or cloud credential is needed. Each visitor gets
+a separate workspace, lasting at most30 minutes; cleanup begins five minutes early.
+Capacity and the shared demo budget can temporarily close access.
 
-When an individual session is issued, enter its session and CSRF values only into
-that HTTPS application. Use synthetic data only. Review each contract and exact code
-version yourself. The flow is Upload and review → Approve contract → Run original →
-Request repair → Inspect evidence → Prepare/review/approve exact version → Run fresh
-batch. A guest cannot authorize an external GitHub action.
+1. Click **Upload and review** and read the contract before approving it.
+2. Run the original. The example deliberately joins customers without their merchant;
+   inspect the wrong-owner evidence even though totals match.
+3. Request repair and refresh its recorded status. Vultr proposes real code; fresh
+   isolated runs and protected checks determine whether it passes.
+4. Inspect the diff/evidence, then prepare and review the exact version preview.
+   Approve only if you agree with that version.
+5. Upload a fresh compatible synthetic CSV pair, run a fresh batch and download evidence.
 
-The owner can issue a fresh window using the existing configured launcher described
-in [setup](setup.md). That administrative launcher and its local credentials must not
-be shared with judges. Opening a window rechecks credit and prices; expiry closes
-admission even if the owner's computer disconnects.
+The [November9 acceptance](../docs/evidence/phase6-judge-access-2026-11-09.json) passed
+this path with two actual model calls and a completed fresh batch. Automated test
+approvals are not independent human sign-off. A guest cannot authorize GitHub writes.
+Public visitors are not verified as judges. If capacity is full, use the recording and retry later.
 
 ## Scope and limits
 

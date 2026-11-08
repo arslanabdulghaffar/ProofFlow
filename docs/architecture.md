@@ -1,5 +1,12 @@
 # Architecture plan
 
+November9: self-service synthetic guest access is deployed and accepted. The guest-only
+bootstrap creates a fresh expiring workspace, with no operator promotion or automatic
+approval. A root timer checks fixed rates/funding and renews a short admission lease.
+Public visitors are not verified judge identities; bounded abuse can reduce availability.
+See [judging controls and review](judging-hosting.md) and [evidence](evidence/phase6-judge-access-2026-11-09.json).
+Earlier invited-only status below is historical. Human-review/full-host/offline-key gaps persist.
+
 Current Phase3 implementation (D65) supersedes older missing-repair and no-provider-mount statements. Separate repair rows reference an approved real original result and share the single worker lease/admission lock. Bounded fixed-provider proposals become immutable candidates; every passing source runs original inputs plus two fresh protected comparisons. Product SQL commits intent before provider/worker I/O, rejects stale leases, retains unknown spend, and requires exact source/runtime/verifier/cleanup proofs before AWAITING_APPROVAL. The unchanged-original variant uses candidate ordinal0 and zero model calls.
 
 Only trusted dispatcher mounts inference/budget secrets. API remains networknone, gains read-only captures for owned exports under descriptor/retention locks and repeated authorization. Candidate/worker/verifier get no provider credentials. SQL008–010 add repair calls/candidates/executions/events/retirement; no activation, fresh-batch or external-write authorization is implemented here. ZIP includes original and candidate evidence, manifest/diff/output hashes/replay instructions; canary rows and provider reasoning are excluded. [Phase3 acceptance](evidence/phase3-acceptance-2026-11-04.json).

@@ -74,6 +74,18 @@ async def main():
         github_app = load_github_app()
         github = GitHubDispatcher(store, github_app) if github_app is not None else None
         while True:
+            # Root publishes a validated, same-model/rate quote atomically.
+            # Refresh between jobs, never while a bounded repair is in progress.
+            current = json.loads(Path("/etc/proofflow-repair/config.json").read_bytes())
+            fresh = dict(current["quote"])
+            if current["account_id"] != repair_config["account_id"] or any(
+                fresh[key] != repair_config["quote"][key] for key in
+                ("model", "input_micro_usd_per_million", "output_micro_usd_per_million")
+            ):
+                raise RuntimeError("PROVIDER_QUOTE_IDENTITY_CHANGED")
+            for key in ("observed_at", "valid_until"):
+                fresh[key] = datetime.fromisoformat(fresh[key])
+            provider.quote = RateQuote(**fresh)
             if not await dispatcher.once():
                 await repair.once()
             if github is not None:

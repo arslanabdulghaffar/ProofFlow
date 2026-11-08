@@ -1,5 +1,11 @@
 # ProofFlow release materials
 
+November9: source/MIT and the approved narrated video/deck are public; the entry is
+submitted. Self-service guest access is live: [Start demo](https://158.247.227.66:8443),
+then Load synthetic example. No invitation/owner launcher is needed. Read the current
+[judge guide](judges.md). Older private-packet and invited-only notes below describe
+historical artifacts, not the current access path.
+
 The owner confirmed ownership and authorized MIT publication and hackathon submission
 on November8,2026. [The public source and prepared media](https://github.com/arslanabdulghaffar/ProofFlow/releases/tag/v0.1.0-hackathon)
 are published and anonymously downloadable. See [the judge guide](judges.md) for the

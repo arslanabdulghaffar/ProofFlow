@@ -1,5 +1,16 @@
 # Decision log
 
+## D105: bounded public guest bootstrap during judging
+
+Owner authorized finishing live judge access. Create only new synthetic guest sessions
+through a narrow security-definer function; no public provisioner role or shared secret.
+Preserve exact contract/version approvals and operator-only GitHub. Cap claims and time,
+refresh only the fixed model/rates, latch infrastructure failures, and drain sessions before
+funding review. Add judge state to restore authority removal. The separate critical review
+and failed-test reconciliation are in [judging operations](judging-hosting.md). No independent
+human approval is implied.
+
+
 ## D104: verify actual scheduled operation and preserve release provenance
 
 Observe the existing scheduler's natural twelve-hour-due capture rather than forcing

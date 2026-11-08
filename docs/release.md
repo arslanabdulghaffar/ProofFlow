@@ -1,10 +1,35 @@
 # Release and operations plan
 
+## November9 — self-service judge access accepted
+
+Judges can open https://158.247.227.66:8443, select synthetic-only consent and **Start demo**,
+then **Load synthetic example**. No owner launcher or shared credential is needed.
+A fresh browser passed original mismatch, two actual Vultr calls, fresh isolated checks,
+exact automated test approval and a completed fresh batch. A second guest was denied
+access to the first job. No PR was created. [Receipt](evidence/phase6-judge-access-2026-11-09.json).
+
+Funding now ends November11 03:13:23 KST; final teardown stays November23 09:00 KST.
+Credit $187.35; reservations $145 and caps $150/$25 unchanged. Four-hour recurring
+maintenance is registered as `maintain-proofflow-judging-access`. Follow
+[judging operations](judging-hosting.md): drain, wait for guests, close, review, rearm.
+Do not use the old single-window launcher while judging is open. Keep the computer
+and desktop app running for local maintenance/teardown; server admission expires independently.
+
+108 scoped tests, real SQL/permissions probes and the actual public flow pass. A fresh
+190819-byte scheduled SQL backup restored into isolated tmpfs in5.938 seconds; all25
+runtime-authority tables were cleared, ordinary login denied and container removed.
+Snapshot had zero retained workspaces; this is not a new nonempty/full-host recovery claim.
+Offline custody, full-host recovery, provider future access/terms and human review remain
+limitations. Submission is already confirmed. The existing entry was updated successfully with the
+new Start demo instructions; media and URLs are unchanged. Do not create another entry
+or regenerate approved media.
+
+
 ## November9 — hackathon entry submitted and verified
 
 The owner approved the narrated edit and explicitly requested submission and the final
 PowerPoint. The site displayed its successful-submission confirmation, and the public
-entry exposes the correct title, C1 track, video, PDF, repository and live https://lablab.build/ai-hackathons/vultr-hackathon/neuralfoundry/proofflow-checked-repairs-before-the-next-batch.
+entry exposes the correct title, C1 track, video, PDF, repository and live application URL.
 [Public submission](https://lablab.build/ai-hackathons/vultr-hackathon/neuralfoundry/proofflow-checked-repairs-before-the-next-batch). Recorded at approximately01:45 KST
 (Nov8 16:45 UTC). Receipt: [submission readback](evidence/phase6-submission-2026-11-09.json).
 The uploaded video and PDF were downloaded anonymously and match their approved local

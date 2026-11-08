@@ -8,6 +8,7 @@ is an operational early cutoff, never a provider guarantee against overage.
 import json
 import re
 import sys
+import time
 from datetime import UTC, datetime
 from decimal import Decimal, InvalidOperation
 
@@ -110,9 +111,21 @@ def run(admin: Admin, now: datetime) -> dict:
             "deleted_vm_roles": deleted, "provider_hard_stop": False}
 
 
+def acquire_guard_admin(factory=Admin, *, pause=time.sleep):
+    """Wait briefly for an existing administration transaction; never skip review."""
+    for attempt in range(46):
+        try:
+            return factory()
+        except RuntimeError as error:
+            if str(error) != "ADMINISTRATOR_OPERATION_IN_PROGRESS" or attempt == 45:
+                raise
+            pause(1)
+    raise RuntimeError("GUARD_LOCK_WAIT_EXHAUSTED")
+
+
 if __name__ == "__main__":
     try:
-        admin = Admin()
+        admin = acquire_guard_admin()
         try:
             print(json.dumps(run(admin, datetime.now(UTC))))
         finally:

@@ -1,5 +1,12 @@
 # Risks and owner decisions
 
+November9: self-service synthetic guest access is deployed and accepted. The guest-only
+bootstrap creates a fresh expiring workspace, with no operator promotion or automatic
+approval. A root timer checks fixed rates/funding and renews a short admission lease.
+Public visitors are not verified judge identities; bounded abuse can reduce availability.
+See [judging controls and review](judging-hosting.md) and [evidence](evidence/phase6-judge-access-2026-11-09.json).
+Earlier invited-only status below is historical. Human-review/full-host/offline-key gaps persist.
+
 Natural scheduled backup rollover and actual renewal ExecStartPost now pass. The current
 backup expires Nov9 13:36 KST and contains no retained workspaces. Existing Vultr ticket
 only reports routing to Account Management; no billing/post-event clearance. Private v5

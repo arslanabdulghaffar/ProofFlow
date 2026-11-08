@@ -1,5 +1,28 @@
 # Requirements traceability
 
+## November9 — self-service judge access accepted
+
+Judges can open https://158.247.227.66:8443, select synthetic-only consent and **Start demo**,
+then **Load synthetic example**. No owner launcher or shared credential is needed.
+A fresh browser passed original mismatch, two actual Vultr calls, fresh isolated checks,
+exact automated test approval and a completed fresh batch. A second guest was denied
+access to the first job. No PR was created. [Receipt](evidence/phase6-judge-access-2026-11-09.json).
+
+Funding now ends November11 03:13:23 KST; final teardown stays November23 09:00 KST.
+Credit $187.35; reservations $145 and caps $150/$25 unchanged. Four-hour recurring
+maintenance is registered as `maintain-proofflow-judging-access`. Follow
+[judging operations](judging-hosting.md): drain, wait for guests, close, review, rearm.
+Do not use the old single-window launcher while judging is open. Keep the computer
+and desktop app running for local maintenance/teardown; server admission expires independently.
+
+104 scoped tests, real SQL/permissions probes and the actual public flow pass. A fresh
+190819-byte scheduled SQL backup restored into isolated tmpfs in5.938 seconds; all25
+runtime-authority tables were cleared, ordinary login denied and container removed.
+Snapshot had zero retained workspaces; this is not a new nonempty/full-host recovery claim.
+Offline custody, full-host recovery, provider future access/terms and human review remain
+limitations. Submission is already confirmed; do not resubmit or regenerate approved media.
+
+
 November9 submission delivery is verified in [the exact media and entry receipt](evidence/phase6-submission-2026-11-09.json). This supersedes historical publication/license/submission gaps below; invited live access, offline custody, full compromised-host recovery and human-review limits remain.
 
 November8 recovery/hosting: eight actual isolated recovery controls/denials and cleanup

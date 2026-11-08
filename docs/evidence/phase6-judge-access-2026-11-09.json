@@ -1,0 +1,137 @@
+{
+  "observed_at": "2026-11-08T18:32:35.817596+00:00",
+  "scope": "public_self_service_synthetic_guest_judging",
+  "public_origin": "https://158.247.227.66:8443",
+  "image": "d5fb870bdfbeabf9cfd7bd8b7b87380291f4ada2d590566789e6bab39f819485",
+  "guard_revision": "judging-6c2d2c75e3d0770923a60500e6c7135cc516aac7da95ff8a32bc8206f69e3432",
+  "source_hashes": [
+    {
+      "file": "judging_guard.py",
+      "sha256": "f4b58ccf8a6ab470845e068eed89545002795409c97f962158c93d1354554e9c"
+    },
+    {
+      "file": "guest_demo_guard.py",
+      "sha256": "b37eb2d23fa4a832b3cee3752efe11970b907575065582b28fb5ae0ce2543aba"
+    },
+    {
+      "file": "install_provider_quote.py",
+      "sha256": "dc16c299c664ce4d6c98a833d2fafd154270f9d23360ea9473e6ef06e4cd3a6e"
+    },
+    {
+      "file": "install_product_services.py",
+      "sha256": "90eef7aa96f65492cfdd279194f723b67afbdc4a1f718e11c5418a5f6bb5d3b1"
+    },
+    {
+      "file": "public_api_policy.py",
+      "sha256": "f2385ec15558808df3f96eadb6992204dc63ae4f0c28b812b83ec26c5eb22a09"
+    },
+    {
+      "file": "install_judge_access.py",
+      "sha256": "6a5c807331a915838221177033e6d6712202c2f3e6390def620a09368be067a6"
+    },
+    {
+      "file": "judging.json",
+      "sha256": "f202929d49a291c490ee28334ab493cadae61aff27e1dcc7695906d11870f600"
+    }
+  ],
+  "live_browser": {
+    "completed": true,
+    "checks": [
+      "fresh_browser_no_owner_tokens",
+      "no_automatic_contract_approval",
+      "same_origin_required",
+      "separate_guest_cannot_read_other_job",
+      "real_vultr_changed_source_and_fresh_checks",
+      "actual_browser_bundle_download",
+      "exact_synthetic_version_approval",
+      "fresh_batch_completed_on_designated_worker"
+    ],
+    "provider_calls": 2,
+    "reserved_micro_usd_not_invoice": 55706,
+    "fresh_batch_state": "COMPLETED",
+    "second_guest_http_status": 200,
+    "test_workspace_revoked": true,
+    "automated_synthetic_approval_not_human_signoff": true,
+    "tested_image": "d25de703ee7befa27608bcb2fd6d42b0da47c6187fb406861b1d9aa18a2476b3"
+  },
+  "limits": {
+    "project_usd": 150,
+    "inference_usd": 25,
+    "reservations_usd": 145,
+    "observed_credit_usd": "187.35",
+    "funded_until": "2026-11-10T18:13:23.925728+00:00",
+    "final_teardown": "2026-11-23T00:00:00Z",
+    "guest_minutes": 30,
+    "cleanup_begins_minutes_before_expiry": 5,
+    "maximum_retained_workspaces": 8,
+    "maximum_claims": 128,
+    "claim_spacing_seconds": 10,
+    "new_claim_lease_minutes": 3,
+    "quote_validity_minutes": 60
+  },
+  "checks": {
+    "scoped_pytest": 108,
+    "real_disposable_postgresql": "PASS",
+    "linux_quote_umask_and_conflicting_stage": "PASS",
+    "live_root_quote_publication_mode_0444": "PASS",
+    "image_inventory_modules": 75,
+    "local_isolated_deletion_safe_restore_checks": 14,
+    "actual_scheduled_backup_restored": true,
+    "restored_authority_tables_cleared": 25,
+    "ordinary_restored_login_denied": true,
+    "restore_container_removed": true,
+    "backup_snapshot": "2026-11-08T18:28:47.339379+00:00",
+    "backup_sql_bytes": 190819,
+    "backup_workspaces": 0,
+    "new_cloud_resources": 0,
+    "final_image_all_75_files_identical_to_tested_image_after_newline_normalization": true,
+    "credit_guard_scheduled_task_exit": 0
+  },
+  "findings": [
+    "First live test stayed queued because root umask created the refreshed public quote as0400. Fixed with fchmod0444 before atomic publication; Linux and actual host probes passed. Failed receipt retained; workspace revoked/retired.",
+    "Second attempt ended at second visitor admission before a global-throttle wait. Its response status was not retained, so no cause is claimed as proven. Third run respected the throttle and passed both visitors.",
+    "Judge admission state added to mandatory restore authority clearing.",
+    "Scheduled backup permits read-only observation of open but idle admission, with login/admission mutation prohibited in that mode.",
+    "First actual saved-restore recheck encountered a vault-busy condition; a subsequent read-only retry passed.",
+    "Final image normalizes source line endings to exactly match Git; all75 runtime files were compared against the tested image after newline normalization. No functional change or paid rerun.",
+    "Refreshing quotes exposed a deployment helper that retained an obsolete install-receipt quote. It now reads the installed quote only with a closed budget and rejects changed account/model/rates;108 scoped tests pass.",
+    "Scheduled credit-guard run failed during overlapping administration. Added a bounded45-second retry only for the exact administration-lock error; all other errors remain failures. Actual scheduled task readback returned0 with unchanged credit/caps."
+  ],
+  "limitations": [
+    "Public visitors are not verified judge identities; bounded abuse can reduce availability.",
+    "Independent human review and full compromised-host reconstruction remain unverified.",
+    "Offline key custody owner-deferred.",
+    "Provider hard stop, tax treatment and future post-event account conditions remain unverified.",
+    "Local monitoring and credit teardown require the owner computer to remain running. No guaranteed future uptime claim."
+  ],
+  "submission_update": {
+    "observed_at": "2026-11-08T18:38:25.937206+00:00",
+    "site_confirmation": "Submission Updated!",
+    "description_updated": true,
+    "additional_information_updated": true,
+    "media_and_urls_unchanged": true,
+    "new_submission_created": false,
+    "screenshot_sha256": "3db90db88ee2dd9cc01b896ff64c05d53f9951ef739fdd774398605aa6b9caed"
+  },
+  "monitor": {
+    "id": "maintain-proofflow-judging-access",
+    "cadence_hours": 4,
+    "active": true,
+    "final_verification_buffer_until": "2026-11-23T06:00:00Z",
+    "host_timer": "active",
+    "latest_result": "success",
+    "admission_open_readback": true
+  },
+  "final_readback": {
+    "automatic_quote_refresh": {
+      "observed_at": "2026-11-08T18:46:02.400835+00:00",
+      "valid_until": "2026-11-08T19:46:02.400835+00:00",
+      "mode": "0o444"
+    },
+    "three_service_images_match": true,
+    "operations": "SCOPED_OK",
+    "operations_blockers": [],
+    "scheduled_credit_guard_natural_run_exit": 0,
+    "secret_scan": "PASS"
+  }
+}

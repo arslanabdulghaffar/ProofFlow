@@ -32,7 +32,7 @@
   "internal_target_kst": "2026-11-09T03:00:00+09:00",
   "target_note": "Existing internal buffer, not a newly verified organizer deadline",
   "release_allowed": true,
-  "public_demo_access": "Invited individual guest windows, maximum30 minutes. Owner launcher rechecks credit/prices and signs in without automatic upload/approval. No shared judge credential or anonymous signup.",
+  "public_demo_access": "Self-service synthetic guest access: Start demo, then Load synthetic example. Separate expiring workspace per visitor; maximum30 minutes, cleanup starts five minutes early. Capacity and shared credit limits apply. No invitation or cloud credential required; exact approvals remain.",
   "public_cover_url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/download/v0.1.0-hackathon/ProofFlow-cover-submission.png",
   "public_release_url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/tag/v0.1.0-hackathon",
   "public_slides_pdf_url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/download/v0.1.0-hackathon/ProofFlow-deck-submission.pdf",

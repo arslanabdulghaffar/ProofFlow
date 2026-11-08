@@ -116,7 +116,9 @@ def run(*, force=False):
         envelope, key = recover(previous["backup_id"])
         checked_backup(previous, envelope, key, now=datetime.now(UTC))
         return {"scheduled_backup": "not_due", "expires_at": previous["expires_at"]}
-    with LiveSession() as live:
+    # Consistent capture is read-only with respect to product authority. A live
+    # judging window need not be closed; existing active-job/repair checks stay.
+    with LiveSession(observation_only=True) as live:
         require(live.sql("SELECT count(*) FROM pf_product.jobs WHERE state NOT IN "
                          "('NEEDS_REVIEW','FAILED_INFRA','CANCELLED');") == b"0",
                 "BACKUP_RETRY_WHEN_IDLE")

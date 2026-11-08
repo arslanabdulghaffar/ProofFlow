@@ -1,5 +1,10 @@
 # Review and setup
 
+November9: judges can [Start demo](https://158.247.227.66:8443) and load the synthetic
+example without an invitation or owner launcher. See [judge instructions](judges.md)
+and [hosting operations](../docs/judging-hosting.md). Earlier private-packet/launcher
+notes below are historical; do not use that launcher while judging admission is open.
+
 ## Inspect without credentials
 
 Open the deck and cover locally, play the MP4, then read the measured comparison and

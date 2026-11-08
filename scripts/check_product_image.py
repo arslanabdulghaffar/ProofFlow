@@ -5,7 +5,7 @@ import json
 import subprocess
 from pathlib import Path
 
-IMAGE = "441d3a417149242c7afb1f6ae72a355865b8515f2416ff02f92a0deb1cf50a74"
+IMAGE = "d5fb870bdfbeabf9cfd7bd8b7b87380291f4ada2d590566789e6bab39f819485"
 PROBE = """
 import hashlib,json,os,stat
 from pathlib import Path
@@ -15,7 +15,8 @@ result={}
 for p in Path('/app').rglob('*'):
     assert not p.is_symlink()
     if p.is_file():
-        assert p.suffix in ('.py','.html','.js','.css') and stat.S_IMODE(p.stat().st_mode)==0o444
+        assert p.suffix in ('.py','.html','.js','.css','.json')
+        assert stat.S_IMODE(p.stat().st_mode)==0o444
         result[str(p.relative_to('/app'))]=hashlib.sha256(p.read_bytes()).hexdigest()
     elif p.is_dir(): assert stat.S_IMODE(p.stat().st_mode)==0o555
 print(json.dumps(result,sort_keys=True))
@@ -34,7 +35,7 @@ def main():
                 "!integrations/", "!verifier/", "!worker/")
     expected = {line[1:] for line in Path(".dockerignore").read_text().splitlines()
                 if line.startswith(packages)
-                and line.endswith((".py", ".html", ".js", ".css"))}
+                and line.endswith((".py", ".html", ".js", ".css", ".json"))}
     if inventory.keys() != expected:
         raise RuntimeError("PRODUCT_IMAGE_CONTENT_INVENTORY_CHANGED")
     for name, digest in inventory.items():

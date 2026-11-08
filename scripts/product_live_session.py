@@ -27,6 +27,10 @@ def require(value, code):
 
 
 class LiveSession:
+    def __init__(self, *, observation_only=False):
+        require(type(observation_only) is bool, "OBSERVATION_MODE_INVALID")
+        self.observation_only = observation_only
+
     def __enter__(self):
         self.admin, self.tunnel, self.client = Admin(), None, None
         self.opened = False
@@ -42,7 +46,8 @@ class LiveSession:
             self.policy = json.loads(
                 self.sql("SELECT row_to_json(p) FROM pf_product.execution_policy p;")
             )
-            require(not self.policy["enabled"], "ADMISSION_MUST_START_CLOSED")
+            require(self.observation_only or not self.policy["enabled"],
+                    "ADMISSION_MUST_START_CLOSED")
             require(
                 self.sql(
                     "SELECT count(*) FROM pf_product.repairs WHERE state IN "
@@ -115,6 +120,7 @@ class LiveSession:
         )
 
     def login(self, workspace, *, minutes=40):
+        require(not self.observation_only, "OBSERVATION_CANNOT_LOGIN")
         require(type(minutes) is int and 1 <= minutes <= 40, "SESSION_DURATION_INVALID")
         self.workspace, self.secret = str(UUID(str(workspace))), SessionSecrets.create()
         self.sql(
@@ -139,6 +145,7 @@ class LiveSession:
         return self.client
 
     def admission(self, enabled):
+        require(not self.observation_only, "OBSERVATION_CANNOT_CHANGE_ADMISSION")
         require(
             all(
                 re.fullmatch("[a-f0-9]{64}", self.policy[k])

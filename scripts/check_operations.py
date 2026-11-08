@@ -24,7 +24,7 @@ SERVICES = {
     "control": ("proofflow-budget.service", "proofflow-product-api.service",
                 "proofflow-product-dispatcher.service", "proofflow-public-api.service",
                 "proofflow-product-retention.timer", "proofflow-public-renew.timer",
-                "proofflow-guest-demo.timer"),
+                "proofflow-guest-demo.timer", "proofflow-judging.timer"),
     "worker": ("proofflow-worker.service",),
 }
 STORAGE = {"control": "/var/lib/docker", "worker": "/var/lib/proofflow-worker"}
@@ -135,7 +135,7 @@ def assess(observations, now):
     blockers = []
     notes = ["READ_ONLY_OBSERVATION_NOT_RELEASE_APPROVAL",
              "NO_WORKER_JOB_OR_PROVIDER_CALL", "OFFLINE_KEY_CUSTODY_DEFERRED",
-             "NO_BACKGROUND_MONITOR_INSTALLED"]
+             "DESKTOP_MONITOR_STATUS_NOT_CHECKED"]
 
     def age(value):
         stamp = datetime.fromisoformat(value)

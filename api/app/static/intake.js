@@ -31,6 +31,20 @@ $("login").addEventListener("submit",async event=>{event.preventDefault();const 
   try { await api("/v1/session/import","POST",{session_token:$("session-token").value,csrf_token:$("csrf-token").value}); $("login").reset(); await refreshSession();resumePending(); }
   catch(error){notice(error.message,true);}finally{button.disabled=false;}
 });
+$("judge-consent").addEventListener("change",()=>{$("judge-start").disabled=!$("judge-consent").checked;});
+$("judge-start").addEventListener("click",async()=>{
+  $("judge-start").disabled=true;
+  try { await api("/v1/judge/start","POST",{synthetic_only:true}); await refreshSession(); }
+  catch(error){notice("Demo unavailable or at capacity. Try again later; recorded video remains available. "+error.message,true);}
+  finally{$("judge-start").disabled=!$("judge-consent").checked;}
+});
+$("judge-example").addEventListener("click",async()=>{
+  try{const example=await api("/static/judge-example.json");
+    for(const kind of kinds){if($(kind).disabled)throw new Error("Finish the pending upload first.");}
+    for(const kind of kinds){const item=example[kind], data=new DataTransfer();data.items.add(new File([item.text],item.name,{type:"text/plain"}));$(kind).files=data.files;invalidate(kind);}
+    notice("Synthetic example selected. Click Upload and review; no rule or version has been approved.");
+  }catch(error){notice(error.message,true);}
+});
 function invalidate(kind) { delete assets[kind]; delete uploadIds[kind]; requestBody=null; $("retry").hidden=true; $("run").disabled=true;
   if(kind==="contract"){approved=false;$("confirm-contract").checked=false;$("confirm-contract").disabled=true;$("approve").disabled=true;$("contract-preview").textContent="Upload the new contract before approval.";$("contract-hash").textContent="";$("approval-status").textContent="No contract approved.";}
 }
