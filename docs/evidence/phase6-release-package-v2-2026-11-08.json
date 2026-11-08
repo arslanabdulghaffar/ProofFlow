@@ -1,0 +1,122 @@
+{
+  "verified": true,
+  "files": 14,
+  "source_commit": "414dd13a7a35192be1418577f3dcdbb5a5e4bbaa",
+  "package_sha256": "03148ae3925d399c0aca6fb1d8a7cf2970821d3e521334a64eaa7507a4c55035",
+  "bytes": 4754204,
+  "status": "PRIVATE_RELEASE_PACKAGE_VERIFIED_NOT_PUBLISHED",
+  "phase6_complete": false,
+  "filename": "ProofFlow-private-release-v2.zip",
+  "source_archive_files": 497,
+  "files_manifest": {
+    "ProofFlow-cover.png": {
+      "bytes": 52142,
+      "sha256": "1ded3c8bf7dcdd8bad1070f45c7dd1d6c40f4bc2c749777316b849794c133dbb"
+    },
+    "ProofFlow-deck.pptx": {
+      "bytes": 73690,
+      "sha256": "f9f738dbc3c6a93898c2840e3339e1bce6154da918e8c007002f85b93fe45204"
+    },
+    "ProofFlow-demo.mp4": {
+      "bytes": 3396705,
+      "sha256": "93580699f50cb23b082481f849397ca42664a931a6ef8f71a1cb41aa2f597fac"
+    },
+    "README.md": {
+      "bytes": 4471,
+      "sha256": "10b714339cd7fa3103e36a65c9573b6d3d76c7b23ce54ca109f470e067cee013"
+    },
+    "SOURCE.zip": {
+      "bytes": 1437692,
+      "sha256": "6844380bfc8967ee3a9d6400d0787803e27ec98edaaa4466bd5f856f854260a6"
+    },
+    "demo-edit-manifest.json": {
+      "bytes": 9636,
+      "sha256": "070456ad4bb75b22990aa07f4e6a0382642496774e5bda3da2a36d10a98b3b25"
+    },
+    "evidence/comparison.md": {
+      "bytes": 7906,
+      "sha256": "68fffcd40fefd1adeabc10b3a19da6ad7a57de1e491c8d0b0626eefc9715b315"
+    },
+    "evidence/ingress-recovery.json": {
+      "bytes": 6168,
+      "sha256": "7a9a49c78c8c2821bdc5fe2ef3732b35fb1ed5b78f8908015e8457dfbdc87e29"
+    },
+    "evidence/phase5.json": {
+      "bytes": 56220,
+      "sha256": "a1040a3d21e776f30f4b746cb4facc71e147e7d446f074ceef3c96219b161e05"
+    },
+    "evidence/phase6.json": {
+      "bytes": 19592,
+      "sha256": "3091b70f66f59ad4c5213278dfe27b146980e12edee8f360f88c66a61fb6898f"
+    },
+    "setup.md": {
+      "bytes": 2938,
+      "sha256": "e891d4184676a83a19234b1e34da543269290babc00e66acffb89e71e9c99690"
+    },
+    "submission-copy.md": {
+      "bytes": 3828,
+      "sha256": "5edc8d736e045c6cde380993180edd6e31c61fe6550d9184a1324aceab571f54"
+    },
+    "submission.json": {
+      "bytes": 1559,
+      "sha256": "b533e4977b56d129f4ebb07aa66d099dee3f0ef884a57ad95c9eaf23bf578a29"
+    }
+  },
+  "checks": {
+    "separate_verify_readback": "PASS",
+    "outer_and_source_zip_crc": "PASS",
+    "exact_outer_file_set": [
+      "README.md",
+      "setup.md",
+      "submission.json",
+      "submission-copy.md",
+      "evidence/comparison.md",
+      "evidence/phase6.json",
+      "evidence/phase5.json",
+      "evidence/ingress-recovery.json",
+      "ProofFlow-cover.png",
+      "ProofFlow-deck.pptx",
+      "ProofFlow-demo.mp4",
+      "demo-edit-manifest.json",
+      "SOURCE.zip",
+      "MANIFEST.json"
+    ],
+    "source_archive_git_comment": "PASS",
+    "source_bytes_against_commit": "PASS",
+    "media_against_committed_reviewed_pins": "PASS",
+    "package_docs_against_source_normalized_line_endings": "PASS",
+    "native_deck_comparison_against_committed_content": "PASS",
+    "frozen_comparison_accounting": "PASS",
+    "durable_guard_tests": "13 PASS",
+    "actual_deck_and_negative_probes": "8 PASS",
+    "final_slides_and_cover_visual_review": "PASS",
+    "staged_secret_scan": "PASS: no leaks",
+    "repo_visibility_at_source_checkpoint": "private verified",
+    "native_powerpoint_and_public_form": "NOT RUN",
+    "live_application_tests": "PASS: private TLS ingress and container/source readback; 928 Windows full / 161 Linux scoped / 6 later probe tests; public acceptance NOT RUN"
+  },
+  "artifact_receipt": "phase6-release-assets-2026-11-08.json",
+  "repository_visibility": "private",
+  "release_allowed": false,
+  "owner_offline_key_custody": "DEFERRED",
+  "cloud_or_model_requests_for_package": 0,
+  "spending_limits_usd": {
+    "total_eligible_credit": 150,
+    "inference_eligible_credit": 25
+  },
+  "personal_spending_authorized": false,
+  "receipt_commit_note": "This receipt is committed after the source snapshot; no archive can contain its own later verification commit.",
+  "remaining_gates": [
+    "Public repository restriction and actual public TLS/guest activation",
+    "Ownership and permissive license clearance",
+    "Authenticated submission form/enrollment/absolute deadline",
+    "Public-access deployment and smoke test",
+    "Deferred offline key custody and full disaster recovery",
+    "Judging-period hosting beyond current dated cutoff",
+    "Independent human review gap"
+  ],
+  "revision": 2,
+  "current_runtime_receipt": "phase6-ingress-recovery-2026-11-08.json",
+  "current_runtime_image": "c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4",
+  "media_note": "Unchanged reviewed deck/cover/video retain their original recording/evidence checkpoint; source and ingress evidence are newer."
+}

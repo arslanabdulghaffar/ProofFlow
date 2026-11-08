@@ -1,5 +1,15 @@
 # Progress
 
+## November8 KST — refreshed private source package verified
+
+Ingress/recovery source checkpoint `414dd13a7a35192be1418577f3dcdbb5a5e4bbaa` was pushed
+and matched to main. New private release v2 passes independent readback of14 files,
+497 tracked source files, all CRC/hashes, source identity, committed media pins and
+native table/source agreement. ZIP size4,754,204 bytes. The prior ZIP remains intact;
+video and deck keep their actual original runtime/evidence rather than claiming a new
+recording. [Receipt](evidence/phase6-release-package-v2-2026-11-08.json). No publication,
+model call, new resource or personal spending. Public and full disaster gates remain.
+
 ## November8 KST — public-demo preparation deployed; recovery expiry and replay checked
 
 Deployed strict HTTPS authority handling on the existing private API, with protected

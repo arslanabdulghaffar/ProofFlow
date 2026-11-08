@@ -38,10 +38,16 @@ approval. Evidence: `docs/evidence/phase6-ingress-recovery-2026-11-08.json`.
 Fresh credit$189.27 at Nov8 09:34 KST; funded cutoff Nov10 01:29 KST unchanged.
 Backup task last observed09:36 KST, LastTaskResult0. No new cloud resource/model request.
 
-Do not replay completed deployment or dated evidence scripts blindly. Private source
-package refresh follows this checkpoint because application source changed; preserve
-the earlier verified ZIP and video. Phase6 remains IN PROGRESS until actual public and
-disaster/hosting gates pass; no public release, new PR, license or submission occurred.
+Do not replay completed deployment or dated evidence scripts blindly. New private
+package `ProofFlow-private-release-v2.zip` is verified:14 files,497 tracked source files,
+4,754,204 bytes. Source checkpoint `414dd13a7a35192be1418577f3dcdbb5a5e4bbaa` was pushed
+and matched to remote main. ZIP SHA-256:
+`03148ae3925d399c0aca6fb1d8a7cf2970821d3e521334a64eaa7507a4c55035`.
+Local path: `C:/Users/IT/.proofflow/release/2026-11-08/ProofFlow-private-release-v2.zip`.
+Final receipt: `docs/evidence/phase6-release-package-v2-2026-11-08.json`. Preserve the
+earlier ZIP and unchanged video; the recording has its original runtime, not this new
+ingress build. Phase6 remains IN PROGRESS until actual public and disaster/hosting
+gates pass; no public release, new PR, license or submission occurred.
 
 ## Current checkpoint — November8 KST: private deck, cover and release package
 

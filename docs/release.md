@@ -13,8 +13,10 @@ Recovery now checks expiry after materialization. Actual fresh encrypted two-DB 
 and old-session/runtime-login denial pass; actual updated-image tmpfs timeout/cleanup
 passes. [Evidence](evidence/phase6-ingress-recovery-2026-11-08.json). Lost deletion authority
 and compromised-host recovery remain unproven; owner offline key custody is deferred.
-The existing video/package retain their historical source/image. Refresh the private
-source package for these changes without overwriting the earlier sealed artifact.
+The existing video/package retain their historical source/image. A new private source
+package v2 is verified from checkpoint `414dd13a7a35192be1418577f3dcdbb5a5e4bbaa`:
+14 files,497 source files,4,754,204 bytes. [Readback receipt](evidence/phase6-release-package-v2-2026-11-08.json).
+The earlier sealed artifact remains intact; media are unchanged and truthfully dated.
 Fresh credit$189.27, caps and Nov10 01:29 KST cutoff unchanged. No new resource/model call.
 
 ## Private release package — November8
