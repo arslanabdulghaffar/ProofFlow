@@ -1,5 +1,39 @@
 # Decision log
 
+## D93: prepare one HTTPS origin and recheck recovery expiry at completion
+
+The owner requests remaining public-demo preparation/recovery work while retaining
+private Git and credit-only limits. Add one canonical configured HTTPS authority,
+checked before routing, body parsing or database access. Reject duplicate/wrong Host,
+plaintext transport and caller Forwarded/X-Forwarded headers. Preserve strict Origin,
+CSRF, session, workspace and exact approval checks. This is not anonymous signup.
+An optional bounded owner-only file in the existing read-only TLS mount may configure
+the future public origin; absence preserves the private tunnel. No new mount, package,
+network namespace, credential privilege or default public listener is introduced.
+
+Separate Codex critical pass reviewed startup failure, symlink/hardlink/mode/size,
+canonical IPv4/IPv6/DNS/port, proxy spoofing before routing and denial headers. Linux
+and ASGI adversarial tests pass. One old event fixture lacked Host; add the valid
+header rather than weakening the new policy. References checked Nov8: official
+[Uvicorn settings](https://uvicorn.dev/settings/) and
+[Starlette middleware](https://starlette.dev/middleware/). Unlike a terminating proxy
+that supplies scheme headers, the proposed edge transports TLS to the existing API;
+proxy-header trust remains disabled.
+
+Recovery previously checked expiry using only the start timestamp. Materialization
+now charges monotonic elapsed time and rechecks backup, workspace and authority
+expiry before success. Failure still requires isolated caller cleanup; fresh live
+deletion-authority readback remains mandatory. No stale authority or lost-host restore
+exception is added. Four Linux expiry/clock faults and a real separate-instance
+encrypted restore pass. This does not establish compromised-host recovery or owner
+offline custody. Codex/automated review is not independent human sign-off.
+
+Rebuild uses unchanged locked base/dependencies. The first network-disabled build
+could not use the network-mode-specific apt cache; normal trusted build reused all
+dependency layers successfully. New image passes exact 73-file/source/mode inventory.
+Private deployment must retain closed/idle admissions, preserve the predecessor,
+pass container policy/readback and update evidence before claiming deployed behavior.
+
 ## D92: private release assets with verifiable source and truthful gate status
 
 Use local editable PPTX and a standalone cover for the repository's private release

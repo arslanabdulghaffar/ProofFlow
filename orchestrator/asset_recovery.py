@@ -2,6 +2,8 @@
 
 import os
 import stat
+import time
+from datetime import timedelta
 from uuid import UUID
 
 from api.app.assets import put_asset, read_asset
@@ -15,6 +17,7 @@ def materialize(directory_fd, payload, current, *, now):
     No sessions or approvals are issued. Caller rechecks live authority after this
     operation and discards staging on failure; it must never promote this root.
     """
+    started = time.monotonic()
     info = os.fstat(directory_fd)
     if (not stat.S_ISDIR(info.st_mode) or info.st_uid != os.geteuid()
             or stat.S_IMODE(info.st_mode) != 0o700 or os.listdir(directory_fd)):
@@ -34,4 +37,13 @@ def materialize(directory_fd, payload, current, *, now):
             os.close(fd)
         report.append({"workspace": workspace, "sha256": digest, "byte_size": len(raw)})
     os.fsync(directory_fd)
+    # Validation/decryption/filesystem work consumes the authority/retention window.
+    # Never report success using only the caller's frozen start timestamp. The
+    # coordinator must still obtain NEW authenticated deletion authority afterward.
+    elapsed = time.monotonic() - started
+    if elapsed < 0:
+        raise RestoreError("RECOVERY_CLOCK_INVALID")
+    final, _ = select_recovery(payload, current, now=now + timedelta(seconds=elapsed))
+    if final["keep"] != plan["keep"] or final["exclude"] != plan["exclude"]:
+        raise RestoreError("RECOVERY_AUTHORITY_EXPIRED_DURING_MATERIALIZATION")
     return {"plan": plan, "assets": report, "mode": "INERT_DATA_ONLY_NO_PROMOTION"}

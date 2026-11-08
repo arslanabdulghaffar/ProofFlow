@@ -106,3 +106,29 @@ def test_materialization_private_modes_bytes_and_nonempty_target(tmp_path):
 
 def UUID_HEX(snapshot):
     return snapshot["workspaces"][0]["id"].replace("-", "")
+
+
+@pytest.mark.skipif(sys.platform != "linux", reason="Linux descriptor-based private asset store")
+@pytest.mark.parametrize("expired", ["authority", "workspace", "backup", "clock"])
+def test_materialization_cannot_claim_success_after_expiry(tmp_path, monkeypatch, expired):
+    from orchestrator import asset_recovery
+
+    snapshot, assets, key = fixture()
+    if expired == "workspace":
+        snapshot["workspaces"][0]["expires_at"] = (NOW + timedelta(seconds=1)).isoformat()
+    payload = open_backup(seal(snapshot, assets, b"inert", key, now=NOW), key, now=NOW)
+    if expired == "backup":
+        payload["expires_at"] = (NOW + timedelta(seconds=1)).isoformat()
+    elapsed = {"authority": 61, "workspace": 2, "backup": 2, "clock": -1}[expired]
+    ticks = iter([100.0, 100.0 + elapsed])
+    monkeypatch.setattr(asset_recovery.time, "monotonic", lambda: next(ticks))
+    tmp_path.chmod(0o700)
+    fd = os.open(tmp_path, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        with pytest.raises(RestoreError):
+            asset_recovery.materialize(fd, payload, snapshot, now=NOW)
+        # The isolated caller must discard staging even when validation fails.
+        recovered = tmp_path / UUID_HEX(snapshot) / assets[0]["sha256"]
+        assert recovered.read_bytes() == assets[0]["bytes"]
+    finally:
+        os.close(fd)

@@ -1,5 +1,48 @@
 # Resume ProofFlow
 
+## Current checkpoint — November8 KST: deployed ingress preparation and recovery hardening
+
+Base `c2029bf038ffbbc690c092b2f02ff47410f8ec21`; main, private, initially clean.
+Owner authorized continued Phase6 work without continuation prompts; offline key
+custody stays explicitly deferred. Keep $150 total/$25 inference credit-only limits.
+
+New product image `c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4`
+is installed in both existing control service roles. Exact73 source files and runtime
+container policy match; predecessor preserved. Worker/verifier/schema/business rules,
+dependencies and spending limits unchanged. API remains networkless private Unix TLS.
+Strict canonical HTTPS authority, duplicate/wrong Host and proxy-header denial apply
+before routing. Optional protected `origin.json` on the existing read-only TLS mount
+can configure a future public origin; currently absent, so private mode is preserved.
+Actual private TLS GET smoke passes; product/inference admissions remain closed.
+
+`infra/public-demo/` contains bounded TCP8443 TLS passthrough units and exact
+activation/rollback/guest/TLS/funding acceptance steps. Actual control-host systemd
+validation passes; units were NOT installed/enabled and no public firewall changed.
+Official IP-certificate support offers a no-domain path; do not require domain purchase.
+Public certificate issuance/renewal, external guest/browser acceptance and submission
+remain unperformed. Source repository still must stay private under the current user
+instruction; broad development authority does not silently change that restriction.
+
+Inert recovery now rechecks backup/workspace/current-authority expiry after filesystem
+work using elapsed monotonic time. Linux fault tests cover expiry and clock reversal.
+Actual isolated container recovery and independent timeout/cleanup pass on the new
+image. Actual two-PostgreSQL encrypted restore passes14 groups, including no runtime
+grants, denied old-session lookups, denied normal logins and deletion during recovery.
+It does NOT solve lost trustworthy deletion authority or compromised-host reconstruction.
+Owner custody is not needed for these independent checks and remains deferred.
+
+Windows full suite:928 passed/191 platform skips, plus6 later HTTP-probe unit tests.
+Linux scoped suite:161 pass including actual filesystem/config tests skipped on Windows.
+Ruff and documentation hygiene pass. Review is Codex/automated, not independent human
+approval. Evidence: `docs/evidence/phase6-ingress-recovery-2026-11-08.json`.
+Fresh credit$189.27 at Nov8 09:34 KST; funded cutoff Nov10 01:29 KST unchanged.
+Backup task last observed09:36 KST, LastTaskResult0. No new cloud resource/model request.
+
+Do not replay completed deployment or dated evidence scripts blindly. Private source
+package refresh follows this checkpoint because application source changed; preserve
+the earlier verified ZIP and video. Phase6 remains IN PROGRESS until actual public and
+disaster/hosting gates pass; no public release, new PR, license or submission occurred.
+
 ## Current checkpoint — November8 KST: private deck, cover and release package
 
 Base58dca0d0c392282dfc376532adbda52d045c2eea. Phase0–5 DONE;Phase6 IN PROGRESS.

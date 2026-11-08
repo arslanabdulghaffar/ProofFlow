@@ -1,5 +1,17 @@
 # Threat model and controls
 
+November8 ingress/recovery review: one canonical HTTPS authority is enforced before
+routes; wrong/duplicate Host, plaintext scopes and proxy-spoof headers fail closed.
+Optional admin origin config is bounded, read-only, no-follow, one-link and mode0400;
+absence keeps private mode. No anonymous signup or expanded credentials. Prepared
+TCP8443 passthrough has eight-connection/process/resource bounds but is not enabled
+and is not DDoS protection. Actual private TLS/source/container readback passes.
+Recovery charges monotonic elapsed time before its final expiry check; stale backup,
+workspace or deletion-authority windows cannot report successful materialization.
+Caller cleanup and fresh authenticated deletion readback remain required. Real restore
+denies old sessions/runtime logins without restoring grants. Lost authority, host
+compromise and absent human review remain gaps. [Evidence](evidence/phase6-ingress-recovery-2026-11-08.json).
+
 November7 audit: both existing hosts now run signed Ubuntu kernel6.8.0-149-generic,
 fixing the reviewed Critical TCP advisory.16 fresh isolated-worker probes pass after
 reboot. Go binary findings and native helper source/disassembly review are recorded

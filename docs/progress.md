@@ -1,5 +1,34 @@
 # Progress
 
+## November8 KST — public-demo preparation deployed; recovery expiry and replay checked
+
+Deployed strict HTTPS authority handling on the existing private API, with protected
+future-origin configuration and no public listener/default signup. Wrong/duplicate
+Host, forwarded-header spoofing and plaintext scope are denied before data access.
+Both roles run image `c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4`;
+73 exact source files/container policy match. Native/Python dependencies are unchanged.
+Prepared bounded TLS passthrough units; actual host validates them without activation.
+Private TLS smoke passes. The documented IP-cert option avoids a domain purchase.
+
+Fixed frozen-start-time expiry in inert recovery and tested authority/workspace/backup
+expiry during materialization. Real separate-DB restore passes14 groups, with old sessions
+and normal logins denied after all runtime authority is stripped. The first added probe
+expected a session error under a role that intentionally lacks restored schema grants;
+fixed the harness to separately verify ACL denial and admin-invoked session lookup.
+No permission was restored to make the test pass. Fresh container tmpfs recovery and
+independent kill/cleanup pass (21.797s). No production promotion or host rebuild claimed.
+
+928 Windows tests pass/191 platform skips;161 scoped Linux tests and6 later HTTP-probe
+tests pass. Initial raw event fixture lacked Host; fixed fixture, not policy. First
+network-disabled image build missed its cache; normal build reused unchanged pinned
+dependency layers. Local systemd verification lacked the deployed service dependency;
+actual control-host validation passed. All failures remain disclosed.
+
+Credit$189.27, prior caps/cutoff retained, no new service or model request. Backup task
+last observed09:36 KST/result0. Owner offline custody deferred. Repository remains private;
+public certificate/activation/external acceptance, license/submission, lost-authority
+recovery and judging-period funding remain open. No independent human sign-off.
+
 ## November8 KST — verified private package checkpoint
 
 Source commit `d6dfceae1d22a901442f85e0dc5440ad4149993a` was committed, pushed and

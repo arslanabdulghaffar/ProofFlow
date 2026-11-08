@@ -362,7 +362,8 @@ def test_event_rechecks_session_between_frames():
             await asyncio.Event().wait()
         scope = {"type": "http", "asgi": {"spec_version": "2.4"}, "method": "GET",
                  "scheme": "https", "path": "/v1/jobs/" + str(uuid4()) + "/events",
-                 "query_string": b"", "headers": [(b"cookie", ("__Host-proofflow="
+                 "query_string": b"", "headers": [(b"host", b"proofflow.internal:8443"),
+                                                   (b"cookie", ("__Host-proofflow="
                                                    + db.secrets.token).encode())]}
         await app(scope, receive, send)
         raw = b"".join(m.get("body", b"") for m in messages)

@@ -1,5 +1,22 @@
 # Release and operations plan
 
+## November8 ingress and recovery follow-up
+
+Image `c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4` is deployed
+privately with73 matching source files and both container policies verified. Strict
+HTTPS authority is active; optional protected origin config remains absent/private.
+[Public edge preparation](../infra/public-demo/README.md) supplies host-validated disabled
+TLS passthrough units, guest constraints, activation/rollback steps and a no-domain IP
+certificate option. No public socket, certificate, firewall or shared invitation exists.
+
+Recovery now checks expiry after materialization. Actual fresh encrypted two-DB restore
+and old-session/runtime-login denial pass; actual updated-image tmpfs timeout/cleanup
+passes. [Evidence](evidence/phase6-ingress-recovery-2026-11-08.json). Lost deletion authority
+and compromised-host recovery remain unproven; owner offline key custody is deferred.
+The existing video/package retain their historical source/image. Refresh the private
+source package for these changes without overwriting the earlier sealed artifact.
+Fresh credit$189.27, caps and Nov10 01:29 KST cutoff unchanged. No new resource/model call.
+
 ## Private release package — November8
 
 The [package source and guide](../release/README.md) now include8-slide deck,cover,

@@ -1,5 +1,11 @@
 # ProofFlow
 
+**November8 Phase6 follow-up:** strict HTTPS authority checks are deployed privately;
+the [public-demo edge](infra/public-demo/README.md) is prepared and host-validated but
+disabled. Recovery expiry-after-copy and restored-session denial have fresh evidence.
+See the [current receipt](docs/evidence/phase6-ingress-recovery-2026-11-08.json).
+No public-demo or full lost-host recovery acceptance is claimed.
+
 ProofFlow is a private prototype for repairing supported Python revenue-import pipelines, checking their actual records against human-approved business rules, and using an exact approved version for subsequent batches.
 
 **Current Phase6 review materials:** an eight-slide editable deck, standalone cover,

@@ -1,8 +1,10 @@
 """Actual local inert recovery and container-owned timeout/ephemeral-byte cleanup."""
 
+import argparse
 import base64
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import time
@@ -18,6 +20,14 @@ from orchestrator.asset_backup import seal  # noqa: E402
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--receipt-name", default="phase5-recovery-tmpfs.json")
+    receipt_name = parser.parse_args().receipt_name
+    if re.fullmatch(r"phase[56]-[a-z0-9-]{1,90}\.json", receipt_name) is None:
+        raise RuntimeError("RECOVERY_RECEIPT_NAME_INVALID")
+    destination = PRIVATE / "evidence" / receipt_name
+    if destination.exists():
+        raise RuntimeError("RECOVERY_RECEIPT_EXISTS_RECONCILE_BEFORE_RETRY")
     now = datetime.now(UTC)
     workspace = str(uuid4())
     snapshot = {"observed_at": now.isoformat(), "workspaces": [{
@@ -50,9 +60,8 @@ def main():
                   "fault_cleanup_finally_ran": False, "source_hash": digest,
                   "plaintext_storage": "private_bounded_tmpfs_no_disk_bind",
                   "cloud_calls": 0, "production_restore": False}
-        (PRIVATE / "evidence/phase5-recovery-tmpfs.json").write_text(
-            json.dumps(result, sort_keys=True), encoding="utf-8"
-        )
+        with destination.open("x", encoding="utf-8") as output:
+            json.dump(result, output, sort_keys=True)
         print(json.dumps({"normal_inert_recovery": "passed", "timeout_cleanup": "passed",
                           "seconds": round(elapsed, 3), "cloud_calls": 0}))
     finally:

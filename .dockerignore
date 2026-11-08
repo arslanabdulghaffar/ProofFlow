@@ -26,6 +26,7 @@ api/app/static/**
 !api/app/static/intake.css
 !api/app/product_store.py
 !api/app/product_bootstrap.py
+!api/app/ingress.py
 !infra/
 infra/**
 !infra/images/

@@ -1,0 +1,140 @@
+{
+  "status": "PRIVATE_DEPLOYED_INGRESS_PREPARATION_AND_RECOVERY_HARDENING_PASS",
+  "phase6_complete": false,
+  "base_commit": "c2029bf038ffbbc690c092b2f02ff47410f8ec21",
+  "observed_at": "2026-11-08T00:34:09.802356+00:00",
+  "deployed": {
+    "anonymous_routes_checked": [
+      "/",
+      "/health/live",
+      "/v1/session",
+      "/openapi.json",
+      "/static/missing.js"
+    ],
+    "container_policy": "verified both roles",
+    "credit": {
+      "checked_at": "2026-11-08T00:34:01.056154+00:00",
+      "credit_guard": "within_early_cutoff",
+      "remaining_credit": "189.27",
+      "review_due_at": "2026-11-09T16:29:33.986905+00:00"
+    },
+    "forged_authorities_denied": 3,
+    "image": "c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4",
+    "inference_admission": "closed",
+    "network_path": "private pinned SSH/TLS only; not public acceptance",
+    "observed_at": "2026-11-08T00:34:09.802356+00:00",
+    "product_admission": "closed",
+    "provider_calls": 0,
+    "public_network_path": "caller must identify",
+    "source_files": 73,
+    "source_hashes_match": true,
+    "workspaces": 0,
+    "writes": 0
+  },
+  "dependency_comparison": {
+    "dependency_inventory_unchanged": true,
+    "images": [
+      "e64a0040b23a347b264c5aacf4e66687bdd8c8f8e84da4f95e8d3e6a3ed6e358",
+      "c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4"
+    ],
+    "native_inventory_sha256": "6251acaee59297f4eff97ffe8d6de2bac1cf0c9eb34cc60cc67fe1a732ee13d9",
+    "python_package_count": 22
+  },
+  "public_unit_validation": {
+    "passed": true,
+    "scope": "actual_control_host_unit_validation_only",
+    "units_enabled": false,
+    "temporary_files_removed": true
+  },
+  "source_sha256": {
+    "api/app/ingress.py": "d89c5d221b3a45c8497c92de05545c3ca27b4399dec51893d3bafe6c2711eb21",
+    "api/app/product.py": "69ddd0b0350decb3c5c9a8f065ddbfab2f43dc911e65f064fcb78eda9a80b2ef",
+    "api/app/product_bootstrap.py": "27b19bf9df5ee6c485b636e45878932bc1ed3431635b01034e965aed04f79551",
+    "orchestrator/asset_recovery.py": "c46b533bcd6cddda7b1b3a4c5a1d2abee9352e641b18737b54f0aa1d8a413371",
+    "scripts/check_deletion_safe_restore.py": "3c4a1b1ce0eb5b6dc66b695f8f54b54bc23067bad78ed048582d99844ae24d68",
+    "scripts/check_asset_recovery_container.py": "f8fb701121fe6a913f65579b82202edca47d75c10a379589551a749d4301ee99",
+    "scripts/probe_public_ingress_http.py": "cc866b56d82ff24eb9521808d1845806ee6dd152e622876e5ab0377c704375d1",
+    "scripts/check_phase6_ingress_live.py": "f6885f2f3d67396c600d74a2a6b56ad7002e35204eabc9269daaaf537c2c96d3",
+    "scripts/install_product_services.py": "57f76409674f28e1b2e2e4e236667e60ca8a48f7629a7a4903f0675e9ff6c9eb",
+    "scripts/check_product_image.py": "04c01db2e0511bbc802d873ca60f587322b90242f10731e3465e82064e12d5cc",
+    "infra/public-demo/proofflow-public.socket": "93757afec93e67f63b72b8b15d3a532989ee37be35ec8d0f4f6ff3cab2c27c3b",
+    "infra/public-demo/proofflow-public.service": "e6c429532810ccb97796aebcf293b27b273888e0dff6dfb203cd6f4ee4d057e6",
+    "tests/security/test_public_ingress.py": "195bc119759163a8404ab3b8ee950de40fb889c9db61d2d1e8c561f2afbcc693",
+    "tests/security/test_asset_backup.py": "df9209bdbc496b1a876688ec29e0d9bb60903a3e5753d00c968966d441e2e80f",
+    "tests/unit/test_public_probe.py": "2e3b2b6917a4482b01c12794ffe75fc3ca8b578f8860363fe2d424f4fca3e65f"
+  },
+  "tests": {
+    "windows_full": {
+      "passed": 928,
+      "skipped": 191,
+      "failed": 0,
+      "seconds": 12.91
+    },
+    "linux_scoped": {
+      "passed": 161,
+      "failed": 0,
+      "seconds": 9.05
+    },
+    "later_smoke_tool_unit": {
+      "passed": 6,
+      "failed": 0
+    },
+    "ruff": "PASS",
+    "documentation_hygiene": "PASS:276 entries/59 pages"
+  },
+  "actual_local_database_recovery": {
+    "scope": "two disposable network-denied PostgreSQL instances and inert synthetic assets",
+    "checks_passed": 14,
+    "seconds": 22.255,
+    "dump_bytes": 172317,
+    "cleanup": "confirmed",
+    "new_checks": [
+      "runtime role lacks restored grants",
+      "three old sessions denied by restored lookup",
+      "runtime login still denied after stripping all 24 authority tables"
+    ],
+    "no_production_restore": true,
+    "no_cloud_calls": true
+  },
+  "actual_local_container_recovery": {
+    "completed": true,
+    "image": "c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4",
+    "source_hash": "c218a8df5eb3cdd847ea0be227a2dcb70e75d30965c859351d590db2673c92e4",
+    "timeout_seconds": 21.797,
+    "fault_exit": 137,
+    "fault_container_removed": true,
+    "fault_cleanup_finally_ran": false,
+    "plaintext_storage": "private_bounded_tmpfs_no_disk_bind",
+    "cloud_calls": 0
+  },
+  "scheduled_backup_observation": {
+    "last_run_kst": "2026-11-08T09:36:07+09:00",
+    "last_task_result": 0,
+    "capture_forced": false
+  },
+  "failures_resolved": [
+    "Event fixture lacked required Host: fixed fixture, no policy relaxation.",
+    "Network-disabled Docker build missed apt cache: ordinary trusted build reused pinned dependency layers.",
+    "Local unit check lacked actual product service: validated on deployed host without installing units.",
+    "Restored role probe encountered intended missing grants first: separately tested ACL denial and old-session lookup; no grants added."
+  ],
+  "critical_review": "Separate Codex pass, not independent human sign-off",
+  "repository_visibility": "private verified",
+  "offline_key_custody": "OWNER_DEFERRED",
+  "new_cloud_resources": 0,
+  "new_inference_calls": 0,
+  "personal_spending_authorized": false,
+  "credit_limits_usd": {
+    "total": 150,
+    "inference": 25
+  },
+  "not_run": [
+    "public certificate/ACME issuance and renewal",
+    "public firewall/listener activation",
+    "external clean-browser guest acceptance",
+    "compromised-host reconstruction",
+    "lost-current-deletion-authority restore",
+    "public repository/license/submission"
+  ],
+  "release_package_note": "Prior private package preserved; a new source package follows this checkpoint."
+}

@@ -18,6 +18,7 @@ from starlette.exceptions import HTTPException
 
 from api.app.auth import AuthError, SessionSecrets, request_digests
 from api.app.evidence_bundle import build_bundle
+from api.app.ingress import authority, check_ingress
 from api.app.product_store import ProductFailure
 from api.app.wire import (
     ApprovalResponse,
@@ -127,8 +128,9 @@ async def body(request, limit):
 class CapacityBoundary:
     """Hold capacity through the final response byte, including slow downloads."""
 
-    def __init__(self, app):
+    def __init__(self, app, origin=None):
         self.app = app
+        self.authority = authority(origin) if origin is not None else None
         self.slots = asyncio.Semaphore(4)
         self.event_slots = asyncio.Semaphore(2)
 
@@ -157,6 +159,9 @@ class CapacityBoundary:
                      b"base-uri 'none'; form-action 'self'; script-src 'self'; "
                      b"style-src 'self'; connect-src 'self'")]}
             await send(message)
+
+        if self.authority is not None and not check_ingress(scope, self.authority):
+            return await failure(scope, "INGRESS_NOT_ALLOWED", 400)(scope, receive, protected_send)
 
         async def dispatch():
             started = False
@@ -189,7 +194,8 @@ def create_product_app(store, assets, *, origin: str, journals=None):
     blocking = BlockingWork(4, "ASSET_IO_CAPACITY")
     bundles = BlockingWork(1, "EXPORT_CAPACITY")
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
-    app.add_middleware(CapacityBoundary)
+    authority(origin)  # Fail startup immediately, before the first request.
+    app.add_middleware(CapacityBoundary, origin=origin)
 
     @app.exception_handler(HTTPException)
     async def route_failure(request, error):

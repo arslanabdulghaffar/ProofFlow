@@ -1,0 +1,37 @@
+[Unit]
+Description=ProofFlow bounded TLS passthrough to networkless API
+Requires=proofflow-public.socket proofflow-product-api.service
+After=proofflow-public.socket proofflow-product-api.service
+ConditionPathExists=/etc/proofflow-public/enabled
+
+[Service]
+Type=notify
+User=10003
+Group=10003
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd --connections-max=8 --exit-idle-time=30s /run/proofflow-product-api/api.sock
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+PrivateNetwork=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_UNIX AF_INET
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+InaccessiblePaths=-/etc/proofflow-product-api -/etc/proofflow-product-dispatcher -/etc/proofflow-repair -/etc/proofflow-github -/etc/proofflow-batch-events -/var/lib/proofflow-product
+MemoryMax=32M
+MemorySwapMax=0
+CPUQuota=25%
+TasksMax=4
+LimitNOFILE=64
+LimitCORE=0
+UMask=0077
+TimeoutStopSec=5s
+StandardOutput=null
+StandardError=journal

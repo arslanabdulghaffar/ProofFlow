@@ -4,6 +4,13 @@ This package is ready for private review. It is not a submission or public relea
 Keep the repository and package private. Offline key custody was deferred by the owner;
 it is not silently completed or a prerequisite for unrelated package preparation.
 
+The November8 ingress follow-up is newer than the recorded demonstration: deployed
+image `c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4` adds strict
+HTTPS Host/origin preparation. The existing video retains its original runtime/date;
+it is not a recording of this follow-up. New source packages include the tested
+`infra/public-demo/` plan and recovery expiry fix. Public ingress remains disabled;
+the source/media manifest distinguishes current source from recorded runtime evidence.
+
 ## Contents
 
 | File | Purpose |

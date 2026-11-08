@@ -232,6 +232,19 @@ def main():
                     "Restored runtime authority",
                 )
             checks.append("only_current_data_retained_all_runtime_authority_removed")
+            # --no-privileges preserves no runtime grants in the clone. Check that
+            # denial separately; then use the quarantined admin to exercise the
+            # restored lookup function itself without installing runtime grants.
+            denied("SET ROLE pf_product_api; SELECT * FROM pf_product.sessions;",
+                   cloned_sql, "permission denied")
+            for prior in (retained, removed, revoked):
+                token = prior["s"]
+                require(len(token) == 64 and all(c in "0123456789abcdef" for c in token),
+                        "Unexpected fixture token digest")
+                denied("SELECT * FROM pf_product.session_context('"  # noqa: S608 - exact hex digest
+                       + token + "');", cloned_sql, "ACCESS_DENIED")
+            denied("SELECT 1;", lambda q: cloned_sql(q, "fixture_api"), "too many connections")
+            checks.append("old_sessions_and_runtime_login_still_denied_after_restore")
             revalidate_restore(
                 snapshot,
                 plan,

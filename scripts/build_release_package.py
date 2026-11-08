@@ -30,6 +30,7 @@ DOCUMENTS = {
     "evidence/comparison.md": "eval/final-comparison-2026-11-06.md",
     "evidence/phase6.json": "docs/evidence/phase6-scheduled-portable-demo-2026-11-08.json",
     "evidence/phase5.json": "docs/evidence/phase5-binary-acceptance-2026-11-07.json",
+    "evidence/ingress-recovery.json": "docs/evidence/phase6-ingress-recovery-2026-11-08.json",
 }
 
 

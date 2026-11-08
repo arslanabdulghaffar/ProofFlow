@@ -1,5 +1,12 @@
 # Requirements traceability
 
+November8 Phase6 ingress/recovery follow-up: public-demo preparation now has deployed
+canonical HTTPS authority enforcement and host-validated disabled ingress units. Restore
+expiry-after-materialization and post-restore old-session/runtime-login denial have
+actual local evidence. [Receipt](evidence/phase6-ingress-recovery-2026-11-08.json).
+These narrow checks improve R37/R40/R49–R53 readiness; they do not mark public network,
+lost-host recovery, licensing or submission accepted. Offline custody remains deferred.
+
 November8 package follow-up: R49/R50/R51–R53 have private8-slide deck,standalone cover,
 existing actual AI recording,source-bound draft copy and an offline review-ZIP builder.
 [Package guide](../release/README.md). Native table claims match frozen accounting;

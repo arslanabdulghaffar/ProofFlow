@@ -1,5 +1,15 @@
 # Acceptance and verification plan
 
+November8 ingress/recovery:928 Windows tests pass/191 platform skips,161 scoped Linux
+tests pass and6 later read-only smoke-tool tests pass. Linux covers actual origin-file
+ownership/no-follow rules and expiry during descriptor-based inert recovery. Actual
+private TLS smoke denies forged authority; both deployed container policies and73
+source files match. Real two-DB restore passes14 groups, including old-session lookup
+and runtime ACL/login denial; actual updated-image tmpfs recovery/timeout/cleanup passes.
+Prepared systemd units validate on the real host without activation. New dependency
+inventory equals its predecessor. Public TLS/guest/browser acceptance and full disaster
+rebuild are NOT RUN. [Receipt](evidence/phase6-ingress-recovery-2026-11-08.json).
+
 November8 private package checks:8-slide PPTX package integrity,Arial font policy,
 geometry/native-table ownership and Artifact Tool import pass. Every final slide and
 standalone1920×1080 cover visually inspected.8 negative archive/XML/table-drift probes

@@ -1,0 +1,15 @@
+# Prepared only. No installer enables this listener automatically.
+[Unit]
+Description=ProofFlow reviewed TLS passthrough listener
+ConditionPathExists=/etc/proofflow-public/enabled
+
+[Socket]
+# 443 is the existing pinned operator SSH endpoint; do not replace it.
+ListenStream=0.0.0.0:8443
+Accept=no
+Backlog=8
+NoDelay=true
+Service=proofflow-public.service
+
+[Install]
+WantedBy=sockets.target

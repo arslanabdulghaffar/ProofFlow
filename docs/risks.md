@@ -1,5 +1,15 @@
 # Risks and owner decisions
 
+November8 ingress/recovery update: strict HTTPS authority and optional protected origin
+configuration are deployed privately; prepared TCP8443 relay units validate on the
+actual host but are disabled. No publicly trusted certificate or external-browser
+acceptance is claimed. A documented IP-certificate option avoids a domain purchase.
+Recovery now rechecks expiry after materialization; actual restored old sessions and
+runtime logins remain denied. This does not recover lost deletion authority or establish
+trusted fresh-host reconstruction. Owner offline key custody remains deferred. Credit
+$189.27 observed09:34 KST, cutoff Nov10 01:29 KST; no new resources/model calls or personal
+payment. Public Git/licensing/submission and independent human review remain unresolved.
+
 November8 current update (supersedes dated statements below): scheduled encrypted
 nonempty capture, profile-independent password transport and the private real-AI demo
 recording now have actual evidence. Desktop must be logged in/awake; current backup
