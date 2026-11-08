@@ -1,5 +1,29 @@
 # Progress
 
+## November8 — submission paused for narrated video review
+
+Revised local video: 182.55 seconds, H.264/AAC; complete decode, source hashes,
+visual samples and audio-level checks passed. Receipt:
+`docs/evidence/phase6-narrated-video-review-2026-11-08.json`. Owner listening/visual
+review is pending. No new video publication or hackathon submission was performed.
+
+Owner stopped submission, then requested voice narration and more natural cursor pacing.
+Latest instruction requires owner review/approval BEFORE submitting. Do not resume lablab
+or replace published media until that review. The existing entry is a saved draft on
+team NeuralFoundry; enrollment and displayed Nov9 08:00 KST deadline are now observed.
+Source/MIT and the original four prepared release assets are already public at tag
+v0.1.0-hackathon (450611796097bfca55e04d3e010159f42eacf666). This is not submission.
+
+Local guided video uses unchanged retained real automated-test footage, disclosed
+editorial cursor/pulses, labeled slow motion/holds and local synthetic af_heart narration.
+No live product action, new Vultr inference call or external write was needed for the edit.
+Narration plan and media-only render/synthesis helpers are checked in. Models, WAVs,
+intermediate frames and revised MP4 remain outside Git. A separate local review receipt
+records hashes and media checks. Offline keys and individual live judge access remain
+unfinished; the new video does not resolve them. Preserve earlier uncommitted release
+preparation; it is not authorization to finish submission in this turn.
+
+
 ## November8 — owner authorized MIT publication and submission
 
 Owner explicitly confirmed code ownership and authorized MIT release, public ProofFlow

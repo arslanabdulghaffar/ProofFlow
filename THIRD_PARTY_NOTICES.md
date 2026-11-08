@@ -88,3 +88,18 @@ Worker import/TLS local tooling (Nov 4): existing Ubuntu squashfs-tools `1:4.6.1
 Database hardening (Nov 4): active trusted fixture now derives from Docker Official PostgreSQL 18.6 Alpine 3.24, upstream revision `e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc`, base digest `10a5c69a83035ab5239f5620d708520e8b28f5aa1f2b20143e6024532edadfb5`. Stable Alpine signed packages pin brotli-libs 1.2.1-r0 (MIT) and libcurl 8.23.0-r0 (curl license); other Alpine packages retain separate obligations and upstream notices. gosu is removed from the final filesystem. Retain PostgreSQL/upstream licenses and complete image redistribution attribution before release; removing a binary is not a waiver for distributing underlying layers. No Python dependency change. Exact build/scan identities in the database/provider receipt. Codex review is not independent human sign-off.
 
 gVisor preflight (Nov 4): official release-20261102.0 x86_64 archive and eight member pins in infra/gvisor/runsc-release.json. Binaries remain ignored local artifacts. Upstream [selected-release license](https://raw.githubusercontent.com/google/gvisor/release-20261102.0/LICENSE) is Apache-2.0; retain upstream notices and bundled-component obligations on installation/redistribution. Only trusted version/flag inspection; no install or guest execution. Trivy package inventory unavailable. Project MIT ownership clearance remains open.
+
+
+## Local narration tooling — November8,2026
+
+The revised demo uses the built-in af_heart voice from
+[Kokoro v1.0](https://huggingface.co/hexgrad/Kokoro-82M) (Apache-2.0 weights), through
+[kokoro-onnx](https://github.com/thewh1teagle/kokoro-onnx)0.6.1 (MIT), ONNX Runtime1.31.1
+(MIT), SoundFile0.14.0 (BSD) and local FFmpeg6.1.1. espeak-ng phonemization and its
+separately licensed runtime remain in the isolated local tool environment with upstream
+notices. This adds no application dependency, provider, candidate runtime or cloud service.
+No weights/native libraries are redistributed with ProofFlow. The model and voice-file
+SHA-256 pins come from the upstream model-files-v1.1 release and are checked before use.
+The narration is synthetic, not the owner's voice or independent human testimony.
+Reviewer: Codex; no independent human approval claimed. The owner reviews the video before
+submission. All original footage/receipts remain unchanged.

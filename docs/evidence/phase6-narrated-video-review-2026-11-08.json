@@ -1,0 +1,49 @@
+{
+  "status": "LOCAL_REVIEW_ONLY_AWAITING_OWNER_APPROVAL",
+  "output_file": "ProofFlow-narrated-review-v3.mp4",
+  "sha256": "da12264bbec71c2eb563f7ebf5f0984e13ede40d09a3231d9cc0b4d045d7bfc7",
+  "duration_seconds": 182.546667,
+  "bytes": 7701031,
+  "streams": [
+    {
+      "codec_name": "h264",
+      "codec_type": "video",
+      "width": 1366,
+      "height": 1000
+    },
+    {
+      "codec_name": "aac",
+      "codec_type": "audio",
+      "sample_rate": "48000"
+    }
+  ],
+  "source_sha256": "93580699f50cb23b082481f849397ca42664a931a6ef8f71a1cb41aa2f597fac",
+  "edit": "Preserved real automated-test footage; added editorial guide cursor, emphasis pulses, labeled holds/slow motion and synthetic narration. This is not a new human-operated recording.",
+  "narration": {
+    "engine": "kokoro-onnx 0.6.1",
+    "voice": "af_heart",
+    "runtime": "onnxruntime 1.31.1 CPU",
+    "external_calls": 0,
+    "cloud_charges": 0
+  },
+  "checks": {
+    "source_and_segment_hashes": "PASS",
+    "narration_hashes": "PASS",
+    "complete_ffmpeg_decode": "PASS",
+    "visual_sample_review": "PASS",
+    "audio_nonsilent": "PASS",
+    "audio_mean_db": -16.1,
+    "audio_peak_db": -1.4,
+    "ruff": "PASS",
+    "preparation_hygiene": "PASS",
+    "human_listening_review": "PENDING_OWNER",
+    "application_regression": "NOT RUN: media-only change"
+  },
+  "limitations": [
+    "Cursor motion is an editorial guide, not captured mouse telemetry.",
+    "No new typing interaction was recorded; source uses file uploads.",
+    "Subtitle sentence timings are estimated.",
+    "No independent human review is claimed."
+  ],
+  "publication": "New MP4 remains local. Previously published silent recording unchanged. Hackathon submission paused."
+}

@@ -4,6 +4,11 @@ Read `docs/next-session.md`, `docs/product.md`, `docs/contract.md`, `docs/threat
 
 ## Current boundary
 
+Latest November8 owner instruction: submission is PAUSED. Improve the video with
+narration and a visible, naturally paced guide cursor; show the revised video and
+obtain owner approval before submitting. Existing source/media publication stays in
+place. Do not resume the submission or replace published media during this review.
+
 November8 release authorization supersedes the historical private-only boundary below:
 the owner confirmed code ownership and explicitly authorized MIT licensing, publishing
 ProofFlow and its prepared materials, finishing judge access and submitting the lablab
