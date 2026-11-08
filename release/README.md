@@ -4,12 +4,11 @@ This package is ready for private review. It is not a submission or public relea
 Keep the repository and package private. Offline key custody was deferred by the owner;
 it is not silently completed or a prerequisite for unrelated package preparation.
 
-The November8 ingress follow-up is newer than the recorded demonstration: deployed
-image `c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4` adds strict
-HTTPS Host/origin preparation. The existing video retains its original runtime/date;
-it is not a recording of this follow-up. New source packages include the tested
-`infra/public-demo/` plan and recovery expiry fix. Public ingress remains disabled;
-the source/media manifest distinguishes current source from recorded runtime evidence.
+The November8 guest TLS follow-up is newer than the recorded demonstration. Public
+login: https://158.247.227.66:8443. Four fresh guest browser cases and security/restart
+checks passed without certificate bypass. Test sessions are revoked and admissions
+closed after acceptance; this is invited access, not anonymous AI. The existing video
+retains its original runtime/date. New packages include the public acceptance receipt.
 
 ## Contents
 
@@ -36,16 +35,16 @@ development computer, control host or verifier.
 | Gate | Current status |
 | --- | --- |
 | Ownership and permissive license | Owner clearance pending; no license issued |
-| Public repository / demo / media | Not authorized or published; repository stays private |
+| Public repository / media | Remain private; no publication or submission |
 | Authenticated submission form / enrollment / absolute deadline | Not verified; public countdown text is zero |
-| Guest/public deployment smoke | Not performed; existing service is operator-only |
+| Guest/public TLS smoke | Passed four external contexts and scoped security/restart checks; invited access |
 | Offline password and recovery kit | Owner deferred |
 | Lost deletion authority / compromised-host restore | Still blocked by design / not tested |
 | Independent human security review | No reviewer confirmed; automated/Codex review is not sign-off |
 | Judging-period hosting | Existing cutoff Nov10 01:29 KST; later funding needs fresh review within caps |
 
 No new paid service or inference request is needed to inspect this package. The most
-recent credit observation was$190.13 on Nov8 KST, not a fresh balance promise. Limits
+recent credit observation was$189.17 on Nov8 KST, not a fresh balance promise. Limits
 remain$150 total/$25 inference in eligible credits, with no personal payment authorized.
 
 ## Building and checking the package

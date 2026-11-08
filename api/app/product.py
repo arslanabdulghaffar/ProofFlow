@@ -190,7 +190,7 @@ class CapacityBoundary:
             return await dispatch()
 
 
-def create_product_app(store, assets, *, origin: str, journals=None):
+def create_product_app(store, assets, *, origin: str, journals=None, guest_only=False):
     blocking = BlockingWork(4, "ASSET_IO_CAPACITY")
     bundles = BlockingWork(1, "EXPORT_CAPACITY")
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
@@ -258,6 +258,8 @@ def create_product_app(store, assets, *, origin: str, journals=None):
                     (b"x-proofflow-csrf", value.csrf_token.encode())]
         token, csrf = request_digests(headers, expected_origin=origin, writing=True)
         workspace, kind, expiry = await store.call("browser_session", token, csrf)
+        if guest_only and kind != "guest":
+            raise AuthError("GUEST_SESSION_REQUIRED")
         await blocking.run(assets.assert_live, workspace)
         age = max(1, min(43200, int((expiry - datetime.now(UTC)).total_seconds())))
         response = JSONResponse(SessionResponse(workspace_id=str(workspace), kind=kind,
@@ -274,6 +276,8 @@ def create_product_app(store, assets, *, origin: str, journals=None):
         row = await store.call("session", session)
         if row is None or len(row) != 3 or type(row[0]) is not UUID:
             raise ProductFailure("PRODUCT_RESULT_INVALID")
+        if guest_only and row[1] != "guest":
+            raise AuthError("GUEST_SESSION_REQUIRED")
         await blocking.run(assets.assert_live, row[0])
         return row[0], session, csrf
 

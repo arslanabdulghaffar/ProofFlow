@@ -5,7 +5,7 @@ ConditionPathExists=/etc/proofflow-public/enabled
 
 [Socket]
 # 443 is the existing pinned operator SSH endpoint; do not replace it.
-ListenStream=0.0.0.0:8443
+ListenStream=@PUBLIC_IPV4@:8443
 Accept=no
 Backlog=8
 NoDelay=true

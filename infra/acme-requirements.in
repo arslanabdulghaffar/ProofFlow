@@ -1,0 +1,2 @@
+# Root-only infrastructure certificate client; never installed in application/worker images.
+certbot==5.9.0

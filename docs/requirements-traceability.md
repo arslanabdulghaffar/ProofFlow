@@ -1,5 +1,14 @@
 # Requirements traceability
 
+November8 public activation update supersedes earlier private-only statements:
+trusted public TLS and four clean external guest contexts now pass, with scoped
+isolation/expiry/PR denial/restart and renewal checks. [Evidence](evidence/phase6-public-tls-2026-11-08.json).
+R49–R53 public network component now has actual evidence, not full Phase6 acceptance.
+No anonymous guest or shared key; admissions closed and test workspaces erased.
+Remaining: offline custody deferred, lost trustworthy deletion authority, fresh-host
+compromise reconstruction, judging hosting after Nov10 01:29 KST, public Git/media,
+license/submission and independent human review. Latest credit$189.17 at10:11 KST.
+
 November8 Phase6 ingress/recovery follow-up: public-demo preparation now has deployed
 canonical HTTPS authority enforcement and host-validated disabled ingress units. Restore
 expiry-after-materialization and post-restore old-session/runtime-login denial have

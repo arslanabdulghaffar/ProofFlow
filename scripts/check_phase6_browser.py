@@ -176,12 +176,17 @@ def variants(run):
 
 
 def main():
+    global ORIGIN
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--version-only", action="store_true",
                         help="Rehearse correct original, exact approval and fresh batch only")
     parser.add_argument("--ai-demo", action="store_true",
                         help="One bounded Vultr repair, activation and batch recording")
+    parser.add_argument("--public-guest", action="store_true",
+                        help="Use deployed public TLS with fresh guest workspaces; no AI/PR")
     options = parser.parse_args()
+    require(not (options.public_guest and (options.ai_demo or options.version_only)),
+            "PUBLIC_GUEST_BASIC_REHEARSAL_ONLY")
     require(not (options.ai_demo and options.version_only), "DEMO_MODES_EXCLUSIVE")
     run = uuid4().hex
     path = PRIVATE / "evidence" / ("phase6-browser-" + run + ".json")
@@ -202,6 +207,10 @@ def main():
 
     with LiveSession() as live:
         record["credit"] = live.credit
+        if options.public_guest:
+            ORIGIN = "https://" + live.admin.state["hosts"]["control"]["address"] + ":8443"
+            record["scope"] = "external_public_tls_fresh_guest_contexts"
+            record["origin"] = ORIGIN
         require(live.sql("SELECT count(*) FROM pf_product.workspaces;") == b"0",
                 "REHEARSAL_REQUIRES_EMPTY_WORKSPACE_SET")
         require(live.sql("SELECT bool_and(blocked) FROM pf_budget.accounts;", "proofflow_budget")
@@ -234,7 +243,8 @@ def main():
             live.admission(True)
             with sync_playwright() as playwright, ExitStack() as browser_cleanup:
                 browser = playwright.chromium.launch(
-                    args=["--ignore-certificate-errors-spki-list=" + spki])
+                    args=[] if options.public_guest else
+                    ["--ignore-certificate-errors-spki-list=" + spki])
                 browser_cleanup.callback(browser.close)
                 for index, name, expected, files in variants(run):
                     if options.ai_demo and name != "joins-repairable":
@@ -251,8 +261,15 @@ def main():
                     save()
                     live.sql("SET ROLE pf_product_provisioner; "
                              "SELECT pf_product.create_workspace('" + workspace
-                             + "','operator',clock_timestamp()+interval '1 hour');")
+                             + "','" + ("guest" if options.public_guest else "operator")
+                             + "',clock_timestamp()+interval '1 hour');")
                     client = live.login(workspace, minutes=20)
+                    if options.public_guest:
+                        headers = dict(client.headers)
+                        headers["origin"] = ORIGIN
+                        client = httpx.Client(base_url=ORIGIN, trust_env=False, timeout=20,
+                                              headers=headers)
+                        browser_cleanup.callback(client.close)
                     context = browser.new_context(viewport={"width": 1366, "height": 900})
                     browser_cleanup.callback(context.close)
                     page = context.new_page()
@@ -342,13 +359,21 @@ def main():
                         containment_rehearsal(page,client,files,item,save,live=live)
                     page.locator("#logout").click()
                     expect(page.locator("#access")).to_be_visible()
+                    # Close pooled transports before the independent revocation request;
+                    # the public edge intentionally admits only eight connections.
+                    context.close()
+                    client.close()
                     # Test the revoked credential on a NEW transport. A server idle
                     # close racing an older pooled connection is not an auth result.
                     with httpx.Client(base_url=ORIGIN, trust_env=False, timeout=20,
                                       verify=ssl.create_default_context(
-                                          cafile=str(PRIVATE / "tls/ca.pem")),
+                                          cafile=None if options.public_guest else
+                                          str(PRIVATE / "tls/ca.pem")),
                                       headers=client.headers) as negative:
-                        require(negative.get("/v1/jobs/" + item["job"]).status_code == 403,
+                        revoked_status = negative.get("/v1/jobs/" + item["job"]).status_code
+                        item["logout_readback_status"] = revoked_status
+                        save()
+                        require(revoked_status == 403,
                                 "LOGGED_OUT_SESSION_STILL_READS_JOB")
                     context.close()
                     if options.ai_demo:

@@ -1,5 +1,43 @@
 # Decision log
 
+## D95: preserve bounded public admission and separate renewal scheduling
+
+Actual staging and public firewall probes initially timed out, then passed after
+external connectivity was established. Preserve failed receipts; no blind replay.
+The first browser revocation test encountered the connection cap; close old pooled
+test transports before independent readback, never increase admission limits to pass.
+Four fresh contexts and a separate real restart/revocation test then passed. Use
+normal time-bound authority IDs in test provisioning; UUID4 is rejected by current SQL.
+
+Certbot renewal adds its own random sleep. Use systemd's existing300s jitter and
+`--no-random-sleep-on-renew`, preserving240s service bounds. Actual staging renewal,
+production hook trust/no-op and scheduled service passed; future production rotation
+is not yet observed. Keep existing private transport and keys isolated from public TLS.
+
+## D94: explicit public TLS activation with a separate guest-only API
+
+The November8 owner request explicitly authorizes public TLS activation and external
+guest testing, while retaining private Git and promotional-credit caps. Use the existing
+control IPv4 and free short-lived IP certificates; no domain purchase or new VM. Keep
+operator SSH443/private API intact. A separate networkless API container has the same
+limited database/assets policy, a separate Unix socket/TLS mount, and guest-only session
+admission. Operator tokens must fail on this surface. Public relay binds only the VM's
+public IP:8443 because an existing loopback health service occupies127.0.0.1:8443.
+
+Certificate infrastructure uses a separate root-only Certbot5.9.0 environment, hash-
+locked18-package dependency set; the initial audit reports no known Python advisories.
+It is not added to application/worker images. ACME standalone challenge exposes port80
+only while the client runs; that port does not serve project files. Test staging first,
+then validate production chain/IP/key/expiry before activation. ACME account keys stay root-only; the TLS key is readable only by the isolated API UID
+on its protected read-only mount. Keys never enter Git, prompts or browser profiles. Scheduled renewal must copy verified certificate pairs
+and restart only the public API. No certificate validation bypass in external tests.
+
+Preserve firewall SSH rules, worker isolation, exact approvals, session expiry, quotas
+and budget gates. Public access is invited guests, not anonymous signup or a shared
+judge credential. Tests use separate bounded synthetic guests and clean browsers with
+system trust. No new product PR, repository publication, license or event submission is
+authorized by this TLS work. Separate Codex critical review is not human sign-off.
+
 ## D93: prepare one HTTPS origin and recheck recovery expiry at completion
 
 The owner requests remaining public-demo preparation/recovery work while retaining

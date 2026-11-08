@@ -6,7 +6,29 @@ import zipfile
 
 import pytest
 
-from scripts.build_release_package import safe_entries, xml
+from scripts.build_release_package import release_gate, safe_entries, xml
+
+
+def test_public_demo_evidence_does_not_authorize_public_repository_or_license():
+    submission = {"repository_visibility": "private", "release_allowed": False,
+                  "license_issued": False, "public_demo_url": "https://192.0.2.1:8443"}
+    evidence = {"origin": submission["public_demo_url"], "external_acceptance_passed": True,
+                "owner_authorized_activation": True}
+    release_gate(submission, evidence)
+    for field, value in (("repository_visibility", "public"), ("release_allowed", True),
+                         ("license_issued", True)):
+        with pytest.raises(ValueError, match="UNAPPROVED_RELEASE_CLAIM"):
+            release_gate(submission | {field: value}, evidence)
+    for changed in (None, evidence | {"external_acceptance_passed": False},
+                    evidence | {"owner_authorized_activation": False},
+                    evidence | {"origin": "https://unrelated.invalid"}):
+        with pytest.raises(ValueError, match="PUBLIC_URL_WITHOUT_EVIDENCE"):
+            release_gate(submission, changed)
+
+
+def test_historical_private_package_requires_no_public_evidence():
+    release_gate({"repository_visibility": "private", "release_allowed": False,
+                  "license_issued": False, "public_demo_url": None})
 
 
 @pytest.mark.parametrize("name", [

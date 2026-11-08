@@ -30,9 +30,10 @@ execute source. Application-agent calls use the fixed Vultr Serverless Inference
 Secrets are scoped to the trusted dispatcher/admin services and are never copied into
 candidate sandboxes, this source archive or the package.
 
-The existing product is operator-only over pinned HTTPS/SSH forwarding. A localhost
-address is not a public-demo URL. Public guest access, public TLS/origin configuration
-and fresh public smoke must pass before an eventual public release can be claimed.
+The public guest login is https://158.247.227.66:8443 with trusted IP TLS; four fresh
+external guest contexts and security/restart checks passed. The separate operator path
+remains pinned HTTPS/SSH. Test sessions were revoked and execution/inference admission
+is closed after testing; an invited demo needs scoped access and a fresh operating review.
 Normal authenticated operator flows require private account setup outside this package;
 there is no shared judge password or key embedded here.
 

@@ -1,5 +1,37 @@
 # Release and operations plan
 
+## November8 KST — public guest TLS and restart recovery accepted
+
+Owner explicitly authorized public TLS/guest testing. https://158.247.227.66:8443 is
+live with a publicly trusted IP certificate; repository and media remain private.
+Separate networkless guest API rejects operator tokens. Private operator TLS/SSH stays
+intact. Image `441d3a417149242c7afb1f6ae72a355865b8515f2416ff02f92a0deb1cf50a74` runs
+all three product roles;73 exact source files and container policies verified.
+
+Four clean external Chromium guest contexts passed actual worker execution: mismatch,
+mismatch,match,held; refresh, mobile layout and revoked logout access passed. Additional
+actual public checks passed cross-workspace download denial, wrong-origin denial, guest
+PR denial, expired sessions, valid access after restart and revocation after restart.
+No new product PR or inference request. Public trust uses no certificate bypass.
+
+Certbot5.9.0/18 hash-locked packages live outside app/worker runtimes. Staging/production
+issuance, staging renewal dry-run, trusted deploy-hook/no-op and scheduled service passed.
+Timer runs twice daily with systemd jitter; duplicate Certbot sleep is disabled to stay
+inside the240s bound. Certificate expires Nov15 01:01 KST, but funded VM cutoff remains
+**Nov10 01:29 KST**. Fresh credit **$189.17** at10:11 KST, VM quotes$24+$48/month,
+$150 total/$25 inference caps unchanged. No new resource or personal payment.
+
+Windows949 pass/191 platform skips; Linux40 scoped pass; Ruff clean. Failed firewall
+propagation probes, an overloaded browser revocation probe and an invalid-ID harness
+attempt remain preserved/reconciled. Limits/auth policy were not weakened. Review is
+Codex/automated, not independent human sign-off. [Evidence](evidence/phase6-public-tls-2026-11-08.json).
+
+Final state: public login available, zero test workspaces, execution/inference admissions
+CLOSED. Guest invitation and bounded operating admission are required before live use;
+no anonymous signup/shared credential. Full compromised-host rebuild/current-deletion-
+authority recovery and judging-period hosting remain open. Offline owner custody is
+deferred. Phase6 remains IN PROGRESS; public repo/license/media/submission are separate.
+
 ## November8 ingress and recovery follow-up
 
 Image `c65fa2203eed08f062f76a9c6a58d056119d1521e19af42091244ede201c7dc4` is deployed

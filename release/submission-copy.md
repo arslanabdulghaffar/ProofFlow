@@ -46,8 +46,8 @@ The implemented backend and private web app run on Vultr Compute. Vultr Serverle
 Inference supplies application-agent proposals; a separate Compute worker executes
 untrusted source. PostgreSQL preserves jobs, budgets, approvals and durable intents.
 The verifier never runs candidate code. The owner is the only confirmed human contributor,
-with Codex assisting engineering. Public access, ownership/license clearance, independent
-human review and full disaster recovery remain open.
+with Codex assisting engineering. Invited public guest TLS and external tests passed;
+ownership/license clearance, independent human review and full disaster recovery remain open.
 
 ## Supporting evidence
 

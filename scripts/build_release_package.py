@@ -31,12 +31,24 @@ DOCUMENTS = {
     "evidence/phase6.json": "docs/evidence/phase6-scheduled-portable-demo-2026-11-08.json",
     "evidence/phase5.json": "docs/evidence/phase5-binary-acceptance-2026-11-07.json",
     "evidence/ingress-recovery.json": "docs/evidence/phase6-ingress-recovery-2026-11-08.json",
+    "evidence/public-tls.json": "docs/evidence/phase6-public-tls-2026-11-08.json",
 }
 
 
 def require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+def release_gate(submission, public=None):
+    require(submission["repository_visibility"] == "private"
+            and submission["release_allowed"] is False and submission["license_issued"] is False,
+            "UNAPPROVED_RELEASE_CLAIM")
+    if submission["public_demo_url"] is not None:
+        require(public is not None and public.get("external_acceptance_passed") is True
+                and public.get("owner_authorized_activation") is True
+                and submission["public_demo_url"] == public.get("origin"),
+                "PUBLIC_URL_WITHOUT_EVIDENCE")
 
 
 def sha(raw):
@@ -108,9 +120,8 @@ def check_claims():
         wanted.append(f"{result['incorrect_accepted']} / {result['accepted']}")
         require(row[1:] == wanted, "RELEASE_COMPARISON_DRIFT")
     submission = json.loads((ROOT / "release/submission.json").read_bytes())
-    require(submission["repository_visibility"] == "private"
-            and submission["release_allowed"] is False and submission["license_issued"] is False
-            and submission["public_demo_url"] is None, "UNAPPROVED_RELEASE_CLAIM")
+    public = json.loads((ROOT / DOCUMENTS["evidence/public-tls.json"]).read_bytes())
+    release_gate(submission, public)
     return content
 
 
@@ -131,8 +142,9 @@ def verify(path):
             content = json.loads(source.read("release/deck-content.json"))
             inspect_deck(archive.read("ProofFlow-deck.pptx"), content)
         submission = json.loads(archive.read("submission.json"))
-        require(submission["release_allowed"] is False
-                and submission["repository_visibility"] == "private", "PACKAGE_PUBLIC_CLAIM")
+        public = (json.loads(archive.read("evidence/public-tls.json"))
+                  if "evidence/public-tls.json" in names else None)
+        release_gate(submission, public)
     return {"verified": True, "files": len(names), "source_commit": manifest["source_commit"],
             "package_sha256": sha(path.read_bytes()), "bytes": path.stat().st_size}
 

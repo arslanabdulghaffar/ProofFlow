@@ -1,0 +1,201 @@
+{
+  "phase": 6,
+  "status": "PUBLIC_TLS_AND_SCOPED_GUEST_RECOVERY_ACCEPTED_PHASE6_IN_PROGRESS",
+  "owner_authorized_activation": true,
+  "external_acceptance_passed": true,
+  "origin": "https://158.247.227.66:8443",
+  "observed_at": "2026-11-08T01:11:18.984360+00:00",
+  "base_checkpoint": "2dae00713f7bbd875be249a3ab7b37dd1a3da309",
+  "image": "441d3a417149242c7afb1f6ae72a355865b8515f2416ff02f92a0deb1cf50a74",
+  "certificate": {
+    "trusted_ip_certificate": true,
+    "expires_at": "2026-11-14T16:01:59+00:00",
+    "replaced": false,
+    "private_operator_tls_changed": false
+  },
+  "renewal": {
+    "observed_at": "2026-11-08T01:10:22.456499+00:00",
+    "renewal_dry_run_passed": true,
+    "exit_code": 0,
+    "production_reissue": false,
+    "scheduled_service": "Result=success\nExecMainStatus=0\nNextElapseUSecRealtime=Sun 2026-11-08 12:02:00 UTC\nActiveState=active\n"
+  },
+  "public_guest_cases": [
+    {
+      "name": "joins-repairable",
+      "outcome": "mismatch",
+      "checks": [
+        "clean_unauthenticated_context_denied",
+        "exact_contract_required_before_run",
+        "actual_worker_original_and_independent_comparison",
+        "refresh_preserves_job_identity",
+        "mobile_no_page_overflow",
+        "logout_revokes_evidence"
+      ],
+      "logout_status": 403,
+      "elapsed_seconds": 8.625
+    },
+    {
+      "name": "units-repairable",
+      "outcome": "mismatch",
+      "checks": [
+        "clean_unauthenticated_context_denied",
+        "exact_contract_required_before_run",
+        "actual_worker_original_and_independent_comparison",
+        "refresh_preserves_job_identity",
+        "mobile_no_page_overflow",
+        "logout_revokes_evidence"
+      ],
+      "logout_status": 403,
+      "elapsed_seconds": 6.984
+    },
+    {
+      "name": "completeness-repairable",
+      "outcome": "match",
+      "checks": [
+        "clean_unauthenticated_context_denied",
+        "exact_contract_required_before_run",
+        "actual_worker_original_and_independent_comparison",
+        "refresh_preserves_job_identity",
+        "mobile_no_page_overflow",
+        "logout_revokes_evidence"
+      ],
+      "logout_status": 403,
+      "elapsed_seconds": 8.235
+    },
+    {
+      "name": "joins-ambiguous",
+      "outcome": "held",
+      "checks": [
+        "clean_unauthenticated_context_denied",
+        "exact_contract_required_before_run",
+        "actual_worker_original_and_independent_comparison",
+        "refresh_preserves_job_identity",
+        "mobile_no_page_overflow",
+        "logout_revokes_evidence"
+      ],
+      "logout_status": 403,
+      "elapsed_seconds": 10.39
+    }
+  ],
+  "external_http": {
+    "anonymous_routes_checked": [
+      "/",
+      "/health/live",
+      "/v1/session",
+      "/openapi.json",
+      "/static/missing.js"
+    ],
+    "forged_authorities_denied": 3,
+    "writes": 0,
+    "provider_calls": 0,
+    "public_network_path": "Windows desktop to public IPv4; system trust; no tunnel/certificate override"
+  },
+  "private_http": {
+    "anonymous_routes_checked": [
+      "/",
+      "/health/live",
+      "/v1/session",
+      "/openapi.json",
+      "/static/missing.js"
+    ],
+    "forged_authorities_denied": 3,
+    "writes": 0,
+    "provider_calls": 0,
+    "public_network_path": "caller must identify"
+  },
+  "security_recovery_checks": [
+    "operator_import_and_cookie_denied_guests_admitted",
+    "cross_workspace_download_denied",
+    "wrong_origin_write_denied",
+    "guest_pr_preview_denied",
+    "restart_preserves_valid_session_and_asset",
+    "restart_does_not_resurrect_revoked_session",
+    "expired_public_session_denied"
+  ],
+  "three_container_policies": "PASS",
+  "source_files_checked": 73,
+  "application_dependencies_changed": false,
+  "acme_dependencies": {
+    "certbot": "5.9.0",
+    "packages": 18,
+    "hashes_required": true,
+    "audit": "No known advisories found; not proof of absence"
+  },
+  "automated_checks": {
+    "windows_full": "949 passed,191 Linux/platform skips",
+    "linux_scoped": "40 passed",
+    "ruff": "PASS",
+    "certificate_negative_cases": "wrong IP, wrong key, expiring, future, malformed rejected",
+    "release_guards": "15 passed including public URL evidence and private repository/license separation"
+  },
+  "critical_review": {
+    "reviewer": "Separate Codex review pass, not independent human",
+    "findings_fixed": [
+      "Public API must reject operator tokens at import and every request",
+      "Public IPv4-only bind avoids existing loopback8443 listener",
+      "Certbot internal random sleep disabled; systemd provides jitter within bounded service lifetime"
+    ],
+    "remaining_limitations": [
+      "No DDoS guarantee",
+      "No future production renewal observed; staging renewal and production hook/no-op tested",
+      "Partial certificate replacement stops guest service for reconciliation rather than falling back"
+    ]
+  },
+  "failed_attempts_preserved": [
+    "First staging ACME timeout before firewall became reachable; external fixed response passed before retry",
+    "First external GET timed out during8443 firewall propagation; later external trust checks passed",
+    "First browser run ended on unexpected logout readback with API concurrency warning; closed old transports, retained failure, four new cases passed",
+    "First boundary harness used UUID4 rather than time-bound authority IDs; no workspace created; corrected harness and cleanup handling"
+  ],
+  "funding": {
+    "remaining_credit": "189.17",
+    "observed_at": "2026-11-08T01:11:11.053913+00:00",
+    "monthly_vm_quotes_usd": {
+      "control": 24,
+      "worker": 48
+    },
+    "total_limit": 150,
+    "inference_limit": 25,
+    "cutoff_utc": "2026-11-09T16:29:33.986905+00:00",
+    "new_resources": 0,
+    "model_calls": 0,
+    "personal_payment": false
+  },
+  "final_state": {
+    "workspaces": 0,
+    "execution_admission": "closed",
+    "inference_admission": "closed",
+    "public_login": "live invited guests only",
+    "repository": "private"
+  },
+  "remaining": [
+    "Owner offline key custody deferred",
+    "Lost trustworthy deletion authority prevents restoration",
+    "Full compromised-host reconstruction and RTO/RPO not established",
+    "Judging hosting beyond Nov10 needs fresh bounded funding review",
+    "Public repository/media/license/submission not authorized or completed",
+    "Independent human review gap"
+  ],
+  "private_receipt_sha256": {
+    "phase6-browser-062e29bf843e42c3879edd16c067c5b0.json": "af2f7a9aaff2df70323f24da12c3144dc4c51fc3f7167e8af4d0a244860abbf0",
+    "phase6-public-security-8bd05363cd3941789521405d7e140d85.json": "aba4335d54a2fb435f5446e2a346ecaba8b62db495c9a43fd26aca860b2dc8f0",
+    "phase6-public-final-readback.json": "f0ced46cd95799f0df49aebc9dc228d82bc67592ad128ade29ca0afa729b3d82"
+  },
+  "scheduled_tasks": {
+    "credit_guard": {
+      "last_result": 0,
+      "checked_at": "2026-11-08T01:14:43.364761+00:00",
+      "remaining_credit": "189.17",
+      "prior_result": "RETRY_REQUIRED during serialized admin work; fresh scheduled execution passed"
+    },
+    "backup": {
+      "last_result": 0,
+      "last_run_kst": "2026-11-08T09:36:07+09:00"
+    },
+    "local_key_expiry": {
+      "status": "checked",
+      "key_records": 3
+    }
+  }
+}
