@@ -1,5 +1,14 @@
 # Threat model and controls
 
+November8 guest-operation update supersedes earlier private-only/provisioning gaps:
+one individual30-minute guest window, profile-encrypted launcher, no auto approval,
+source-pinned host expiry guard and actual public AI repair/fresh batch now pass.
+[Evidence](evidence/phase6-guest-operation-2026-11-08.json). Scope remains synthetic,
+invited access; no anonymous signup or public Git/media/license/submission. Guard adds
+fixed trusted root administration, not guest Docker/SQL/cloud privileges. Existing
+workspace/quote expiry, reservations, quotas and exact approvals stay intact. Full
+compromised-host recovery, owner offline custody and independent human review remain open.
+
 November8 ingress/recovery review: one canonical HTTPS authority is enforced before
 routes; wrong/duplicate Host, plaintext scopes and proxy-spoof headers fail closed.
 Optional admin origin config is bounded, read-only, no-follow, one-link and mode0400;

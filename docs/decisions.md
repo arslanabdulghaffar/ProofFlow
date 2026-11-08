@@ -1,5 +1,39 @@
 # Decision log
 
+## D96: individual expiring guest windows and desktop-independent closure
+
+The owner explicitly authorized guest access and bounded live demo operation on Nov8.
+Use one individually provisioned guest workspace/session per30-minute window. No public
+signup, shared judge credential, URL token, operator session or automatic contract/version
+approval. The owner launcher uses existing CurrentUser DPAPI and owner/SYSTEM-only ACL
+helpers; a dedicated ephemeral Chromium context signs in and stages labeled synthetic
+files locally. Actual submission/contract/version decisions remain in the product UI.
+
+No schema/runtime/limits/provider changes. Fresh official catalogue and VM charges plus
+credit cutoff must pass before opening. Existing$150/$25 account reservations, cumulative
+repair allocation, three-call/$0.50 repair bounds and isolated-worker policy stay intact.
+A root-owned systemd guard on control checks every10s, independently of the desktop.
+Persist intent before admissions; expire on deadline, boot change, backwards clock or
+invalid state. Block inference then close execution through configure_execution; never
+edit job outcomes. If DB closure fails, stop dispatcher. Guest workspace/session expiry
+and fixed quote expiry provide additional request/dispatch enforcement; no automatic
+window extension. Admin commands and Docker access are fixed trusted operations with
+no guest-selected paths, SQL, credentials or cloud-management keys on the host.
+
+Review: this adds a root administrative guard, not public privilege. Use single host lock,
+protected files, fixed arguments, source-hashed installation and live expiry readback.
+Initial credential validation mistakenly assumed URL-safe tokens; use existing prefixed
+session/CSRF validators rather than duplicating their format. Failed setup kept admissions
+closed and its expired workspace goes through normal retention; no paid call was made.
+Final review added dispatcher Requires+After dependency on the one-shot guard so boot
+identity is checked before dispatch can resume. Actual idle dispatcher restart and host
+unit verification passed; guard completion timestamp preceded dispatcher start. Full
+host reboot not repeated. [Official dependency semantics](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html)
+support the ordering/requirement combination. The periodic guard remains separate from
+the desktop and preserves the current valid window on an ordinary dispatcher restart.
+
+Independent human review is still unavailable; automated/Codex review is not human approval.
+
 ## D95: preserve bounded public admission and separate renewal scheduling
 
 Actual staging and public firewall probes initially timed out, then passed after

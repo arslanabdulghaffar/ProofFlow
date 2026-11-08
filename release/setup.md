@@ -50,3 +50,13 @@ in. Actual nonempty encrypted capture and Windows-to-Linux inert recovery have p
 Current trustworthy deletion authority remains mandatory; old snapshots cannot revive
 deleted workspaces. The owner will handle offline password/kit custody later. A fully
 reimaged compromised-host recovery and public-service RTO/RPO are not established.
+
+## Owner’s individual guest launcher
+
+Run `powershell -NoProfile -File "A:\hackathon\ProofFlow\scripts\Open-PublicDemo.ps1"` on
+the already configured owner computer. It rechecks credits/prices and opens an individual
+30-minute guest session in a dedicated browser, with synthetic inputs selected locally.
+No upload, contract/version approval, inference request or PR happens automatically.
+The server closes admission after the window even if the desktop goes offline. This
+administrator helper requires existing private local setup; it is not a public signup
+mechanism and should not be given to judges with account credentials.

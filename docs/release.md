@@ -1,5 +1,47 @@
 # Release and operations plan
 
+## November8 KST — bounded guest launcher and real public AI workflow accepted
+
+Current owner-ready window: ACTIVE until **Nov8 12:34:59 KST**. Exactly one guest,
+zero assets/jobs; no model call or approval during launch/readback. Run the launcher to
+open this window; after expiry it creates a fresh one only after current checks/cleanup.
+A final review found dispatcher startup could precede the timer's boot check; installed
+Requires+After guard dependency and verified an actual idle restart runs guard first.
+This does not claim another full-host reboot or compromised-host recovery.
+
+The owner can run `powershell -NoProfile -File "A:\hackathon\ProofFlow\scripts\Open-PublicDemo.ps1"`.
+It opens a dedicated signed-in guest browser with labeled synthetic files selected.
+It does NOT upload, approve a contract/version or call the model automatically. Review
+and click those controls in the UI. No credentials in chat/Git/URLs; CurrentUser DPAPI
+and owner/SYSTEM ACL protect the short-lived access envelope outside Git. Normal direct
+URL access still shows login; this is invited access, not anonymous signup.
+
+One workspace/session per30-minute window, fresh credit/VM/model quote, fixed caps and
+existing isolated worker. A source-pinned root systemd guard checks every10s on control;
+expiry/reboot/backwards clock/invalid state closes inference then execution. Database
+workspace/session expiry and provider quote expiry also apply. It does not depend on
+the Windows desktop being awake. Real20s window test: automatic closure9.945s after
+expiry, expired public access403, both admissions closed, normal retention leaves0
+workspaces. No schema/app image/provider/cap change; image441d3a remains deployed.
+
+Actual public guest AI run passed: first candidate mismatched and was rejected; second
+candidate plus ownership/quarantine checks matched, all four cleanups confirmed. Two
+Vultr calls reserved$0.055706 (not invoice). Exact synthetic automated approval followed
+by a fresh batch COMPLETED; no PR intent. Test guest deleted and admissions closed.
+966 Windows tests pass/191 platform skips;18 scoped Linux pass;Ruff passes. First setup
+failed token-format validation safely; use existing auth validators, with regression.
+[Evidence](evidence/phase6-guest-operation-2026-11-08.json).
+
+Keep private Git/media, credit-only$150/$25 limits and funded cutoff Nov10 01:29 KST.
+Latest credit$189.06 at12:01 KST; no new resource or personal payment. Offline custody
+is deferred. Full compromised-host/lost-authority recovery, judging uptime, license/
+publication/submission and independent human review remain open. Phase6 IN PROGRESS.
+No need to repeat the same paid acceptance run. `guest_demo.py stop` closes a window
+and requests normal deletion; it does not edit outcomes. An expired/closed window may
+be replaced only after fresh checks and normal prior-workspace cleanup. Partial failed
+intents/active work are reconciled, never blindly replaced. Guest guard's CLOSED/no-window
+state intentionally leaves other explicit administrator tests under their own controls.
+
 ## November8 KST — public TLS source checkpoint and private package v3 verified
 
 Source checkpoint `72f6800c1a356bdd7ad4ffdc22f552e3578b86fc` pushed to main and matched by remote SHA;

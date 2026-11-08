@@ -1,0 +1,155 @@
+{
+  "status": "GUEST_LAUNCHER_AND_BOUNDED_LIVE_OPERATION_ACCEPTED_PHASE6_IN_PROGRESS",
+  "base_checkpoint": "e9946f69b30768024378e6238b0e622d6c7c9e69",
+  "origin": "https://158.247.227.66:8443",
+  "current_product_image": "441d3a417149242c7afb1f6ae72a355865b8515f2416ff02f92a0deb1cf50a74",
+  "application_runtime_or_schema_changed": false,
+  "new_dependencies": false,
+  "new_resources": 0,
+  "guest_access": {
+    "one_guest_workspace_per_window": true,
+    "maximum_window_seconds": 1800,
+    "credential_storage": "CurrentUser DPAPI, owner/SYSTEM ACL, outside Git",
+    "browser": "Dedicated ephemeral Chromium, system TLS trust, memory-only cookies",
+    "launcher_uploads_or_approves": false,
+    "synthetic_files_staged_only": true,
+    "anonymous_signup": false,
+    "operator_credentials_on_public_surface": false
+  },
+  "guard": {
+    "source_sha256": "b37eb2d23fa4a832b3cee3752efe11970b907575065582b28fb5ae0ce2543aba",
+    "host": "existing control VM",
+    "timer_interval_seconds": 10,
+    "closes_on": [
+      "expiry",
+      "boot identity change",
+      "clock before window start",
+      "invalid window/state"
+    ],
+    "fallback": "Block inference then configure execution closed; stop dispatcher if database closure fails",
+    "additional_enforcement": "same expiry on workspace/session and checked by authorization/dispatch; fixed quote expiry",
+    "desktop_independent_expiry_probe": {
+      "observed_at": "2026-11-08T02:57:58.481669+00:00",
+      "window_seconds": 20,
+      "server_closed_at": "2026-11-08T02:57:29.027041+00:00",
+      "closure_lag_seconds": 9.945034,
+      "execution_closed": true,
+      "inference_blocked": true,
+      "expired_public_session": 403,
+      "workspaces_after_retention": 0,
+      "desktop_start_process_exited_before_expiry": true,
+      "guard_service": "Result=success\nExecMainStatus=0",
+      "provider_calls": 0,
+      "receipt": "guest-demo-00461de7-8a03-4838-acfe-2b754c301953.json"
+    },
+    "startup_dependency": {
+      "dispatcher_requires_and_waits_for_guard": true,
+      "actual_idle_dispatcher_restart_passed": true,
+      "guard_exit_before_dispatcher_start": true,
+      "guest_window_preserved": true,
+      "full_host_reboot": "NOT RUN"
+    }
+  },
+  "actual_guest_workflow": {
+    "provider": "Vultr fixed adapter",
+    "model": "qwen3.8-flash-next",
+    "provider_calls": 2,
+    "reserved_micro_usd": 55706,
+    "cost_note": "Reservation, not invoice; existing cumulative caps unchanged",
+    "checks": [
+      {
+        "generation": 1,
+        "purpose": "candidate",
+        "comparison": "mismatch",
+        "cleanup_confirmed": true
+      },
+      {
+        "generation": 2,
+        "purpose": "candidate",
+        "comparison": "match",
+        "cleanup_confirmed": true
+      },
+      {
+        "generation": 3,
+        "purpose": "canary_ownership",
+        "comparison": "match",
+        "cleanup_confirmed": true
+      },
+      {
+        "generation": 4,
+        "purpose": "canary_quarantine",
+        "comparison": "match",
+        "cleanup_confirmed": true
+      }
+    ],
+    "batch_state": "COMPLETED",
+    "synthetic_automated_approval_not_human_signoff": true,
+    "browser_checks": [
+      "launcher_only_stages_files_no_upload_or_approval",
+      "real_vultr_changed_source_and_fresh_checks",
+      "actual_browser_bundle_download",
+      "exact_synthetic_version_approval",
+      "fresh_batch_completed_on_designated_worker",
+      "public_browser_system_trust_no_override",
+      "actual_guest_original_mismatch",
+      "no_external_pr_intent"
+    ],
+    "new_pr_intents": 0,
+    "cleanup_workspaces": 0
+  },
+  "tests": {
+    "windows_full": "966 passed /191 platform skips",
+    "linux_scoped": "18 passed including partial-open, malformed-state and unavailable-DB fallback fault tests",
+    "ruff": "PASS",
+    "source_review": "Separate Codex critical pass, not independent human",
+    "reboot_and_clock": "predicate tests, not another actual host reboot",
+    "fault_test_scope": "Unavailable database/fallback command mocked; real short-window expiry and closure exercised on control.",
+    "critical_review_finding": "Added Requires+After guard dependency before dispatcher startup; actual idle restart confirms guard exit precedes dispatcher start. No full host reboot claimed."
+  },
+  "funding": {
+    "credit": {
+      "credit_guard": "within_early_cutoff",
+      "checked_at": "2026-11-08T03:01:16.387809+00:00",
+      "remaining_credit": "189.06",
+      "review_due_at": "2026-11-09T16:29:33.986905+00:00"
+    },
+    "project_limit_usd": 150,
+    "inference_limit_usd": 25,
+    "vm_monthly_quotes_usd": {
+      "control": 24,
+      "worker": 48
+    },
+    "inference_usd_per_million": {
+      "input": 0.1,
+      "output": 0.2
+    },
+    "new_personal_payment": false,
+    "provider_non_overage_guarantee": false
+  },
+  "failed_attempts_preserved": [
+    "First short-window setup used wrong token format validation; admissions closed, expired workspace retained then removed through normal retention. Fixed by using existing session/CSRF validators; regression covers actual generated format."
+  ],
+  "remaining": [
+    "Owner offline key custody deferred",
+    "Compromised-host reconstruction and lost deletion authority remain unresolved",
+    "Judging hosting after Nov10 01:29 KST requires bounded review",
+    "Repository/media/license/submission remain private/unreleased",
+    "Independent human review gap"
+  ],
+  "private_receipt_sha256": "07b6d592dd44679c2637551d7791dae51b256e90b1b21627435596f20cefe3ad",
+  "owner_ready_window": {
+    "observed_at": "2026-11-08T03:06:06.525912+00:00",
+    "state": "ACTIVE",
+    "expires_at": "2026-11-08T03:34:59.073093+00:00",
+    "one_guest": true,
+    "assets": 0,
+    "jobs": 0,
+    "launcher_paid_calls": 0,
+    "automatic_approvals": 0,
+    "host_guard_source_match": true,
+    "timer": "ActiveState=active",
+    "caps_unchanged": true,
+    "public_browser_system_trust_and_staging": "PASS",
+    "credit": "189.06"
+  }
+}

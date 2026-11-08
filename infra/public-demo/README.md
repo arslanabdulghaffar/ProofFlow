@@ -18,6 +18,37 @@ no persistent HTTP server or directory listing is installed. Staging and product
 issuance passed. The first staging request timed out while firewall propagation was
 pending; a bounded external fixed-response probe then passed before retry.
 
+## Open an individual live demo
+
+From the owner’s Windows PowerShell:
+
+```powershell
+powershell -NoProfile -File "A:\hackathon\ProofFlow\scripts\Open-PublicDemo.ps1"
+```
+
+No key entry is needed. The launcher checks credits/current prices and creates one
+30-minute guest window, or reopens its still-valid window. It opens a dedicated browser
+and selects disclosed synthetic files without uploading or approving anything. Click
+**Upload and review**, read/approve the contract, run the original, then request repair.
+Review the exact version before activation and a fresh batch. No GitHub action is available
+to guests. Do not share this owner-administration helper or its DPAPI files as judge credentials.
+
+The server guard closes admissions at expiry (up to its10s check interval); workspace
+and session authorization end at their exact deadline. This does not require the desktop
+to stay online. Reopening an expired demo performs fresh checks; it does not extend the old
+workspace, reset budgets or restore a revoked approval. To end early:
+
+```powershell
+A:\hackathon\ProofFlow\.venv\Scripts\python.exe A:\hackathon\ProofFlow\scripts\guest_demo.py stop
+```
+
+Expired demo data follows existing retention. Export any needed results before the window
+ends. Closing the browser alone leaves the bounded server window until expiry; it does
+not create another inference call. No persistent browser profile or credential URL exists.
+Dispatcher startup requires the guard and waits for its successful boot/expiry check.
+The root guard is in `scripts/guest_demo_guard.py`; timer/installer source is reviewed and
+pinned, and a real short-window expiry test passed. No new runtime/DB dependency was added.
+
 ## Issuance, deployment and renewal
 
 Use fresh credit checks before changes. No new VM, domain, subscription or payment is
@@ -57,8 +88,8 @@ expiry or an account balance does not extend this cutoff.
 There is no anonymous signup, shared judge password or token in a URL. Provision each
 invited guest through the existing scoped workspace/session administration, with a
 <=one-hour session. No test credentials survive the acceptance run. Execution and
-inference admissions remain CLOSED after testing; invite issuance must include a fresh
-bounded operating review before a guest can run jobs. The public login page is live;
+inference admissions close after tests/windows; the owner launcher performs the fresh
+bounded operating review before opening another guest window. The public login page is live;
 this is not an unattended anonymous AI service. Existing exact approvals remain required.
 
 To close the edge, stop/disable `proofflow-public.socket` and `proofflow-public.service`;

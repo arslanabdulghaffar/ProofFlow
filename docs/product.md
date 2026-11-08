@@ -1,5 +1,14 @@
 # Product and UX specification
 
+November8 guest-operation update supersedes earlier private-only/provisioning gaps:
+one individual30-minute guest window, profile-encrypted launcher, no auto approval,
+source-pinned host expiry guard and actual public AI repair/fresh batch now pass.
+[Evidence](evidence/phase6-guest-operation-2026-11-08.json). Scope remains synthetic,
+invited access; no anonymous signup or public Git/media/license/submission. Guard adds
+fixed trusted root administration, not guest Docker/SQL/cloud privileges. Existing
+workspace/quote expiry, reservations, quotas and exact approvals stay intact. Full
+compromised-host recovery, owner offline custody and independent human review remain open.
+
 Current Phase4 acceptance passes: exact version approval/revocation, fresh browser batches, signed events and [real private draft PR#1](https://github.com/arslanabdulghaffar/ProofFlow-Demo/pull/1) with exact readback/restart/replay. Owner requested no additional PR; a recovery-only drill against the existing PR passed real GET-response loss, actual SQL restart/natural lease takeover/fencing and cleanup from an explicit synthetic missing-ack seed. Production was unchanged. Original POST-create response loss is not reproduced or claimed. [Phase4 acceptance](evidence/phase4-acceptance-2026-11-05.json); DONE follows verified checkpoint push. Public release, evaluation and full lifecycle/backup readiness remain later gates.
 
 Current Phase3 acceptance supersedes the historical missing-repair status below. Private browser supports original failure evidence, bounded real Vultr repair, fresh isolated candidate/protected checks, unchanged-source checks with zero model calls, owned source/diff/evidence download and raw retirement. AWAITING_APPROVAL never activates a version. Exact activation, fresh batches and external actions remain Phase4; public access/evaluation remain later gates. [Actual Phase3 evidence](evidence/phase3-acceptance-2026-11-04.json).

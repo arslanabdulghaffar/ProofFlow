@@ -1,5 +1,14 @@
 # Risks and owner decisions
 
+November8 guest-operation update supersedes earlier private-only/provisioning gaps:
+one individual30-minute guest window, profile-encrypted launcher, no auto approval,
+source-pinned host expiry guard and actual public AI repair/fresh batch now pass.
+[Evidence](evidence/phase6-guest-operation-2026-11-08.json). Scope remains synthetic,
+invited access; no anonymous signup or public Git/media/license/submission. Guard adds
+fixed trusted root administration, not guest Docker/SQL/cloud privileges. Existing
+workspace/quote expiry, reservations, quotas and exact approvals stay intact. Full
+compromised-host recovery, owner offline custody and independent human review remain open.
+
 November8 public activation update supersedes earlier private-only statements:
 trusted public TLS and four clean external guest contexts now pass, with scoped
 isolation/expiry/PR denial/restart and renewal checks. [Evidence](evidence/phase6-public-tls-2026-11-08.json).
