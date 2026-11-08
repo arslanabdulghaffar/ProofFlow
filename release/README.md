@@ -4,11 +4,13 @@ This package is ready for private review. It is not a submission or public relea
 Keep the repository and package private. Offline key custody was deferred by the owner;
 it is not silently completed or a prerequisite for unrelated package preparation.
 
-The November8 guest TLS follow-up is newer than the recorded demonstration. Public
+The November8 guest TLS and live AI follow-ups are newer than the recorded demonstration. Public
 login: https://158.247.227.66:8443. Four fresh guest browser cases and security/restart
-checks passed without certificate bypass. Test sessions are revoked and admissions
-closed after acceptance; this is invited access, not anonymous AI. The existing video
-retains its original runtime/date. New packages include the public acceptance receipt.
+checks passed without certificate bypass. A later bounded guest run demonstrated two
+real Vultr calls, rejection then verified repair, and a completed fresh batch. Test
+sessions were revoked; owner demo windows are separately limited to30 minutes. This is
+invited access, not anonymous AI. The existing video retains its original runtime/date;
+it does not depict the later guest run. New packages include both acceptance receipts.
 
 ## Contents
 
@@ -44,7 +46,7 @@ development computer, control host or verifier.
 | Judging-period hosting | Existing cutoff Nov10 01:29 KST; later funding needs fresh review within caps |
 
 No new paid service or inference request is needed to inspect this package. The most
-recent credit observation was$189.17 on Nov8 KST, not a fresh balance promise. Limits
+recent documented credit observation was$189.06 on Nov8 KST, not a fresh balance promise. Limits
 remain$150 total/$25 inference in eligible credits, with no personal payment authorized.
 
 ## Building and checking the package
@@ -65,4 +67,8 @@ the form rather than claiming that a guessed limit is authoritative.
 `scripts/build_release_package.py` accepts only a clean committed project and explicit
 reviewed artifact paths. It uses `git archive` for the exact commit, fixed manifest
 entries and SHA-256 readback; no upload/submission action exists. Its `--verify` mode
-checks the finished ZIP without extracting or executing its contents.
+checks the finished ZIP without extracting or executing its contents. It also compares
+documents and media with their committed source/pins. Supply `--expected-sha256` from
+the separately trusted private checkpoint receipt to verify archive identity. A package
+manifest alone proves internal consistency, not the identity of its publisher. New v2
+manifests require the complete document/media set; older v1 packages remain checkable.

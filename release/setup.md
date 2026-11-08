@@ -32,8 +32,8 @@ candidate sandboxes, this source archive or the package.
 
 The public guest login is https://158.247.227.66:8443 with trusted IP TLS; four fresh
 external guest contexts and security/restart checks passed. The separate operator path
-remains pinned HTTPS/SSH. Test sessions were revoked and execution/inference admission
-is closed after testing; an invited demo needs scoped access and a fresh operating review.
+remains pinned HTTPS/SSH. Test sessions were revoked; each owner guest demonstration
+uses its own bounded window and a fresh operating review through the launcher below.
 Normal authenticated operator flows require private account setup outside this package;
 there is no shared judge password or key embedded here.
 
@@ -57,6 +57,20 @@ Run `powershell -NoProfile -File "A:\hackathon\ProofFlow\scripts\Open-PublicDemo
 the already configured owner computer. It rechecks credits/prices and opens an individual
 30-minute guest session in a dedicated browser, with synthetic inputs selected locally.
 No upload, contract/version approval, inference request or PR happens automatically.
+On Windows it uses installed Microsoft Edge in an ephemeral profile and proves visible
+browser startup before opening guest access. It does not reuse your personal profile.
 The server closes admission after the window even if the desktop goes offline. This
 administrator helper requires existing private local setup; it is not a public signup
 mechanism and should not be given to judges with account credentials.
+
+## Check a private archive
+
+Use trusted checked-out source and the ZIP hash from its private checkpoint receipt:
+
+```powershell
+python scripts/build_release_package.py --verify "PATH-TO-PRIVATE-ZIP" --expected-sha256 HASH-FROM-TRUSTED-CHECKPOINT
+```
+
+This reads inert files only. It does not upload, extract, run a candidate, restore a
+database or grant publication approval. Keep the original recording provenance even
+when newer acceptance evidence is bundled beside it.

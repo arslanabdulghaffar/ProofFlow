@@ -1,0 +1,42 @@
+{
+  "observed_at": "2026-11-08T03:25:58.077690+00:00",
+  "status": "PRIVATE_PHASE6_PREPARATION",
+  "phase6_complete": false,
+  "backup_authenticated": true,
+  "snapshot_at": "2026-11-07T16:35:14.29645+00:00",
+  "expires_at": "2026-11-08T16:35:14.296450+00:00",
+  "asset_count": 1,
+  "database_bytes": 185228,
+  "checks": {
+    "scoped_tests_passed": 36,
+    "ruff": "PASS",
+    "historical_v3_archive_and_trusted_hash": "PASS",
+    "frozen_release_claims": "PASS",
+    "scheduled_credit_guard_last_result": 0,
+    "scheduled_credit_guard_last_run_kst": "2026-11-08T12:14:39+09:00",
+    "scheduled_backup_last_result": 0,
+    "scheduled_backup_last_run_kst": "2026-11-08T11:36:07+09:00"
+  },
+  "offline_export_performed": false,
+  "production_restore": false,
+  "new_resources": 0,
+  "model_calls": 0,
+  "critical_review": "Separate Codex pass; no independent human sign-off",
+  "limitations": [
+    "Current-profile backup authentication is not loss-of-profile recovery",
+    "Lost current deletion authority blocks restoration",
+    "Compromised-host rebuild and production RTO/RPO remain NOT RUN",
+    "Owner offline password and kit custody deferred",
+    "Private source/media and licensing/submission gates remain open"
+  ],
+  "actual_archive_tamper_checks": [
+    {
+      "changed": "README.md",
+      "self_consistent_manifest_rejected": "PACKAGE_DOCUMENT_DRIFT"
+    },
+    {
+      "changed": "ProofFlow-demo.mp4",
+      "self_consistent_manifest_rejected": "PACKAGE_MEDIA_DRIFT"
+    }
+  ]
+}

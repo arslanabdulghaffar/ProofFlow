@@ -32,6 +32,9 @@ DOCUMENTS = {
     "evidence/phase5.json": "docs/evidence/phase5-binary-acceptance-2026-11-07.json",
     "evidence/ingress-recovery.json": "docs/evidence/phase6-ingress-recovery-2026-11-08.json",
     "evidence/public-tls.json": "docs/evidence/phase6-public-tls-2026-11-08.json",
+    "evidence/guest-operation.json": "docs/evidence/phase6-guest-operation-2026-11-08.json",
+    "evidence/recovery-release.json":
+        "docs/evidence/phase6-recovery-release-hardening-2026-11-08.json",
 }
 
 
@@ -125,12 +128,37 @@ def check_claims():
     return content
 
 
-def verify(path):
+def source_bindings(archive, source, *, documents):
+    """Cross-check outer claims/media with the source snapshot, without execution."""
+    for name, local in documents.items():
+        # Historical Windows packages used CRLF working-tree text. New packages
+        # use exact committed bytes; comparison tolerates only that newline form.
+        require(archive.read(name).replace(b"\r\n", b"\n")
+                == source.read(local).replace(b"\r\n", b"\n"), "PACKAGE_DOCUMENT_DRIFT")
+    pins = json.loads(source.read("release/assets.json"))
+    require(set(pins) == {"ProofFlow-deck.pptx", "ProofFlow-cover.png", "ProofFlow-demo.mp4",
+                         "demo-edit-manifest.json"}, "PACKAGE_ASSET_SET")
+    for name, pin in pins.items():
+        raw = archive.read(name)
+        require(sha(raw) == pin["sha256"] and len(raw) == pin["bytes"],
+                "PACKAGE_MEDIA_DRIFT")
+
+
+def verify(path, *, expected_sha256=None):
     require(path.stat().st_size <= MAX_TOTAL, "PACKAGE_SIZE")
-    with zipfile.ZipFile(path) as archive:
+    with path.open("rb") as handle:
+        package = handle.read(MAX_TOTAL + 1)
+    require(len(package) <= MAX_TOTAL, "PACKAGE_SIZE")
+    digest = sha(package)
+    if expected_sha256 is not None:
+        require(re.fullmatch(r"[a-f0-9]{64}", expected_sha256) is not None
+                and digest == expected_sha256, "PACKAGE_CHECKPOINT_HASH_MISMATCH")
+    # Parse the same bounded bytes that were hashed, even if the path changes.
+    with zipfile.ZipFile(io.BytesIO(package)) as archive:
         names = safe_entries(archive)
         manifest = json.loads(archive.read("MANIFEST.json"))
         require(manifest["status"] == "PRIVATE_REVIEW_NOT_RELEASED", "PACKAGE_RELEASE_GATE")
+        require(manifest["version"] in (1, 2), "PACKAGE_VERSION")
         require(set(names) == set(manifest["files"]) | {"MANIFEST.json"}, "PACKAGE_FILE_SET")
         for name, expected in manifest["files"].items():
             raw = archive.read(name)
@@ -141,24 +169,33 @@ def verify(path):
                     "SOURCE_COMMIT_MISMATCH")
             content = json.loads(source.read("release/deck-content.json"))
             inspect_deck(archive.read("ProofFlow-deck.pptx"), content)
+            documents = {name: local for name, local in DOCUMENTS.items() if name in names}
+            if manifest["version"] == 2:
+                require(set(names) == set(DOCUMENTS) | {
+                    "ProofFlow-deck.pptx", "ProofFlow-cover.png", "ProofFlow-demo.mp4",
+                    "demo-edit-manifest.json", "SOURCE.zip", "MANIFEST.json"},
+                    "PACKAGE_REQUIRED_FILES")
+            source_bindings(archive, source, documents=documents)
         submission = json.loads(archive.read("submission.json"))
         public = (json.loads(archive.read("evidence/public-tls.json"))
                   if "evidence/public-tls.json" in names else None)
         release_gate(submission, public)
     return {"verified": True, "files": len(names), "source_commit": manifest["source_commit"],
-            "package_sha256": sha(path.read_bytes()), "bytes": path.stat().st_size}
+            "package_sha256": digest, "bytes": len(package),
+            "trusted_hash_checked": expected_sha256 is not None}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--verify", type=Path)
+    parser.add_argument("--expected-sha256", help="Trusted ZIP hash from private checkpoint")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--artifacts", type=Path)
     parser.add_argument("--evidence", type=Path)
     parser.add_argument("--check-claims", action="store_true")
     args = parser.parse_args()
     if args.verify:
-        print(json.dumps(verify(args.verify)))
+        print(json.dumps(verify(args.verify, expected_sha256=args.expected_sha256)))
         return
     content = check_claims()
     if args.check_claims:
@@ -171,7 +208,7 @@ def main():
     pinned = json.loads((ROOT / "release/assets.json").read_bytes())
     require(set(pinned) == {"ProofFlow-deck.pptx", "ProofFlow-cover.png", "ProofFlow-demo.mp4",
                            "demo-edit-manifest.json"}, "PACKAGE_ASSET_SET")
-    files = {name: (ROOT / local).read_bytes() for name, local in DOCUMENTS.items()}
+    files = {name: git("show", commit + ":" + local) for name, local in DOCUMENTS.items()}
     for name, spec in pinned.items():
         require(spec["source"] in ("evidence", "artifacts")
                 and Path(spec["filename"]).name == spec["filename"]
@@ -190,7 +227,7 @@ def main():
     with zipfile.ZipFile(io.BytesIO(files["SOURCE.zip"])) as source:
         safe_entries(source)
     require(sum(map(len, files.values())) <= MAX_TOTAL, "PACKAGE_SIZE")
-    manifest = {"version": 1, "status": "PRIVATE_REVIEW_NOT_RELEASED", "source_commit": commit,
+    manifest = {"version": 2, "status": "PRIVATE_REVIEW_NOT_RELEASED", "source_commit": commit,
                 "runtime_evidence_checkpoint": content["source_checkpoint"],
                 "created_at": datetime.now(UTC).isoformat(),
                 "files": {name: {"sha256": sha(raw), "bytes": len(raw)}

@@ -1,5 +1,18 @@
 # Decision log
 
+## D98: bind offline export and release receipts to their authenticated content
+
+Owner export must match scheduled digest/capture/expiry to the authenticated backup,
+re-read the vault after interactive password entry, and recheck expiry after encryption.
+Receipt substitution cannot mislabel custody, and a key retired during the prompt cannot
+be exported from a cached key. Current-profile authentication is not lost-profile recovery.
+Package v2 uses exact Git document bytes, checks documents and media against bundled
+source/pins and permits a separately trusted ZIP hash. Internal manifest consistency alone
+is not authenticity; the external checkpoint hash remains the trust anchor. Historical v1
+archives remain verifiable, including their Windows newline convention. No archive code
+executes; no new dependency, runtime privilege, restore promotion or public release.
+Separate Codex critical review and scoped tests do not supply independent human sign-off.
+
 ## D97: prove visible browser startup before opening guest authority
 
 Use the installed Microsoft Edge Playwright channel on Windows, in a fresh ephemeral

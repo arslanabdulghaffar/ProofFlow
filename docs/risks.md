@@ -1,5 +1,10 @@
 # Risks and owner decisions
 
+November8 recovery/package follow-up: authenticated current-profile backup readback and
+receipt/source-binding regression checks pass; no offline custody or compromised-host
+recovery claim. [Scoped evidence](evidence/phase6-recovery-release-hardening-2026-11-08.json).
+Remaining phase/release gates and credit-only/private limits are unchanged.
+
 November8 guest-operation update supersedes earlier private-only/provisioning gaps:
 one individual30-minute guest window, profile-encrypted launcher, no auto approval,
 source-pinned host expiry guard and actual public AI repair/fresh batch now pass.

@@ -1,5 +1,28 @@
 # Progress
 
+## November8 KST — recovery receipt and private package verification hardened
+
+Offline export now binds the scheduled receipt to authenticated ciphertext, capture time
+and expiry before prompting. It re-reads the vault after the password wait (a retired key
+must stay retired) and checks expiry again after encryption. Owner custody remains deferred;
+no password was requested or export created. Actual current-profile backup authenticated:
+185228 database bytes and1 inert asset, expiry Nov9 01:35:14 KST. This is not a live restore
+or current deletion-authority proof. Backup11:36/credit guard12:14 KST last task results0.
+
+Private package verifier now binds documents/media to the bundled source/pins, accepts a
+separately trusted ZIP hash, and requires the full v2 file set. New bundle includes guest
+AI/expiry evidence and this recovery review; original video/deck provenance stays intact.
+36 scoped tests, Ruff, frozen comparison and historical v3 trusted-hash readback passed.
+[Evidence](evidence/phase6-recovery-release-hardening-2026-11-08.json).
+
+Separate critical pass checked key retirement during the prompt, receipt substitution,
+expiry after encryption, package self-consistency versus trusted provenance and no archive
+execution. No deployed image/policy/dependency change, paid call, new resource, visibility
+change or human sign-off. Preserve owner guest work. Phase6 remains IN PROGRESS: offline
+custody deferred; compromised-host rebuild/lost authority/RTO-RPO, post-cutoff hosting and
+license/publication/submission gates remain. Do not rerun paid acceptance merely to refresh
+these receipts. Funded cutoff remains Nov10 01:29 KST; credit caps unchanged.
+
 ## November8 KST — visible Windows browser launcher repaired
 
 The owner reported missing `chromium-1248/chrome-win64/chrome.exe`: prior acceptance

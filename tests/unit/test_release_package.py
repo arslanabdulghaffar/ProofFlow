@@ -1,12 +1,20 @@
 """Offline release-package guard probes; inert bytes only, no candidate execution."""
 
 import io
+import json
 import stat
 import zipfile
 
 import pytest
 
-from scripts.build_release_package import release_gate, safe_entries, xml
+from scripts.build_release_package import (
+    release_gate,
+    safe_entries,
+    sha,
+    source_bindings,
+    verify,
+    xml,
+)
 
 
 def test_public_demo_evidence_does_not_authorize_public_repository_or_license():
@@ -68,3 +76,32 @@ def test_archive_rejects_symlinks():
 def test_xml_rejects_declarations_alternate_encoding_and_oversize(raw):
     with pytest.raises(ValueError, match="OOXML_DECLARATION_OR_SIZE"):
         xml(raw)
+
+
+@pytest.mark.parametrize("change", [None, "document", "media"])
+def test_self_consistent_outer_manifest_cannot_replace_source_bound_content(change):
+    names = ["ProofFlow-deck.pptx", "ProofFlow-cover.png", "ProofFlow-demo.mp4",
+             "demo-edit-manifest.json"]
+    media = {name: b"original inert bytes" for name in names}
+    pins = {name: {"sha256": sha(raw), "bytes": len(raw)} for name, raw in media.items()}
+    outer, source_bytes = io.BytesIO(), io.BytesIO()
+    with zipfile.ZipFile(source_bytes, "w") as source:
+        source.writestr("release/assets.json", json.dumps(pins))
+        source.writestr("release/README.md", b"original\n")
+    with zipfile.ZipFile(outer, "w") as archive:
+        archive.writestr("README.md", b"changed" if change == "document" else b"original\r\n")
+        for name, raw in media.items():
+            archive.writestr(name, b"replaced" if change == "media" else raw)
+    with zipfile.ZipFile(outer) as archive, zipfile.ZipFile(source_bytes) as source:
+        if change:
+            with pytest.raises(ValueError, match="PACKAGE_(DOCUMENT|MEDIA)_DRIFT"):
+                source_bindings(archive, source, documents={"README.md": "release/README.md"})
+        else:
+            source_bindings(archive, source, documents={"README.md": "release/README.md"})
+
+
+def test_trusted_checkpoint_hash_is_checked_before_archive_parsing(tmp_path):
+    package = tmp_path / "package.zip"
+    package.write_bytes(b"replaced archive")
+    with pytest.raises(ValueError, match="PACKAGE_CHECKPOINT_HASH_MISMATCH"):
+        verify(package, expected_sha256="0" * 64)
