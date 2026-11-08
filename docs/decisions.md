@@ -1,5 +1,24 @@
 # Decision log
 
+## D101: observe live operations without granting release or spending authority
+
+Provide a one-shot owner command using existing credentials and pinned SSH hosts.
+Only fixed HTTPS GET, account GET, budget SELECT, systemctl and statvfs observations;
+never call the destructive credit guard, create work, extend funding or export keys.
+Authenticate the saved backup through the existing profile vault (its local freshness
+floor may advance). Bound and redact public response/error text. Check actual Docker
+and worker storage paths, exact budget caps and deadline, task freshness and certificate
+expiry. Nonzero means a fixed actionable failure code, not permission to repair blindly.
+Conservative credit floor $150 is a review threshold, not an invoice or provider stop.
+
+SCOPED_OK always retains phase6_complete=false. Public liveness and the deliberately
+unready product endpoint have separate meanings; test unexpected200 and wrong-app
+responses. This is not a background monitor, end-to-end workflow or RPO/RTO promise.
+Separate critical pass reviewed side effects, secret output, deadline/cap binding,
+false readiness and failed-probe continuation. Twenty regression cases and actual
+readback pass; no new dependency/privilege/security policy, independent human sign-off
+or publication. Preserve existing private release artifacts as dated evidence.
+
 ## D100: actual scheduled SQL quarantine with an independently tested process deadline
 
 Authenticate the existing scheduled backup and receipt under CurrentUser DPAPI; send

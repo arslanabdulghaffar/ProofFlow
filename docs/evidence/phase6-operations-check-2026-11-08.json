@@ -1,0 +1,111 @@
+{
+  "observed_at": "2026-11-08T04:10:18.535753+00:00",
+  "status": "SCOPED_OK",
+  "blockers": [],
+  "notes": [
+    "READ_ONLY_OBSERVATION_NOT_RELEASE_APPROVAL",
+    "NO_WORKER_JOB_OR_PROVIDER_CALL",
+    "OFFLINE_KEY_CUSTODY_DEFERRED",
+    "NO_BACKGROUND_MONITOR_INSTALLED",
+    "PUBLIC_READINESS_REMAINS_503_NOT_VERIFIED"
+  ],
+  "phase6_complete": false,
+  "observations": {
+    "public": {
+      "certificate_expires_at": "2026-11-14T16:01:59+00:00",
+      "live": {
+        "status": 200,
+        "body": {
+          "status": "alive"
+        }
+      },
+      "ready": {
+        "status": 503,
+        "body": {
+          "status": "not_ready",
+          "reason": "product_acceptance_incomplete"
+        }
+      }
+    },
+    "backup": {
+      "snapshot_at": "2026-11-07T16:35:14.29645+00:00",
+      "expires_at": "2026-11-08T16:35:14.296450+00:00",
+      "authenticated": true
+    },
+    "tasks": [
+      {
+        "last_run": "2026-11-08T03:59:39.0000000Z",
+        "result": 0,
+        "name": "ProofFlow-CreditGuard",
+        "enabled": true
+      },
+      {
+        "last_run": "2026-11-08T03:36:07.0000000Z",
+        "result": 0,
+        "name": "ProofFlow-ProductBackup",
+        "enabled": true
+      }
+    ],
+    "remote": {
+      "remaining_credit_usd": "188.85",
+      "credit_stop_reason": null,
+      "funded_until": "2026-11-09T16:29:33.986905+00:00",
+      "hosts": {
+        "control": {
+          "services": {
+            "proofflow-budget.service": true,
+            "proofflow-product-api.service": true,
+            "proofflow-product-dispatcher.service": true,
+            "proofflow-public-api.service": true,
+            "proofflow-product-retention.timer": true,
+            "proofflow-public-renew.timer": true,
+            "proofflow-guest-demo.timer": true
+          },
+          "storage_path": "/var/lib/docker",
+          "free_bytes": 79408394240,
+          "total_bytes": 100077776896,
+          "free_inodes": 25743976,
+          "total_inodes": 25917760
+        },
+        "worker": {
+          "services": {
+            "proofflow-worker.service": true
+          },
+          "storage_path": "/var/lib/proofflow-worker",
+          "free_bytes": 159283314688,
+          "total_bytes": 180637249536,
+          "free_inodes": 46612479,
+          "total_inodes": 46756160
+        }
+      },
+      "budget": {
+        "project_limit": 150000000,
+        "inference_limit": 25000000,
+        "probe_limit": 2000000,
+        "expires_at": "2026-11-09T16:29:33.986905+00:00"
+      }
+    }
+  },
+  "scope": "One-shot read-only operations observation; not phase or release acceptance",
+  "checks": {
+    "unit_tests_passed": 20,
+    "ruff": "PASS",
+    "live_probe": "SCOPED_OK",
+    "documentation": "PASS: 276 entries, 59 pages",
+    "staged_secret_scan": "PASS: no leaks",
+    "diff_whitespace": "PASS"
+  },
+  "review": [
+    "Fixed GET/SELECT/service/storage probes only; no admissions, guard.run, provider call or cloud mutation.",
+    "Exact storage paths, budget caps/deadline, timezone-aware freshness, exception redaction and false readiness reviewed.",
+    "Initial harness expected the foundation readiness reason; corrected to deployed product_acceptance_incomplete. No product policy changed.",
+    "Separate Codex critical review; no independent human sign-off."
+  ],
+  "not_run": [
+    "Fresh compromised-host trust/credential rebuild",
+    "Lost-current-deletion-authority recovery",
+    "Owner offline key custody (deferred)",
+    "Future production certificate rotation",
+    "Full judging-period hosting and public release/submission"
+  ]
+}

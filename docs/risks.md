@@ -1,5 +1,11 @@
 # Risks and owner decisions
 
+Read-only operations audit now checks real TLS, authenticated backup expiry, tasks,
+services/storage, credits and deployed budget caps. A passing observation cannot
+replace readiness (still503), future monitoring, full recovery or release approval.
+[Evidence](evidence/phase6-operations-check-2026-11-08.json). No funding extension;
+owner offline custody remains deferred and Windows task availability remains conditional.
+
 Actual scheduled SQL quarantine now passes in RAM-only local PostgreSQL. The test found
 and fixed a PID1/BusyBox timeout issue using existing Docker init, then proved90s kill
 and removal after launcher exit. Full compromised-host trust/credential recovery remains

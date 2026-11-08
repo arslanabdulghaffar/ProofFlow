@@ -1,5 +1,28 @@
 # Progress
 
+## November8 KST — live operations check and release instructions reconciled
+
+Added `scripts/check_operations.py`: one-shot TLS/health, authenticated backup,
+Windows task, pinned-host service/storage and credit/budget readback. Actual run at
+13:10 KST passed its scoped checks: credit $188.85, unchanged $150/$25 caps and
+Nov10 01:29:33 KST funding cutoff. Certificate expires Nov15 01:01:59 KST;
+current backup expires Nov9 01:35:14 KST. Both scheduled tasks last returned zero.
+[Sanitized evidence](evidence/phase6-operations-check-2026-11-08.json).
+
+Twenty regression tests cover stale/failed tasks, backup expiry/authentication, TLS,
+service/storage pressure, budget drift, missing probes, redaction and false readiness.
+The initial harness used the foundation readiness reason; corrected against actual
+product source. Public liveness is 200; readiness remains 503
+`product_acceptance_incomplete`. SCOPED_OK is explicitly not phase acceptance.
+README/setup/test-plan now describe actual guest access and implemented commands.
+No new resource, model call, admission, deployment change or public release.
+
+Phase6 remains IN PROGRESS. Preserve dated private v4; no media regeneration needed.
+Offline custody is deferred. Fresh compromised-host trust/credential rebuild, lost
+current deletion authority, post-event access, license/publication/submission and
+independent human review remain open. The checker is not a background monitor;
+existing credit/backup tasks still require the owner's Windows session awake.
+
 ## November8 KST — actual saved SQL restore and deadline fix accepted
 
 The latest authenticated scheduled185228-byte SQL backup restored into a fresh local,

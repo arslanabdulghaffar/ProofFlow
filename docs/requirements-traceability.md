@@ -480,3 +480,9 @@ Database/provider setup follow-up: R14-05/R24/R39/R46 have additional partial ev
 Receipts/runtime follow-up: R14/R24/R39/R46/R55 have partial evidence from durable probe recovery, crash/restore hash comparison, measured host CPU throttling, kernel admission checks and complete runtime-bundle validation. [Receipt](evidence/phase1-receipts-runtime-2026-11-04.json) binds sources/results. No requirement is promoted to complete: deployed isolation, actual provider behavior, billing enforcement and runtime vulnerability coverage remain open.
 
 Phase2 bounded-verifier follow-up: semantic checks now have actual restricted-process verification and four fresh worker canary fixtures, including correct-held output and wrong-owner rejection. [Evidence](evidence/phase2-bounded-verifier-2026-11-04.json) binds sources/images/manifests/reports. Product API/queue/failure UI and full Phase2 acceptance remain unfinished; no complete requirement is inferred solely from these fixtures.
+
+November8 operations follow-up: R48-02–R48-04 and R55-01/R55-03 have partial actual
+evidence from the [one-shot operations check](evidence/phase6-operations-check-2026-11-08.json)
+and implemented command contracts in test-plan.md. TLS, service/storage, budget and
+backup/task checks pass; runtime readiness remains503. Continuous alerts, assigned
+human on-call, full workflow health and full disaster recovery are not implied.

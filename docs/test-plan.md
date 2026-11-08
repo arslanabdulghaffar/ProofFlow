@@ -1,5 +1,10 @@
 # Acceptance and verification plan
 
+Current Phase6 operational coverage and command semantics are listed below. Dated entries
+retain the scope observed at that time; later public TLS/guest acceptance is recorded in
+[guest evidence](evidence/phase6-guest-operation-2026-11-08.json). The historical NOT RUN
+public-ingress status is superseded; full compromised-host recovery is still unproven.
+
 November8 ingress/recovery:928 Windows tests pass/191 platform skips,161 scoped Linux
 tests pass and6 later read-only smoke-tool tests pass. Linux covers actual origin-file
 ownership/no-follow rules and expiry during descriptor-based inert recovery. Actual
@@ -183,7 +188,21 @@ Protected changes receive an automated check and a separate critical review pass
 
 CI plan: lockfile install → lint/types/schema drift/secret scan → trusted units → real DB integration → isolated runtime suite on restricted worker → frontend behaviors → production images and dependency/license scans → release manifest → reviewed deploy and real smoke. Candidate code never executes on a privileged shared runner. Credentials or reachable critical vulnerabilities block affected release; other findings get documented triage.
 
-Planned commands, none implemented yet: make doctor (presence/version/dependency checks without secret values), dev, test, sandbox-probe, smoke, eval, build, deploy, verify-release, backup, restore-test. Each needs prerequisites, safe defaults, output/failure codes and cleanup documented; nonzero on failure. A placeholder zero exit is not a check. Destructive reset must name and validate an explicitly disposable workspace.
+Current operator checks use the actual scripts below; the earlier proposed `make` aliases
+were not implemented. Run from the repository root with the locked Python environment.
+
+| Command | Prerequisites and actual scope | Failure behavior |
+| --- | --- | --- |
+| `python scripts/check_preparation.py` | Local documentation only | Nonzero for missing/invalid links, traceability or repository hygiene |
+| `python scripts/check_operations.py` | Configured owner Windows credentials/vault/tasks; existing hosts and public TLS | One-shot GET/SELECT/status checks; fixed blocker codes and nonzero; no new admission or schedule |
+| `python scripts/build_release_package.py --verify PRIVATE-ZIP --expected-sha256 TRUSTED-HASH` | Existing private archive and separately trusted checkpoint hash | Bounded inert archive readback; no extraction/execution; nonzero on drift |
+| `python scripts/check_saved_database_recovery.py` | Owner vault/SSH, fresh current deletion authority, cached pinned WSL database image | Fresh RAM-only isolated SQL quarantine, second authority read and cleanup; no production restore; nonzero on failure |
+| `python -m scripts.check_saved_database_deadline` (Linux/WSL) | Cached pinned database image and trusted Docker access | Empty90s watchdog drill; requires exit137/AutoRemove after launcher exits; scoped cleanup on failure |
+
+These checks do not replace worker containment, paid evaluation, exact approvals or a full
+compromised-host rebuild. Completed one-shot deploy/PR/evaluation scripts are not a generic
+smoke suite and must not be rerun blindly. Destructive reset must identify an explicitly
+disposable workspace. No test may turn stored PASS or ordinary HTTP200 into release approval.
 
 ## Observed local budget checks — Nov 4
 

@@ -24,6 +24,15 @@ one-shot campaign, renewal, kernel maintenance or PR scripts to reproduce a tabl
 
 ## Actual Vultr deployment
 
+Before an invited session, the configured owner computer can run
+`.venv/Scripts/python.exe scripts/check_operations.py`. This makes read-only HTTPS,
+cloud-account and host observations, authenticates the scheduled backup and inspects
+existing Windows task results. It opens no guest or inference admission. Nonzero exit
+means inspect the fixed blocker codes in the JSON report; a successful scoped report
+still records readiness503 and does not authorize release or future judging uptime.
+It installs no background monitor, and the desktop backup/credit tasks still require
+the configured Windows identity and an awake computer.
+
 Two Vultr Compute VMs host the private product: control/API/dispatcher/PostgreSQL and a
 separate gVisor execution worker. The restricted verifier lives on control and does not
 execute source. Application-agent calls use the fixed Vultr Serverless Inference adapter.
