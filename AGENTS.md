@@ -4,6 +4,14 @@ Read `docs/next-session.md`, `docs/product.md`, `docs/contract.md`, `docs/threat
 
 ## Current boundary
 
+November8 release authorization supersedes the historical private-only boundary below:
+the owner confirmed code ownership and explicitly authorized MIT licensing, publishing
+ProofFlow and its prepared materials, finishing judge access and submitting the lablab
+hackathon entry. Keep ProofFlow-Demo private; this release grants no new product PR
+approval or credential disclosure. Credit-only $150/$25 limits remain unchanged.
+No further permission to continue is needed. Record actual publication/submission
+readbacks; never treat authorization as evidence of completion.
+
 The official live dashboard confirmed the event open on 2026-11-04 KST. Phase 1 implementation is authorized. Account activation is verified ($200, ledger expiry 2026-12-04). Latest owner instruction explicitly authorizes using the credits now for Phase 1 while the owner awaits their support ticket reply. Do not repeatedly ask the billing question or make that reply a universal prerequisite. Use fresh balance/quotes, conservative reservations and early spending controls within $150 total/$25 inference; no card, deposit or personal payment is authorized. A provider hard stop and tax treatment remain unknown facts, not verified guarantees. Stop an affected action if the console demands personal payment or projected usage exceeds authorized credit limits. Do not advance past failed critical infrastructure gates. The latest owner instruction authorizes continuing Phase 2 after actual Phase 1 acceptance and its verified GitHub checkpoint/report while the owner is away; no reply is required to continue that already authorized work. Keep this repository private. Do not contact people, publish, submit, or change visibility without explicit user instruction. Do not assume a PDF estimate is an observed result.
 
 ## Invariants

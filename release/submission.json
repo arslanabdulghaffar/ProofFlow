@@ -1,5 +1,5 @@
 {
-  "status": "PRIVATE_REVIEW_PACKAGE_NOT_SUBMITTED",
+  "status": "RELEASE_AUTHORIZED_SUBMISSION_PENDING",
   "project_title": "ProofFlow",
   "short_description": "Repair merchant revenue imports with Vultr AI, check every source record, and approve exact code before the next batch.",
   "challenge": "C1 \u2014 Blast Radius Zero",
@@ -19,8 +19,8 @@
   "public_demo_url": "https://158.247.227.66:8443",
   "public_video_url": null,
   "public_slides_url": null,
-  "license_issued": false,
-  "license_proposal": "MIT, pending owner ownership clearance and explicit publication instruction",
+  "license_issued": true,
+  "license_proposal": "MIT; ownership confirmed by owner November8,2026",
   "form_limits_verified": false,
   "absolute_submission_deadline_verified_this_session": false,
   "registration_verified": false,
@@ -31,6 +31,6 @@
   "event_check_note": "Public page still requires repository/demo/video/slides and containment. Dashboard labels submissions open but text countdown is zero; authenticated form and absolute final deadline remain unverified. General rules/guide routes were unavailable to web retrieval.",
   "internal_target_kst": "2026-11-09T03:00:00+09:00",
   "target_note": "Existing internal buffer, not a newly verified organizer deadline",
-  "release_allowed": false,
+  "release_allowed": true,
   "public_demo_access": "Invited individual guest windows, maximum30 minutes. Owner launcher rechecks credit/prices and signs in without automatic upload/approval. No shared judge credential or anonymous signup."
 }

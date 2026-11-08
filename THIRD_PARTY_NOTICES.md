@@ -8,7 +8,11 @@ application dependency or redistributed third-party source was added. Existing V
 Ubuntu kernel packages upgraded to signed noble-updates6.8.0-149.149;distribution
 copyright/license files remain installed. This inventory is not MIT ownership clearance.
 
-MIT is the proposed license for team-owned code. No LICENSE grant is issued in Phase 0 because the copyright holder, contributor rights and any employer restrictions are unconfirmed. The owner must settle these before publication. “MIT-compliant” is an event requirement, not evidence that the team owns everything supplied.
+On November8,2026 the owner Arslan Abdul Ghaffar confirmed ownership and authorized
+public release under MIT. The root LICENSE covers original ProofFlow code and
+documentation. Third-party dependencies retain their own licenses and notices below;
+this release does not redistribute their installed packages, images or model weights.
+Earlier review notes about pending ownership describe the historical preparation state.
 
 The engineering handoff is attributed in docs/source-review.md. Its PDF, extracted text and page images remain outside Git; redistribution rights have not been established. Repository documentation paraphrases the specification and records decisions rather than republishing the source.
 

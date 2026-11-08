@@ -1,5 +1,18 @@
 # Resume ProofFlow
 
+## November8 — owner authorized MIT publication and submission
+
+Owner explicitly confirmed code ownership and authorized MIT release, public ProofFlow
+repository/materials, judge-access completion and lablab submission. This supersedes
+older private-only and ownership-pending notes. ProofFlow-Demo remains private and
+product exact-version/PR approvals remain intact. Credit-only $150/$25 limits persist.
+Full Git history (74 commits) secret scan passed before publication. Source and prepared
+media release is underway; do not claim submission or judge access until actual readback.
+The existing v5 private archive remains historical. Do not rerun paid acceptance merely
+for publication. Full compromised-host reconstruction remains a disclosed limitation,
+not a claim of production disaster-recovery readiness. Offline custody is deferred.
+
+
 ## November8 KST — scheduled rollover, renewal post-check and private v5 verified
 
 The existing hourly Windows task ran naturally at13:36 KST and returned0 with a new

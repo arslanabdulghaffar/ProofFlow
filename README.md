@@ -1,22 +1,26 @@
 # ProofFlow
 
-**Current status — November8:** the [public guest demo](https://158.247.227.66:8443)
-has trusted TLS and accepted invited-guest workflows. Each guest window is individually
-provisioned and limited to30 minutes; there is no anonymous signup or shared judge password.
-The repository and release media remain private. Phase6 recovery/release work is ongoing;
-full compromised-host recovery and publication/submission are not complete.
-See [guest acceptance](docs/evidence/phase6-guest-operation-2026-11-08.json) and the
-[release gate checklist](docs/release.md#stopgo-inventory-mapped-to-pdf-p53).
+**Checked repairs before the next batch.** ProofFlow repairs supported Python revenue
+imports using Vultr AI, executes each candidate in a fresh isolated worker, checks every
+source occurrence, and requires exact-version approval before new batches.
 
-ProofFlow is a private prototype for repairing supported Python revenue-import pipelines, checking their actual records against human-approved business rules, and using an exact approved version for subsequent batches.
+Original project code is [MIT licensed](LICENSE). The owner authorized public release
+on November 8, 2026. Phases 1–5 passed technical acceptance; release and submission
+readbacks are tracked in [the release checklist](docs/release.md).
 
-**Current Phase6 review materials:** an eight-slide editable deck, standalone cover,
-139.04s real-AI demo and verified private release ZIP are prepared. See the
-[package guide](release/README.md), [draft submission copy](release/submission-copy.md)
-and [exact asset hashes](release/assets.json). The application URL is live; public
-repository/video/slides and submission confirmation remain unavailable. The private v5
-archive is a dated snapshot, not automatically rebuilt for later operational tools.
-The owner deferred offline key custody. Phases0–5 are complete at verified checkpoints.
+- [Live application](https://158.247.227.66:8443) — individually invited, synthetic-only
+  guest sessions; judge access setup is being finalized. No cloud credentials are needed
+  by guests. The application currently requires a session; it is not anonymous signup.
+- [Recorded demo, slides and cover](https://github.com/arslanabdulghaffar/ProofFlow/releases/tag/v0.1.0-hackathon)
+  — prepared November 8 materials. Their private-preview labels describe the recording
+  date; publication does not turn automated test approvals into human review.
+- [Setup and trust boundaries](release/setup.md), [measured comparison](eval/final-comparison-2026-11-06.md),
+  [source-derived contract](docs/contract.md), [security limitations](docs/threat-model.md).
+
+The narrow frozen benchmark repaired 15/18 cases with ProofFlow and 18/18 with the
+fixed deterministic rebuild. We claim inspectable, approval-bound repairs, not AI
+superiority or production certification. Full compromised-host recovery is unproven;
+independent human review and offline key custody remain unavailable/deferred.
 
 ## Actual Vultr use
 
@@ -29,7 +33,7 @@ recorded run). Only the dispatcher receives provider credentials. The verifier c
 collected bytes and never executes candidate source. See [architecture](docs/architecture.md),
 [sandbox](docs/sandbox.md) and [setup for review](release/setup.md).
 
-**Phases 1–5 passed private technical acceptance and their remote checkpoints are verified.** Real Vultr repair, isolated execution, independent deterministic checks, exact-version approval, fresh batches and one separately approved private draft PR have evidence. Phase5 adds security/recovery hardening and a frozen96-job comparison. The deterministic baseline repaired18/18 cases versus ProofFlow15/18; no beyond-normalizer or witness-quality superiority is claimed. Both VMs received the reviewed Critical kernel fix and passed16 fresh containment probes. Native advisory and independent human-review limitations remain. Public demo/release work is Phase6 and is not complete. See [acceptance audit](docs/phase5-security-review.md), [measured comparison](eval/final-comparison-2026-11-06.md), [progress](docs/progress.md) and [resume instructions](docs/next-session.md).
+**Phases 1–5 passed private technical acceptance and their remote checkpoints are verified.** Real Vultr repair, isolated execution, independent deterministic checks, exact-version approval, fresh batches and one separately approved private draft PR have evidence. Phase5 adds security/recovery hardening and a frozen96-job comparison. The deterministic baseline repaired18/18 cases versus ProofFlow15/18; no beyond-normalizer or witness-quality superiority is claimed. Both VMs received the reviewed Critical kernel fix and passed16 fresh containment probes. Native advisory and independent human-review limitations remain. Phase6 submission and judge-access readback remain in progress. See [acceptance audit](docs/phase5-security-review.md), [measured comparison](eval/final-comparison-2026-11-06.md), [progress](docs/progress.md) and [resume instructions](docs/next-session.md).
 
 The demonstrated workflow is intake → original execution → independent checks → bounded Vultr-generated repair → fresh sandbox → independent verification → exact approval → verified fresh batch. A separate operator approval permits a draft GitHub PR. Humans supply inputs and business decisions; they do not manually repair code or advance repair stages. Automated acceptance approvals are labeled test actions and are not independent human sign-off.
 
@@ -80,4 +84,4 @@ approves automatically. The separately approved private PR has recorded readback
 PR still needs its own exact approval. Judges have not been issued shared access by this
 repository. See [owner setup](release/setup.md) for the bounded guest launcher.
 
-The repository remains private. Publication, visibility changes and submission need a later explicit instruction. MIT is proposed for team-owned code; ownership and dependency/data attribution must be settled before issuing a license or publishing. The supplied handoff PDF is not redistributed here.
+The owner confirmed ownership and authorized MIT licensing, public release and hackathon submission on November8. Third-party dependencies retain their own licenses; see THIRD_PARTY_NOTICES.md. The supplied handoff PDF is not redistributed.

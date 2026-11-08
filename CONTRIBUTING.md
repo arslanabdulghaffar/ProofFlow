@@ -1,6 +1,9 @@
 # Contributing
 
-This repository currently contains preparation, not an application. Read AGENTS.md and the phase plan. Follow the event implementation boundary. Use a small trunk and short-lived branches, integrating at least twice each event day when the team is available.
+This repository contains the ProofFlow application, tests and reproducible engineering
+evidence. Original project code is MIT-licensed. Read AGENTS.md, the contract and threat
+model before changing runtime or approval boundaries. Use focused branches and preserve
+existing work and history.
 
 Each change identifies behavior, requirement IDs, acceptance evidence, risk, recovery, and remaining limits. Use READY, IN_PROGRESS, BLOCKED, REVIEW and DONE for tasks. Untested work stays REVIEW; phase DONE also requires the verified remote checkpoint.
 

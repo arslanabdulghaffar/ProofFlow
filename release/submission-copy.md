@@ -1,6 +1,6 @@
 # ProofFlow
 
-Private review copy. Not submitted, published or licensed for public distribution.
+Owner-approved public release copy. Original code is MIT licensed; submission is pending.
 Final form limits, enrollment and absolute closing time have not been verified in the
 authenticated submission form. `submission.json` deliberately leaves public URLs blank.
 
