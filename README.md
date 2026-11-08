@@ -14,7 +14,7 @@ ProofFlow is a private prototype for repairing supported Python revenue-import p
 139.04s real-AI demo and verified private release ZIP are prepared. See the
 [package guide](release/README.md), [draft submission copy](release/submission-copy.md)
 and [exact asset hashes](release/assets.json). The application URL is live; public
-repository/video/slides and submission confirmation remain unavailable. The private v4
+repository/video/slides and submission confirmation remain unavailable. The private v5
 archive is a dated snapshot, not automatically rebuilt for later operational tools.
 The owner deferred offline key custody. Phases0–5 are complete at verified checkpoints.
 

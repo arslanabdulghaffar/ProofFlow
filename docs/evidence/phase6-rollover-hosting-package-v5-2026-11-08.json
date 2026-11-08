@@ -1,0 +1,121 @@
+{
+  "scope": "Phase6 scheduled-backup rollover, normal renewal post-check and private v5 package",
+  "package": {
+    "verified": true,
+    "files": 17,
+    "source_commit": "65b6b8e51d7809d2f8b05e9f2e9da72b4277f831",
+    "package_sha256": "9adebb1796557bde657d4617d1fc1c93f0bd2c91787a9a92259e7f1d8c2fee42",
+    "bytes": 4890331,
+    "trusted_hash_checked": true,
+    "source_files": 572,
+    "bundled_tls_hook_matches_deployment": true,
+    "latest_recovery_helpers_present": true,
+    "filename": "ProofFlow-private-release-v5.zip",
+    "source_zip_matches_git_archive": true,
+    "repository_visibility": "private",
+    "phase6_complete": false,
+    "old_v4_preserved": true,
+    "model_calls": 0,
+    "new_resources": 0,
+    "media_regenerated": false,
+    "offline_key_custody": "DEFERRED",
+    "status": "PRIVATE_REVIEW_NOT_RELEASED"
+  },
+  "backup_task": {
+    "status": "captured",
+    "checked_at": "2026-11-08T04:36:29.8342447Z",
+    "expires_at": "2026-11-09T04:36:22.087837+00:00"
+  },
+  "actual_restore": {
+    "database_bytes": 187565,
+    "snapshot_workspaces": 0,
+    "kept_workspaces": 0,
+    "excluded_workspaces": 0,
+    "cleared_authority_tables": 24,
+    "ordinary_login_denied": true,
+    "database_connection_limit": 0,
+    "database_image": "sha256:9ed8d24e2d804f04bd228a4619c9ed43c3a8d2f4a09fe947b44b112615eb010d",
+    "storage": "tmpfs_only_no_volumes_or_host_binds",
+    "network": "none",
+    "production_promotion": false,
+    "container_removed": true,
+    "elapsed_seconds": 6.423,
+    "observed_at": "2026-11-08T04:37:34.597867+00:00",
+    "snapshot_at": "2026-11-08T04:36:22.087837+00:00",
+    "expires_at": "2026-11-09T04:36:22.087837+00:00",
+    "snapshot_age_seconds": 72.51,
+    "authenticated_vault_and_receipt": true,
+    "fresh_authority_rechecked": true,
+    "scope": "actual_scheduled_SQL_backup_restored_into_fresh_local_tmpfs_database",
+    "provider_calls": 0,
+    "new_resources": 0,
+    "owner_offline_keys_used": false,
+    "compromised_host_rebuild": false,
+    "production_RTO_measured": false
+  },
+  "renewal": {
+    "observed_at": "2026-11-08T04:38:56.521935+00:00",
+    "normal_renewal_service_passed": true,
+    "post_hook_executed_successfully": true,
+    "forced_issuance": false,
+    "certificate_changed": false,
+    "public": {
+      "certificate_expires_at": "2026-11-14T16:01:59+00:00",
+      "live": {
+        "status": 200,
+        "body": {
+          "status": "alive"
+        }
+      },
+      "ready": {
+        "status": 503,
+        "body": {
+          "status": "not_ready",
+          "reason": "product_acceptance_incomplete"
+        }
+      }
+    },
+    "unit_sha256": "eff2874ef62ff81230e7abd6ca8d4a8a04c5b9696c91d4c4a932fee5f5119856",
+    "hook_sha256": "fb21cb63ecfa6271ef1fe9305e6bfa52caf012b5fa1fa29b5adee4090d2e8562",
+    "systemd_readback": "Result=success\nExecMainStatus=0\nExecStartPost={ path=/opt/proofflow-acme/bin/python ; argv[]=/opt/proofflow-acme/bin/python -I /opt/proofflow-public-setup/fb21cb63ecfa6271ef1fe9305e6bfa52caf012b5fa1fa29b5adee4090d2e8562/install_public_certificate.py ; ignore_errors=no ; start_time=[Sun 2026-11-08 04:38:58 UTC] ; stop_time=[Sun 2026-11-08 04:38:58 UTC] ; pid=490530 ; code=exited ; status=0 }\nActiveEnterTimestamp=\nInactiveEnterTimestamp=Sun 2026-11-08 04:38:58 UTC\n",
+    "new_resources": 0,
+    "model_calls": 0,
+    "funded_until": "2026-11-09T16:29:33.986905+00:00"
+  },
+  "support": {
+    "checked_at_kst": "2026-11-08T13:37:00+09:00",
+    "scope": "read-only existing account ticket; no message sent",
+    "reply_count": 2,
+    "staff_reply_at": "2026-11-04T11:09:08+00:00",
+    "staff_reply_summary": "Technical Support forwarded the request to Account Management; no coverage, tax, non-overage or post-event access decision supplied.",
+    "terms_verified": false,
+    "ticket_status": "open",
+    "private_reply_sha256": "1f0dfa320b8b0c32d9f591a1b60a889e32d702cbddb81d28444aae7cd3790a99",
+    "private_identifiers_and_contact_details_omitted": true
+  },
+  "checks": {
+    "scoped_package_backup_tests_passed": 38,
+    "documentation": "PASS:276 entries,59 pages",
+    "diff_whitespace": "PASS",
+    "staged_secret_scan": "PASS: no leaks"
+  },
+  "limits": {
+    "project_credit_usd": 150,
+    "inference_credit_usd": 25,
+    "new_resources": 0,
+    "model_calls": 0,
+    "payment_method_added": false,
+    "funded_until": "2026-11-09T16:29:33.986905+00:00"
+  },
+  "review": [
+    "Natural hourly scheduler captured the new snapshot; no manual force capture or owner password.",
+    "Latest snapshot has zero workspaces, consistent with retention; it is not new nonempty-data recovery evidence.",
+    "Authenticated new scheduled SQL restored in isolated local RAM-only database, old authority stripped, ordinary login denied and container removed.",
+    "Normal renewal service actually executed ExecStartPost successfully; same certificate remains, future issuance/rotation still unobserved.",
+    "Private v5 source is byte-for-byte Git archive of verified checkpoint; hook hash matches deployed source. Historical media is unchanged and keeps its original provenance.",
+    "Support ticket read with GET only; routing response is not billing or eligibility clearance.",
+    "Separate Codex review is not independent human sign-off."
+  ],
+  "phase6_complete": false,
+  "offline_key_custody": "DEFERRED"
+}

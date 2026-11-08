@@ -1,5 +1,24 @@
 # Decision log
 
+## D104: verify actual scheduled operation and preserve release provenance
+
+Observe the existing scheduler's natural twelve-hour-due capture rather than forcing
+another capture to refresh a date. Rehearse the newly authenticated snapshot off-VM;
+a zero-workspace snapshot after retention is valid but not a fresh nonempty-data claim.
+Exercise the normal renewal service under the exact reviewed unit/closed admission,
+without force-renewal. Actual ExecStartPost success supplements the prior direct hook
+check; future CA issuance and post-event hosting remain unverified.
+
+Read only the existing support ticket through documented GET endpoints. Retain raw
+messages privately; commit only routing status/date, content digest and decision gap.
+Do not send, rate, close, or attach anything. A forwarding response is not clearance.
+
+Package v5 uses verified source65b6b8e, unchanged media and original recording provenance.
+Compare SOURCE.zip byte-for-byte to Git archive and the bundled hook to deployed hash;
+verify outer ZIP against its separately recorded digest. Preserve all previous bundles.
+This is private review material, not publication or proof of all Phase6 gates. Scoped
+checks/Codex review are not independent human approval; offline custody remains deferred.
+
 ## D103: recover interrupted TLS deployment without guessing or forcing issuance
 
 Keep the existing exact IP, chain, validity and key validation. Before service changes,

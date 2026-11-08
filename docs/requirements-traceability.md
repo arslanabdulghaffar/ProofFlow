@@ -496,3 +496,8 @@ November8 TLS recovery: R48/R49–R53 gain scoped actual hook deployment and ext
 readback evidence, plus a real local between-file process-crash recovery drill.
 [Receipt](evidence/phase6-tls-interruption-recovery-2026-11-08.json). No full-host rebuild,
 future production renewal or post-event availability guarantee is implied.
+
+November8 R46/R48/R55 follow-up: actual natural scheduled rollover, fresh isolated SQL
+restore and normal renewal ExecStartPost pass. Private v5 contains verified source and
+deployed-hook bytes. [Receipt](evidence/phase6-rollover-hosting-package-v5-2026-11-08.json).
+No full-host reconstruction, future certificate issuance or post-event access claim.

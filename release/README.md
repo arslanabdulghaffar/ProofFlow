@@ -1,5 +1,11 @@
 # Private release review package
 
+Latest verified private bundle: **v5**, source checkpoint
+`65b6b8e51d7809d2f8b05e9f2e9da72b4277f831`. It includes the TLS interruption-recovery
+fix and current recovery helpers; existing media retains its original provenance.
+[Verification receipt](../docs/evidence/phase6-rollover-hosting-package-v5-2026-11-08.json).
+Earlier bundles remain historical artifacts. No public release or submission is implied.
+
 This package is ready for private review. It is not a submission or public release.
 Keep the repository and package private. Offline key custody was deferred by the owner;
 it is not silently completed or a prerequisite for unrelated package preparation.

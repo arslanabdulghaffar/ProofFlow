@@ -1,5 +1,34 @@
 # Release and operations plan
 
+## November8 KST — scheduled rollover, renewal post-check and private v5 verified
+
+The existing hourly Windows task ran naturally at13:36 KST and returned0 with a new
+captured snapshot. Latest backup is187565 SQL bytes, snapshot13:36:22 KST, expiry
+Nov9 13:36:22 KST. Actual isolated restore passed in6.423s with all24 runtime-authority
+tables cleared, ordinary login denied and temporary container removed. It contains
+zero workspaces after retention; historical nonempty recovery evidence remains separate.
+No forced capture, offline password, production restore, new resource or model call.
+
+Normal renewal service ran with its new ExecStartPost: actual post-check exit0 and
+service success, trusted public TLS/liveness unchanged and no certificate replacement.
+This closes the untested systemd post-check path, not future CA issuance/rotation.
+Existing support ticket read via GET only: one staff reply onNov4 routed it to Account
+Management. No later billing/post-event decision; no follow-up message was sent.
+
+Private v5 now includes the recovery helpers and deployed TLS fix from verified source
+`65b6b8e51d7809d2f8b05e9f2e9da72b4277f831`.17 package files/572 source files; SOURCE.zip
+matches fresh Git archive byte-for-byte and bundled hook hash matches deployment.
+ZIP SHA-256 `9adebb1796557bde657d4617d1fc1c93f0bd2c91787a9a92259e7f1d8c2fee42`.
+Location: `C:/Users/IT/.proofflow/release/2026-11-08/ProofFlow-private-release-v5.zip`.
+38 scoped tests and trusted-hash/CRC/media/source checks pass. Old archives/media stay
+unchanged. [Receipt](evidence/phase6-rollover-hosting-package-v5-2026-11-08.json).
+
+Phase6 IN PROGRESS. Offline custody deferred; full compromised-host trust/credential
+recovery, lost current deletion authority, post-event access and publication/license/
+submission remain open. No cutoff extension: Nov10 01:29:33 KST and $150/$25 caps.
+Do not repeat paid tests, force issuance or rebuild this package just to add its receipt.
+Source checkpoint and later readback receipt necessarily live in different commits.
+
 ## November8 KST — TLS interruption recovery deployed
 
 Fixed a concrete judging-hosting failure: certificate/key replacement now has an

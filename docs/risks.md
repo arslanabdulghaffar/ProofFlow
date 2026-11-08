@@ -1,5 +1,11 @@
 # Risks and owner decisions
 
+Natural scheduled backup rollover and actual renewal ExecStartPost now pass. The current
+backup expires Nov9 13:36 KST and contains no retained workspaces. Existing Vultr ticket
+only reports routing to Account Management; no billing/post-event clearance. Private v5
+contains the TLS fix; future issuance, full-host recovery and offline custody remain gaps.
+[Evidence](evidence/phase6-rollover-hosting-package-v5-2026-11-08.json).
+
 TLS deployment now recovers a tested between-file interruption and exposes renewal-hook
 failures in service/operations checks. Actual production hook no-op and public health
 passed; future certificate rotation, CA availability and post-event account access remain

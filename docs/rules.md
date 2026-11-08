@@ -1,5 +1,11 @@
 # Rules and implementation timing
 
+November8 read-only account-ticket check: the existing credit-only question has one
+staff reply dated November4, forwarding it to Account Management. No substantive terms
+or post-event access decision is present in the complete two-reply response. No message
+was sent or ticket changed. This does not resolve the event-page payment-method conflict.
+[Sanitized observation](evidence/phase6-rollover-hosting-package-v5-2026-11-08.json).
+
 November8 judging-hosting recheck: the [event page](https://lablab.build/ai-hackathons/vultr-hackathon)
 still asks for a payment method after the event; owner-relayed judging coverage does not
 resolve that account-access condition. No personal payment authorized or added. Current
