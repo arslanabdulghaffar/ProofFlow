@@ -50,7 +50,7 @@ def test_duplicate_blob_uses_earliest_retention_timestamp(monkeypatch):
         m.unique_registry([first] * 257)
 
 
-@pytest.mark.parametrize("fault", [None, "missing_key", "receipt", "corrupt_envelope"])
+@pytest.mark.parametrize("fault", [None, "missing_key", "receipt", "corrupt_envelope", "snapshot"])
 def test_not_due_still_authenticates_backup_without_cloud(monkeypatch, tmp_path, fault):
     m = module(monkeypatch)
     snapshot, assets, key = fixture()
@@ -78,9 +78,12 @@ def test_not_due_still_authenticates_backup_without_cloud(monkeypatch, tmp_path,
 
     monkeypatch.setattr(m, "recover", recover)
     monkeypatch.setattr(m, "LiveSession", lambda: pytest.fail("No cloud check needed for not_due"))
-    if fault == "receipt":
+    if fault in {"receipt", "snapshot"}:
         value = json.loads(latest.read_bytes())
-        value["encrypted_sha256"] = "0" * 64
+        if fault == "receipt":
+            value["encrypted_sha256"] = "0" * 64
+        else:
+            value["snapshot_at"] = (NOW-timedelta(minutes=1)).isoformat()
         latest.write_text(json.dumps(value))
     if fault:
         with pytest.raises((FileNotFoundError, RuntimeError, ValueError)):

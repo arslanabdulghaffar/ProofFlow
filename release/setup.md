@@ -33,6 +33,14 @@ still records readiness503 and does not authorize release or future judging upti
 It installs no background monitor, and the desktop backup/credit tasks still require
 the configured Windows identity and an awake computer.
 
+If a funding review lost its reply, inspect the existing dated receipt with
+`.venv/Scripts/python.exe scripts/review_credit_window.py --inspect --review-date YYYY-MM-DD`.
+Use its original review date. This reads the pinned budget and local receipt; it does not
+extend hosting, retry the update or open admission. A nonzero/partial result needs
+reconciliation while the old cutoff remains enforced. Never delete an intent to retry.
+Backup recovery similarly stops on a pending/replaced receipt or retired key; preserve
+that evidence instead of deleting pending files. Offline key custody remains deferred.
+
 Two Vultr Compute VMs host the private product: control/API/dispatcher/PostgreSQL and a
 separate gVisor execution worker. The restricted verifier lives on control and does not
 execute source. Application-agent calls use the fixed Vultr Serverless Inference adapter.

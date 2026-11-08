@@ -1,5 +1,11 @@
 # Risks and owner decisions
 
+Backup receipt interruption/replacement and key retirement during SQL rehearsal now
+fail closed. Read-only funded-window inspection distinguishes partial commits without
+replaying them; actual saved/deployed cutoff matches. This does not solve lost current
+deletion authority, compromised-host trust, offline custody or post-event access.
+[Evidence](evidence/phase6-recovery-funding-reconciliation-2026-11-08.json).
+
 Read-only operations audit now checks real TLS, authenticated backup expiry, tasks,
 services/storage, credits and deployed budget caps. A passing observation cannot
 replace readiness (still503), future monitoring, full recovery or release approval.

@@ -17,6 +17,7 @@ from uuid import UUID
 from asset_backup_vault import expire, recover, save
 from check_product_image import IMAGE
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from export_portable_backup import checked_backup
 from product_live_session import PRIVATE, LiveSession, require
 from recovery_clock import wait_for_observation
 
@@ -113,10 +114,7 @@ def run(*, force=False):
         # A recent timestamp alone does not establish that the key/envelope still
         # exists and authenticates. Fail visibly rather than report healthy coverage.
         envelope, key = recover(previous["backup_id"])
-        payload = open_backup(envelope, key, now=datetime.now(UTC))
-        require(hashlib.sha256(envelope).hexdigest() == previous["encrypted_sha256"]
-                and payload["expires_at"] == previous["expires_at"],
-                "SCHEDULED_BACKUP_RECEIPT_CHANGED")
+        checked_backup(previous, envelope, key, now=datetime.now(UTC))
         return {"scheduled_backup": "not_due", "expires_at": previous["expires_at"]}
     with LiveSession() as live:
         require(live.sql("SELECT count(*) FROM pf_product.jobs WHERE state NOT IN "

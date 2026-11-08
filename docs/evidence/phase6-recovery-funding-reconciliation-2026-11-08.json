@@ -1,0 +1,129 @@
+{
+  "scope": "Phase6 recovery receipt hardening and read-only funded-update reconciliation",
+  "recovery": {
+    "database_bytes": 185228,
+    "snapshot_workspaces": 1,
+    "kept_workspaces": 0,
+    "excluded_workspaces": 1,
+    "cleared_authority_tables": 24,
+    "ordinary_login_denied": true,
+    "database_connection_limit": 0,
+    "database_image": "sha256:9ed8d24e2d804f04bd228a4619c9ed43c3a8d2f4a09fe947b44b112615eb010d",
+    "storage": "tmpfs_only_no_volumes_or_host_binds",
+    "network": "none",
+    "production_promotion": false,
+    "container_removed": true,
+    "elapsed_seconds": 6.218,
+    "observed_at": "2026-11-08T04:22:38.749361+00:00",
+    "snapshot_at": "2026-11-07T16:35:14.29645+00:00",
+    "expires_at": "2026-11-08T16:35:14.296450+00:00",
+    "snapshot_age_seconds": 42444.453,
+    "authenticated_vault_and_receipt": true,
+    "fresh_authority_rechecked": true,
+    "scope": "actual_scheduled_SQL_backup_restored_into_fresh_local_tmpfs_database",
+    "provider_calls": 0,
+    "new_resources": 0,
+    "owner_offline_keys_used": false,
+    "compromised_host_rebuild": false,
+    "production_RTO_measured": false
+  },
+  "funded_inspection": {
+    "status": "COMPLETED_MATCHED",
+    "observed_at": "2026-11-08T04:18:12.853460+00:00",
+    "local_cutoff": "2026-11-09T16:29:33.986905+00:00",
+    "remote_cutoff": "2026-11-09T16:29:33.986905+00:00",
+    "requires_reconciliation": false,
+    "read_only": true,
+    "deadline_extended": false,
+    "admission_opened": false,
+    "post_event_access_verified": false
+  },
+  "hosting": {
+    "observed_at": "2026-11-08T04:18:17.056076+00:00",
+    "status": "CONDITIONAL_READ_ONLY_PREPARATION",
+    "remaining_credit_usd": "188.85",
+    "vm_quotes": [
+      {
+        "role": "control",
+        "plan": "vhp-2c-4gb-amd",
+        "monthly_usd": 24
+      },
+      {
+        "role": "worker",
+        "plan": "vhp-4c-8gb-amd",
+        "monthly_usd": 48
+      }
+    ],
+    "additional_7_day_compute_estimate_usd": "18.00",
+    "additional_14_day_compute_estimate_usd": "36.00",
+    "compute_from_creation_to_final_cutoff_estimate_usd": "49.18",
+    "compute_reservation_usd": 72,
+    "total_reservation_usd": 145,
+    "project_cap_usd": 150,
+    "inference_cap_usd": 25,
+    "current_funded_cutoff": "2026-11-09T16:29:33.986905+00:00",
+    "absolute_final_cutoff": "2026-11-23T00:00:00+00:00",
+    "credit_ledger_expiry_date": "2026-12-04",
+    "post_event_no_payment_access_verified": false,
+    "provider_hard_stop_verified": false,
+    "tax_coverage_verified": false,
+    "deadline_extended": false,
+    "new_resources": 0,
+    "model_calls": 0,
+    "estimate_note": "Compute only, rounded up; full monthly reservation retained. Excludes unknown taxes/overages. Credit is not post-event eligibility.",
+    "next_review": "Closed/idle fresh review, at most48 hours via existing helper; do not reopen a latched/expired stop or change final cutoff.",
+    "reservations_readback": "PASS",
+    "inference_admission_blocked_at_observation": true
+  },
+  "scheduled_backup": {
+    "scheduled_backup": "not_due",
+    "expires_at": "2026-11-08T16:35:14.296450+00:00"
+  },
+  "checks": {
+    "scoped_unit_tests_passed": 103,
+    "ruff": "PASS",
+    "documentation": "PASS:276 entries,59 pages",
+    "temporary_recovery_container_inventory": "EMPTY",
+    "staged_secret_scan": "PASS: no leaks",
+    "diff_whitespace": "PASS"
+  },
+  "source_sha256": {
+    "scripts/export_portable_backup.py": "aa06b93532a6a5c584560c29a545e0c42d8ed6bf87a2329efb9f9cad062faff7",
+    "scripts/check_saved_database_recovery.py": "7666675f11adcb1e5224be537c599df060720f5a8e298d09410b9d1d828ed9c4",
+    "scripts/check_operations.py": "75c35c926625076c44d39fc5a0d7407666044ea6e8ed032ada14f8f46770248e",
+    "scripts/scheduled_product_backup.py": "6c67b5529a4ab057d5d2fe56ebba6c5d7dd3157f38557cf5b339b4f65a73261a",
+    "scripts/review_credit_window.py": "a080b5d86501c0f1e340ee07a28e57dc426c9fecb8faba3029cc2848508af2c0"
+  },
+  "critical_review": [
+    "An unfinished backup pointer blocks export/recovery before key or cloud access.",
+    "Pointer replacement and key retirement are rechecked after potentially slow operations; not a global transactional lock.",
+    "Scheduler capture time must match authenticated contents even on not_due path.",
+    "Funding inspection uses pinned host identity and a repeatable-read read-only SQL snapshot; never enters LiveSession or runs credit_guard.",
+    "Partial update classification never applies SQL, changes local state, extends a deadline or reopens stopped admission.",
+    "Crash-boundary cases are automated doubles; actual receipt and deployed budget match at observation.",
+    "Separate Codex critical pass is not independent human review.",
+    "Final authority/expiry time is sampled after the vault re-read, so time spent rechecking keys counts against freshness."
+  ],
+  "official_sources": [
+    {
+      "url": "https://lablab.build/ai-hackathons/vultr-hackathon",
+      "checked_kst": "2026-11-08",
+      "finding": "Post-event deployment wording still asks for payment method; owner-relayed judging coverage does not settle that condition."
+    },
+    {
+      "url": "https://docs.vultr.com/support/platform/billing/how-am-i-billed-for-my-servers",
+      "checked_kst": "2026-11-08",
+      "finding": "Non-GPU billing hourly, minimum one hour, capped at672 hours/month; stopped instances still bill."
+    }
+  ],
+  "phase6_complete": false,
+  "remaining": [
+    "Full compromised-host trust and credential rebuild",
+    "Loss of current deletion authority",
+    "Owner offline custody deferred",
+    "Post-event no-payment account access",
+    "Future certificate rotation",
+    "Public release/license/submission",
+    "Independent human review"
+  ]
+}

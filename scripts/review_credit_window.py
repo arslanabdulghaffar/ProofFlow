@@ -20,7 +20,7 @@ from comparison_api import save  # noqa: E402
 from install_product_services import IMAGE  # noqa: E402
 from product_live_session import LiveSession, require  # noqa: E402
 from vultr_credit_guard import FINAL_TEARDOWN  # noqa: E402
-from vultr_phase1 import LABEL, PLANS, PRICES, PRIVATE  # noqa: E402
+from vultr_phase1 import LABEL, PLANS, PRICES, PRIVATE, Admin  # noqa: E402
 
 RESERVATIONS = {"compute": 72, "inference": 25, "later_storage": 18,
                 "incidental": 10, "contingency": 20}
@@ -123,6 +123,87 @@ def receipt_prefix(review_date):
     return "funded-review-" + review_date
 
 
+def inspect_review(state, budget, intent, completed, ledger, now):
+    """Classify an existing update without replaying SQL or weakening the old cutoff."""
+    prior = datetime.fromisoformat(intent["prior_review_due_at"])
+    due = datetime.fromisoformat(intent["review_due_at"])
+    reviewed = datetime.fromisoformat(intent["reviewed_at"])
+    local = datetime.fromisoformat(state["review_due_at"])
+    remote = datetime.fromisoformat(budget["expires_at"])
+    require(all(value.tzinfo is not None for value in (prior, due, reviewed, local, remote, now))
+            and reviewed < prior < due <= min(reviewed + timedelta(hours=48), FINAL_TEARDOWN)
+            and reviewed <= now, "FUNDED_INSPECTION_TIMELINE_INVALID")
+    require(state["project"] == LABEL and state["project_limit_usd"] == 150
+            and state["reservations_usd"] == RESERVATIONS
+            and state["credit_expiry_date"] == "2026-12-04"
+            and budget["id"] == state["budget_install_intent"]["account_id"]
+            and budget["project_limit"] == 150000000 and budget["inference_limit"] == 25000000
+            and budget["probe_limit"] == 2000000
+            and intent["project_cap_usd"] == 150 and intent["inference_cap_usd"] == 25
+            and intent["reserved_total_usd"] == 145
+            and intent["new_resources"] == 0 and intent["admission"] is False
+            and intent["inference"] is False, "FUNDED_INSPECTION_SCOPE_CHANGED")
+    require(not state.get("credit_guard", {}).get("admission_closed")
+            and now < min(local, remote, FINAL_TEARDOWN), "FUNDED_INSPECTION_STOP_REMAINS_CLOSED")
+    check_reservations(json.loads(ledger), budget["id"])
+    if completed is not None:
+        require(completed == intent and state.get("funded_review") == intent
+                and local == remote == due, "FUNDED_INSPECTION_COMPLETION_MISMATCH")
+        status = "COMPLETED_MATCHED"
+    else:
+        require(budget["blocked"] is True
+                and hashlib.sha256(ledger).hexdigest() == intent["reservation_sha256"],
+                "FUNDED_INSPECTION_UNCERTAIN_RESERVATIONS")
+        if local == remote == prior:
+            status = "NOT_APPLIED_NO_RETRY"
+        elif local == prior and remote == due:
+            status = "REMOTE_APPLIED_LOCAL_PENDING"
+        elif local == remote == due and state.get("funded_review") == intent:
+            status = "LOCAL_APPLIED_RECEIPT_PENDING"
+        else:
+            raise RuntimeError("FUNDED_INSPECTION_DEADLINES_INCONSISTENT")
+    return {"status": status, "observed_at": now.isoformat(),
+            "local_cutoff": local.isoformat(), "remote_cutoff": remote.isoformat(),
+            "requires_reconciliation": status != "COMPLETED_MATCHED",
+            "read_only": True, "deadline_extended": False, "admission_opened": False,
+            "post_event_access_verified": False}
+
+
+def inspect_saved_review(root, review_date):
+    prefix = receipt_prefix(review_date)
+
+    def read(name):
+        with (root / name).open("rb") as source:
+            raw = source.read(65537)
+        require(len(raw) <= 65536, "FUNDED_INSPECTION_RECEIPT_LIMIT")
+        return json.loads(raw)
+
+    intent = read(prefix + "-intent.json")
+    completed_path = root / (prefix + "-completed.json")
+    completed = read(completed_path.name) if completed_path.exists() else None
+    admin = Admin()
+    try:
+        identity = admin.host("control", "cat /etc/machine-id")
+        require(identity.returncode == 0 and identity.stdout.decode().strip()
+                == admin.state["control_machine_id"], "FUNDED_INSPECTION_HOST_CHANGED")
+        sql = ("BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY; "
+               "SELECT json_build_object('accounts',(SELECT json_agg(a) FROM pf_budget.accounts a),"
+               "'ledger',(SELECT coalesce(json_agg(r ORDER BY id),'[]'::json)::text "
+               "FROM pf_budget.reservations r)); COMMIT;")
+        reply = admin.host("control", "docker exec -i --user=70:70 proofflow-budget psql -X -qAt "
+                           "-h /run/proofflow-budget -U postgres -d proofflow_budget "
+                           "--set ON_ERROR_STOP=1", stdin=sql.encode())
+        require(reply.returncode == 0, "FUNDED_INSPECTION_READ_FAILED")
+        observed = json.loads(reply.stdout)
+        require(len(observed["accounts"]) == 1, "FUNDED_INSPECTION_ACCOUNT_COUNT")
+        # Preserve PostgreSQL's original ledger JSON text for the saved byte hash.
+        ledger = observed["ledger"].encode()
+        return inspect_review(admin.state, observed["accounts"][0], intent, completed,
+                              ledger, datetime.now(UTC))
+    finally:
+        admin.close()
+
+
 def apply_review(live, budget, before, record, root, review_date="2026-11-06"):
     prefix = receipt_prefix(review_date)
     save(root, prefix + "-intent.json", record)
@@ -154,9 +235,23 @@ def apply_review(live, budget, before, record, root, review_date="2026-11-06"):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--apply", action="store_true", required=True)
-    parser.add_argument("--review-date", required=True, help="Today's KST date; new receipt only")
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--apply", action="store_true")
+    mode.add_argument("--inspect", action="store_true", help="Read existing receipt/state only")
+    parser.add_argument("--review-date", required=True,
+                        help="Apply: today's KST date; inspect: the existing receipt date")
     options = parser.parse_args()
+    if options.inspect:
+        try:
+            report = inspect_saved_review(PRIVATE / "evidence", options.review_date)
+        except Exception:
+            # Native accounting/SQL/filesystem diagnostics are not safe public output.
+            print(json.dumps({"status": "FUNDED_INSPECTION_FAILED_RECONCILE",
+                              "read_only": True, "requires_reconciliation": True,
+                              "deadline_extended": False, "admission_opened": False}))
+            return 1
+        print(json.dumps(report))
+        return 1 if report["requires_reconciliation"] else 0
     require(options.review_date == (datetime.now(UTC)+timedelta(hours=9)).date().isoformat(),
             "FUNDED_REVIEW_DATE_MUST_BE_TODAY_KST")
     prefix = receipt_prefix(options.review_date)
@@ -199,4 +294,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

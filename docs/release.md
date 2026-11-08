@@ -1,5 +1,37 @@
 # Release and operations plan
 
+## November8 KST — recovery receipt and funding reconciliation hardened
+
+Saved recovery/export now reject an unfinished backup pointer and a pointer replaced
+while waiting. SQL recovery re-reads the vault after rehearsal so retired keys cannot
+be accepted from memory. The scheduler's not-due path also binds capture time to the
+authenticated envelope. No older receipt is silently substituted and no offline key
+prompt/export was performed.
+
+Added read-only `review_credit_window.py --inspect --review-date 2026-11-08`.
+Actual saved receipt, local cutoff and deployed budget match; no deadline extension.
+Partial remote/local/completion states receive distinct non-success reports and never
+retry UPDATE. The old cutoff stays authoritative; no stop is reopened. Fixed errors
+avoid leaking native SQL/account diagnostics.103 scoped tests and Ruff pass.
+
+Actual authenticated185228-byte scheduled SQL restore passes again in fresh local
+RAM-only PostgreSQL: one deleted workspace excluded, all24 authority tables cleared,
+ordinary login denied and container removed.6.218s is a small rehearsal duration, not
+production RTO. Scheduler authenticated the existing backup and correctly said not_due.
+[Evidence](evidence/phase6-recovery-funding-reconciliation-2026-11-08.json).
+
+Fresh13:18 KST hosting preview: credit $188.85; $24/$48 monthly VM plans; additional
+14-day compute estimate $36 inside the existing $72 compute/$145 total reservations.
+Caps remain $150/$25. Funded cutoff remains Nov10 01:29:33 KST. Official post-event
+payment-method wording is unchanged; no card, new resource, model call or promise of
+judging-period access. Backup expiry remains Nov9 01:35 KST; hourly scheduler's next
+due capture is after13:35 KST and still requires closed/idle services and awake Windows.
+
+Phase6 IN PROGRESS: full compromised-host trust/credential rebuild, lost deletion
+authority, post-event eligibility, publication/license/submission and human review
+remain open. Offline custody is deferred. Do not repeat paid acceptance or regenerate
+the dated v4 archive for these operator-only changes. No deployed product change.
+
 ## November8 KST — live operations check and release instructions reconciled
 
 Added `scripts/check_operations.py`: one-shot TLS/health, authenticated backup,

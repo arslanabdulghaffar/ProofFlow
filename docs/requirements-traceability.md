@@ -486,3 +486,8 @@ evidence from the [one-shot operations check](evidence/phase6-operations-check-2
 and implemented command contracts in test-plan.md. TLS, service/storage, budget and
 backup/task checks pass; runtime readiness remains503. Continuous alerts, assigned
 human on-call, full workflow health and full disaster recovery are not implied.
+
+November8 recovery/funding follow-up: R46/R48/R55 gain partial scoped evidence for
+interrupted-receipt denial, post-rehearsal key retirement, real isolated saved-SQL
+readback and read-only funded-window reconciliation. [Receipt](evidence/phase6-recovery-funding-reconciliation-2026-11-08.json).
+No full disaster recovery, post-event hosting or independent human approval is claimed.

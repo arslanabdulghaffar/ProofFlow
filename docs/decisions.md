@@ -1,5 +1,30 @@
 # Decision log
 
+## D102: reconcile backup/funding uncertainty without replaying authority
+
+Use the same bounded latest-receipt reader for export, saved SQL recovery and operations.
+An interrupted replacement is a stop, never permission to erase the pending file or
+fall back silently. Re-read the pointer after slow work and re-read the vault after SQL
+rehearsal. Scheduler timestamp claims must bind to authenticated contents even when no
+new capture is due. These are checkpoint checks, not a claim of atomic custody across
+all concurrent operations. Key expiry and current deletion-authority checks remain.
+
+Funding inspection is separate from apply and does not instantiate LiveSession or run
+the destructive credit guard. Use a pinned machine and repeatable-read read-only SQL
+snapshot. Preserve PostgreSQL ledger bytes for unresolved-intent binding. Distinguish
+not-applied, remote-applied/local-pending, local-applied/receipt-pending and exact completed
+state. Any partial result is nonzero and never edits state or retries the original
+update. Completed inspection permits later legitimate ledger usage after the review,
+while checking current reservation caps; unresolved inspection demands the original
+ledger hash and closed inference. A latched/expired stop stays closed.
+
+Separate critical pass reviewed pre-access pending denial, receipt/key swaps during
+waits, unchanged caps, incomplete/completed record mismatch, readonly SQL, secret error
+redaction and preservation of the stricter deadline. Actual receipt/state readback and
+isolated saved-database replay pass. Crash-stage cases are labeled automated doubles,
+not induced production faults or independent human approval. No dependency, privilege,
+product approval/verifier change, cloud provisioning or offline password setup.
+
 ## D101: observe live operations without granting release or spending authority
 
 Provide a one-shot owner command using existing credentials and pinned SSH hosts.

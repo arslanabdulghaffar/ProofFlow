@@ -14,7 +14,7 @@ from decimal import Decimal
 
 import httpx
 from asset_backup_vault import recover
-from export_portable_backup import checked_backup
+from export_portable_backup import checked_backup, read_latest, require_current_receipt
 from vultr_credit_guard import stop_reason
 from vultr_phase1 import LABEL, PRIVATE, Admin
 
@@ -76,11 +76,10 @@ def public_probe():
 
 
 def backup_probe():
-    if (PRIVATE / "scheduled-backup-latest.pending").exists():
-        raise RuntimeError("BACKUP_RECONCILE_REQUIRED")
-    latest = json.loads((PRIVATE / "scheduled-backup-latest.json").read_bytes())
+    latest = read_latest(PRIVATE)
     envelope, key = recover(latest["backup_id"])
     payload = checked_backup(latest, envelope, key, now=datetime.now(UTC))
+    require_current_receipt(latest, PRIVATE)
     return {"snapshot_at": payload["snapshot"]["observed_at"],
             "expires_at": payload["expires_at"], "authenticated": True}
 

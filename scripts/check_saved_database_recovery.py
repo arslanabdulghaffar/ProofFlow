@@ -10,7 +10,7 @@ import sys
 from datetime import UTC, datetime
 
 from asset_backup_vault import recover
-from export_portable_backup import checked_backup
+from export_portable_backup import checked_backup, read_latest, require_current_receipt
 from recovery_clock import wait_for_observation
 from vultr_phase1 import PRIVATE, ROOT, Admin
 
@@ -38,7 +38,7 @@ def authority(admin):
 
 
 def main():
-    latest = json.loads((PRIVATE / "scheduled-backup-latest.json").read_bytes())
+    latest = read_latest(PRIVATE)
     envelope, key = recover(latest["backup_id"])
     payload = checked_backup(latest, envelope, key, now=datetime.now(UTC))
     admin = Admin()
@@ -60,6 +60,9 @@ def main():
         result = json.loads(reply.stdout)
         # The rehearsal's local timestamp is not current live deletion authority.
         fresh = authority(admin)
+        # Do not accept cached key authority if the vault retired it during rehearsal.
+        envelope, key = recover(latest["backup_id"])
+        require_current_receipt(latest, PRIVATE)
         now = wait_for_observation(fresh["observed_at"])
         checked_backup(latest, envelope, key, now=now)
         revalidate_restore(payload["snapshot"], result["plan"], fresh, now=now)

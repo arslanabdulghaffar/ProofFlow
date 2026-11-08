@@ -196,6 +196,7 @@ were not implemented. Run from the repository root with the locked Python enviro
 | `python scripts/check_preparation.py` | Local documentation only | Nonzero for missing/invalid links, traceability or repository hygiene |
 | `python scripts/check_operations.py` | Configured owner Windows credentials/vault/tasks; existing hosts and public TLS | One-shot GET/SELECT/status checks; fixed blocker codes and nonzero; no new admission or schedule |
 | `python scripts/build_release_package.py --verify PRIVATE-ZIP --expected-sha256 TRUSTED-HASH` | Existing private archive and separately trusted checkpoint hash | Bounded inert archive readback; no extraction/execution; nonzero on drift |
+| `python scripts/review_credit_window.py --inspect --review-date YYYY-MM-DD` | Existing owner receipt and pinned budget host; reads only, never use `--apply` as a retry | Exact completion returns zero; partial/unknown/stopped state returns nonzero without changing either deadline |
 | `python scripts/check_saved_database_recovery.py` | Owner vault/SSH, fresh current deletion authority, cached pinned WSL database image | Fresh RAM-only isolated SQL quarantine, second authority read and cleanup; no production restore; nonzero on failure |
 | `python -m scripts.check_saved_database_deadline` (Linux/WSL) | Cached pinned database image and trusted Docker access | Empty90s watchdog drill; requires exit137/AutoRemove after launcher exits; scoped cleanup on failure |
 

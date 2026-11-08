@@ -139,3 +139,121 @@ def test_funding_cannot_accept_open_or_different_deployment(monkeypatch, field):
     policy[field] = True if field == "enabled" else "0"*64
     with pytest.raises(RuntimeError, match="POLICY_CHANGED"):
         m.closed(SimpleNamespace(policy=policy))
+
+
+@pytest.mark.parametrize("phase", ["unapplied", "remote", "local", "complete"])
+def test_readonly_inspection_classifies_crash_boundaries(monkeypatch, phase):
+    import hashlib
+    from copy import deepcopy
+
+    m, state, account, plans, budget, now = fixture(monkeypatch)
+    budget["id"] = "synthetic-account"
+    state["budget_install_intent"] = {"account_id": budget["id"]}
+    ledger = json.dumps([
+        {"id": str(i), "account_id": budget["id"], "purpose": purpose, "state": "reserved",
+         "reserved_micro": amount, "charged_micro": None}
+        for i, (purpose, amount) in enumerate((("compute", 72000000), ("other", 48000000)))
+    ]).encode()
+    intent = m.review(state, account, plans, budget, now)
+    intent["reservation_sha256"] = hashlib.sha256(ledger).hexdigest()
+    completed = None
+    if phase != "unapplied":
+        budget["expires_at"] = intent["review_due_at"]
+    if phase in {"local", "complete"}:
+        state["review_due_at"] = intent["review_due_at"]
+        state["funded_review"] = intent
+    if phase == "complete":
+        completed = deepcopy(intent)
+    before = deepcopy((state, budget, intent, completed))
+    report = m.inspect_review(state, budget, intent, completed, ledger, now)
+    assert report["status"] == {"unapplied": "NOT_APPLIED_NO_RETRY",
+        "remote": "REMOTE_APPLIED_LOCAL_PENDING", "local": "LOCAL_APPLIED_RECEIPT_PENDING",
+        "complete": "COMPLETED_MATCHED"}[phase]
+    assert report["requires_reconciliation"] == (phase != "complete")
+    assert report["read_only"] and not report["deadline_extended"]
+    assert not report["admission_opened"] and not report["post_event_access_verified"]
+    assert (state, budget, intent, completed) == before
+
+
+@pytest.mark.parametrize("fault", ["latched", "expired", "foreign", "cap", "timeline",
+                                  "ledger", "receipt", "local", "remote", "open"])
+def test_funding_inspection_cannot_accept_changed_or_stopped_authority(monkeypatch, fault):
+    import hashlib
+
+    m, state, account, plans, budget, now = fixture(monkeypatch)
+    budget["id"] = "synthetic-account"
+    state["budget_install_intent"] = {"account_id": budget["id"]}
+    ledger = json.dumps([
+        {"id": str(i), "account_id": budget["id"], "purpose": purpose, "state": "reserved",
+         "reserved_micro": amount, "charged_micro": None}
+        for i, (purpose, amount) in enumerate((("compute", 72000000), ("other", 48000000)))
+    ]).encode()
+    intent = m.review(state, account, plans, budget, now)
+    intent["reservation_sha256"] = hashlib.sha256(ledger).hexdigest()
+    completed = None
+    if fault == "latched":
+        state["credit_guard"] = {"admission_closed": True}
+    elif fault == "expired":
+        now += timedelta(hours=7)
+    elif fault == "foreign":
+        budget["id"] = "different"
+    elif fault == "cap":
+        budget["project_limit"] += 1
+    elif fault == "timeline":
+        intent["review_due_at"] = (now+timedelta(hours=49)).isoformat()
+    elif fault == "ledger":
+        ledger += b" "
+    elif fault == "receipt":
+        completed = {**intent, "new_resources": 1}
+    elif fault == "local":
+        state["review_due_at"] = (now+timedelta(hours=4)).isoformat()
+    elif fault == "remote":
+        budget["expires_at"] = (now+timedelta(hours=4)).isoformat()
+    else:
+        budget["blocked"] = False
+    with pytest.raises(RuntimeError, match="FUNDED_INSPECTION_"):
+        m.inspect_review(state, budget, intent, completed, ledger, now)
+
+
+
+def test_inspect_entrypoint_cannot_enter_live_session_or_echo_native_error(monkeypatch, capsys):
+    m, *_ = fixture(monkeypatch)
+    monkeypatch.setattr(m.sys, "argv", ["review", "--inspect", "--review-date", "2026-11-08"])
+    monkeypatch.setattr(m, "LiveSession", lambda: pytest.fail("mutating session reached"))
+
+    def fail(*_):
+        raise RuntimeError("synthetic-private-native-diagnostic")
+
+    monkeypatch.setattr(m, "inspect_saved_review", fail)
+    assert m.main() == 1
+    raw = capsys.readouterr().out
+    assert "synthetic-private" not in raw
+    assert json.loads(raw)["requires_reconciliation"]
+
+
+def test_inspection_only_uses_pinned_identity_and_readonly_snapshot(monkeypatch, tmp_path):
+    m, state, _, _, budget, now = fixture(monkeypatch)
+    state["control_machine_id"] = "synthetic-machine"
+    prefix = "funded-review-2026-11-08"
+    for suffix in ("intent", "completed"):
+        (tmp_path / (prefix+"-"+suffix+".json")).write_text("{}")
+    closed, reached = [], []
+
+    def host(role, command, **kwargs):
+        assert role == "control"
+        reached.append(command)
+        if command == "cat /etc/machine-id":
+            return SimpleNamespace(returncode=0, stdout=b"synthetic-machine\n")
+        assert "-d proofflow_budget" in command and "-X -qAt" in command
+        query = kwargs["stdin"].decode()
+        assert query.startswith("BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY;")
+        assert "UPDATE" not in query and "DELETE" not in query
+        assert "::text" in query and query.endswith("COMMIT;")
+        return SimpleNamespace(returncode=0, stdout=json.dumps({
+            "accounts": [budget], "ledger": "[]"}).encode())
+
+    monkeypatch.setattr(m, "Admin", lambda: SimpleNamespace(
+        state=state, host=host, close=lambda: closed.append(True)))
+    monkeypatch.setattr(m, "inspect_review", lambda *args: {"ledger_bytes": args[-2] == b"[]"})
+    assert m.inspect_saved_review(tmp_path, "2026-11-08") == {"ledger_bytes": True}
+    assert len(reached) == 2 and closed == [True]
