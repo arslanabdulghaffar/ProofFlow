@@ -1,0 +1,26 @@
+{
+  "verified": true,
+  "files": 17,
+  "source_commit": "0d2dff6217899f6029178bcc83c3cf59d16a0682",
+  "package_sha256": "38467ff5a5afe080abbd28fe82a5808c96a97fc540e9bae94bd49d87d5069a63",
+  "bytes": 4831981,
+  "trusted_hash_checked": true,
+  "filename": "ProofFlow-private-release-v4.zip",
+  "status": "PRIVATE_PACKAGE_VERIFIED_NOT_SUBMITTED",
+  "source_archive_files": 522,
+  "phase6_complete": false,
+  "repository_visibility": "private",
+  "model_calls": 0,
+  "new_resources": 0,
+  "offline_key_custody": "DEFERRED",
+  "checks": [
+    "Trusted SHA256 before parsing same bounded bytes",
+    "Exact entire SOURCE.zip against git archive of verified remote checkpoint",
+    "Outer and source ZIP CRC",
+    "Committed source document/media pins",
+    "Frozen comparison and native table",
+    "V2 required receipt omission denied"
+  ],
+  "recording_unchanged": true,
+  "note": "Recorded video predates guest acceptance; newer receipts do not change video provenance. Readback receipt has a later commit than packaged source."
+}

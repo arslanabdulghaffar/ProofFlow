@@ -1,5 +1,16 @@
 # Progress
 
+## November8 KST — private release v4 sealed and read back
+
+Source checkpoint `0d2dff6217899f6029178bcc83c3cf59d16a0682` is verified on remote main. The private v4 ZIP
+contains17 files and522 source files; entire source ZIP matches a fresh
+Git archive byte-for-byte. SHA-256 `38467ff5a5afe080abbd28fe82a5808c96a97fc540e9bae94bd49d87d5069a63`.
+[Readback receipt](evidence/phase6-release-package-v4-2026-11-08.json). Bundle location:
+`C:/Users/IT/.proofflow/release/2026-11-08/ProofFlow-private-release-v4.zip`.
+Trusted-hash verification, CRC, media/source binding and a missing-required-receipt
+negative probe pass. v1-v3/video/deck preserved. No publication, export password,
+paid model call or runtime change. Phase6 remains IN PROGRESS with the scoped gaps below.
+
 ## November8 KST — recovery receipt and private package verification hardened
 
 Offline export now binds the scheduled receipt to authenticated ciphertext, capture time
