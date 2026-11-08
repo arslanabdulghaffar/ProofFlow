@@ -1,8 +1,7 @@
 # ProofFlow
 
-Owner-approved public release copy. Original code is MIT licensed; submission is pending.
-Final form limits, enrollment and absolute closing time have not been verified in the
-authenticated submission form. `submission.json` deliberately leaves public URLs blank.
+Owner-approved public release copy. Original code is MIT licensed; the entry was submitted on November9 KST.
+The authenticated form and enrollment have been verified. Public media URLs are recorded in `submission.json`.
 
 ## Short description
 
@@ -12,7 +11,7 @@ exact code before the next batch.
 ## Project description
 
 A revenue import can finish successfully while assigning transactions to the wrong
-merchant or customer. ProofFlow is a private prototype for operations engineers who
+merchant or customer. ProofFlow is a hackathon prototype for operations engineers who
 maintain small Python revenue imports. It proposes repairs and produces inspectable
 record-level evidence before repaired code can process another batch.
 
@@ -45,9 +44,8 @@ we do not claim AI superiority, universal correctness or measured customer savin
 The implemented backend and private web app run on Vultr Compute. Vultr Serverless
 Inference supplies application-agent proposals; a separate Compute worker executes
 untrusted source. PostgreSQL preserves jobs, budgets, approvals and durable intents.
-The verifier never runs candidate code. The owner is the only confirmed human contributor,
-with Codex assisting engineering. Invited public guest TLS and external tests passed;
-ownership/license clearance, independent human review and full disaster recovery remain open.
+The verifier never runs candidate code. Invited public guest TLS and external tests passed.
+The original source is MIT licensed. Independent human security review and full disaster recovery remain open.
 
 ## Supporting evidence
 

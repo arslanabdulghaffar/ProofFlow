@@ -1,0 +1,36 @@
+{
+  "status": "SUBMITTED_CONFIRMED",
+  "observed_date_kst": "2026-11-09",
+  "team": "NeuralFoundry",
+  "title": "ProofFlow: Checked Repairs Before the Next Batch",
+  "submission_url": "https://lablab.build/ai-hackathons/vultr-hackathon/neuralfoundry/proofflow-checked-repairs-before-the-next-batch",
+  "confirmation": "You have successfully submitted your project for the Vultr: Agent Rush Hackathon event!",
+  "public_entry_verified": true,
+  "track": "C1-Blast Radius Zero",
+  "media": [
+    {
+      "kind": "video",
+      "url": "https://storage.googleapis.com/lablab-video-submissions/submissions/q8eah4vx6gfxdlfd7wszaxld/om33otr78i3ee0um4lw6v5bl/video/video_b8htdfywpia7cbo542azwxye.mp4",
+      "bytes": 7701031,
+      "sha256": "da12264bbec71c2eb563f7ebf5f0984e13ede40d09a3231d9cc0b4d045d7bfc7",
+      "unauthenticated_exact_download": true
+    },
+    {
+      "kind": "slides",
+      "url": "https://storage.googleapis.com/lablab-static-eu/submissions/q8eah4vx6gfxdlfd7wszaxld/om33otr78i3ee0um4lw6v5bl/presentation/presentation_zlsaa7kr0n4nxh2gqvadbtxz.pdf",
+      "bytes": 433736,
+      "sha256": "b3e594612d83490320ebaefa124e27a635865846217fb1a42a92f2c650e56d66",
+      "unauthenticated_exact_download": true
+    }
+  ],
+  "live_url": "https://158.247.227.66:8443/",
+  "live_http_status": 200,
+  "tls_verified": true,
+  "access_limitation": "Individual invited 30-minute guest sessions; no anonymous execution. Disclosed in entry.",
+  "public_copy_development_tool_credits": false,
+  "new_cloud_resources": false,
+  "new_inference_calls": 0,
+  "no_personal_payment": true,
+  "powerpoint_sha256": "2b12d84ef65d40bd5979967068ccc76c75a4601c9011fb95ff59916403c1b4e0",
+  "screenshot_sha256": "76c2d81c4224c2875bccce4fc5476a8b3463dcb9e4341b85df748e0e44d33982"
+}

@@ -122,9 +122,6 @@ def check_claims():
                   for k in ("repairable", "ambiguous")]
         wanted.append(f"{result['incorrect_accepted']} / {result['accepted']}")
         require(row[1:] == wanted, "RELEASE_COMPARISON_DRIFT")
-    submission = json.loads((ROOT / "release/submission.json").read_bytes())
-    public = json.loads((ROOT / DOCUMENTS["evidence/public-tls.json"]).read_bytes())
-    release_gate(submission, public)
     return content
 
 
@@ -201,6 +198,10 @@ def main():
     if args.check_claims:
         print("RELEASE_CLAIMS_MATCH_FROZEN_EVIDENCE; no model call or candidate execution")
         return
+    # This historical builder remains private-only. Claim verification also serves
+    # the now-authorized public release and does not itself grant publication.
+    release_gate(json.loads((ROOT / "release/submission.json").read_bytes()),
+                 json.loads((ROOT / DOCUMENTS["evidence/public-tls.json"]).read_bytes()))
     require(all((args.output, args.artifacts, args.evidence)), "PACKAGE_PATHS_REQUIRED")
     require(not args.output.resolve().is_relative_to(ROOT), "PACKAGE_MUST_STAY_OUTSIDE_GIT")
     require(git("status", "--porcelain").strip() == b"", "CLEAN_CHECKPOINT_REQUIRED")

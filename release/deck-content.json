@@ -1,24 +1,73 @@
 {
   "title": "ProofFlow",
   "subtitle": "Checked repairs before the next batch",
-  "date": "8 November 2026",
-  "status": "Private preview · synthetic data",
-  "source_checkpoint": "58dca0d0c392282dfc376532adbda52d045c2eea",
+  "date": "9 November 2026",
+  "status": "Hackathon prototype · synthetic data",
+  "source_checkpoint": "b5d9fec0fb59ac4053ed2044e5b9e27ddecf2391",
   "slides": [
-    {"title":"ProofFlow", "notes":"ProofFlow targets operations engineers maintaining small merchant revenue imports. It proposes code repairs, runs them on a designated isolated worker, independently checks source occurrences, and requires exact-version approval before a fresh batch. This is a private synthetic demonstration, not a public production service. Sources: docs/product.md; docs/contract.md; docs/evidence/phase6-scheduled-portable-demo-2026-11-08.json."},
-    {"title":"A successful run can assign the wrong owner", "notes":"This is an actual screenshot from the November8 private synthetic run, not a mockup. The original customer lookup used only customer_id; overlapping identifiers across merchants produced a wrong-owner witness. The per-record check rejected the output. The grand total alone cannot identify ownership errors. The screenshot contains synthetic identifiers. Source: phase6-9226e15095a441a48272c48e2ffe8f48-0.png, hash in the private run receipt; docs/demo.md."},
-    {"title":"The repair workflow", "notes":"The operator supplies source/data and approves the exact declarative contract. The dispatcher requests bounded proposals through Vultr Serverless Inference; candidate code is untrusted. Every execution is on the designated worker. Source-derived deterministic checks and protected canaries decide whether a candidate may be reviewed. AWAITING_APPROVAL is not activation. Exact-version approval permits another isolated execution on genuinely new input bytes. Product PR actions remain separate. Sources: docs/product.md; docs/contract.md; orchestrator/repair_dispatcher.py; docs/evidence/phase3-acceptance-2026-11-04.json; docs/evidence/phase4-acceptance-2026-11-05.json."},
-    {"title":"Vultr deployment and trust boundaries", "notes":"Two existing Vultr Compute VMs separate control and untrusted execution. The control VM runs the private web API, trusted dispatcher, PostgreSQL durable state/budget and restricted independent verifier. The worker uses gVisor runsc/systrap under systemd cgroups, authenticated mTLS and durable cleanup receipts. Only the trusted dispatcher receives provider and dedicated GitHub App credentials; candidate and verifier do not. No candidate execution on control or development hosts. Architecture reflects the implemented runtime, not older Next.js planning. Sources: docs/architecture.md; docs/sandbox.md; docs/evidence/phase5-binary-acceptance-2026-11-07.json. Event alignment: https://lablab.build/ai-hackathons/vultr-hackathon (checked Nov8 KST)."},
-    {"title":"One recorded repair, then a fresh batch", "notes":"The real November8 run made one Vultr qwen3.8-flash-next request, changed source, passed candidate/ownership-canary/quarantine-canary comparisons with confirmed cleanup, downloaded the evidence ZIP, received an automated synthetic exact-version test approval and completed a different batch. Reservation $0.027853 is not an invoice. These counts describe this run, not benchmark performance. The139.04s edited video preserves raw clips and a cut/hold manifest. A completed-batch receipt card is explicitly a summary, because the raw browser moved on before a readable completion frame. Two later demo harness errors remain failed and reconciled. Source: docs/evidence/phase6-scheduled-portable-demo-2026-11-08.json; docs/demo.md."},
-    {"title":"A deliberate infinite loop is contained", "notes":"This is the separately labeled real zero-inference loop segment, not AI output. Worker readback confirms signal9, no collected output, cleanup confirmed and kernel writers absent. Missing output correctly produces FAILED_INFRA; no verifier acceptance is fabricated. The browser harness initially assumed report.worker on an infrastructure failure; public report is null. Its failed receipt is preserved and reconciled against the committed worker journal. Resource limits are1CPU,768MiB memory,0swap; network denial and other limits were tested in prior actual containment probes. No claim of universal containment or formal security proof. Sources: docs/evidence/phase6-scheduled-portable-demo-2026-11-08.json; docs/evidence/phase5-binary-acceptance-2026-11-07.json."},
-    {"title":"The synthetic comparison", "notes":"Frozen96-job comparison:24 cases x4 approaches,18 repairable plus6 ambiguous per approach. A uses the full API workflow; B accepts successful collected execution then grades independently; C removes witness rows from repair feedback; D is a fixed deterministic rebuild. A and C equal repair coverage; D performs best in this narrow contract and reuses the positive template. This does not establish AI superiority. One repeat, shared fault families/templates, no independent human oracle review; one preserved A harness interruption remains in the denominator. Sources: eval/final-comparison-2026-11-06.md; eval/final-comparison-2026-11-06.json. The artifact checker was rerun offline; no source executed or model called for this package."},
-    {"title":"What this prototype supports", "notes":"Target users and business value are hypotheses, not measured customer traction or ROI. Supported scope:one<=16KiB Python file, pinned pandas, small UTF-8 transaction/customer CSVs, approved synthetic merchant-revenue contract. Every occurrence must be accounted for; conflicts and missing declared attributes hold the batch. Public access, MIT ownership clearance and submission remain unapproved; the repository stays private. Offline key custody is explicitly deferred by the owner; lost trusted deletion authority and compromised-host recovery remain gaps. Project owner is the only confirmed human contributor; Codex assists development. No independent human security sign-off. Sources: docs/product.md; docs/contract.md; docs/risks.md; docs/release.md."}
+    {
+      "title": "ProofFlow",
+      "notes": "ProofFlow targets operations engineers maintaining small merchant revenue imports. It proposes code repairs, runs them on a designated isolated worker, independently checks source occurrences, and requires exact-version approval before a fresh batch. This is a synthetic-data hackathon demonstration with invited live access, not a production service. Sources: docs/product.md; docs/contract.md; docs/evidence/phase6-scheduled-portable-demo-2026-11-08.json."
+    },
+    {
+      "title": "A successful run can assign the wrong owner",
+      "notes": "This is an actual screenshot from the November8 private synthetic run, not a mockup. The original customer lookup used only customer_id; overlapping identifiers across merchants produced a wrong-owner witness. The per-record check rejected the output. The grand total alone cannot identify ownership errors. The screenshot contains synthetic identifiers. Source: phase6-9226e15095a441a48272c48e2ffe8f48-0.png, hash in the private run receipt; docs/demo.md."
+    },
+    {
+      "title": "The repair workflow",
+      "notes": "The operator supplies source/data and approves the exact declarative contract. The dispatcher requests bounded proposals through Vultr Serverless Inference; candidate code is untrusted. Every execution is on the designated worker. Source-derived deterministic checks and protected canaries decide whether a candidate may be reviewed. AWAITING_APPROVAL is not activation. Exact-version approval permits another isolated execution on genuinely new input bytes. Product PR actions remain separate. Sources: docs/product.md; docs/contract.md; orchestrator/repair_dispatcher.py; docs/evidence/phase3-acceptance-2026-11-04.json; docs/evidence/phase4-acceptance-2026-11-05.json."
+    },
+    {
+      "title": "Vultr deployment and trust boundaries",
+      "notes": "Two existing Vultr Compute VMs separate control and untrusted execution. The control VM runs the private web API, trusted dispatcher, PostgreSQL durable state/budget and restricted independent verifier. The worker uses gVisor runsc/systrap under systemd cgroups, authenticated mTLS and durable cleanup receipts. Only the trusted dispatcher receives provider and dedicated GitHub App credentials; candidate and verifier do not. No candidate execution on control or development hosts. Architecture reflects the implemented runtime, not older Next.js planning. Sources: docs/architecture.md; docs/sandbox.md; docs/evidence/phase5-binary-acceptance-2026-11-07.json. Event alignment: https://lablab.build/ai-hackathons/vultr-hackathon (checked Nov8 KST)."
+    },
+    {
+      "title": "One recorded repair, then a fresh batch",
+      "notes": "The real November8 run made one Vultr qwen3.8-flash-next request, changed source, passed candidate/ownership-canary/quarantine-canary comparisons with confirmed cleanup, downloaded the evidence ZIP, received an automated synthetic exact-version test approval and completed a different batch. Reservation $0.027853 is not an invoice. These counts describe this run, not benchmark performance. The approved182.55s narrated video preserves raw clips with disclosed guide cursor overlays, slow motion and pauses. A completed-batch receipt card is explicitly a summary, because the raw browser moved on before a readable completion frame. Two later demo harness errors remain failed and reconciled. Source: docs/evidence/phase6-scheduled-portable-demo-2026-11-08.json; docs/demo.md."
+    },
+    {
+      "title": "A deliberate infinite loop is contained",
+      "notes": "This is the separately labeled real zero-inference loop segment, not AI output. Worker readback confirms signal9, no collected output, cleanup confirmed and kernel writers absent. Missing output correctly produces FAILED_INFRA; no verifier acceptance is fabricated. The browser harness initially assumed report.worker on an infrastructure failure; public report is null. Its failed receipt is preserved and reconciled against the committed worker journal. Resource limits are1CPU,768MiB memory,0swap; network denial and other limits were tested in prior actual containment probes. No claim of universal containment or formal security proof. Sources: docs/evidence/phase6-scheduled-portable-demo-2026-11-08.json; docs/evidence/phase5-binary-acceptance-2026-11-07.json."
+    },
+    {
+      "title": "The synthetic comparison",
+      "notes": "Frozen96-job comparison:24 cases x4 approaches,18 repairable plus6 ambiguous per approach. A uses the full API workflow; B accepts successful collected execution then grades independently; C removes witness rows from repair feedback; D is a fixed deterministic rebuild. A and C equal repair coverage; D performs best in this narrow contract and reuses the positive template. This does not establish AI superiority. One repeat, shared fault families/templates, no independent human oracle review; one preserved A harness interruption remains in the denominator. Sources: eval/final-comparison-2026-11-06.md; eval/final-comparison-2026-11-06.json. The artifact checker was rerun offline; no source executed or model called for this package."
+    },
+    {
+      "title": "What this prototype supports",
+      "notes": "Target users and business value are hypotheses, not measured customer traction or ROI. Supported scope:one<=16KiB Python file, pinned pandas, small UTF-8 transaction/customer CSVs, approved synthetic merchant-revenue contract. Every occurrence must be accounted for; conflicts and missing declared attributes hold the batch. The owner confirmed ownership and released the source under MIT. The live application uses individual invited guest windows. Offline key custody is explicitly deferred by the owner; lost trusted deletion authority and compromised-host recovery remain gaps. No independent human security sign-off. Sources: docs/product.md; docs/contract.md; docs/risks.md; docs/release.md."
+    }
   ],
   "comparison": [
-    ["Approach", "Correct repairs", "Held / clarified", "Wrong accepts"],
-    ["A · Full ProofFlow", "15 / 18", "6 / 6", "0 / 15"],
-    ["B · Exit-success acceptance", "14 / 18", "1 / 6", "9 / 23"],
-    ["C · No witness feedback", "15 / 18", "6 / 6", "0 / 15"],
-    ["D · Fixed rebuild", "18 / 18", "6 / 6", "0 / 18"]
+    [
+      "Approach",
+      "Correct repairs",
+      "Held / clarified",
+      "Wrong accepts"
+    ],
+    [
+      "A · Full ProofFlow",
+      "15 / 18",
+      "6 / 6",
+      "0 / 15"
+    ],
+    [
+      "B · Exit-success acceptance",
+      "14 / 18",
+      "1 / 6",
+      "9 / 23"
+    ],
+    [
+      "C · No witness feedback",
+      "15 / 18",
+      "6 / 6",
+      "0 / 15"
+    ],
+    [
+      "D · Fixed rebuild",
+      "18 / 18",
+      "6 / 6",
+      "0 / 18"
+    ]
   ]
 }

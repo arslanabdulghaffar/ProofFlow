@@ -1,5 +1,27 @@
 # Resume ProofFlow
 
+## November9 — hackathon entry submitted and verified
+
+The owner approved the narrated edit and explicitly requested submission and the final
+PowerPoint. The site displayed its successful-submission confirmation, and the public
+entry exposes the correct title, C1 track, video, PDF, repository and live https://lablab.build/ai-hackathons/vultr-hackathon/neuralfoundry/proofflow-checked-repairs-before-the-next-batch.
+[Public submission](https://lablab.build/ai-hackathons/vultr-hackathon/neuralfoundry/proofflow-checked-repairs-before-the-next-batch). Recorded at approximately01:45 KST
+(Nov8 16:45 UTC). Receipt: [submission readback](evidence/phase6-submission-2026-11-09.json).
+The uploaded video and PDF were downloaded anonymously and match their approved local
+SHA-256 values. Public GitHub assets also match exact readback hashes. The new editable
+PowerPoint has8 slides and3 native evidence tables; final rendering and package/layout
+checks passed. Public presentation/entry copy omits development-tool credits while
+retaining synthetic-data, edited-footage and non-human-test-approval disclosures.
+
+This closes publication/license/submission delivery, not every Phase6 recovery or
+hosting gap. Live HTTPS returned200 with trusted TLS. Execution still requires an
+individual invited30-minute guest session, disclosed in the entry. No shared credential,
+anonymous access, new cloud resource or inference call was created. ProofFlow-Demo
+remains private. Offline key custody stays owner-deferred; full compromised-host
+recovery and independent human security review remain open. Existing funded cutoff:
+Nov10 01:29:33 KST. Do a fresh credit-only funding/account review before any extension.
+Do not resubmit, rerun paid tests or overwrite prior media merely to refresh evidence.
+
 ## November8 — submission paused for narrated video review
 
 Revised local video: 182.55 seconds, H.264/AAC; complete decode, source hashes,

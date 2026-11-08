@@ -1,0 +1,42 @@
+{
+  "status": "PUBLISHED_VERIFIED",
+  "release_url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/tag/v0.1.0-hackathon",
+  "demo_repository_private": true,
+  "assets": [
+    {
+      "name": "ProofFlow-demo-narrated.mp4",
+      "url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/download/v0.1.0-hackathon/ProofFlow-demo-narrated.mp4",
+      "sha256": "da12264bbec71c2eb563f7ebf5f0984e13ede40d09a3231d9cc0b4d045d7bfc7",
+      "bytes": 7701031,
+      "unauthenticated_download_verified": true
+    },
+    {
+      "name": "ProofFlow-deck-submission.pptx",
+      "url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/download/v0.1.0-hackathon/ProofFlow-deck-submission.pptx",
+      "sha256": "2b12d84ef65d40bd5979967068ccc76c75a4601c9011fb95ff59916403c1b4e0",
+      "bytes": 73709,
+      "unauthenticated_download_verified": true
+    },
+    {
+      "name": "ProofFlow-deck-submission.pdf",
+      "url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/download/v0.1.0-hackathon/ProofFlow-deck-submission.pdf",
+      "sha256": "b3e594612d83490320ebaefa124e27a635865846217fb1a42a92f2c650e56d66",
+      "bytes": 433736,
+      "unauthenticated_download_verified": true
+    },
+    {
+      "name": "ProofFlow-cover-submission.png",
+      "url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/download/v0.1.0-hackathon/ProofFlow-cover-submission.png",
+      "sha256": "41e1b3276eed135afadf931ee070653bde9cd79c7d5e30a5d1e276fc5da1288a",
+      "bytes": 53140,
+      "unauthenticated_download_verified": true
+    },
+    {
+      "name": "narrated-demo-edit-manifest.json",
+      "url": "https://github.com/arslanabdulghaffar/ProofFlow/releases/download/v0.1.0-hackathon/narrated-demo-edit-manifest.json",
+      "sha256": "4f9a49c3cd96e14e98a1c8dbaa3b73665488db697a9c82885c071ed10a4fa77b",
+      "bytes": 14151,
+      "unauthenticated_download_verified": true
+    }
+  ]
+}

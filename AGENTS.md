@@ -4,10 +4,11 @@ Read `docs/next-session.md`, `docs/product.md`, `docs/contract.md`, `docs/threat
 
 ## Current boundary
 
-Latest November8 owner instruction: submission is PAUSED. Improve the video with
-narration and a visible, naturally paced guide cursor; show the revised video and
-obtain owner approval before submitting. Existing source/media publication stays in
-place. Do not resume the submission or replace published media during this review.
+Latest November9 owner instruction: the owner approved the narrated video and explicitly
+requested completing the hackathon submission and final PowerPoint. Publication and
+submission are authorized. Keep presentation copy focused on ProofFlow without development-tool
+credits, preserving truthful demo/evaluation disclosures and historical engineering evidence.
+ProofFlow-Demo remains private; credit-only limits and product approvals remain unchanged.
 
 November8 release authorization supersedes the historical private-only boundary below:
 the owner confirmed code ownership and explicitly authorized MIT licensing, publishing

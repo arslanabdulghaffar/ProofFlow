@@ -1,5 +1,7 @@
 # Requirements traceability
 
+November9 submission delivery is verified in [the exact media and entry receipt](evidence/phase6-submission-2026-11-09.json). This supersedes historical publication/license/submission gaps below; invited live access, offline custody, full compromised-host recovery and human-review limits remain.
+
 November8 recovery/hosting: eight actual isolated recovery controls/denials and cleanup
 pass; current account/plan/ledger preview stays read-only. Credit$188.96;14-day compute
 estimate$36 inside unchanged monthly reservation. Post-event payment-method wording

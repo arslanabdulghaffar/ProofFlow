@@ -17,7 +17,7 @@ const { Presentation, PresentationFile } = await import(pathToFileURL(
 const { finalizePresentation } = await import(pathToFileURL(
   path.join(skill,'container_tools/artifact_tool_utils.mjs')).href);
 const content = JSON.parse(await fs.readFile(path.join(root,'release/deck-content.json'),'utf8'));
-const build = path.join(workspace,'.build-v4');
+const build = path.join(workspace,'.build-final');
 const out = path.join(workspace,'deliverables');
 await fs.mkdir(build,{recursive:true});
 await fs.mkdir(out,{recursive:true});
@@ -116,18 +116,18 @@ text(s,'One Python file, pinned pandas, transaction/customer CSVs and an approve
 text(s,'Useful outcome',64,380,370,45,28,C.ink,true);
 text(s,'Inspectable evidence before repaired code processes the next batch.',440,380,770,90,31);
 text(s,'Current limits',64,510,370,45,28,C.ink,true);
-text(s,'Private prototype. Customer value is a hypothesis. Public release, ownership clearance and full disaster recovery remain open.',440,510,770,120,25,C.muted);
+text(s,'Synthetic data with invited live access. Customer value is a hypothesis. Full disaster recovery and independent human review remain open.',440,510,770,120,25,C.muted);
 
 for(let i=0;i<P.slides.items.length;i++) {
   const blob=await P.export({slide:P.slides.items[i],format:'png',scale:1.5});
   await fs.writeFile(path.join(build,`slide-${i+1}.png`),new Uint8Array(await blob.arrayBuffer()));
 }
 const cover=await P.export({slide:P.slides.items[0],format:'png',scale:1.5});
-await fs.writeFile(path.join(out,'ProofFlow-cover-v4.png'),new Uint8Array(await cover.arrayBuffer()));
+await fs.writeFile(path.join(out,'ProofFlow-cover-submission.png'),new Uint8Array(await cover.arrayBuffer()));
 const draft=path.join(build,'candidate.pptx');
 await (await PresentationFile.exportPptx(P)).save(draft);
 const result=await finalizePresentation({workspaceDir:workspace,candidatePath:draft,
-  finalPath:path.join(out,'ProofFlow-deck-v4.pptx'),pythonExecutable:python,
+  finalPath:path.join(out,'ProofFlow-deck-submission.pptx'),pythonExecutable:python,
   integrityValidatorPath:path.join(skill,'container_tools/inspect_presentation_package_integrity.py'),
   layoutValidatorPath:path.join(skill,'container_tools/inspect_presentation_layout_geometry.py'),
   explicitTotalSlideCount:8,requiredNativeTableOwnerSlides:[4,6,7],

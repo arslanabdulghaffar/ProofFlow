@@ -5,15 +5,15 @@ imports using Vultr AI, executes each candidate in a fresh isolated worker, chec
 source occurrence, and requires exact-version approval before new batches.
 
 Original project code is [MIT licensed](LICENSE). The owner authorized public release
-on November 8, 2026. Phases 1–5 passed technical acceptance; release and submission
-readbacks are tracked in [the release checklist](docs/release.md).
+on November 8, 2026. [Our hackathon entry](https://lablab.build/ai-hackathons/vultr-hackathon/neuralfoundry/proofflow-checked-repairs-before-the-next-batch) was submitted on November9 KST. Phases1–5 passed technical acceptance; delivery and remaining operational limits are tracked in [the release checklist](docs/release.md).
 
 - [Live application](https://158.247.227.66:8443) — individually invited, synthetic-only
   guest sessions; judge access setup is being finalized. No cloud credentials are needed
   by guests. The application currently requires a session; it is not anonymous signup.
+- [Judge review guide](release/judges.md) — no login needed for the recording, slides or evidence.
 - [Recorded demo, slides and cover](https://github.com/arslanabdulghaffar/ProofFlow/releases/tag/v0.1.0-hackathon)
-  — prepared November 8 materials. Their private-preview labels describe the recording
-  date; publication does not turn automated test approvals into human review.
+  — use the narrated video and submission deck. The recording discloses editing and
+  automated synthetic approvals; these do not constitute independent human review.
 - [Setup and trust boundaries](release/setup.md), [measured comparison](eval/final-comparison-2026-11-06.md),
   [source-derived contract](docs/contract.md), [security limitations](docs/threat-model.md).
 
@@ -49,7 +49,7 @@ The demonstrated workflow is intake → original execution → independent check
 
 One UTF-8 Python file, small transaction/customer CSVs, a declarative approved contract, and one pinned Python/pandas runtime. Money uses exact integer minor units. Implemented checks cover every source occurrence, merchant/customer ownership, values, currencies, timestamps, duplicates, justified exclusions, and declared downstream behavior. These rules are approved for synthetic demo data only; real customer policies are not approved.
 
-Vanilla HTML/CSS/JavaScript with generated TypeScript wire types and FastAPI/Pydantic run on a Vultr control VM with PostgreSQL state/queue. A separate Linux worker uses explicit gVisor `runsc`. Application agent LLM calls use Vultr Serverless Inference. Development tools such as Codex are separate from this runtime provider requirement.
+Vanilla HTML/CSS/JavaScript with generated TypeScript wire types and FastAPI/Pydantic run on a Vultr control VM with PostgreSQL state/queue. A separate Linux worker uses explicit gVisor `runsc`. Application agent LLM calls use Vultr Serverless Inference.
 
 No arbitrary repositories, package installation, candidate networking, live accounting writes, financial transfers, browser automation, enterprise SSO, large datasets, or certification claims. “Proof” means inspectable evidence for specified checks, not formal proof or universal correctness.
 

@@ -1,4 +1,18 @@
-# Private release review package
+# ProofFlow release materials
+
+The owner confirmed ownership and authorized MIT publication and hackathon submission
+on November8,2026. [The public source and prepared media](https://github.com/arslanabdulghaffar/ProofFlow/releases/tag/v0.1.0-hackathon)
+are published and anonymously downloadable. See [the judge guide](judges.md) for the
+video, PDF/editable slides, evidence and live-access limitation. [The hackathon entry](https://lablab.build/ai-hackathons/vultr-hackathon/neuralfoundry/proofflow-checked-repairs-before-the-next-batch) was successfully submitted on November9 KST. Exact media/readback receipt: `docs/evidence/phase6-submission-2026-11-09.json`.
+Use the narrated video and files named `ProofFlow-deck-submission` in the public release.
+
+The sections below describe the preserved private v5 archive and its historical gates.
+That archive is not silently rewritten or relabeled as a public release. Its verifier
+continues to reject altered provenance. `--check-claims` verifies frozen comparison
+claims independently of publication; new private-only archive building intentionally
+stops now that the current submission manifest records public release.
+
+## Historical private release review package
 
 Latest verified private bundle: **v5**, source checkpoint
 `65b6b8e51d7809d2f8b05e9f2e9da72b4277f831`. It includes the TLS interruption-recovery
@@ -38,7 +52,7 @@ tool caches and browser profiles. The deck's screenshot contains synthetic ident
 Candidate programs in source/evaluation files remain inert text: never run them on the
 development computer, control host or verifier.
 
-## Release gates still open
+## Historical private-package gates (superseded by current receipt)
 
 | Gate | Current status |
 | --- | --- |
@@ -48,7 +62,7 @@ development computer, control host or verifier.
 | Guest/public TLS smoke | Passed four external contexts and scoped security/restart checks; invited access |
 | Offline password and recovery kit | Owner deferred |
 | Lost deletion authority / compromised-host restore | Still blocked by design / not tested |
-| Independent human security review | No reviewer confirmed; automated/Codex review is not sign-off |
+| Independent human security review | No reviewer confirmed; automated review is not human sign-off |
 | Judging-period hosting | Existing cutoff Nov10 01:29 KST; later funding needs fresh review within caps |
 
 No new paid service or inference request is needed to inspect this package. The most
