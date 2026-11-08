@@ -491,3 +491,8 @@ November8 recovery/funding follow-up: R46/R48/R55 gain partial scoped evidence f
 interrupted-receipt denial, post-rehearsal key retirement, real isolated saved-SQL
 readback and read-only funded-window reconciliation. [Receipt](evidence/phase6-recovery-funding-reconciliation-2026-11-08.json).
 No full disaster recovery, post-event hosting or independent human approval is claimed.
+
+November8 TLS recovery: R48/R49–R53 gain scoped actual hook deployment and external
+readback evidence, plus a real local between-file process-crash recovery drill.
+[Receipt](evidence/phase6-tls-interruption-recovery-2026-11-08.json). No full-host rebuild,
+future production renewal or post-event availability guarantee is implied.

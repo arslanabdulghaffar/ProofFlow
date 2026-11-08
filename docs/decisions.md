@@ -1,5 +1,30 @@
 # Decision log
 
+## D103: recover interrupted TLS deployment without guessing or forcing issuance
+
+Keep the existing exact IP, chain, validity and key validation. Before service changes,
+validate both existing files and all staged files without short-circuiting. Serialize
+with a root-owned no-follow lock. A fsynced root-owned marker binds the intended pair
+by hash; exact private staged bytes roll forward only to that same target. Stop the
+guest API before replacement; verify both bytes, start and verify active, then clear
+the marker. Retain it on uncertainty. Unknown partial or conflicting files stop rather
+than being deleted or interpreted as an old certificate to roll back automatically.
+Normal same-certificate/no-marker operation remains a no-op.
+
+Certbot deploy hooks only follow actual renewals and hook errors are not sufficient to
+establish its exit status ([official guide](https://eff-certbot.readthedocs.io/en/stable/using.html#renewing-certificates)).
+Add the fixed hook as ExecStartPost under the existing service resource/deadline bounds.
+This provides a same-lineage check and retry on subsequent scheduled no-renewal runs.
+It does not force renewal, bypass CA validation or promise future successful issuance.
+
+The targeted installer requires exact old unit digest, pinned host, valid credit window
+and closed/idle product before changing only the reviewed hook/unit. Preserve prior
+revision/unit and exercise actual same-certificate no-op and external health readback.
+New source is hash-named, no new privilege/dependency or provider key. Operations flags
+renewal failure and leftover rotation state even if an old public certificate still
+works. Separate review includes real local process death, file safety/lock conflicts,
+start failures, no-op behavior and scope-denial tests; no independent human sign-off.
+
 ## D102: reconcile backup/funding uncertainty without replaying authority
 
 Use the same bounded latest-receipt reader for export, saved SQL recovery and operations.

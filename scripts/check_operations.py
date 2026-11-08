@@ -36,9 +36,17 @@ for name in value['services']:
  r=subprocess.run(['/usr/bin/systemctl','is-active',name],capture_output=True,timeout=5)
  services[name]=r.returncode==0 and r.stdout.strip()==b'active'
 s=os.statvfs(value['storage'])
-print(json.dumps({'services':services,'storage_path':value['storage'],
+result={'services':services,'storage_path':value['storage'],
  'free_bytes':s.f_bavail*s.f_frsize,
- 'total_bytes':s.f_blocks*s.f_frsize,'free_inodes':s.f_favail,'total_inodes':s.f_files}))
+ 'total_bytes':s.f_blocks*s.f_frsize,'free_inodes':s.f_favail,'total_inodes':s.f_files}
+if value['storage']=='/var/lib/docker':
+ r=subprocess.run(['/usr/bin/systemctl','show','proofflow-public-renew.service',
+   '-p','Result','-p','ExecMainStatus'],capture_output=True,check=True,timeout=5)
+ fields=dict(line.split('=',1) for line in r.stdout.decode().splitlines())
+ result['renewal_success']=fields=={'Result':'success','ExecMainStatus':'0'}
+ result['tls_rotation_pending']=any(os.path.lexists('/etc/proofflow-public-api/tls/'+n)
+   for n in ('.rotation.json','health.pem.pending','health.key.pending'))
+print(json.dumps(result))
 """
 TASKS = r"""
 $ErrorActionPreference='Stop'
@@ -182,6 +190,9 @@ def assess(observations, now):
                 blockers.append("HOST_INVENTORY_CHANGED")
             for role in SERVICES:
                 host = remote["hosts"][role]
+                if role == "control" and (host["renewal_success"] is not True
+                                          or host["tls_rotation_pending"] is not False):
+                    blockers.append("TLS_RENEWAL_OR_ROTATION_REQUIRES_RECONCILIATION")
                 if (set(host["services"]) != set(SERVICES[role])
                         or not all(value is True for value in host["services"].values())):
                     blockers.append(role.upper()+"_SERVICE_UNHEALTHY")

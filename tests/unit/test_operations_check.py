@@ -30,13 +30,15 @@ def fixture(monkeypatch):
                                "free_bytes": 4*1024**3,
                                "total_bytes": 20*1024**3, "free_inodes": 50, "total_inodes": 100}
                         for role, names in m.SERVICES.items()}}}
+    o["remote"]["hosts"]["control"].update(renewal_success=True, tls_rotation_pending=False)
     return m, now, o
 
 
 @pytest.mark.parametrize("fault", [None, "tls", "live", "fake_ready", "wrong_app", "backup_expiry",
                                   "unauthenticated_backup", "stale_task", "disabled_task",
                                   "task_failure", "credit", "nan", "cutoff", "cap", "service",
-                                  "disk", "inodes", "missing_probe", "malformed"])
+                                  "disk", "inodes", "missing_probe", "malformed",
+                                  "renewal", "rotation"])
 def test_real_issues_are_actionable_and_liveness_is_not_release_readiness(monkeypatch, fault):
     m, now, o = fixture(monkeypatch)
     if fault == "tls":
@@ -65,6 +67,10 @@ def test_real_issues_are_actionable_and_liveness_is_not_release_readiness(monkey
         o["remote"]["budget"]["inference_limit"] = 26000000
     elif fault == "service":
         o["remote"]["hosts"]["worker"]["services"]["proofflow-worker.service"] = False
+    elif fault == "renewal":
+        o["remote"]["hosts"]["control"]["renewal_success"] = False
+    elif fault == "rotation":
+        o["remote"]["hosts"]["control"]["tls_rotation_pending"] = True
     elif fault == "disk":
         o["remote"]["hosts"]["control"]["free_bytes"] = 1
     elif fault == "inodes":

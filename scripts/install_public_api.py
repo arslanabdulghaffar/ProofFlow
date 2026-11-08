@@ -69,6 +69,7 @@ After=network-online.target
 [Service]
 Type=oneshot
 ExecStart=/opt/proofflow-acme/bin/certbot renew --non-interactive --no-random-sleep-on-renew --config-dir /etc/proofflow-acme/production --work-dir /var/lib/proofflow-acme/production --logs-dir /var/log/proofflow-acme/production --deploy-hook "/opt/proofflow-acme/bin/python -I {hook}"
+ExecStartPost=/opt/proofflow-acme/bin/python -I {hook}
 TimeoutStartSec=240
 TimeoutStopSec=10
 KillMode=control-group

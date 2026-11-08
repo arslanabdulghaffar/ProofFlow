@@ -113,3 +113,20 @@ References: [official IP certificate guidance](https://letsencrypt.org/2026/03/1
 [Certbot renewal](https://eff-certbot.readthedocs.io/en/stable/using.html),
 [Certbot timer jitter discussion](https://github.com/certbot/certbot/issues/9997),
 [systemd socket proxy](https://www.freedesktop.org/software/systemd/man/latest/systemd-socket-proxyd.html).
+
+## November8 TLS deployment recovery follow-up
+
+The deployed renewal unit now runs the reviewed fixed hook as ExecStartPost as well as
+its Certbot deploy hook. A persisted target marker and exclusive lock allow a retry to
+finish a matching certificate/key pair before service start. Both existing and staged
+files require bounded regular single-link exact-owner/mode reads; conflicting partial
+state is preserved and stops reconciliation. A normal unchanged pair does not restart.
+Operations checks flag leftover markers or failed renewal, even while the old endpoint
+still responds. Never erase pending files or force issuance to clear a failed status.
+
+The exact prior unit/revision remains preserved. `scripts/update_public_certificate_hook.py`
+is a targeted one-time update, not a generic deploy/renew command: do not rerun it blindly
+against changed wiring. The timer's next ordinary run performs the post-check; actual
+future production renewal remains unobserved. Local generated-key process crash recovery
+and deployed trusted no-op/external readback are in the
+[receipt](../../docs/evidence/phase6-tls-interruption-recovery-2026-11-08.json).

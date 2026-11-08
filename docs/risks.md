@@ -1,5 +1,11 @@
 # Risks and owner decisions
 
+TLS deployment now recovers a tested between-file interruption and exposes renewal-hook
+failures in service/operations checks. Actual production hook no-op and public health
+passed; future certificate rotation, CA availability and post-event account access remain
+unverified. Unknown partial/conflicting state stops for reconciliation.
+[Evidence](evidence/phase6-tls-interruption-recovery-2026-11-08.json).
+
 Backup receipt interruption/replacement and key retirement during SQL rehearsal now
 fail closed. Read-only funded-window inspection distinguishes partial commits without
 replaying them; actual saved/deployed cutoff matches. This does not solve lost current

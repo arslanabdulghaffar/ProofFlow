@@ -1,0 +1,182 @@
+{
+  "scope": "Phase6 TLS renewal interruption recovery and judging hosting maintenance",
+  "deployment": {
+    "hook_sha256": "fb21cb63ecfa6271ef1fe9305e6bfa52caf012b5fa1fa29b5adee4090d2e8562",
+    "unit_sha256": "eff2874ef62ff81230e7abd6ca8d4a8a04c5b9696c91d4c4a932fee5f5119856",
+    "certificate": {
+      "trusted_ip_certificate": true,
+      "expires_at": "2026-11-14T16:01:59+00:00",
+      "replaced": false,
+      "private_operator_tls_changed": false
+    },
+    "old_revision_preserved": true,
+    "renewal_timer_active": true,
+    "unit_has_post_check": true,
+    "observed_at": "2026-11-08T04:28:58.612451+00:00",
+    "public_before_after_unchanged": true,
+    "public": {
+      "certificate_expires_at": "2026-11-14T16:01:59+00:00",
+      "live": {
+        "status": 200,
+        "body": {
+          "status": "alive"
+        }
+      },
+      "ready": {
+        "status": 503,
+        "body": {
+          "status": "not_ready",
+          "reason": "product_acceptance_incomplete"
+        }
+      }
+    },
+    "certificate_issuance": false,
+    "new_resources": 0,
+    "provider_calls": 0,
+    "funded_until": "2026-11-09T16:29:33.986905+00:00"
+  },
+  "operations": {
+    "observed_at": "2026-11-08T04:30:13.278445+00:00",
+    "status": "SCOPED_OK",
+    "blockers": [],
+    "notes": [
+      "READ_ONLY_OBSERVATION_NOT_RELEASE_APPROVAL",
+      "NO_WORKER_JOB_OR_PROVIDER_CALL",
+      "OFFLINE_KEY_CUSTODY_DEFERRED",
+      "NO_BACKGROUND_MONITOR_INSTALLED",
+      "PUBLIC_READINESS_REMAINS_503_NOT_VERIFIED"
+    ],
+    "phase6_complete": false,
+    "observations": {
+      "public": {
+        "certificate_expires_at": "2026-11-14T16:01:59+00:00",
+        "live": {
+          "status": 200,
+          "body": {
+            "status": "alive"
+          }
+        },
+        "ready": {
+          "status": 503,
+          "body": {
+            "status": "not_ready",
+            "reason": "product_acceptance_incomplete"
+          }
+        }
+      },
+      "backup": {
+        "snapshot_at": "2026-11-07T16:35:14.29645+00:00",
+        "expires_at": "2026-11-08T16:35:14.296450+00:00",
+        "authenticated": true
+      },
+      "tasks": [
+        {
+          "last_run": "2026-11-08T04:29:39.0000000Z",
+          "result": 0,
+          "name": "ProofFlow-CreditGuard",
+          "enabled": true
+        },
+        {
+          "last_run": "2026-11-08T03:36:07.0000000Z",
+          "result": 0,
+          "name": "ProofFlow-ProductBackup",
+          "enabled": true
+        }
+      ],
+      "remote": {
+        "remaining_credit_usd": "188.85",
+        "credit_stop_reason": null,
+        "funded_until": "2026-11-09T16:29:33.986905+00:00",
+        "hosts": {
+          "control": {
+            "services": {
+              "proofflow-budget.service": true,
+              "proofflow-product-api.service": true,
+              "proofflow-product-dispatcher.service": true,
+              "proofflow-public-api.service": true,
+              "proofflow-product-retention.timer": true,
+              "proofflow-public-renew.timer": true,
+              "proofflow-guest-demo.timer": true
+            },
+            "storage_path": "/var/lib/docker",
+            "free_bytes": 79382978560,
+            "total_bytes": 100077776896,
+            "free_inodes": 25743966,
+            "total_inodes": 25917760,
+            "renewal_success": true,
+            "tls_rotation_pending": false
+          },
+          "worker": {
+            "services": {
+              "proofflow-worker.service": true
+            },
+            "storage_path": "/var/lib/proofflow-worker",
+            "free_bytes": 159283298304,
+            "total_bytes": 180637249536,
+            "free_inodes": 46612479,
+            "total_inodes": 46756160
+          }
+        },
+        "budget": {
+          "project_limit": 150000000,
+          "inference_limit": 25000000,
+          "probe_limit": 2000000,
+          "expires_at": "2026-11-09T16:29:33.986905+00:00"
+        }
+      }
+    }
+  },
+  "checks": {
+    "windows_scoped_pass": 40,
+    "windows_linux_only_skips": 12,
+    "linux_scoped_pass": 25,
+    "ruff": "PASS",
+    "documentation": "PASS:276 entries,59 pages",
+    "secret_scan_note": "Initial generic-api-key alert matched the source hash indexed by install_public_api.py; changed receipt to explicit path/sha256 fields, no scanner exception.",
+    "staged_secret_scan": "PASS: no leaks",
+    "diff_whitespace": "PASS"
+  },
+  "actual_crash_fixture": {
+    "scope": "local Linux generated disposable keys; service calls replaced by test recorder",
+    "process_exit": 77,
+    "interrupted_after": "first certificate replacement, before key replacement",
+    "durable_marker_survived": true,
+    "retry_installed_matching_pair_before_start": true,
+    "production_service_interrupted": false
+  },
+  "findings_fixed": [
+    "Two-file certificate/key replacement had no durable resume marker; interrupted hook could leave API stopped or mixed files.",
+    "A generator any() short-circuit initially skipped the second unsafe file when the first differed; all existing/pending files are now read and validated before mutation.",
+    "Renewal exit status alone cannot establish hook success; ExecStartPost validates/reconciles current lineage even on no-renewal runs."
+  ],
+  "critical_review": [
+    "Fixed trusted chain/IP/key validation remains before installation. No certificate or validation bypass.",
+    "Exclusive local lock and target hash marker; fsync; no-follow bounded single-link exact-owner/mode files; reject altered markers/staged bytes.",
+    "Do not start until both installed bytes match the validated target. Preserve marker through start/active failures. Ordinary unchanged pair does not restart.",
+    "Incomplete or conflicting markers/staged files fail closed for manual reconciliation; no automatic deletion or guessed rollback.",
+    "New hook is immutable hash-named source; prior source/unit preserved, systemd verifies unit, public before/after unchanged.",
+    "No actual future production certificate issuance/rotation or full compromised-host recovery claimed. Separate Codex review is not human sign-off."
+  ],
+  "official_reference": "https://eff-certbot.readthedocs.io/en/stable/using.html#renewing-certificates",
+  "phase6_complete": false,
+  "offline_keys": "DEFERRED",
+  "post_event_access_verified": false,
+  "sources": [
+    {
+      "path": "scripts/install_public_certificate.py",
+      "sha256": "fb21cb63ecfa6271ef1fe9305e6bfa52caf012b5fa1fa29b5adee4090d2e8562"
+    },
+    {
+      "path": "scripts/install_public_api.py",
+      "sha256": "ddc7fd3f7e3ceb8458a4f3800f24435f5d5287172a501dd17be7d2931eb93a82"
+    },
+    {
+      "path": "scripts/update_public_certificate_hook.py",
+      "sha256": "616a948a3915d4d157934466d72c13f743570bd1a2ecef823d9caab8a4634bce"
+    },
+    {
+      "path": "scripts/check_operations.py",
+      "sha256": "b2e73813664885f9d59554fdd2cfd9f341296839b1bc61a0d205b0191c226210"
+    }
+  ]
+}

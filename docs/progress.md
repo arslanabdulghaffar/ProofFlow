@@ -1,5 +1,33 @@
 # Progress
 
+## November8 KST — TLS interruption recovery deployed
+
+Fixed a concrete judging-hosting failure: certificate/key replacement now has an
+exclusive lock, durable target marker and exact staged-file checks. After interruption,
+retry finishes the validated pair before restarting the guest API. Failed start/active
+readback preserves the marker; unchanged normal checks do not restart. Conflicting or
+partial unknown bytes fail closed. Critical tests found and fixed short-circuit checking
+that skipped the second unsafe file when the first differed.
+
+Actual Linux child exit77 between certificate and key writes recovered successfully
+using generated fixture keys; service actions were test recorders, not production faults.
+40 Windows tests pass/12 Linux-only skips;25 Linux tests and Ruff pass.
+[Evidence](evidence/phase6-tls-interruption-recovery-2026-11-08.json).
+
+The hash-named hook and verified systemd wiring are deployed on the existing host.
+ExecStartPost rechecks/reconciles the current lineage even when Certbot performs no
+renewal; hook failure now surfaces as service failure. Old revision/unit are preserved.
+Actual trusted current-certificate no-op passed; external TLS/liveness/readiness stayed
+unchanged, with no guest restart or issuance. Future production rotation remains unobserved.
+Operations checks now reject failed renewal results or leftover rotation markers/stages.
+
+At13:30 KST the combined check passed: credit $188.85; $150/$25 caps and Nov10 01:29:33
+KST cutoff unchanged. No new resource, model call, personal payment or public release.
+Full compromised-host trust/credential recovery and post-event account access remain
+unverified; offline key custody remains deferred. Phase6 IN PROGRESS. The private v4
+archive predates this fix: preserve it as historical evidence, use current Git for the
+fixed hook, and include this change in the next release package before publication.
+
 ## November8 KST — recovery receipt and funding reconciliation hardened
 
 Saved recovery/export now reject an unfinished backup pointer and a pointer replaced
