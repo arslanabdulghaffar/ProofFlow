@@ -1,5 +1,31 @@
 # Release and operations plan
 
+## November8 KST — actual saved SQL restore and deadline fix accepted
+
+The latest authenticated scheduled185228-byte SQL backup restored into a fresh local,
+networkless, nonroot PostgreSQL container using tmpfs only. One saved workspace was
+excluded by current live deletion authority; all24 runtime-authority tables cleared,
+normal login denied, fresh live authority rechecked and container removed. Small-snapshot
+rehearsal5.18s, observed snapshot age11.4h: neither is a production RTO/RPO guarantee.
+No production import, credentials restored, candidate execution, cloud resource or model call.
+
+Fault testing found BusyBox timeout as namespace PID1 did not stop the empty PostgreSQL
+fixture by90s. Harness detected failure and cleaned up. Require existing Docker-provided
+init; unchanged90s deadline now yields exit137 and AutoRemove after91.487s, after launcher
+exit and without observer cleanup. Exact tmpfs readback corrected (HostConfig.Tmpfs,
+not Mounts); actual filesystem type and resource/network/process policy are checked.
+28 Windows tests pass/1 Linux-only skip;29 Linux tests,Ruff and documentation checks pass.
+[Evidence](evidence/phase6-saved-database-release-audit-2026-11-08.json).
+
+Release G01–G12 now has concrete scoped statuses and evidence links. The pinned local
+product image still matches all73 approved files. The live deployment and private v4
+archive were preserved. No need to regenerate media or replay paid acceptance for this
+admin-tool change. Phase6 IN PROGRESS: fresh compromised-host trust/credential rebuild,
+lost current deletion authority, owner offline custody (deferred), post-event access,
+publication/license/submission and independent human review remain open. Existing caps
+and Nov10 01:29:33 KST cutoff unchanged. New helper is a trusted-admin rehearsal only;
+never supply uploaded or suspected-compromised SQL. No remaining temporary containers.
+
 ## November8 KST — recovery denial drill and judging-hosting preparation
 
 Eight actual fresh local pinned recovery containers passed: valid inert materialization,
@@ -353,20 +379,24 @@ Backup design: restic to private Vultr S3-compatible storage with separate crede
 
 ## Stop/go inventory mapped to PDF p53
 
-| Gate | Required linked evidence before release claim |
-| --- | --- |
-| G-01 rules | Registration, track, timing clarification, current form |
-| G-02 scope | Owner-approved contract, supported/unsupported inputs and worked examples |
-| G-03 stack | Actual Vultr VM web/backend, provider calls and sandbox receipts |
-| G-04 autonomy | Actual generated code and new inputs without hidden human repair |
-| G-05 correctness | Independent per-record/mutation/canary checks |
-| G-06 boundaries | Runtime, tenant, secret, upload/output, quota and cleanup evidence |
-| G-07 durable result | Exact approval, new batch, authorized download, actual integration status |
-| G-08 reliability | Restart/replay/cancel/provider-failure/restore/clean-browser results |
-| G-09 comparison | Prior-art attribution, held-out methodology/baselines/raw results/limitations |
-| G-10 demo | Final-release live execution, containment and disclosed fixtures/replay |
-| G-11 package | Authorized public repo/app, license/notices, cover/video/deck, descriptions/links and confirmation |
-| G-12 availability | Funded judging uptime, alerts, named owner, backup/cleanup plan |
+| Gate | Current assessment | Evidence and remaining work |
+| --- | --- | --- |
+| G-01 rules | PARTIAL | Event/track verified; enrollment, authenticated form and absolute deadline remain unverified. See [rules](rules.md). |
+| G-02 scope | SCOPED PASS | Approved synthetic-only contract including Q08; each exact contract still requires product approval. [Contract](contract.md). |
+| G-03 stack | SCOPED PASS | Actual Vultr VM/provider/sandbox accepted. [Phase1](evidence/phase1-acceptance-2026-11-04.json). |
+| G-04 autonomy | SCOPED PASS | Real bounded repair and new batch on the invited guest path; no generalized arbitrary-code autonomy claim. [Guest run](evidence/phase6-guest-operation-2026-11-08.json). |
+| G-05 correctness | SCOPED PASS | Source-derived record checks/protected canaries; exact finite profile, not formal proof. [Phase3](evidence/phase3-acceptance-2026-11-04.json). |
+| G-06 boundaries | SCOPED PASS / REVIEW GAP | Containment/runtime review and guest denials pass; native/administrator limits and missing independent human review remain disclosed. [Phase5](evidence/phase5-binary-acceptance-2026-11-07.json), [public checks](evidence/phase6-public-tls-2026-11-08.json). |
+| G-07 durable result | SCOPED PASS | Exact activation, fresh completed batch, owned downloads and real private PR readback/recovery. [Phase4](evidence/phase4-acceptance-2026-11-05.json). No additional PR authorized. |
+| G-08 reliability | PARTIAL | Restart/replay/cancel and isolated backup recovery pass. Actual scheduled SQL quarantine is now tested; fresh compromised-host trust/credential reconstruction and production RTO/RPO remain unproven. [Recovery](evidence/phase6-saved-database-release-audit-2026-11-08.json). |
+| G-09 comparison | SCOPED PASS | Frozen measured arms, attribution and limitations; no customer ROI or universal repair-rate claim. [Comparison](../eval/final-comparison-2026-11-06.md). |
+| G-10 demo | SCOPED PASS | Real private AI recording/containment, later public TLS/guest rehearsal; dated recording is not footage of later runs. [Media](evidence/phase6-release-assets-2026-11-08.json). |
+| G-11 package | BLOCKED PUBLIC RELEASE | Private v4 archive verified; repository/media remain private, license ownership, public URLs and submission confirmation unresolved. [Package](evidence/phase6-release-package-v4-2026-11-08.json). |
+| G-12 availability | PARTIAL | Current credit/caps/timers and conditional judging cost plan verified; post-event account access, future funding reviews and on-call availability unconfirmed. [Hosting](evidence/phase6-recovery-hosting-2026-11-08.json). |
+
+These are scoped evidence assessments, not a blanket release approval. Phase6 remains
+IN PROGRESS. Owner-deferred offline custody is separate from already completed recovery
+experiments. No snapshot is a replacement for lost current deletion authority.
 
 A credential leak, crossed workspace, unsandboxed/unbounded code, false acceptance or fabricated result blocks the affected release until repaired/retested. Optional omissions are removed from claims. Low repair coverage is reported rather than hidden. Missing real PR readback is an integration gap, not an export success. Final source/deployment/evidence/evaluation/video/copy must agree.
 

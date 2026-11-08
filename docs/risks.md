@@ -1,5 +1,11 @@
 # Risks and owner decisions
 
+Actual scheduled SQL quarantine now passes in RAM-only local PostgreSQL. The test found
+and fixed a PID1/BusyBox timeout issue using existing Docker init, then proved90s kill
+and removal after launcher exit. Full compromised-host trust/credential recovery remains
+unproven; current deletion authority is mandatory. No new paid resources or public release.
+[Evidence](evidence/phase6-saved-database-release-audit-2026-11-08.json).
+
 November8 recovery/hosting: eight actual isolated recovery controls/denials and cleanup
 pass; current account/plan/ledger preview stays read-only. Credit$188.96;14-day compute
 estimate$36 inside unchanged monthly reservation. Post-event payment-method wording

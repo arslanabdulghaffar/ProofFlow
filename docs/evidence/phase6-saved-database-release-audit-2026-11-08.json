@@ -1,0 +1,86 @@
+{
+  "phase": "6",
+  "phase_complete": false,
+  "status": "SAVED_DATABASE_REHEARSAL_ACCEPTED_RELEASE_STILL_GATED",
+  "saved_database": {
+    "database_bytes": 185228,
+    "snapshot_workspaces": 1,
+    "kept_workspaces": 0,
+    "excluded_workspaces": 1,
+    "cleared_authority_tables": 24,
+    "ordinary_login_denied": true,
+    "database_connection_limit": 0,
+    "database_image": "sha256:9ed8d24e2d804f04bd228a4619c9ed43c3a8d2f4a09fe947b44b112615eb010d",
+    "storage": "tmpfs_only_no_volumes_or_host_binds",
+    "network": "none",
+    "production_promotion": false,
+    "container_removed": true,
+    "elapsed_seconds": 5.18,
+    "observed_at": "2026-11-08T03:58:57.582880+00:00",
+    "snapshot_at": "2026-11-07T16:35:14.29645+00:00",
+    "expires_at": "2026-11-08T16:35:14.296450+00:00",
+    "snapshot_age_seconds": 41023.286,
+    "authenticated_vault_and_receipt": true,
+    "fresh_authority_rechecked": true,
+    "scope": "actual_scheduled_SQL_backup_restored_into_fresh_local_tmpfs_database",
+    "provider_calls": 0,
+    "new_resources": 0,
+    "owner_offline_keys_used": false,
+    "compromised_host_rebuild": false,
+    "production_RTO_measured": false
+  },
+  "watchdog": {
+    "scope": "empty_local_postgres_no_backup_or_credentials",
+    "launcher_exited_before_timeout": true,
+    "watchdog_seconds": 90,
+    "container_exit": 137,
+    "observed_seconds": 91.487,
+    "container_removed": true,
+    "observer_issued_cleanup": false,
+    "cloud_calls": 0
+  },
+  "runtime_readback": {
+    "product_image": "441d3a417149242c7afb1f6ae72a355865b8515f2416ff02f92a0deb1cf50a74",
+    "approved_modules": 73,
+    "exact_source_matches": true,
+    "scope": "local pinned image readback; no redeployment"
+  },
+  "checks": {
+    "windows": {
+      "passed": 28,
+      "skipped": 1,
+      "reason": "Linux symlink case covered by Linux run"
+    },
+    "linux_passed": 29,
+    "ruff": "PASS",
+    "documentation": "276 requirements,59 pages,links/ignore/template checks pass"
+  },
+  "findings": [
+    {
+      "finding": "Docker --tmpfs readback appears in HostConfig.Tmpfs, not Mounts. Initial conservative checker rejected it before SQL import.",
+      "fix": "Exact Tmpfs map plus no other Mounts and real filesystem-type check; regression coverage."
+    },
+    {
+      "finding": "BusyBox timeout used as namespace PID1 did not stop PostgreSQL by90s; observer detected failure and removed only its empty fixture.",
+      "fix": "Require Docker-provided init as PID1; timeout/PostgreSQL run below it. Retest observed137 and AutoRemove91.487s after launcher exited. Original90s deadline unchanged.",
+      "original_failure": "SAVED_WATCHDOG_TIMEOUT_FAILED; cleanup issued by test, not falsely accepted"
+    }
+  ],
+  "existing_local_init": {
+    "path": "/usr/libexec/docker/docker-init",
+    "version": "tini version0.19.0 - git.de40ad0",
+    "sha256": "348356457ca22d9f59443f18a4df20db041fe328de8fa5247ffc99922dfe1f32",
+    "new_install": false,
+    "documentation": "https://docs.docker.com/reference/cli/docker/container/run"
+  },
+  "critical_review": "Separate Codex review of trust provenance, namespace/process deadline, RAM-only storage, fixed targets, current-authority revalidation and redacted failure diagnostics; not independent human sign-off.",
+  "scope_limits": [
+    "Trusted scheduled SQL only; compromised-host dump is not trusted",
+    "No production restore, promotion, credential restoration or job replay",
+    "5.18s is small snapshot rehearsal time, not host rebuild RTO",
+    "11.4h snapshot age is an observation, not guaranteed RPO",
+    "Owner offline custody deferred",
+    "Private source/media and license/submission gates remain open",
+    "Existing funded cutoff and credit caps unchanged"
+  ]
+}

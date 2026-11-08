@@ -51,6 +51,17 @@ Current trustworthy deletion authority remains mandatory; old snapshots cannot r
 deleted workspaces. The owner will handle offline password/kit custody later. A fully
 reimaged compromised-host recovery and public-service RTO/RPO are not established.
 
+The configured owner computer can rehearse the latest authenticated scheduled SQL
+backup with `.venv/Scripts/python.exe scripts/check_saved_database_recovery.py`.
+This reads current deletion authority, restores trusted administrator SQL only into
+a fresh local networkless PostgreSQL container backed by tmpfs, removes runtime
+authority, rechecks live deletions and destroys the container. It never imports a
+dump into production, restores credentials, replays a job or executes candidate code.
+It requires the existing Windows vault identity and authenticated management setup;
+it does not require or complete the deferred offline-password custody step. Do not
+feed it uploads or a dump from a suspected compromised host. A failed check stops
+the rehearsal; do not bypass current authority, expiry or the container deadline.
+
 ## Owner’s individual guest launcher
 
 Run `powershell -NoProfile -File "A:\hackathon\ProofFlow\scripts\Open-PublicDemo.ps1"` on

@@ -1,5 +1,24 @@
 # Decision log
 
+## D100: actual scheduled SQL quarantine with an independently tested process deadline
+
+Authenticate the existing scheduled backup and receipt under CurrentUser DPAPI; send
+only trusted SQL/snapshot/current-authority bytes over stdin to a local pinned PostgreSQL
+rehearsal. Never put a key, password or SQL in argv, logs or a persistent data volume.
+No cloud mutation or production SQL import. Use no network/ports, UID70, dropped caps,
+read-only root,512MiB no-swap memory,1CPU,128PIDs and bounded tmpfs. Clone connection
+limit0 denies normal login before stripping all24 authority tables. Recheck live deletion
+authority after local cleanup; a stale or lost authority cannot be reconstructed from backup.
+
+Actual failure showed BusyBox timeout as PID1 was insufficient. Use the existing Docker
+init (Tini0.19.0, hash in receipt) to separate namespace init from the timed PostgreSQL
+process. No new package/privilege/network installation. [Official Docker documentation](https://docs.docker.com/reference/cli/docker/container/run)
+describes init/signal behavior; actual90s kill/AutoRemove is separately measured. Observer
+must see exit137 and disappearance without cleanup, not any nonzero exit or a forced
+cleanup. Fresh trusted container reconstruction is not compromised-host recovery. Failed
+readbacks and the first watchdog failure remain disclosed. Separate critical review is
+not independent human sign-off; no contract/verifier/product approval policy changed.
+
 ## D99: prepare judging hosting without changing operational authority
 
 Use a fixed read-only account/instance/inference/ledger preview. Check exact project and

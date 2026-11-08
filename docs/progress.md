@@ -1,5 +1,31 @@
 # Progress
 
+## November8 KST — actual saved SQL restore and deadline fix accepted
+
+The latest authenticated scheduled185228-byte SQL backup restored into a fresh local,
+networkless, nonroot PostgreSQL container using tmpfs only. One saved workspace was
+excluded by current live deletion authority; all24 runtime-authority tables cleared,
+normal login denied, fresh live authority rechecked and container removed. Small-snapshot
+rehearsal5.18s, observed snapshot age11.4h: neither is a production RTO/RPO guarantee.
+No production import, credentials restored, candidate execution, cloud resource or model call.
+
+Fault testing found BusyBox timeout as namespace PID1 did not stop the empty PostgreSQL
+fixture by90s. Harness detected failure and cleaned up. Require existing Docker-provided
+init; unchanged90s deadline now yields exit137 and AutoRemove after91.487s, after launcher
+exit and without observer cleanup. Exact tmpfs readback corrected (HostConfig.Tmpfs,
+not Mounts); actual filesystem type and resource/network/process policy are checked.
+28 Windows tests pass/1 Linux-only skip;29 Linux tests,Ruff and documentation checks pass.
+[Evidence](evidence/phase6-saved-database-release-audit-2026-11-08.json).
+
+Release G01–G12 now has concrete scoped statuses and evidence links. The pinned local
+product image still matches all73 approved files. The live deployment and private v4
+archive were preserved. No need to regenerate media or replay paid acceptance for this
+admin-tool change. Phase6 IN PROGRESS: fresh compromised-host trust/credential rebuild,
+lost current deletion authority, owner offline custody (deferred), post-event access,
+publication/license/submission and independent human review remain open. Existing caps
+and Nov10 01:29:33 KST cutoff unchanged. New helper is a trusted-admin rehearsal only;
+never supply uploaded or suspected-compromised SQL. No remaining temporary containers.
+
 ## November8 KST — recovery denial drill and judging-hosting preparation
 
 Eight actual fresh local pinned recovery containers passed: valid inert materialization,
